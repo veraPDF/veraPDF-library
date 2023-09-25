@@ -43,7 +43,7 @@ public interface TestAssertion {
      */
     public int getOrdinal();
     /**
-     * @return the String id for the {@link org.verapdf.pdfa.validation.Rule} that this assertion refers to
+     * @return the String id for the {@link org.verapdf.validation.profiles.Rule} that this assertion refers to
      */
     public RuleId getRuleId();
 
