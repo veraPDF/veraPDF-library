@@ -27,6 +27,5 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  */
 @XmlJavaTypeAdapter(FixerConfigImpl.Adapter.class)
 public interface MetadataFixerConfig {
-	public boolean isFixId();
 	public String getFixesPrefix();
 }

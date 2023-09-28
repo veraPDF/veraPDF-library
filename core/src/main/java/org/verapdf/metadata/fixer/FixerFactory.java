@@ -48,8 +48,8 @@ public final class FixerFactory {
 		return FixerConfigImpl.defaultInstance();
 	}
 
-	public static MetadataFixerConfig configFromValues(final String fixesPrefix, boolean fixId) {
-		return FixerConfigImpl.fromValues(fixesPrefix, fixId);
+	public static MetadataFixerConfig configFromValues(final String fixesPrefix) {
+		return FixerConfigImpl.fromValues(fixesPrefix);
 	}
 
 	public static MetadataFixerConfig configFromXml(final InputStream source) throws JAXBException {
