@@ -68,7 +68,7 @@ public class FixerConfigTest {
 	@Test
 	public void testFromValues() {
 		MetadataFixerConfig defaultConfig = FixerFactory.defaultConfig();
-		MetadataFixerConfig fromVals = FixerFactory.configFromValues(defaultConfig.getFixesPrefix(), defaultConfig.isFixId());
+		MetadataFixerConfig fromVals = FixerFactory.configFromValues(defaultConfig.getFixesPrefix());
 		assertEquals(defaultConfig, fromVals);
 		assertNotSame(defaultConfig, fromVals);
 	}

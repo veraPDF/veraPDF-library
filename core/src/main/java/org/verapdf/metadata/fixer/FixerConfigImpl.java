@@ -32,30 +32,15 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 	public final static String DEFAULT_PREFIX = "veraFixMd_";  //$NON-NLS-1$
 	private final static MetadataFixerConfig defaultInstance = new FixerConfigImpl();
 	@XmlAttribute
-	private final boolean fixId;
-	@XmlAttribute
 	private final String fixesPrefix;
 
 	private FixerConfigImpl() {
-		this(true);
+		this(DEFAULT_PREFIX); //$NON-NLS-1$
 	}
 
-	private FixerConfigImpl(final boolean fixId) {
-		this(DEFAULT_PREFIX, fixId); //$NON-NLS-1$
-	}
-
-	private FixerConfigImpl(final String fixesPrefix, boolean fixId) {
+	private FixerConfigImpl(final String fixesPrefix) {
 		super();
-		this.fixId = fixId;
 		this.fixesPrefix = fixesPrefix;
-	}
-
-	/**
-	 * @return the fixId
-	 */
-	@Override
-	public boolean isFixId() {
-		return this.fixId;
 	}
 
 	/**
@@ -73,7 +58,6 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (this.fixId ? 1231 : 1237);
 		result = prime * result + ((this.fixesPrefix == null) ? 0 : this.fixesPrefix.hashCode());
 		return result;
 	}
@@ -93,9 +77,6 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 			return false;
 		}
 		FixerConfigImpl other = (FixerConfigImpl) obj;
-		if (this.fixId != other.fixId) {
-			return false;
-		}
 		if (this.fixesPrefix == null) {
 			if (other.fixesPrefix != null) {
 				return false;
@@ -111,15 +92,15 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 	 */
 	@Override
 	public String toString() {
-		return "FixerConfigImpl [fixId=" + this.fixId + ", fixesPrefix=" + this.fixesPrefix + "]";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
+		return "FixerConfigImpl [fixesPrefix=" + this.fixesPrefix + "]";  //$NON-NLS-1$//$NON-NLS-2$ //$NON-NLS-3$
 	}
 
 	static MetadataFixerConfig defaultInstance() {
 		return defaultInstance;
 	}
 
-	static MetadataFixerConfig fromValues(final String fixesPrefix, boolean fixId) {
-		return new FixerConfigImpl(fixesPrefix, fixId);
+	static MetadataFixerConfig fromValues(final String fixesPrefix) {
+		return new FixerConfigImpl(fixesPrefix);
 	}
 
 	static class Adapter extends XmlAdapter<FixerConfigImpl, MetadataFixerConfig> {
