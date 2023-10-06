@@ -28,6 +28,42 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDFUAIdentification">
+            <id specification="ISO_14289_1" clause="5" testNumber="3"/>
+            <description>Property part of the PDF/UA Identification Schema shall have namespace prefix pdfuaid</description>
+            <test>partPrefix == null || partPrefix == &quot;pdfuaid&quot;</test>
+            <error>
+                <message>Property part of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>partPrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFUAIdentification">
+            <id specification="ISO_14289_1" clause="5" testNumber="4"/>
+            <description>Property amd of the PDF/UA Identification Schema shall have namespace prefix pdfuaid</description>
+            <test>amdPrefix == null || amdPrefix == &quot;pdfuaid&quot;</test>
+            <error>
+                <message>Property amd of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>amdPrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDFUAIdentification">
+            <id specification="ISO_14289_1" clause="5" testNumber="5"/>
+            <description>Property corr of the PDF/UA Identification Schema shall have namespace prefix pdfuaid</description>
+            <test>corrPrefix == null || corrPrefix == &quot;pdfuaid&quot;</test>
+            <error>
+                <message>Property corr of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
+                <arguments>
+                    <argument>corrPrefix</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.1" testNumber="1"/>
             <description>Content marked as Artifact should not present inside tagged content</description>
