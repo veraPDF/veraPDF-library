@@ -46986,7 +46986,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_5" clause="PageObject-TemplateInstantiated" testNumber="11"/>
 			<description>Entry TemplateInstantiated in PageObject is required, when fn:InNameTree(trailer::Catalog::Names::Pages) || fn:InNameTree(trailer::Catalog::Names::Templates)</description>
-			<test>containsTemplateInstantiated == true || ((nameTreetrailerCatalogNamesPagesContainsTemplateInstantiatedString != true) &amp;&amp; (nameTreetrailerCatalogNamesTemplatesContainsTemplateInstantiatedString != true))</test>
+			<test>containsTemplateInstantiated == true || ((TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesPages != true) &amp;&amp; (TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesTemplates != true))</test>
 			<error>
 				<message>Entry TemplateInstantiated in PageObject is missing</message>
 				<arguments>
@@ -53778,7 +53778,7 @@
 		<rule object="ASlideShow">
 			<id specification="ISO_32000_1_5" clause="SlideShow-StartResource-StringByte" testNumber="9"/>
 			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:InNameTree(Resources)</description>
-			<test>StartResourceHasTypeStringByte != true || (nameTreeResourcesContainsStartResourceString == true)</test>
+			<test>StartResourceHasTypeStringByte != true || (StartResourceEntryIsIndexInNameTreeResources == true)</test>
 			<error>
 				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:InNameTree(Resources)</message>
 				<arguments>

@@ -52338,7 +52338,7 @@
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_6" clause="PageObject-TemplateInstantiated" testNumber="11"/>
 			<description>Entry TemplateInstantiated in PageObject is required, when fn:InNameTree(trailer::Catalog::Names::Pages) || fn:InNameTree(trailer::Catalog::Names::Templates)</description>
-			<test>containsTemplateInstantiated == true || ((nameTreetrailerCatalogNamesPagesContainsTemplateInstantiatedString != true) &amp;&amp; (nameTreetrailerCatalogNamesTemplatesContainsTemplateInstantiatedString != true))</test>
+			<test>containsTemplateInstantiated == true || ((TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesPages != true) &amp;&amp; (TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesTemplates != true))</test>
 			<error>
 				<message>Entry TemplateInstantiated in PageObject is missing</message>
 				<arguments>
@@ -59409,7 +59409,7 @@
 		<rule object="ASlideShow">
 			<id specification="ISO_32000_1_6" clause="SlideShow-StartResource-StringByte" testNumber="9"/>
 			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:InNameTree(Resources)</description>
-			<test>StartResourceHasTypeStringByte != true || (nameTreeResourcesContainsStartResourceString == true)</test>
+			<test>StartResourceHasTypeStringByte != true || (StartResourceEntryIsIndexInNameTreeResources == true)</test>
 			<error>
 				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:InNameTree(Resources)</message>
 				<arguments>
@@ -62744,7 +62744,7 @@
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_6" clause="Target-N" testNumber="11"/>
 			<description>Entry N in Target is required, when (@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)</description>
-			<test>containsN == true || ((RNameValue != "C") || (nameTreetrailerCatalogNamesEmbeddedFilesContainsNString != true))</test>
+			<test>containsN == true || ((RNameValue != "C") || (NEntryIsIndexInNameTreetrailerCatalogNamesEmbeddedFiles != true))</test>
 			<error>
 				<message>Entry N in Target is missing</message>
 				<arguments>
@@ -62756,7 +62756,7 @@
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_6" clause="Target-N-StringByte" testNumber="9"/>
 			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles))))</description>
-			<test>NHasTypeStringByte != true || (((RNameValue != "C") || (nameTreetrailerCatalogNamesEmbeddedFilesContainsNString != true)) || containsN != true)</test>
+			<test>NHasTypeStringByte != true || (((RNameValue != "C") || (NEntryIsIndexInNameTreetrailerCatalogNamesEmbeddedFiles != true)) || containsN != true)</test>
 			<error>
 				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles))))</message>
 				<arguments>
@@ -62793,7 +62793,7 @@
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_6" clause="Target-P-StringByte" testNumber="14"/>
 			<description>Entry P with type StringByte in Target shall satisfy possible value predicate: fn:Eval(fn:InNameTree(trailer::Catalog::Names::Dests))</description>
-			<test>PHasTypeStringByte != true || (nameTreetrailerCatalogNamesDestsContainsPString == true)</test>
+			<test>PHasTypeStringByte != true || (PEntryIsIndexInNameTreetrailerCatalogNamesDests == true)</test>
 			<error>
 				<message>Entry P with type StringByte in Target does not satisfy possible value predicate: fn:Eval(fn:InNameTree(trailer::Catalog::Names::Dests))</message>
 				<arguments>

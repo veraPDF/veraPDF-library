@@ -40703,7 +40703,7 @@
 		<rule object="ASlideShow">
 			<id specification="ISO_32000_1_4" clause="SlideShow-StartResource-StringByte" testNumber="9"/>
 			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:InNameTree(Resources)</description>
-			<test>StartResourceHasTypeStringByte != true || (nameTreeResourcesContainsStartResourceString == true)</test>
+			<test>StartResourceHasTypeStringByte != true || (StartResourceEntryIsIndexInNameTreeResources == true)</test>
 			<error>
 				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:InNameTree(Resources)</message>
 				<arguments>
