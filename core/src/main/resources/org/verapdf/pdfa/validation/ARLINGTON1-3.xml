@@ -3446,10 +3446,10 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_3" clause="AnnotFreeText-DA" testNumber="8"/>
-			<description>Entry DA in AnnotFreeText shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in AnnotFreeText shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in AnnotFreeText has type %2 instead of type String</message>
+				<message>Entry DA in AnnotFreeText has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -16423,10 +16423,10 @@
 		</rule>
 		<rule object="AFieldBtnCheckbox">
 			<id specification="ISO_32000_1_3" clause="FieldBtnCheckbox-DA" testNumber="8"/>
-			<description>Entry DA in FieldBtnCheckbox shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in FieldBtnCheckbox shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in FieldBtnCheckbox has type %2 instead of type String</message>
+				<message>Entry DA in FieldBtnCheckbox has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -16677,10 +16677,10 @@
 		</rule>
 		<rule object="AFieldBtnPush">
 			<id specification="ISO_32000_1_3" clause="FieldBtnPush-DA" testNumber="8"/>
-			<description>Entry DA in FieldBtnPush shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in FieldBtnPush shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in FieldBtnPush has type %2 instead of type String</message>
+				<message>Entry DA in FieldBtnPush has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -16931,10 +16931,10 @@
 		</rule>
 		<rule object="AFieldBtnRadio">
 			<id specification="ISO_32000_1_3" clause="FieldBtnRadio-DA" testNumber="8"/>
-			<description>Entry DA in FieldBtnRadio shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in FieldBtnRadio shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in FieldBtnRadio has type %2 instead of type String</message>
+				<message>Entry DA in FieldBtnRadio has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -17185,10 +17185,10 @@
 		</rule>
 		<rule object="AFieldChoice">
 			<id specification="ISO_32000_1_3" clause="FieldChoice-DA" testNumber="8"/>
-			<description>Entry DA in FieldChoice shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in FieldChoice shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in FieldChoice has type %2 instead of type String</message>
+				<message>Entry DA in FieldChoice has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -17477,10 +17477,10 @@
 		</rule>
 		<rule object="AFieldSig">
 			<id specification="ISO_32000_1_3" clause="FieldSig-DA" testNumber="8"/>
-			<description>Entry DA in FieldSig shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in FieldSig shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in FieldSig has type %2 instead of type String</message>
+				<message>Entry DA in FieldSig has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -17743,10 +17743,10 @@
 		</rule>
 		<rule object="AFieldTx">
 			<id specification="ISO_32000_1_3" clause="FieldTx-DA" testNumber="8"/>
-			<description>Entry DA in FieldTx shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in FieldTx shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in FieldTx has type %2 instead of type String</message>
+				<message>Entry DA in FieldTx has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -29314,10 +29314,10 @@
 		</rule>
 		<rule object="AInteractiveForm">
 			<id specification="ISO_32000_1_3" clause="InteractiveForm-DA" testNumber="8"/>
-			<description>Entry DA in InteractiveForm shall have type String</description>
-			<test>containsDA == false || DAHasTypeString == true</test>
+			<description>Entry DA in InteractiveForm shall have type StringByte</description>
+			<test>containsDA == false || DAHasTypeStringByte == true</test>
 			<error>
-				<message>Entry DA in InteractiveForm has type %2 instead of type String</message>
+				<message>Entry DA in InteractiveForm has type %2 instead of type StringByte</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
