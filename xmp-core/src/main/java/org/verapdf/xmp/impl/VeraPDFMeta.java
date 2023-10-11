@@ -15,6 +15,7 @@ import java.util.*;
 public class VeraPDFMeta {
 
     public static final String PDFAID_PREFIX = "pdfaid";
+    public static final String PDFUAID_PREFIX = "pdfuaid";
     public static final String CONFORMANCE = "conformance";
     public static final String PART = "part";
     public static final String REVISION_YEAR = "rev";

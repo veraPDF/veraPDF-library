@@ -45,7 +45,7 @@ public interface RuleSummary {
     public int getTestNumber();
     public String getStatus();
     public Status getRuleStatus();
-    public int getPassedChecks();
+    public Integer getPassedChecks();
     public int getFailedChecks();
     public Set<String> getTags();
     public String getDescription();
