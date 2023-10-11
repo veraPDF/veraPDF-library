@@ -77476,10 +77476,10 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_7" clause="Target-N-StringByte" testNumber="9"/>
-			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles))))</description>
-			<test>NHasTypeStringByte != true || (((RNameValue != "C") || (NEntryIsIndexInNameTreetrailerCatalogNamesEmbeddedFiles != true)) || containsN != true)</test>
+			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)))))</description>
+			<test>NHasTypeStringByte != true || ((((RNameValue != "C") || (NEntryIsIndexInNameTreetrailerCatalogNamesEmbeddedFiles != true)) &amp;&amp; containsN == true) != true)</test>
 			<error>
-				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles))))</message>
+				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)))))</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
