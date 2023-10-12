@@ -50,7 +50,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	@XmlAttribute
 	private final String status;
 	@XmlAttribute
-	private final int passedChecks;
+	private final Integer passedChecks;
 	@XmlAttribute
 	private final int failedChecks;
 	@XmlAttribute
@@ -64,7 +64,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	@XmlElement(name = "check")
 	private final List<Check> checks;
 
-	private RuleSummaryImpl(final RuleId ruleId, final Status status, final int passedChecks, final int failedChecks,
+	private RuleSummaryImpl(final RuleId ruleId, final Status status, final Integer passedChecks, final int failedChecks,
 			final String tags, final String description, final String object, final String test, final List<Check> checks) {
 		PDFAFlavour.Specification specification = ruleId.getSpecification();
 		this.specification = specification == null ? null : specification.getId();
@@ -135,7 +135,7 @@ final class RuleSummaryImpl implements RuleSummary {
 	 * @return the passedChecks
 	 */
 	@Override
-	public int getPassedChecks() {
+	public Integer getPassedChecks() {
 		return this.passedChecks;
 	}
 
@@ -149,7 +149,7 @@ final class RuleSummaryImpl implements RuleSummary {
 
 	@Override
 	public Set<String> getTags() {
-		return tags != null ? new HashSet<>(Arrays.asList(tags.split(","))) : Collections.emptySet();
+		return tags != null ? new HashSet<>(Arrays.asList(tags.split(","))) : null;
 	}
 
 	/**
@@ -213,15 +213,13 @@ final class RuleSummaryImpl implements RuleSummary {
 		for (TestAssertion assertion : assertions) {
 			if (assertion.getStatus() == Status.PASSED) {
 				passedChecks++;
-				if (logPassedChecks) {
-					checks.add(CheckImpl.fromValue(assertion));
-				}
+				checks.add(CheckImpl.fromValue(assertion));
 			} else {
 				status = assertion.getStatus();
 				checks.add(CheckImpl.fromValue(assertion));
 			}
 		}
-		return new RuleSummaryImpl(id, status, passedChecks, failedChecks != null ? failedChecks : 0, tags, description, object, test, checks);
+		return new RuleSummaryImpl(id, status, logPassedChecks ? passedChecks : null, failedChecks != null ? failedChecks : 0, tags, description, object, test, checks);
 	}
 
 	static final RuleSummary uncheckedInstance(final RuleId id, final String description, final String object,
