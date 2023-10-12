@@ -146,16 +146,21 @@ final class ValidationDetailsImpl implements ValidationDetails {
 					assertionMap.get(rule.getRuleId()), logPassedChecks, failedChecksMap.get(rule.getRuleId()), rule.getTags()) :
 				RuleSummaryImpl.uncheckedInstance(rule.getRuleId(), rule.getDescription(), rule.getObject(), rule.getTest(), rule.getTags());
 			failedChecks += summary.getFailedChecks();
+			Set<String> summaryTags = summary.getTags();
 			if (summary.getRuleStatus() == Status.PASSED) {
 				passedRules++;
 				if (logPassedChecks) {
 					ruleSummaries.add(summary);
-					tags.addAll(summary.getTags());
+					if (summaryTags != null) {
+						tags.addAll(summaryTags);
+					}
 				}
 			} else {
 				failedRules++;
 				ruleSummaries.add(summary);
-				tags.addAll(summary.getTags());
+				if (summaryTags != null) {
+					tags.addAll(summaryTags);
+				}
 			}
 		}
 		int passedChecks = result.getTotalAssertions() - failedChecks;
