@@ -298,11 +298,7 @@ public class BaseValidator implements PDFAValidator {
 	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
 		Boolean deferred = rule.getDeferred();
 		if (deferred != null && deferred.booleanValue()) {
-			List<ObjectWithContext> list = this.deferredRules.get(rule);
-			if (list == null) {
-				list = new ArrayList<>();
-				this.deferredRules.put(rule, list);
-			}
+			List<ObjectWithContext> list = this.deferredRules.computeIfAbsent(rule, k -> new ArrayList<>());
 			list.add(new ObjectWithContext(checkObject, checkContext));
 			return true;
 		}
