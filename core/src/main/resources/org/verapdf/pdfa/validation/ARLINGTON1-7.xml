@@ -27584,18 +27584,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOfStructElemParentTreeEntry">
-			<id specification="ISO_32000_1_7" clause="ArrayOfStructElemParentTreeEntry-Null" testNumber="10"/>
-			<description>Entry with type Null in ArrayOfStructElemParentTree shall be indirect</description>
-			<test>HasTypeNull != true || isIndirect == true</test>
-			<error>
-				<message>Entry %1 with type Null in ArrayOfStructElemParentTree is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="AArrayOfSubjectDNEntry">
 			<id specification="ISO_32000_1_7" clause="ArrayOfSubjectDNEntry" testNumber="8"/>
 			<description>Entry in ArrayOfSubjectDN shall have type Dictionary</description>

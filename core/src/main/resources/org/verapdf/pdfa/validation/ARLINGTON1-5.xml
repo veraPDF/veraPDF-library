@@ -16814,18 +16814,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOfStructElemParentTreeEntry">
-			<id specification="ISO_32000_1_5" clause="ArrayOfStructElemParentTreeEntry-Null" testNumber="10"/>
-			<description>Entry with type Null in ArrayOfStructElemParentTree shall be indirect</description>
-			<test>HasTypeNull != true || isIndirect == true</test>
-			<error>
-				<message>Entry %1 with type Null in ArrayOfStructElemParentTree is direct</message>
-				<arguments>
-					<argument>keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="AArrayOfTags">
 			<id specification="ISO_32000_1_5" clause="ArrayOfTags" testNumber="3"/>
 			<description>ArrayOfTags shall contain 2 * n elements</description>
