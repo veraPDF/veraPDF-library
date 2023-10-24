@@ -10566,6 +10566,43 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfStructElemParentTreeEntry">
+			<id specification="ISO_32000_1_3" clause="ArrayOfStructElemParentTreeEntry" testNumber="8"/>
+			<description>Entry in ArrayOfStructElemParentTree shall have one of types: Dictionary, Null</description>
+			<test>HasTypeDictionary == true || HasTypeNull == true</test>
+			<error>
+				<message>Entry %1 in ArrayOfStructElemParentTree has type %2 instead of one of types: Dictionary, Null</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfStructElemParentTreeEntry">
+			<id specification="ISO_32000_1_3" clause="ArrayOfStructElemParentTreeEntry-Dictionary" testNumber="10"/>
+			<description>Entry with type Dictionary in ArrayOfStructElemParentTree shall be indirect</description>
+			<test>HasTypeDictionary != true || isIndirect == true</test>
+			<error>
+				<message>Entry %1 with type Dictionary in ArrayOfStructElemParentTree is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfStructElemParentTreeEntry">
+			<id specification="ISO_32000_1_3" clause="ArrayOfStructElemParentTreeEntry-Null" testNumber="10"/>
+			<description>Entry with type Null in ArrayOfStructElemParentTree shall be indirect</description>
+			<test>HasTypeNull != true || isIndirect == true</test>
+			<error>
+				<message>Entry %1 with type Null in ArrayOfStructElemParentTree is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfTags">
 			<id specification="ISO_32000_1_3" clause="ArrayOfTags" testNumber="3"/>
 			<description>ArrayOfTags shall contain 2 * n elements</description>

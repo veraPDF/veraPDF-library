@@ -3553,7 +3553,7 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_5" clause="AnnotCaret" testNumber="1"/>
-			<description>AnnotCaret shall not contain entries except CreationDate, C, F, Sy, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, RD, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotCaret shall not contain entries except CreationDate, C, F, Sy, IRT, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, RD, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Sy' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotCaret contains entry(ies) %1</message>
@@ -3565,12 +3565,12 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_5" clause="AnnotCaret" testNumber="22"/>
-			<description>AnnotCaret shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotCaret shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotCaret contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3711,6 +3711,31 @@
 				<message>Entry F with type Bitmask in AnnotCaret does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCaret">
+			<id specification="ISO_32000_1_5" clause="AnnotCaret-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotCaret shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotCaret is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCaret">
+			<id specification="ISO_32000_1_5" clause="AnnotCaret-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotCaret shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotCaret has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4022,7 +4047,7 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_5" clause="AnnotCircle" testNumber="1"/>
-			<description>AnnotCircle shall not contain entries except CreationDate, BE, C, F, M, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, RD, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotCircle shall not contain entries except CreationDate, BE, C, F, IRT, M, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, RD, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotCircle contains entry(ies) %1</message>
@@ -4034,12 +4059,12 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_5" clause="AnnotCircle" testNumber="22"/>
-			<description>AnnotCircle shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotCircle shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotCircle contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4216,6 +4241,31 @@
 			<test>containsIC == false || ICHasTypeArray == true</test>
 			<error>
 				<message>Entry IC in AnnotCircle has type %2 instead of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCircle">
+			<id specification="ISO_32000_1_5" clause="AnnotCircle-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotCircle shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotCircle is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCircle">
+			<id specification="ISO_32000_1_5" clause="AnnotCircle-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotCircle shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotCircle has type %2 instead of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -4504,7 +4554,7 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_5" clause="AnnotFileAttachment" testNumber="1"/>
-			<description>AnnotFileAttachment shall not contain entries except CreationDate, C, F, FS, M, Name, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotFileAttachment shall not contain entries except CreationDate, C, F, IRT, FS, M, Name, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotFileAttachment contains entry(ies) %1</message>
@@ -4516,12 +4566,12 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_5" clause="AnnotFileAttachment" testNumber="22"/>
-			<description>AnnotFileAttachment shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotFileAttachment shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotFileAttachment contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4687,6 +4737,31 @@
 				<message>Entry FS in AnnotFileAttachment is missing</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFileAttachment">
+			<id specification="ISO_32000_1_5" clause="AnnotFileAttachment-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotFileAttachment shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotFileAttachment is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFileAttachment">
+			<id specification="ISO_32000_1_5" clause="AnnotFileAttachment-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotFileAttachment shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotFileAttachment has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4960,7 +5035,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_5" clause="AnnotFreeText" testNumber="1"/>
-			<description>AnnotFreeText shall not contain entries except CreationDate, C, F, M, DS, P, BS, Q, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, DA, Subtype, NM</description>
+			<description>AnnotFreeText shall not contain entries except CreationDate, C, F, IRT, M, DS, P, BS, Q, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, DA, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'CL' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
@@ -4972,12 +5047,12 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_5" clause="AnnotFreeText" testNumber="22"/>
-			<description>AnnotFreeText shall not contain entries RT, BE, IRT, BM, ca, ExData, AF, CL, Lang, IT, RD, LE in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BE' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'RD' || elem == 'LE').length == 0</test>
+			<description>AnnotFreeText shall not contain entries RT, BE, BM, ca, ExData, AF, CL, Lang, IT, RD, LE in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BE' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'RD' || elem == 'LE').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BE' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'RD' || elem == 'LE').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BE' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'CL' || elem == 'Lang' || elem == 'IT' || elem == 'RD' || elem == 'LE').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5169,6 +5244,31 @@
 				<message>Entry F with type Bitmask in AnnotFreeText does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFreeText">
+			<id specification="ISO_32000_1_5" clause="AnnotFreeText-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotFreeText shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotFreeText is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFreeText">
+			<id specification="ISO_32000_1_5" clause="AnnotFreeText-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotFreeText shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotFreeText has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5455,7 +5555,7 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_5" clause="AnnotHighlight" testNumber="1"/>
-			<description>AnnotHighlight shall not contain entries except CreationDate, C, F, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
+			<description>AnnotHighlight shall not contain entries except CreationDate, C, F, IRT, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotHighlight contains entry(ies) %1</message>
@@ -5467,12 +5567,12 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_5" clause="AnnotHighlight" testNumber="22"/>
-			<description>AnnotHighlight shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotHighlight shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotHighlight contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5613,6 +5713,31 @@
 				<message>Entry F with type Bitmask in AnnotHighlight does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotHighlight">
+			<id specification="ISO_32000_1_5" clause="AnnotHighlight-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotHighlight shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotHighlight is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotHighlight">
+			<id specification="ISO_32000_1_5" clause="AnnotHighlight-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotHighlight shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotHighlight has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5898,7 +6023,7 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_5" clause="AnnotInk" testNumber="1"/>
-			<description>AnnotInk shall not contain entries except CreationDate, C, F, M, P, BS, OC, StructParent, T, Popup, CA, Rect, InkList, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotInk shall not contain entries except CreationDate, C, F, IRT, M, P, BS, OC, StructParent, T, Popup, CA, Rect, InkList, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'InkList' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotInk contains entry(ies) %1</message>
@@ -5910,12 +6035,12 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_5" clause="AnnotInk" testNumber="22"/>
-			<description>AnnotInk shall not contain entries RT, IRT, BM, ca, Path, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotInk shall not contain entries RT, BM, ca, Path, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotInk contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6069,6 +6194,31 @@
 				<message>Entry F with type Bitmask in AnnotInk does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotInk">
+			<id specification="ISO_32000_1_5" clause="AnnotInk-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotInk shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotInk is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotInk">
+			<id specification="ISO_32000_1_5" clause="AnnotInk-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotInk shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotInk has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6354,7 +6504,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_5" clause="AnnotLine" testNumber="1"/>
-			<description>AnnotLine shall not contain entries except CreationDate, C, F, L, M, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, Type, Contents, LE, Border, Subtype, NM</description>
+			<description>AnnotLine shall not contain entries except CreationDate, C, F, IRT, L, M, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, Type, Contents, LE, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'LL' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'LLE' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'L' &amp;&amp; elem != 'M' &amp;&amp; elem != 'LLO' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'CO' &amp;&amp; elem != 'CP' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Cap' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotLine contains entry(ies) %1</message>
@@ -6366,12 +6516,12 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_5" clause="AnnotLine" testNumber="22"/>
-			<description>AnnotLine shall not contain entries LL, RT, LLE, IRT, BM, LLO, Measure, ca, ExData, AF, Lang, IT, CO, CP, Cap in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'LL' || elem == 'RT' || elem == 'LLE' || elem == 'IRT' || elem == 'BM' || elem == 'LLO' || elem == 'Measure' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'CO' || elem == 'CP' || elem == 'Cap').length == 0</test>
+			<description>AnnotLine shall not contain entries LL, RT, LLE, BM, LLO, Measure, ca, ExData, AF, Lang, IT, CO, CP, Cap in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'LL' || elem == 'RT' || elem == 'LLE' || elem == 'BM' || elem == 'LLO' || elem == 'Measure' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'CO' || elem == 'CP' || elem == 'Cap').length == 0</test>
 			<error>
 				<message>AnnotLine contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'LL' || elem == 'RT' || elem == 'LLE' || elem == 'IRT' || elem == 'BM' || elem == 'LLO' || elem == 'Measure' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'CO' || elem == 'CP' || elem == 'Cap').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'LL' || elem == 'RT' || elem == 'LLE' || elem == 'BM' || elem == 'LLO' || elem == 'Measure' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'CO' || elem == 'CP' || elem == 'Cap').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6535,6 +6685,31 @@
 			<test>containsIC == false || ICHasTypeArray == true</test>
 			<error>
 				<message>Entry IC in AnnotLine has type %2 instead of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLine">
+			<id specification="ISO_32000_1_5" clause="AnnotLine-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotLine shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotLine is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLine">
+			<id specification="ISO_32000_1_5" clause="AnnotLine-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotLine shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotLine has type %2 instead of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -7597,7 +7772,7 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_5" clause="AnnotPolyLine" testNumber="1"/>
-			<description>AnnotPolyLine shall not contain entries except CreationDate, BE, C, F, M, Vertices, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, Type, Contents, LE, Border, Subtype, NM</description>
+			<description>AnnotPolyLine shall not contain entries except CreationDate, BE, C, F, IRT, M, Vertices, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, Type, Contents, LE, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Vertices' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotPolyLine contains entry(ies) %1</message>
@@ -7609,12 +7784,12 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_5" clause="AnnotPolyLine" testNumber="22"/>
-			<description>AnnotPolyLine shall not contain entries RT, IRT, BM, Measure, ca, Path, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotPolyLine shall not contain entries RT, BM, Measure, ca, Path, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotPolyLine contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -7791,6 +7966,31 @@
 			<test>containsIC == false || ICHasTypeArray == true</test>
 			<error>
 				<message>Entry IC in AnnotPolyLine has type %2 instead of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolyLine">
+			<id specification="ISO_32000_1_5" clause="AnnotPolyLine-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotPolyLine shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotPolyLine is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolyLine">
+			<id specification="ISO_32000_1_5" clause="AnnotPolyLine-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotPolyLine shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotPolyLine has type %2 instead of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -8092,7 +8292,7 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_5" clause="AnnotPolygon" testNumber="1"/>
-			<description>AnnotPolygon shall not contain entries except CreationDate, BE, C, F, M, Vertices, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, Type, Contents, LE, Border, Subtype, NM</description>
+			<description>AnnotPolygon shall not contain entries except CreationDate, BE, C, F, IRT, M, Vertices, P, BS, OC, StructParent, T, Popup, IC, CA, Rect, Subj, AP, RC, AS, Type, Contents, LE, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Vertices' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotPolygon contains entry(ies) %1</message>
@@ -8104,12 +8304,12 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_5" clause="AnnotPolygon" testNumber="22"/>
-			<description>AnnotPolygon shall not contain entries RT, IRT, BM, Measure, ca, Path, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotPolygon shall not contain entries RT, BM, Measure, ca, Path, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotPolygon contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'Measure' || elem == 'ca' || elem == 'Path' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8286,6 +8486,31 @@
 			<test>containsIC == false || ICHasTypeArray == true</test>
 			<error>
 				<message>Entry IC in AnnotPolygon has type %2 instead of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolygon">
+			<id specification="ISO_32000_1_5" clause="AnnotPolygon-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotPolygon shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotPolygon is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolygon">
+			<id specification="ISO_32000_1_5" clause="AnnotPolygon-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotPolygon shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotPolygon has type %2 instead of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -9626,7 +9851,7 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_5" clause="AnnotSound" testNumber="1"/>
-			<description>AnnotSound shall not contain entries except CreationDate, C, F, M, Name, P, OC, StructParent, T, Popup, CA, Rect, Sound, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotSound shall not contain entries except CreationDate, C, F, IRT, M, Name, P, OC, StructParent, T, Popup, CA, Rect, Sound, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Sound' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotSound contains entry(ies) %1</message>
@@ -9638,12 +9863,12 @@
 		</rule>
 		<rule object="AAnnotSound">
 			<id specification="ISO_32000_1_5" clause="AnnotSound" testNumber="22"/>
-			<description>AnnotSound shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotSound shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotSound contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -9784,6 +10009,31 @@
 				<message>Entry F with type Bitmask in AnnotSound does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSound">
+			<id specification="ISO_32000_1_5" clause="AnnotSound-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotSound shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotSound is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSound">
+			<id specification="ISO_32000_1_5" clause="AnnotSound-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotSound shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotSound has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -10094,7 +10344,7 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_5" clause="AnnotSquare" testNumber="1"/>
-			<description>AnnotSquare shall not contain entries except CreationDate, BE, C, F, M, P, BS, OC, StructParent, T, Popup, IC, Rect, Subj, AP, RC, AS, RD, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotSquare shall not contain entries except CreationDate, BE, C, F, IRT, M, P, BS, OC, StructParent, T, Popup, IC, Rect, Subj, AP, RC, AS, RD, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotSquare contains entry(ies) %1</message>
@@ -10106,12 +10356,12 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_5" clause="AnnotSquare" testNumber="22"/>
-			<description>AnnotSquare shall not contain entries RT, IRT, BM, CA, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotSquare shall not contain entries RT, BM, CA, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotSquare contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -10263,6 +10513,31 @@
 			<test>containsIC == false || ICHasTypeArray == true</test>
 			<error>
 				<message>Entry IC in AnnotSquare has type %2 instead of type Array</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquare">
+			<id specification="ISO_32000_1_5" clause="AnnotSquare-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotSquare shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotSquare is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquare">
+			<id specification="ISO_32000_1_5" clause="AnnotSquare-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotSquare shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotSquare has type %2 instead of type Dictionary</message>
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
@@ -10551,7 +10826,7 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_5" clause="AnnotSquiggly" testNumber="1"/>
-			<description>AnnotSquiggly shall not contain entries except CreationDate, C, F, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
+			<description>AnnotSquiggly shall not contain entries except CreationDate, C, F, IRT, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotSquiggly contains entry(ies) %1</message>
@@ -10563,12 +10838,12 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_5" clause="AnnotSquiggly" testNumber="22"/>
-			<description>AnnotSquiggly shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotSquiggly shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotSquiggly contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -10709,6 +10984,31 @@
 				<message>Entry F with type Bitmask in AnnotSquiggly does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquiggly">
+			<id specification="ISO_32000_1_5" clause="AnnotSquiggly-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotSquiggly shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotSquiggly is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquiggly">
+			<id specification="ISO_32000_1_5" clause="AnnotSquiggly-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotSquiggly shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotSquiggly has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -10994,7 +11294,7 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_5" clause="AnnotStamp" testNumber="1"/>
-			<description>AnnotStamp shall not contain entries except CreationDate, C, F, M, Name, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
+			<description>AnnotStamp shall not contain entries except CreationDate, C, F, IRT, M, Name, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotStamp contains entry(ies) %1</message>
@@ -11006,12 +11306,12 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_5" clause="AnnotStamp" testNumber="22"/>
-			<description>AnnotStamp shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotStamp shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotStamp contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -11152,6 +11452,31 @@
 				<message>Entry F with type Bitmask in AnnotStamp does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStamp">
+			<id specification="ISO_32000_1_5" clause="AnnotStamp-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotStamp shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotStamp is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStamp">
+			<id specification="ISO_32000_1_5" clause="AnnotStamp-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotStamp shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotStamp has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -11425,7 +11750,7 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_5" clause="AnnotStrikeOut" testNumber="1"/>
-			<description>AnnotStrikeOut shall not contain entries except CreationDate, C, F, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
+			<description>AnnotStrikeOut shall not contain entries except CreationDate, C, F, IRT, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotStrikeOut contains entry(ies) %1</message>
@@ -11437,12 +11762,12 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_5" clause="AnnotStrikeOut" testNumber="22"/>
-			<description>AnnotStrikeOut shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotStrikeOut shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotStrikeOut contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -11583,6 +11908,31 @@
 				<message>Entry F with type Bitmask in AnnotStrikeOut does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStrikeOut">
+			<id specification="ISO_32000_1_5" clause="AnnotStrikeOut-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotStrikeOut shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotStrikeOut is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStrikeOut">
+			<id specification="ISO_32000_1_5" clause="AnnotStrikeOut-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotStrikeOut shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotStrikeOut has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -12842,7 +13192,7 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_5" clause="AnnotUnderline" testNumber="1"/>
-			<description>AnnotUnderline shall not contain entries except CreationDate, C, F, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
+			<description>AnnotUnderline shall not contain entries except CreationDate, C, F, IRT, M, P, OC, StructParent, T, Popup, CA, Rect, Subj, AP, RC, AS, Type, Contents, Border, Subtype, NM, QuadPoints</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotUnderline contains entry(ies) %1</message>
@@ -12854,12 +13204,12 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_5" clause="AnnotUnderline" testNumber="22"/>
-			<description>AnnotUnderline shall not contain entries RT, IRT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
+			<description>AnnotUnderline shall not contain entries RT, BM, ca, ExData, AF, Lang, IT in PDF 1.5. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').length == 0</test>
 			<error>
 				<message>AnnotUnderline contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'RT' || elem == 'BM' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -13000,6 +13350,31 @@
 				<message>Entry F with type Bitmask in AnnotUnderline does not satisfy special case: fn:Eval(fn:BitsClear(10, 32))</message>
 				<arguments>
 					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotUnderline">
+			<id specification="ISO_32000_1_5" clause="AnnotUnderline-IRT-Dictionary" testNumber="17"/>
+			<description>Entry IRT with type Dictionary in AnnotUnderline shall be one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</description>
+			<test>IRTHasTypeDictionary != true || IRT_size == 1</test>
+			<error>
+				<message>Entry IRT with type Dictionary in AnnotUnderline is not one of objects AnnotText, AnnotLink, AnnotFreeText, AnnotLine, AnnotSquare, AnnotCircle, AnnotPolygon, AnnotHighlight, AnnotUnderline, AnnotSquiggly, AnnotStrikeOut, AnnotCaret, AnnotStamp, AnnotInk, AnnotPopup, AnnotFileAttachment, AnnotSound, AnnotMovie, AnnotScreen, AnnotWidget, AnnotPrinterMark, AnnotWatermark, Annot3D</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotUnderline">
+			<id specification="ISO_32000_1_5" clause="AnnotUnderline-IRT" testNumber="8"/>
+			<description>Entry IRT in AnnotUnderline shall have type Dictionary</description>
+			<test>containsIRT == false || IRTHasTypeDictionary == true</test>
+			<error>
+				<message>Entry IRT in AnnotUnderline has type %2 instead of type Dictionary</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -16410,6 +16785,43 @@
 				<arguments>
 					<argument>keyName</argument>
 					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfStructElemParentTreeEntry">
+			<id specification="ISO_32000_1_5" clause="ArrayOfStructElemParentTreeEntry" testNumber="8"/>
+			<description>Entry in ArrayOfStructElemParentTree shall have one of types: Dictionary, Null</description>
+			<test>HasTypeDictionary == true || HasTypeNull == true</test>
+			<error>
+				<message>Entry %1 in ArrayOfStructElemParentTree has type %2 instead of one of types: Dictionary, Null</message>
+				<arguments>
+					<argument>keyName</argument>
+					<argument>objectType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfStructElemParentTreeEntry">
+			<id specification="ISO_32000_1_5" clause="ArrayOfStructElemParentTreeEntry-Dictionary" testNumber="10"/>
+			<description>Entry with type Dictionary in ArrayOfStructElemParentTree shall be indirect</description>
+			<test>HasTypeDictionary != true || isIndirect == true</test>
+			<error>
+				<message>Entry %1 with type Dictionary in ArrayOfStructElemParentTree is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfStructElemParentTreeEntry">
+			<id specification="ISO_32000_1_5" clause="ArrayOfStructElemParentTreeEntry-Null" testNumber="10"/>
+			<description>Entry with type Null in ArrayOfStructElemParentTree shall be indirect</description>
+			<test>HasTypeNull != true || isIndirect == true</test>
+			<error>
+				<message>Entry %1 with type Null in ArrayOfStructElemParentTree is direct</message>
+				<arguments>
+					<argument>keyName</argument>
 				</arguments>
 			</error>
 			<references/>
