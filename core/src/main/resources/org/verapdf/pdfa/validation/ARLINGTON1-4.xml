@@ -11846,6 +11846,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfPageTreeNodeKidsEntry">
+			<id specification="ISO_32000_1_4" clause="ArrayOfPageTreeNodeKidsEntry-Dictionary" testNumber="10"/>
+			<description>Entry with type Dictionary in ArrayOfPageTreeNodeKids shall be indirect</description>
+			<test>HasTypeDictionary != true || isIndirect == true</test>
+			<error>
+				<message>Entry %1 with type Dictionary in ArrayOfPageTreeNodeKids is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfPagesEntry">
 			<id specification="ISO_32000_1_4" clause="ArrayOfPagesEntry" testNumber="8"/>
 			<description>Entry in ArrayOfPages shall have type Dictionary</description>
@@ -35954,10 +35966,10 @@
 		</rule>
 		<rule object="APageTreeNode">
 			<id specification="ISO_32000_1_4" clause="PageTreeNode-Count-Integer" testNumber="14"/>
-			<description>Entry Count with type Integer in PageTreeNode shall satisfy possible value predicate: fn:Eval(@Count &gt;= 0)</description>
-			<test>CountHasTypeInteger != true || CountIntegerValue &gt;= 0</test>
+			<description>Entry Count with type Integer in PageTreeNode shall satisfy possible value predicate: fn:Eval(@Count &gt; 0)</description>
+			<test>CountHasTypeInteger != true || CountIntegerValue &gt; 0</test>
 			<error>
-				<message>Entry Count with type Integer in PageTreeNode does not satisfy possible value predicate: fn:Eval(@Count &gt;= 0)</message>
+				<message>Entry Count with type Integer in PageTreeNode does not satisfy possible value predicate: fn:Eval(@Count &gt; 0)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -35996,6 +36008,18 @@
 			<test>containsKids == true</test>
 			<error>
 				<message>Entry Kids in PageTreeNode is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageTreeNode">
+			<id specification="ISO_32000_1_4" clause="PageTreeNode-Kids-Array" testNumber="9"/>
+			<description>Entry Kids with type Array in PageTreeNode shall satisfy special case: fn:Eval(fn:ArrayLength(Kids) &gt; 0)</description>
+			<test>KidsHasTypeArray != true || (KidsArraySize &gt; 0)</test>
+			<error>
+				<message>Entry Kids with type Array in PageTreeNode does not satisfy special case: fn:Eval(fn:ArrayLength(Kids) &gt; 0)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>

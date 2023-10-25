@@ -19673,6 +19673,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfPageTreeNodeKidsEntry">
+			<id specification="ISO_32000_1_6" clause="ArrayOfPageTreeNodeKidsEntry-Dictionary" testNumber="10"/>
+			<description>Entry with type Dictionary in ArrayOfPageTreeNodeKids shall be indirect</description>
+			<test>HasTypeDictionary != true || isIndirect == true</test>
+			<error>
+				<message>Entry %1 with type Dictionary in ArrayOfPageTreeNodeKids is direct</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfPagesEntry">
 			<id specification="ISO_32000_1_6" clause="ArrayOfPagesEntry" testNumber="8"/>
 			<description>Entry in ArrayOfPages shall have type Dictionary</description>
@@ -25527,23 +25539,23 @@
 		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart" testNumber="1"/>
 			<description>DPart shall not contain entries except DPM, DParts, Type, Parent, Start, End</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DPM' &amp;&amp; elem != 'DParts' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Start' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'End' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DPM' &amp;&amp; elem != 'DParts' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Start' &amp;&amp; elem != 'End' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>DPart contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DPM' &amp;&amp; elem != 'DParts' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Start' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'End' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DPM' &amp;&amp; elem != 'DParts' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Start' &amp;&amp; elem != 'End' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="ADPart">
 			<id specification="ISO_32000_1_6" clause="DPart" testNumber="22"/>
-			<description>DPart shall not contain entries AF, Metadata in PDF 1.6. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Metadata').length == 0</test>
+			<description>DPart shall not contain entries AF in PDF 1.6. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
 				<message>DPart contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Metadata').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -52539,10 +52551,10 @@
 		</rule>
 		<rule object="APageTreeNode">
 			<id specification="ISO_32000_1_6" clause="PageTreeNode-Count-Integer" testNumber="14"/>
-			<description>Entry Count with type Integer in PageTreeNode shall satisfy possible value predicate: fn:Eval(@Count &gt;= 0)</description>
-			<test>CountHasTypeInteger != true || CountIntegerValue &gt;= 0</test>
+			<description>Entry Count with type Integer in PageTreeNode shall satisfy possible value predicate: fn:Eval(@Count &gt; 0)</description>
+			<test>CountHasTypeInteger != true || CountIntegerValue &gt; 0</test>
 			<error>
-				<message>Entry Count with type Integer in PageTreeNode does not satisfy possible value predicate: fn:Eval(@Count &gt;= 0)</message>
+				<message>Entry Count with type Integer in PageTreeNode does not satisfy possible value predicate: fn:Eval(@Count &gt; 0)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
@@ -52581,6 +52593,18 @@
 			<test>containsKids == true</test>
 			<error>
 				<message>Entry Kids in PageTreeNode is missing</message>
+				<arguments>
+					<argument>keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageTreeNode">
+			<id specification="ISO_32000_1_6" clause="PageTreeNode-Kids-Array" testNumber="9"/>
+			<description>Entry Kids with type Array in PageTreeNode shall satisfy special case: fn:Eval(fn:ArrayLength(Kids) &gt; 0)</description>
+			<test>KidsHasTypeArray != true || (KidsArraySize &gt; 0)</test>
+			<error>
+				<message>Entry Kids with type Array in PageTreeNode does not satisfy special case: fn:Eval(fn:ArrayLength(Kids) &gt; 0)</message>
 				<arguments>
 					<argument>keyName</argument>
 				</arguments>
