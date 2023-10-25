@@ -76,28 +76,20 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
 
     private List<AXLPDFUAIdentification> getUAIdentification() {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
-        if (xmpMetadata != null) {
-            for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
-                if (XMPConst.NS_PDFUA_ID.equals(node.getNamespaceURI())) {
-                    List<AXLPDFUAIdentification> res = new ArrayList<>(1);
-                    res.add(new AXLPDFUAIdentification(xmpMetadata));
-                    return Collections.unmodifiableList(res);
-                }
-            }
+        if (xmpMetadata != null && xmpMetadata.containsPropertiesFromNamespace(XMPConst.NS_PDFUA_ID)) {
+            List<AXLPDFUAIdentification> res = new ArrayList<>(1);
+            res.add(new AXLPDFUAIdentification(xmpMetadata));
+            return Collections.unmodifiableList(res);
         }
         return Collections.emptyList();
     }
 
     private List<AXLPDFAIdentification> getIdentification() {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
-        if (xmpMetadata != null) {
-            for (VeraPDFXMPNode node : xmpMetadata.getProperties()) {
-                if (XMPConst.NS_PDFA_ID.equals(node.getNamespaceURI())) {
-                    List<AXLPDFAIdentification> res = new ArrayList<>(1);
-                    res.add(new AXLPDFAIdentification(xmpMetadata));
-                    return Collections.unmodifiableList(res);
-                }
-            }
+        if (xmpMetadata != null && xmpMetadata.containsPropertiesFromNamespace(XMPConst.NS_PDFA_ID)) {
+            List<AXLPDFAIdentification> res = new ArrayList<>(1);
+            res.add(new AXLPDFAIdentification(xmpMetadata));
+            return Collections.unmodifiableList(res);
         }
         return Collections.emptyList();
     }

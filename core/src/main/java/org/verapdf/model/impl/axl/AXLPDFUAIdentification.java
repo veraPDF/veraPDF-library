@@ -13,8 +13,7 @@ public class AXLPDFUAIdentification extends AXLXMPObject implements PDFUAIdentif
 
     public static final String PDFUA_IDENTIFICATION = "PDFUAIdentification";
 
-    private static final Logger LOGGER = Logger
-            .getLogger(AXLPDFUAIdentification.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AXLPDFUAIdentification.class.getName());
 
     private final VeraPDFMeta metadata;
 
