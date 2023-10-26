@@ -145,6 +145,15 @@ public class VeraPDFMeta {
         return isDeleted;
     }
 
+    public boolean containsPropertiesFromNamespace(String nameSpaceURI) {
+        for (VeraPDFXMPNode node : getProperties()) {
+            if (nameSpaceURI.equals(node.getNamespaceURI())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private VeraPDFMeta setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
         if (value == null) {
             this.meta.deleteProperty(namespaceURI, propertyName);
