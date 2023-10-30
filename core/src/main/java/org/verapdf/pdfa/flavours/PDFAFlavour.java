@@ -100,13 +100,13 @@ public enum PDFAFlavour {
     PDFUA_2(Specification.ISO_14289_2, Level.NO_LEVEL),
     /** Special ID for the arlington none case */
     NO_ARLINGTON_FLAVOUR(Specification.NO_STANDARD, Level.A),
-    ARLINGTON1_0(Specification.ISO_32000_1_0, Level.NO_LEVEL),
-    ARLINGTON1_1(Specification.ISO_32000_1_1, Level.NO_LEVEL),
-    ARLINGTON1_2(Specification.ISO_32000_1_2, Level.NO_LEVEL),
-    ARLINGTON1_3(Specification.ISO_32000_1_3, Level.NO_LEVEL),
-    ARLINGTON1_4(Specification.ISO_32000_1_4, Level.NO_LEVEL),
-    ARLINGTON1_5(Specification.ISO_32000_1_5, Level.NO_LEVEL),
-    ARLINGTON1_6(Specification.ISO_32000_1_6, Level.NO_LEVEL),
+    ARLINGTON1_0(Specification.PDF_1_0, Level.NO_LEVEL),
+    ARLINGTON1_1(Specification.PDF_1_1, Level.NO_LEVEL),
+    ARLINGTON1_2(Specification.PDF_1_2, Level.NO_LEVEL),
+    ARLINGTON1_3(Specification.PDF_1_3, Level.NO_LEVEL),
+    ARLINGTON1_4(Specification.PDF_1_4, Level.NO_LEVEL),
+    ARLINGTON1_5(Specification.PDF_1_5, Level.NO_LEVEL),
+    ARLINGTON1_6(Specification.PDF_1_6, Level.NO_LEVEL),
     ARLINGTON1_7(Specification.ISO_32000_1_7, Level.NO_LEVEL),
     ARLINGTON2_0(Specification.ISO_32000_2_0, Level.NO_LEVEL),
     /** wcag PDF version 2.1 */
@@ -138,8 +138,10 @@ public enum PDFAFlavour {
             return PDFAFlavours.PDFUA_PREFIX;
         } else if(PDFAFlavours.WCAG.equals(standard.family)) {
             return PDFAFlavours.WCAG2_1_PREFIX;
-        } else if (PDFAFlavours.ARLINGTON_1.equals(standard.family) || PDFAFlavours.ARLINGTON_2.equals(standard.family)) {
-            return PDFAFlavours.ARLINGTON_PREFIX + standard.series.id % 10 + ".";
+        } else if (PDFAFlavours.ARLINGTON_1.equals(standard.family)) {
+            return PDFAFlavours.ARLINGTON_1.toLowerCase() + ".";
+        } else if (PDFAFlavours.ARLINGTON_2.equals(standard.family)) {
+            return PDFAFlavours.ARLINGTON_2.toLowerCase() + ".";
         }
         return "";
     }
@@ -203,23 +205,23 @@ public enum PDFAFlavour {
         ISO_19005_4(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_4_PART,
                     PDFAFlavours.ISO_19005_4_YEAR,
                     PDFAFlavours.ISO_19005_4_DESCRIPTION),
-        ISO_32000_1_0(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 0,
+        PDF_1_0(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 0,
                 "1993", "Based on PDF 1.0"),
-        ISO_32000_1_1(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 1,
+        PDF_1_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 1,
                 "1996", "Based on PDF 1.1"),
-        ISO_32000_1_2(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 2,
+        PDF_1_2(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 2,
                 "1996", "Based on PDF 1.2"),
-        ISO_32000_1_3(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 3,
+        PDF_1_3(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 3,
                 "2000", "Based on PDF 1.3"),
-        ISO_32000_1_4(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 4,
+        PDF_1_4(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 4,
                 "2001", "Based on PDF 1.4"),
-        ISO_32000_1_5(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 5,
+        PDF_1_5(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 5,
                 "2003", "Based on PDF 1.5"),
-        ISO_32000_1_6(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 6,
+        PDF_1_6(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 6,
                 "2004", "Based on PDF 1.6"),
-        ISO_32000_1_7(IsoStandardSeries.ISO_32000_1, PDFAFlavours.ARLINGTON_1, 7,
+        ISO_32000_1_7(IsoStandardSeries.ISO_32000, PDFAFlavours.ARLINGTON_1, 7,
                 "2008", "Based on PDF 1.7"),
-        ISO_32000_2_0(IsoStandardSeries.ISO_32000_2, PDFAFlavours.ARLINGTON_2, 0,
+        ISO_32000_2_0(IsoStandardSeries.ISO_32000, PDFAFlavours.ARLINGTON_2, 0,
                 "2020", "Based on PDF 2.0"),
         ISO_32005(IsoStandardSeries.ISO_32005, PDFAFlavours.TAGGED_PDF, PDFAFlavours.NONE_ID,
                 PDFAFlavours.ISO_32005_YEAR,
@@ -253,6 +255,12 @@ public enum PDFAFlavour {
             }
             if (PDFAFlavours.ISO_32005_DESCRIPTION.equals(description)) {
                 return this.series.getName() + ":" + this.getYear();
+            }
+            if (PDFAFlavours.ARLINGTON_1.equals(family) && partNumber < 7) {
+                return "PDF Reference " + this.family.charAt(this.family.length() - 1) + "." + partNumber;
+            }
+            if (series.equals(IsoStandardSeries.ISO_32000)) {
+                return this.series.getName() + "-" + this.family.charAt(this.family.length() - 1) + ":" + this.getYear();
             }
             return this.series.getName() + "-" + this.getPartNumber() + ":" + this.getYear();
         }

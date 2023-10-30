@@ -426,7 +426,7 @@
         </xsl:variable>
         <xsl:variable name="tempWikiLink">
             <xsl:choose>
-                <xsl:when test="starts-with(@specification, 'ISO 32000')">
+                <xsl:when test="starts-with(@specification, 'ISO 32000') or starts-with(@specification, 'PDF Reference')">
                     <xsl:value-of select="'https://github.com/pdf-association/arlington-pdf-model/tree/master/tsv/'"/>
                 </xsl:when>
                 <xsl:when test="'/' = substring($wikiPath, string-length($wikiPath))">
@@ -449,7 +449,7 @@
         </xsl:variable>
         <xsl:variable name="ruleLink">
             <xsl:choose>
-                <xsl:when test="starts-with(@specification, 'ISO 32000')">
+                <xsl:when test="starts-with(@specification, 'ISO 32000') or starts-with(@specification, 'PDF Reference')">
                     <xsl:variable name="originalObject">
                         <xsl:choose>
                             <xsl:when test="contains(object, 'NameTree')">
@@ -469,7 +469,20 @@
                             </xsl:otherwise>
                         </xsl:choose>
                     </xsl:variable>
-                    <xsl:value-of select="concat($wikiLink, translate(substring(@specification, 10, 3), '-', '.'), '/', $originalObject, '.tsv')"/>
+                    <xsl:variable name="arlingtonVersion">
+                        <xsl:choose>
+                            <xsl:when test="starts-with(@specification, 'ISO 32000-1:2008')">
+                                <xsl:value-of select="'1.7'"/>
+                            </xsl:when>
+                            <xsl:when test="starts-with(@specification, 'ISO 32000-2:2020')">
+                                <xsl:value-of select="'2.0'"/>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="translate(substring(@specification, 15, 3), '-', '.')"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:value-of select="concat($wikiLink, $arlingtonVersion, '/', $originalObject, '.tsv')"/>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:value-of select="concat($wikiLink, '#rule-', translate(@clause, '.', ''), '-', @testNumber)"/>
@@ -480,7 +493,7 @@
                       select="starts-with(@specification, 'ISO 19005-1') or starts-with(@specification, 'ISO 32000') or
                             starts-with(@specification, 'ISO 19005-2') or starts-with(@specification, 'ISO 19005-3') or
                             starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1') or 
-                            starts-with(@specification, 'ISO 14289-2')"/>
+                            starts-with(@specification, 'ISO 14289-2') or starts-with(@specification, 'PDF Reference')"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,
