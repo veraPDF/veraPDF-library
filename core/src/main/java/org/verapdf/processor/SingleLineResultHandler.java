@@ -38,8 +38,8 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	private static final String pass = "PASS "; //$NON-NLS-1$
 	private static final String fail = "FAIL "; //$NON-NLS-1$
 	private static final String ioExcepMess = "IOException caught when writing to output stream"; //$NON-NLS-1$
-	private static final String parseExcepMessTmpl = "%s does not appear to be a valid PDF file and could not be parsed.";
-	private static final String pdfEncryptMessTmpl = "%s appears to be an encrypted PDF file and could not be processed.";
+	private static final String parseExcepMessTmpl = "%s does not appear to be a valid PDF file and could not be parsed.\n";
+	private static final String pdfEncryptMessTmpl = "%s appears to be an encrypted PDF file and could not be processed.\n";
 	private static final String ruleMessTmpl = "  %s%s-%d\n"; //$NON-NLS-1$
 	private PrintWriter outputStreamWriter;
 	private final boolean isVerbose;
@@ -79,11 +79,13 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	@Override
 	void parsingFailure(final TaskResult taskResult) {
 		this.outputStreamWriter.write(String.format(parseExcepMessTmpl, this.item.getName()));
+		this.outputStreamWriter.flush();
 	}
 
 	@Override
 	void pdfEncrypted(final TaskResult taskResult) {
 		this.outputStreamWriter.write(String.format(pdfEncryptMessTmpl, this.item.getName()));
+		this.outputStreamWriter.flush();
 	}
 
 	@Override
@@ -95,6 +97,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 			if (this.isVerbose || this.logSuccess) {
 				processRules(validationResult);
 			}
+			this.outputStreamWriter.flush();
 		} catch (IOException excep) {
 			throw new VeraPDFException(ioExcepMess, excep);
 		}
@@ -104,6 +107,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	void validationFailure(final TaskResult taskResult) {
 		String reportSummary = "ERROR " + this.item.getName() + " " + taskResult.getType().fullName() + "\n"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		this.outputStreamWriter.write(reportSummary);
+		this.outputStreamWriter.flush();
 	}
 
 	@Override
