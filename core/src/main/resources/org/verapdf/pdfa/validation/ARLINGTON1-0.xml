@@ -37,7 +37,7 @@
 			<error>
 				<message>Entry Border in AnnotLink has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BorderType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -49,7 +49,7 @@
 			<error>
 				<message>Entry Contents in AnnotLink has type %1 instead of type StringText</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ContentsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -71,7 +71,7 @@
 			<error>
 				<message>Entry Dest in AnnotLink has type %1 instead of one of types: Array, Name, StringByte</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DestType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -83,7 +83,7 @@
 			<error>
 				<message>Entry Rect in AnnotLink has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -105,7 +105,7 @@
 			<error>
 				<message>Entry Subtype in AnnotLink has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -139,7 +139,7 @@
 			<error>
 				<message>Entry Type in AnnotLink has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -187,7 +187,7 @@
 			<error>
 				<message>Entry Border in AnnotText has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BorderType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -199,7 +199,7 @@
 			<error>
 				<message>Entry Contents in AnnotText has type %1 instead of type StringText</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ContentsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -211,7 +211,7 @@
 			<error>
 				<message>Entry Name in AnnotText has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -235,7 +235,7 @@
 			<error>
 				<message>Entry Open in AnnotText has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>OpenType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -247,7 +247,7 @@
 			<error>
 				<message>Entry Rect in AnnotText has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -269,7 +269,7 @@
 			<error>
 				<message>Entry Subtype in AnnotText has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -303,7 +303,7 @@
 			<error>
 				<message>Entry Type in AnnotText has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -339,7 +339,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfAnnots has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -352,7 +352,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfCompressionFilterNames has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -390,7 +390,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfDecodeParams has type %1 instead of one of types: Dictionary, Null</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -403,7 +403,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfDifferences has type %1 instead of one of types: Integer, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -416,7 +416,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfFilterNames has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -442,7 +442,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfIntegersGeneral has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -455,7 +455,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfNamesForProcSet has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -481,7 +481,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfNumbersGeneral has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -506,7 +506,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfPageTreeNodeKids has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -531,7 +531,7 @@
 			<error>
 				<message>Entry %keyName% in ArrayOfStreamsGeneral has type %1 instead of type Stream</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -568,7 +568,7 @@
 			<error>
 				<message>Entry 0 in ArrayOf_4AnnotBorderCharacteristics has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -590,7 +590,7 @@
 			<error>
 				<message>Entry 1 in ArrayOf_4AnnotBorderCharacteristics has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -612,7 +612,7 @@
 			<error>
 				<message>Entry 2 in ArrayOf_4AnnotBorderCharacteristics has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry2Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -658,7 +658,7 @@
 			<error>
 				<message>Entry NeedsRendering in Catalog has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NeedsRenderingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -670,7 +670,7 @@
 			<error>
 				<message>Entry Outlines in Catalog has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>OutlinesType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -692,7 +692,7 @@
 			<error>
 				<message>Entry PageLayout in Catalog has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>PageLayoutType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -716,7 +716,7 @@
 			<error>
 				<message>Entry PageMode in Catalog has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>PageModeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -740,7 +740,7 @@
 			<error>
 				<message>Entry Pages in Catalog has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>PagesType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -772,7 +772,7 @@
 			<error>
 				<message>Entry Type in Catalog has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -806,7 +806,7 @@
 			<error>
 				<message>Entry %keyName% in CharProcMap has type %1 instead of type Stream</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -831,7 +831,7 @@
 			<error>
 				<message>Entry %keyName% in ColorSpaceMap has type %1 instead of one of types: Array, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -869,7 +869,7 @@
 			<error>
 				<message>Entry 0 in Dest0Array has type %1 instead of one of types: Dictionary, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -891,7 +891,7 @@
 			<error>
 				<message>Entry 1 in Dest0Array has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -927,7 +927,7 @@
 			<error>
 				<message>Entry 0 in Dest1Array has type %1 instead of one of types: Dictionary, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -949,7 +949,7 @@
 			<error>
 				<message>Entry 1 in Dest1Array has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -973,7 +973,7 @@
 			<error>
 				<message>Entry 2 in Dest1Array has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry2Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -997,7 +997,7 @@
 			<error>
 				<message>Entry 0 in Dest4Array has type %1 instead of one of types: Dictionary, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1019,7 +1019,7 @@
 			<error>
 				<message>Entry 1 in Dest4Array has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1043,7 +1043,7 @@
 			<error>
 				<message>Entry 2 in Dest4Array has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry2Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1055,7 +1055,7 @@
 			<error>
 				<message>Entry 3 in Dest4Array has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry3Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1067,7 +1067,7 @@
 			<error>
 				<message>Entry 4 in Dest4Array has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry4Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1079,7 +1079,7 @@
 			<error>
 				<message>Entry 5 in Dest4Array has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry5Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1103,7 +1103,7 @@
 			<error>
 				<message>Entry 0 in DestXYZArray has type %1 instead of one of types: Dictionary, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1125,7 +1125,7 @@
 			<error>
 				<message>Entry 1 in DestXYZArray has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1149,7 +1149,7 @@
 			<error>
 				<message>Entry 2 in DestXYZArray has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry2Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1161,7 +1161,7 @@
 			<error>
 				<message>Entry 3 in DestXYZArray has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry3Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1173,7 +1173,7 @@
 			<error>
 				<message>Entry 4 in DestXYZArray has type %1 instead of one of types: Null, Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry4Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1209,7 +1209,7 @@
 			<error>
 				<message>Entry Author in DocInfo has type %1 instead of type StringText</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AuthorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1221,7 +1221,7 @@
 			<error>
 				<message>Entry CreationDate in DocInfo has type %1 instead of type Date</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CreationDateType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1233,7 +1233,7 @@
 			<error>
 				<message>Entry Creator in DocInfo has type %1 instead of type StringText</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CreatorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1245,7 +1245,7 @@
 			<error>
 				<message>Entry Producer in DocInfo has type %1 instead of type StringText</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ProducerType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1269,7 +1269,7 @@
 			<error>
 				<message>Entry BaseEncoding in Encoding has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BaseEncodingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1293,7 +1293,7 @@
 			<error>
 				<message>Entry Differences in Encoding has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DifferencesType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1305,7 +1305,7 @@
 			<error>
 				<message>Entry Type in Encoding has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1353,7 +1353,7 @@
 			<error>
 				<message>Entry Info in FileTrailer has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>InfoType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1375,7 +1375,7 @@
 			<error>
 				<message>Entry Prev in FileTrailer has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>PrevType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1407,7 +1407,7 @@
 			<error>
 				<message>Entry Root in FileTrailer has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RootType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1439,7 +1439,7 @@
 			<error>
 				<message>Entry Size in FileTrailer has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SizeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1493,7 +1493,7 @@
 			<error>
 				<message>Entry BlackIs1 in FilterCCITTFaxDecode has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BlackIs1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1505,7 +1505,7 @@
 			<error>
 				<message>Entry Blackls1 in FilterCCITTFaxDecode has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Blackls1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1527,7 +1527,7 @@
 			<error>
 				<message>Entry Columns in FilterCCITTFaxDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColumnsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1549,7 +1549,7 @@
 			<error>
 				<message>Entry DamagedRowsBeforeError in FilterCCITTFaxDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DamagedRowsBeforeErrorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1571,7 +1571,7 @@
 			<error>
 				<message>Entry EncodedByteAlign in FilterCCITTFaxDecode has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EncodedByteAlignType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1583,7 +1583,7 @@
 			<error>
 				<message>Entry EndOfBlock in FilterCCITTFaxDecode has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EndOfBlockType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1595,7 +1595,7 @@
 			<error>
 				<message>Entry EndOfLine in FilterCCITTFaxDecode has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EndOfLineType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1607,7 +1607,7 @@
 			<error>
 				<message>Entry K in FilterCCITTFaxDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>KType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1619,7 +1619,7 @@
 			<error>
 				<message>Entry Rows in FilterCCITTFaxDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RowsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1653,7 +1653,7 @@
 			<error>
 				<message>Entry ColorTransform in FilterDCTDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColorTransformType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1689,7 +1689,7 @@
 			<error>
 				<message>Entry BitsPerComponent in FilterLZWDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BitsPerComponentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1713,7 +1713,7 @@
 			<error>
 				<message>Entry Colors in FilterLZWDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColorsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1735,7 +1735,7 @@
 			<error>
 				<message>Entry Columns in FilterLZWDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColumnsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1747,7 +1747,7 @@
 			<error>
 				<message>Entry EarlyChange in FilterLZWDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EarlyChangeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1771,7 +1771,7 @@
 			<error>
 				<message>Entry Predictor in FilterLZWDecode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>PredictorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1819,7 +1819,7 @@
 			<error>
 				<message>Entry Ascent in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AscentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1841,7 +1841,7 @@
 			<error>
 				<message>Entry AvgWidth in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AvgWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1853,7 +1853,7 @@
 			<error>
 				<message>Entry CapHeight in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CapHeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1865,7 +1865,7 @@
 			<error>
 				<message>Entry Descent in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DescentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1897,7 +1897,7 @@
 			<error>
 				<message>Entry Flags in FontDescriptorTrueType has type %1 instead of type Bitmask</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FlagsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1929,7 +1929,7 @@
 			<error>
 				<message>Entry FontBBox in FontDescriptorTrueType has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontBBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1951,7 +1951,7 @@
 			<error>
 				<message>Entry FontName in FontDescriptorTrueType has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontNameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1983,7 +1983,7 @@
 			<error>
 				<message>Entry ItalicAngle in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ItalicAngleType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2005,7 +2005,7 @@
 			<error>
 				<message>Entry Leading in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LeadingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2017,7 +2017,7 @@
 			<error>
 				<message>Entry MaxWidth in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MaxWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2029,7 +2029,7 @@
 			<error>
 				<message>Entry MissingWidth in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MissingWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2041,7 +2041,7 @@
 			<error>
 				<message>Entry StemH in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>StemHType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2053,7 +2053,7 @@
 			<error>
 				<message>Entry StemV in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>StemVType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2075,7 +2075,7 @@
 			<error>
 				<message>Entry Type in FontDescriptorTrueType has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2109,7 +2109,7 @@
 			<error>
 				<message>Entry XHeight in FontDescriptorTrueType has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>XHeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2145,7 +2145,7 @@
 			<error>
 				<message>Entry Ascent in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AscentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2167,7 +2167,7 @@
 			<error>
 				<message>Entry AvgWidth in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AvgWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2179,7 +2179,7 @@
 			<error>
 				<message>Entry CapHeight in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CapHeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2191,7 +2191,7 @@
 			<error>
 				<message>Entry Descent in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DescentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2223,7 +2223,7 @@
 			<error>
 				<message>Entry Flags in FontDescriptorType1 has type %1 instead of type Bitmask</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FlagsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2255,7 +2255,7 @@
 			<error>
 				<message>Entry FontBBox in FontDescriptorType1 has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontBBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2277,7 +2277,7 @@
 			<error>
 				<message>Entry FontFile in FontDescriptorType1 has type %1 instead of type Stream</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontFileType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2299,7 +2299,7 @@
 			<error>
 				<message>Entry FontName in FontDescriptorType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontNameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2331,7 +2331,7 @@
 			<error>
 				<message>Entry ItalicAngle in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ItalicAngleType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2353,7 +2353,7 @@
 			<error>
 				<message>Entry Leading in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LeadingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2365,7 +2365,7 @@
 			<error>
 				<message>Entry MaxWidth in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MaxWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2377,7 +2377,7 @@
 			<error>
 				<message>Entry MissingWidth in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MissingWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2389,7 +2389,7 @@
 			<error>
 				<message>Entry StemH in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>StemHType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2401,7 +2401,7 @@
 			<error>
 				<message>Entry StemV in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>StemVType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2423,7 +2423,7 @@
 			<error>
 				<message>Entry Type in FontDescriptorType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2457,7 +2457,7 @@
 			<error>
 				<message>Entry XHeight in FontDescriptorType1 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>XHeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2493,7 +2493,7 @@
 			<error>
 				<message>Entry Ascent in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AscentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2505,7 +2505,7 @@
 			<error>
 				<message>Entry AvgWidth in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AvgWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2517,7 +2517,7 @@
 			<error>
 				<message>Entry CapHeight in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CapHeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2529,7 +2529,7 @@
 			<error>
 				<message>Entry Descent in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DescentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2551,7 +2551,7 @@
 			<error>
 				<message>Entry Flags in FontDescriptorType3 has type %1 instead of type Bitmask</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FlagsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2583,7 +2583,7 @@
 			<error>
 				<message>Entry FontBBox in FontDescriptorType3 has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontBBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2595,7 +2595,7 @@
 			<error>
 				<message>Entry FontName in FontDescriptorType3 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontNameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2617,7 +2617,7 @@
 			<error>
 				<message>Entry ItalicAngle in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ItalicAngleType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2639,7 +2639,7 @@
 			<error>
 				<message>Entry Leading in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LeadingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2651,7 +2651,7 @@
 			<error>
 				<message>Entry MaxWidth in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MaxWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2663,7 +2663,7 @@
 			<error>
 				<message>Entry MissingWidth in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MissingWidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2675,7 +2675,7 @@
 			<error>
 				<message>Entry StemH in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>StemHType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2687,7 +2687,7 @@
 			<error>
 				<message>Entry StemV in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>StemVType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2699,7 +2699,7 @@
 			<error>
 				<message>Entry Type in FontDescriptorType3 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2733,7 +2733,7 @@
 			<error>
 				<message>Entry XHeight in FontDescriptorType3 has type %1 instead of type Number</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>XHeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2769,7 +2769,7 @@
 			<error>
 				<message>Entry Length1 in FontFileType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Length1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2801,7 +2801,7 @@
 			<error>
 				<message>Entry Length2 in FontFileType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Length2Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2833,7 +2833,7 @@
 			<error>
 				<message>Entry Length3 in FontFileType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Length3Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2865,7 +2865,7 @@
 			<error>
 				<message>Entry Subtype in FontFileType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2889,7 +2889,7 @@
 			<error>
 				<message>Entry %keyName% in FontMap has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -2926,7 +2926,7 @@
 			<error>
 				<message>Entry BaseFont in FontMultipleMaster has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BaseFontType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2948,7 +2948,7 @@
 			<error>
 				<message>Entry Encoding in FontMultipleMaster has type %1 instead of one of types: Dictionary, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EncodingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2972,7 +2972,7 @@
 			<error>
 				<message>Entry FirstChar in FontMultipleMaster has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FirstCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2994,7 +2994,7 @@
 			<error>
 				<message>Entry FontDescriptor in FontMultipleMaster has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontDescriptorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3026,7 +3026,7 @@
 			<error>
 				<message>Entry LastChar in FontMultipleMaster has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LastCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3048,7 +3048,7 @@
 			<error>
 				<message>Entry Name in FontMultipleMaster has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3070,7 +3070,7 @@
 			<error>
 				<message>Entry Subtype in FontMultipleMaster has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3104,7 +3104,7 @@
 			<error>
 				<message>Entry Type in FontMultipleMaster has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3138,7 +3138,7 @@
 			<error>
 				<message>Entry Widths in FontMultipleMaster has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>WidthsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3184,7 +3184,7 @@
 			<error>
 				<message>Entry BaseFont in FontTrueType has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BaseFontType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3206,7 +3206,7 @@
 			<error>
 				<message>Entry Encoding in FontTrueType has type %1 instead of one of types: Dictionary, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EncodingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3230,7 +3230,7 @@
 			<error>
 				<message>Entry FirstChar in FontTrueType has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FirstCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3252,7 +3252,7 @@
 			<error>
 				<message>Entry FontDescriptor in FontTrueType has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontDescriptorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3284,7 +3284,7 @@
 			<error>
 				<message>Entry LastChar in FontTrueType has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LastCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3306,7 +3306,7 @@
 			<error>
 				<message>Entry Name in FontTrueType has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3328,7 +3328,7 @@
 			<error>
 				<message>Entry Subtype in FontTrueType has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3362,7 +3362,7 @@
 			<error>
 				<message>Entry Type in FontTrueType has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3396,7 +3396,7 @@
 			<error>
 				<message>Entry Widths in FontTrueType has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>WidthsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3442,7 +3442,7 @@
 			<error>
 				<message>Entry BaseFont in FontType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BaseFontType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3464,7 +3464,7 @@
 			<error>
 				<message>Entry Encoding in FontType1 has type %1 instead of one of types: Dictionary, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EncodingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3488,7 +3488,7 @@
 			<error>
 				<message>Entry FirstChar in FontType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FirstCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3510,7 +3510,7 @@
 			<error>
 				<message>Entry FontDescriptor in FontType1 has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontDescriptorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3542,7 +3542,7 @@
 			<error>
 				<message>Entry LastChar in FontType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LastCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3564,7 +3564,7 @@
 			<error>
 				<message>Entry Name in FontType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3586,7 +3586,7 @@
 			<error>
 				<message>Entry Subtype in FontType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3620,7 +3620,7 @@
 			<error>
 				<message>Entry Type in FontType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3654,7 +3654,7 @@
 			<error>
 				<message>Entry Widths in FontType1 has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>WidthsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3710,7 +3710,7 @@
 			<error>
 				<message>Entry CharProcs in FontType3 has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CharProcsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3732,7 +3732,7 @@
 			<error>
 				<message>Entry Encoding in FontType3 has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>EncodingType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3754,7 +3754,7 @@
 			<error>
 				<message>Entry FirstChar in FontType3 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FirstCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3776,7 +3776,7 @@
 			<error>
 				<message>Entry FontBBox in FontType3 has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontBBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3798,7 +3798,7 @@
 			<error>
 				<message>Entry FontDescriptor in FontType3 has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontDescriptorType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3830,7 +3830,7 @@
 			<error>
 				<message>Entry FontMatrix in FontType3 has type %1 instead of type Matrix</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontMatrixType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3852,7 +3852,7 @@
 			<error>
 				<message>Entry LastChar in FontType3 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LastCharType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3874,7 +3874,7 @@
 			<error>
 				<message>Entry Name in FontType3 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3896,7 +3896,7 @@
 			<error>
 				<message>Entry Subtype in FontType3 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3930,7 +3930,7 @@
 			<error>
 				<message>Entry Type in FontType3 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3964,7 +3964,7 @@
 			<error>
 				<message>Entry Widths in FontType3 has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>WidthsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4008,7 +4008,7 @@
 			<error>
 				<message>Entry 0 in IndexedColorSpace has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4032,7 +4032,7 @@
 			<error>
 				<message>Entry 1 in IndexedColorSpace has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4056,7 +4056,7 @@
 			<error>
 				<message>Entry 2 in IndexedColorSpace has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry2Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4078,7 +4078,7 @@
 			<error>
 				<message>Entry 3 in IndexedColorSpace has type %1 instead of one of types: Stream, String</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>entry3Type</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4112,7 +4112,7 @@
 			<error>
 				<message>Entry Count in Outline has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CountType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4134,7 +4134,7 @@
 			<error>
 				<message>Entry First in Outline has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FirstType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4156,7 +4156,7 @@
 			<error>
 				<message>Entry Last in Outline has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LastType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4178,7 +4178,7 @@
 			<error>
 				<message>Entry Type in Outline has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4226,7 +4226,7 @@
 			<error>
 				<message>Entry Count in OutlineItem has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CountType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4248,7 +4248,7 @@
 			<error>
 				<message>Entry Dest in OutlineItem has type %1 instead of one of types: Array, Name, StringByte</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DestType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4260,7 +4260,7 @@
 			<error>
 				<message>Entry First in OutlineItem has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FirstType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4282,7 +4282,7 @@
 			<error>
 				<message>Entry Last in OutlineItem has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LastType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4304,7 +4304,7 @@
 			<error>
 				<message>Entry Next in OutlineItem has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NextType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4336,7 +4336,7 @@
 			<error>
 				<message>Entry Parent in OutlineItem has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ParentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4368,7 +4368,7 @@
 			<error>
 				<message>Entry Prev in OutlineItem has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>PrevType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4390,7 +4390,7 @@
 			<error>
 				<message>Entry Title in OutlineItem has type %1 instead of type StringText</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TitleType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4436,7 +4436,7 @@
 			<error>
 				<message>Entry Annots in PageObject has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>AnnotsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4448,7 +4448,7 @@
 			<error>
 				<message>Entry Contents in PageObject has type %1 instead of one of types: Array, Stream</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ContentsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4470,7 +4470,7 @@
 			<error>
 				<message>Entry CropBox in PageObject has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CropBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4482,7 +4482,7 @@
 			<error>
 				<message>Entry MediaBox in PageObject has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MediaBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4514,7 +4514,7 @@
 			<error>
 				<message>Entry Parent in PageObject has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ParentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4556,7 +4556,7 @@
 			<error>
 				<message>Entry Resources in PageObject has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ResourcesType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4578,7 +4578,7 @@
 			<error>
 				<message>Entry Rotate in PageObject has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RotateType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4600,7 +4600,7 @@
 			<error>
 				<message>Entry Thumb in PageObject has type %1 instead of type Stream</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ThumbType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4622,7 +4622,7 @@
 			<error>
 				<message>Entry Type in PageObject has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4668,7 +4668,7 @@
 			<error>
 				<message>Entry Count in PageTreeNode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CountType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4700,7 +4700,7 @@
 			<error>
 				<message>Entry CropBox in PageTreeNode has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CropBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4712,7 +4712,7 @@
 			<error>
 				<message>Entry Kids in PageTreeNode has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4744,7 +4744,7 @@
 			<error>
 				<message>Entry MediaBox in PageTreeNode has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MediaBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4766,7 +4766,7 @@
 			<error>
 				<message>Entry Parent in PageTreeNode has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ParentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4798,7 +4798,7 @@
 			<error>
 				<message>Entry Resources in PageTreeNode has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ResourcesType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4810,7 +4810,7 @@
 			<error>
 				<message>Entry Rotate in PageTreeNode has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RotateType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4832,7 +4832,7 @@
 			<error>
 				<message>Entry Type in PageTreeNode has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4878,7 +4878,7 @@
 			<error>
 				<message>Entry Count in PageTreeNodeRoot has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CountType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4910,7 +4910,7 @@
 			<error>
 				<message>Entry CropBox in PageTreeNodeRoot has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>CropBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4922,7 +4922,7 @@
 			<error>
 				<message>Entry Kids in PageTreeNodeRoot has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4944,7 +4944,7 @@
 			<error>
 				<message>Entry MediaBox in PageTreeNodeRoot has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MediaBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4956,7 +4956,7 @@
 			<error>
 				<message>Entry Resources in PageTreeNodeRoot has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ResourcesType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4968,7 +4968,7 @@
 			<error>
 				<message>Entry Rotate in PageTreeNodeRoot has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>RotateType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4990,7 +4990,7 @@
 			<error>
 				<message>Entry Type in PageTreeNodeRoot has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5048,7 +5048,7 @@
 			<error>
 				<message>Entry ColorSpace in Resource has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColorSpaceType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5060,7 +5060,7 @@
 			<error>
 				<message>Entry Font in Resource has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FontType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5072,7 +5072,7 @@
 			<error>
 				<message>Entry ProcSet in Resource has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ProcSetType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5084,7 +5084,7 @@
 			<error>
 				<message>Entry XObject in Resource has type %1 instead of type Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>XObjectType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5106,7 +5106,7 @@
 			<error>
 				<message>Entry DecodeParms in Stream has type %1 instead of one of types: Array, Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DecodeParmsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5128,7 +5128,7 @@
 			<error>
 				<message>Entry Filter in Stream has type %1 instead of one of types: Array, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FilterType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5162,7 +5162,7 @@
 			<error>
 				<message>Entry Length in Stream has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LengthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5208,7 +5208,7 @@
 			<error>
 				<message>Entry BitsPerComponent in Thumbnail has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BitsPerComponentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5242,7 +5242,7 @@
 			<error>
 				<message>Entry ColorSpace in Thumbnail has type %1 instead of one of types: Array, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColorSpaceType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5276,7 +5276,7 @@
 			<error>
 				<message>Entry Decode in Thumbnail has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DecodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5288,7 +5288,7 @@
 			<error>
 				<message>Entry Height in Thumbnail has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>HeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5310,7 +5310,7 @@
 			<error>
 				<message>Entry Subtype in Thumbnail has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5334,7 +5334,7 @@
 			<error>
 				<message>Entry Type in Thumbnail has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5358,7 +5358,7 @@
 			<error>
 				<message>Entry Width in Thumbnail has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>WidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5404,7 +5404,7 @@
 			<error>
 				<message>Entry BBox in XObjectFormType1 has type %1 instead of type Rectangle</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BBoxType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5426,7 +5426,7 @@
 			<error>
 				<message>Entry DecodeParms in XObjectFormType1 has type %1 instead of one of types: Array, Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DecodeParmsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5448,7 +5448,7 @@
 			<error>
 				<message>Entry Filter in XObjectFormType1 has type %1 instead of one of types: Array, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FilterType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5482,7 +5482,7 @@
 			<error>
 				<message>Entry FormType in XObjectFormType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FormTypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5516,7 +5516,7 @@
 			<error>
 				<message>Entry Length in XObjectFormType1 has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LengthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5538,7 +5538,7 @@
 			<error>
 				<message>Entry Matrix in XObjectFormType1 has type %1 instead of type Matrix</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>MatrixType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5560,7 +5560,7 @@
 			<error>
 				<message>Entry Name in XObjectFormType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5582,7 +5582,7 @@
 			<error>
 				<message>Entry Subtype in XObjectFormType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5616,7 +5616,7 @@
 			<error>
 				<message>Entry Type in XObjectFormType1 has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5640,7 +5640,7 @@
 			<error>
 				<message>Entry XUID in XObjectFormType1 has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>XUIDType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5676,7 +5676,7 @@
 			<error>
 				<message>Entry BitsPerComponent in XObjectImage has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>BitsPerComponentType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5730,7 +5730,7 @@
 			<error>
 				<message>Entry ColorSpace in XObjectImage has type %1 instead of one of types: Array, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ColorSpaceType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5784,7 +5784,7 @@
 			<error>
 				<message>Entry Decode in XObjectImage has type %1 instead of type Array</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DecodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5806,7 +5806,7 @@
 			<error>
 				<message>Entry DecodeParms in XObjectImage has type %1 instead of one of types: Array, Dictionary</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>DecodeParmsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5828,7 +5828,7 @@
 			<error>
 				<message>Entry F in XObjectImage has type %1 instead of type String</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5840,7 +5840,7 @@
 			<error>
 				<message>Entry Filter in XObjectImage has type %1 instead of one of types: Array, Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>FilterType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5874,7 +5874,7 @@
 			<error>
 				<message>Entry Height in XObjectImage has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>HeightType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5896,7 +5896,7 @@
 			<error>
 				<message>Entry ImageMask in XObjectImage has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>ImageMaskType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5918,7 +5918,7 @@
 			<error>
 				<message>Entry Interpolate in XObjectImage has type %1 instead of type Boolean</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>InterpolateType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5930,7 +5930,7 @@
 			<error>
 				<message>Entry Length in XObjectImage has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>LengthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5952,7 +5952,7 @@
 			<error>
 				<message>Entry Name in XObjectImage has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>NameType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5974,7 +5974,7 @@
 			<error>
 				<message>Entry Subtype in XObjectImage has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>SubtypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6008,7 +6008,7 @@
 			<error>
 				<message>Entry Type in XObjectImage has type %1 instead of type Name</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>TypeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6032,7 +6032,7 @@
 			<error>
 				<message>Entry Width in XObjectImage has type %1 instead of type Integer</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>WidthType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6066,7 +6066,7 @@
 			<error>
 				<message>Entry %keyName% in XObjectMap has type %1 instead of type Stream</message>
 				<arguments>
-					<argument>objectType</argument>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
