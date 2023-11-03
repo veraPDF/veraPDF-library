@@ -79,11 +79,11 @@
         <rule object="SEMarkedContent">
             <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
             <description>Tagged content should not present inside content marked as Artifact</description>
-            <test>structureTag == null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
+            <test>parentStructureTag == null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
             <error>
                 <message>Tagged content (tag %1) is present inside content marked as Artifact</message>
                 <arguments>
-                    <argument>structureTag</argument>
+                    <argument>parentStructureTag</argument>
                 </arguments>
             </error>
             <references/>
