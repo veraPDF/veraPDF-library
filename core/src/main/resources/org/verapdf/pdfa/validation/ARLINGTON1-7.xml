@@ -33541,6 +33541,30 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ADocument">
+			<id specification="ISO_32000_1_7" clause="Document-FileTrailer" testNumber="8"/>
+			<description>FileTrailer shall have type Dictionary</description>
+			<test>containsFileTrailer == false || FileTrailerHasTypeDictionary == true</test>
+			<error>
+				<message>FileTrailer has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>FileTrailerType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocument">
+			<id specification="ISO_32000_1_7" clause="Document-XRefStream" testNumber="8"/>
+			<description>XRefStream shall have type Stream</description>
+			<test>containsXRefStream == false || XRefStreamHasTypeStream == true</test>
+			<error>
+				<message>XRefStream has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>XRefStreamType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AEmbeddedFileParameter">
 			<id specification="ISO_32000_1_7" clause="EmbeddedFileParameter" testNumber="1"/>
 			<description>EmbeddedFileParameter shall not contain entries except CreationDate, CheckSum, Size, ModDate, Mac</description>

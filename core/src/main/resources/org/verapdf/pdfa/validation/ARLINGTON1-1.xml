@@ -3382,6 +3382,48 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ADocument">
+			<id specification="PDF_1_1" clause="Document-LinearizationParameterDict" testNumber="25"/>
+			<description>Document shall not contain LinearizationParameterDict in PDF 1.1</description>
+			<test>containsLinearizationParameterDict == false</test>
+			<error>
+				<message>Document contains LinearizationParameterDict</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocument">
+			<id specification="PDF_1_1" clause="Document-ObjectStreams" testNumber="25"/>
+			<description>Document shall not contain ObjectStreams in PDF 1.1</description>
+			<test>containsObjectStreams == false</test>
+			<error>
+				<message>Document contains ObjectStreams</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocument">
+			<id specification="PDF_1_1" clause="Document-XRefStream" testNumber="25"/>
+			<description>Document shall not contain XRefStream in PDF 1.1</description>
+			<test>containsXRefStream == false</test>
+			<error>
+				<message>Document contains XRefStream</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocument">
+			<id specification="PDF_1_1" clause="Document-FileTrailer" testNumber="8"/>
+			<description>FileTrailer shall have type Dictionary</description>
+			<test>containsFileTrailer == false || FileTrailerHasTypeDictionary == true</test>
+			<error>
+				<message>FileTrailer has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>FileTrailerType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AEncoding">
 			<id specification="PDF_1_1" clause="Encoding" testNumber="1"/>
 			<description>Encoding shall not contain entries except Type, Differences, BaseEncoding</description>
