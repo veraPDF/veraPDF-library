@@ -108,6 +108,16 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDDocument">
+            <id specification="ISO_19005_1" clause="6.1.4" testNumber="3"/>
+            <description>Xref streams shall not be used</description>
+            <test>containsXRefStream == false</test>
+            <error>
+                <message>The document uses xref streams</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
         <rule object="CosString">
             <id specification="ISO_19005_1" clause="6.1.6" testNumber="1"/>
             <description>Hexadecimal strings shall contain an even number of non-white-space characters</description>
