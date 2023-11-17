@@ -2006,11 +2006,12 @@
         </rule>
         <rule object="CosFileSpecification">
             <id specification="ISO_19005_3" clause="6.8" testNumber="3"/>
-            <description>In order to enable identification of the relationship between the file specification dictionary and the content that is referring to it,
-			a new (required) key has been defined and its presence (in the dictionary) is required.</description>
+            <description>The file specification dictionary shall contain key AFRelationship of type Name identifying the
+                relationship between the embedded file and the content of the document</description>
             <test>AFRelationship != null</test>
             <error>
-                <message>The file specification dictionary for an embedded file does not contain the AFRelationship key</message>
+                <message>The file specification dictionary for an embedded file does not contain the AFRelationship key
+                    or it has invalid value type</message>
                 <arguments/>
             </error>
             <references/>
