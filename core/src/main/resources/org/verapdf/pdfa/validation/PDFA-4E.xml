@@ -998,7 +998,7 @@
                 'cmap' subtable that all necessary glyph lookups are able to be carried out.</description>
             <test>isSymbolic == true || cmap31Present == true || cmap10Present == true</test>
             <error>
-                <message>The embedded font program for a non-symbolic TrueType font does not contain contain Microsoft
+                <message>The embedded font program for a non-symbolic TrueType font does not contain Microsoft
                     Symbol (3,0 – Platform ID=3, Encoding ID=0) or the Mac Roman (1,0 – Platform ID=1, Encoding ID=0) encoding.</message>
                 <arguments/>
             </error>
