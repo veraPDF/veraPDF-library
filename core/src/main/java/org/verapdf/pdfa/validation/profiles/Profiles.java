@@ -117,7 +117,7 @@ public final class Profiles {
 	 *             description or creator are empty.
 	 */
 	public static ValidationProfile profileFromSortedValues(final PDFAFlavour flavour, final ProfileDetails details,
-			final String hash, final SortedSet<Rule> rules, final Set<Variable> variables) {
+			final String hash, final SortedSet<Rule> rules, final SortedSet<Variable> variables) {
 		if (flavour == null)
 			throw new IllegalArgumentException("Parameter flavour can not be null.");
 		if (details == null)

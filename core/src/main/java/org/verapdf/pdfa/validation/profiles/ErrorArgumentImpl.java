@@ -39,7 +39,7 @@ public final class ErrorArgumentImpl implements ErrorArgument {
     private final String argumentValue;
 
     private ErrorArgumentImpl() {
-        this("argument", "", null);
+        this("argument", null, null);
     }
 
     private ErrorArgumentImpl(final String argument, final String name, final String argumentValue) {
