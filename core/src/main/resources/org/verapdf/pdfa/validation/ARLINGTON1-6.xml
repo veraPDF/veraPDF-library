@@ -63436,11 +63436,23 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="PDF_1_6" clause="XObjectImageSoftMask" testNumber="1"/>
 			<description>XObjectImageSoftMask shall not contain entries except ColorSpace, F, DL, Metadata, Decode, DecodeParms, Intent, BitsPerComponent, Name, FDecodeParms, ImageMask, Type, Interpolate, Filter, Length, Height, Matte, Subtype, Width, FFilter</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Matte' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Matte' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectImageSoftMask contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Matte' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Matte' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImageSoftMask">
+			<id specification="PDF_1_6" clause="XObjectImageSoftMask" testNumber="22"/>
+			<description>XObjectImageSoftMask shall not contain entries AF in PDF 1.6. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
+			<error>
+				<message>XObjectImageSoftMask contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
