@@ -344,10 +344,10 @@
 		</rule>
 		<rule object="AActionGoTo">
 			<id specification="PDF_1_4" clause="ActionGoTo" testNumber="22"/>
-			<description>ActionGoTo shall not contain entries SD in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ActionGoTo shall not contain entry SD in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>ActionGoTo contains entry(ies) %1</message>
+				<message>ActionGoTo contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -480,10 +480,10 @@
 		</rule>
 		<rule object="AActionGoToR">
 			<id specification="PDF_1_4" clause="ActionGoToR" testNumber="22"/>
-			<description>ActionGoToR shall not contain entries SD in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ActionGoToR shall not contain entry SD in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>ActionGoToR contains entry(ies) %1</message>
+				<message>ActionGoToR contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -2430,10 +2430,10 @@
 		</rule>
 		<rule object="AAlternateImage">
 			<id specification="PDF_1_4" clause="AlternateImage" testNumber="22"/>
-			<description>AlternateImage shall not contain entries OC in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>AlternateImage shall not contain entry OC in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'OC').length == 0</test>
 			<error>
-				<message>AlternateImage contains entry(ies) %1</message>
+				<message>AlternateImage contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'OC').toString()</argument>
 				</arguments>
@@ -13542,10 +13542,10 @@
 		</rule>
 		<rule object="ACMapStream">
 			<id specification="PDF_1_4" clause="CMapStream" testNumber="22"/>
-			<description>CMapStream shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>CMapStream shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>CMapStream contains entry(ies) %1</message>
+				<message>CMapStream contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -15021,10 +15021,10 @@
 		</rule>
 		<rule object="ADestDict">
 			<id specification="PDF_1_4" clause="DestDict" testNumber="22"/>
-			<description>DestDict shall not contain entries SD in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>DestDict shall not contain entry SD in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>DestDict contains entry(ies) %1</message>
+				<message>DestDict contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -15893,10 +15893,10 @@
 		</rule>
 		<rule object="AEmbeddedFileStream">
 			<id specification="PDF_1_4" clause="EmbeddedFileStream" testNumber="22"/>
-			<description>EmbeddedFileStream shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>EmbeddedFileStream shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>EmbeddedFileStream contains entry(ies) %1</message>
+				<message>EmbeddedFileStream contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -18422,10 +18422,10 @@
 		</rule>
 		<rule object="AFileSpecEF">
 			<id specification="PDF_1_4" clause="FileSpecEF" testNumber="22"/>
-			<description>FileSpecEF shall not contain entries UF in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FileSpecEF shall not contain entry UF in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'UF').length == 0</test>
 			<error>
-				<message>FileSpecEF contains entry(ies) %1</message>
+				<message>FileSpecEF contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'UF').toString()</argument>
 				</arguments>
@@ -18468,10 +18468,10 @@
 		</rule>
 		<rule object="AFileSpecRF">
 			<id specification="PDF_1_4" clause="FileSpecRF" testNumber="22"/>
-			<description>FileSpecRF shall not contain entries UF in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FileSpecRF shall not contain entry UF in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'UF').length == 0</test>
 			<error>
-				<message>FileSpecRF contains entry(ies) %1</message>
+				<message>FileSpecRF contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'UF').toString()</argument>
 				</arguments>
@@ -21818,10 +21818,10 @@
 		</rule>
 		<rule object="AFontFile">
 			<id specification="PDF_1_4" clause="FontFile" testNumber="22"/>
-			<description>FontFile shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FontFile shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFile contains entry(ies) %1</message>
+				<message>FontFile contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -22098,10 +22098,10 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="PDF_1_4" clause="FontFile2" testNumber="22"/>
-			<description>FontFile2 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FontFile2 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFile2 contains entry(ies) %1</message>
+				<message>FontFile2 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -22376,10 +22376,10 @@
 		</rule>
 		<rule object="AFontFile3CIDType0">
 			<id specification="PDF_1_4" clause="FontFile3CIDType0" testNumber="22"/>
-			<description>FontFile3CIDType0 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FontFile3CIDType0 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFile3CIDType0 contains entry(ies) %1</message>
+				<message>FontFile3CIDType0 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -22656,10 +22656,10 @@
 		</rule>
 		<rule object="AFontFile3Type1">
 			<id specification="PDF_1_4" clause="FontFile3Type1" testNumber="22"/>
-			<description>FontFile3Type1 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FontFile3Type1 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFile3Type1 contains entry(ies) %1</message>
+				<message>FontFile3Type1 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -22946,10 +22946,10 @@
 		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_4" clause="FontFileType1" testNumber="22"/>
-			<description>FontFileType1 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FontFileType1 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFileType1 contains entry(ies) %1</message>
+				<message>FontFileType1 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -24565,10 +24565,10 @@
 		</rule>
 		<rule object="AFunctionType0">
 			<id specification="PDF_1_4" clause="FunctionType0" testNumber="22"/>
-			<description>FunctionType0 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FunctionType0 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FunctionType0 contains entry(ies) %1</message>
+				<message>FunctionType0 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -25349,10 +25349,10 @@
 		</rule>
 		<rule object="AFunctionType4">
 			<id specification="PDF_1_4" clause="FunctionType4" testNumber="22"/>
-			<description>FunctionType4 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>FunctionType4 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FunctionType4 contains entry(ies) %1</message>
+				<message>FunctionType4 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -26914,10 +26914,10 @@
 		</rule>
 		<rule object="AHalftoneType10">
 			<id specification="PDF_1_4" clause="HalftoneType10" testNumber="22"/>
-			<description>HalftoneType10 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>HalftoneType10 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>HalftoneType10 contains entry(ies) %1</message>
+				<message>HalftoneType10 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -27302,10 +27302,10 @@
 		</rule>
 		<rule object="AHalftoneType16">
 			<id specification="PDF_1_4" clause="HalftoneType16" testNumber="22"/>
-			<description>HalftoneType16 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>HalftoneType16 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>HalftoneType16 contains entry(ies) %1</message>
+				<message>HalftoneType16 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -27893,10 +27893,10 @@
 		</rule>
 		<rule object="AHalftoneType6">
 			<id specification="PDF_1_4" clause="HalftoneType6" testNumber="22"/>
-			<description>HalftoneType6 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>HalftoneType6 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>HalftoneType6 contains entry(ies) %1</message>
+				<message>HalftoneType6 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -28329,10 +28329,10 @@
 		</rule>
 		<rule object="AICCProfileStream">
 			<id specification="PDF_1_4" clause="ICCProfileStream" testNumber="22"/>
-			<description>ICCProfileStream shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ICCProfileStream shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>ICCProfileStream contains entry(ies) %1</message>
+				<message>ICCProfileStream contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -28631,10 +28631,10 @@
 		</rule>
 		<rule object="AIconFit">
 			<id specification="PDF_1_4" clause="IconFit" testNumber="22"/>
-			<description>IconFit shall not contain entries FB in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>IconFit shall not contain entry FB in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'FB').length == 0</test>
 			<error>
-				<message>IconFit contains entry(ies) %1</message>
+				<message>IconFit contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'FB').toString()</argument>
 				</arguments>
@@ -28839,10 +28839,10 @@
 		</rule>
 		<rule object="AInteractiveForm">
 			<id specification="PDF_1_4" clause="InteractiveForm" testNumber="22"/>
-			<description>InteractiveForm shall not contain entries XFA in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>InteractiveForm shall not contain entry XFA in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'XFA').length == 0</test>
 			<error>
-				<message>InteractiveForm contains entry(ies) %1</message>
+				<message>InteractiveForm contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'XFA').toString()</argument>
 				</arguments>
@@ -29783,10 +29783,10 @@
 		</rule>
 		<rule object="AMetadata">
 			<id specification="PDF_1_4" clause="Metadata" testNumber="22"/>
-			<description>Metadata shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>Metadata shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>Metadata contains entry(ies) %1</message>
+				<message>Metadata contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -33032,10 +33032,10 @@
 		</rule>
 		<rule object="APatternType1">
 			<id specification="PDF_1_4" clause="PatternType1" testNumber="22"/>
-			<description>PatternType1 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>PatternType1 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>PatternType1 contains entry(ies) %1</message>
+				<message>PatternType1 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -34774,10 +34774,10 @@
 		</rule>
 		<rule object="AShadingType4">
 			<id specification="PDF_1_4" clause="ShadingType4" testNumber="22"/>
-			<description>ShadingType4 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ShadingType4 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>ShadingType4 contains entry(ies) %1</message>
+				<message>ShadingType4 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -35234,10 +35234,10 @@
 		</rule>
 		<rule object="AShadingType5">
 			<id specification="PDF_1_4" clause="ShadingType5" testNumber="22"/>
-			<description>ShadingType5 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ShadingType5 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>ShadingType5 contains entry(ies) %1</message>
+				<message>ShadingType5 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -35692,10 +35692,10 @@
 		</rule>
 		<rule object="AShadingType6">
 			<id specification="PDF_1_4" clause="ShadingType6" testNumber="22"/>
-			<description>ShadingType6 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ShadingType6 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>ShadingType6 contains entry(ies) %1</message>
+				<message>ShadingType6 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -36140,10 +36140,10 @@
 		</rule>
 		<rule object="AShadingType7">
 			<id specification="PDF_1_4" clause="ShadingType7" testNumber="22"/>
-			<description>ShadingType7 shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>ShadingType7 shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>ShadingType7 contains entry(ies) %1</message>
+				<message>ShadingType7 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -37336,10 +37336,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="PDF_1_4" clause="SoundObject" testNumber="22"/>
-			<description>SoundObject shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>SoundObject shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>SoundObject contains entry(ies) %1</message>
+				<message>SoundObject contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -39056,10 +39056,10 @@
 		</rule>
 		<rule object="AThread">
 			<id specification="PDF_1_4" clause="Thread" testNumber="22"/>
-			<description>Thread shall not contain entries Metadata in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>Thread shall not contain entry Metadata in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').length == 0</test>
 			<error>
-				<message>Thread contains entry(ies) %1</message>
+				<message>Thread contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').toString()</argument>
 				</arguments>
@@ -39148,10 +39148,10 @@
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_4" clause="Thumbnail" testNumber="22"/>
-			<description>Thumbnail shall not contain entries DL in PDF 1.4. These entries appear in later pdf versions</description>
+			<description>Thumbnail shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>Thumbnail contains entry(ies) %1</message>
+				<message>Thumbnail contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>

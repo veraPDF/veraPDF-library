@@ -220,10 +220,10 @@
 		</rule>
 		<rule object="AActionGoTo">
 			<id specification="PDF_1_2" clause="ActionGoTo" testNumber="22"/>
-			<description>ActionGoTo shall not contain entries SD in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>ActionGoTo shall not contain entry SD in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>ActionGoTo contains entry(ies) %1</message>
+				<message>ActionGoTo contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -356,10 +356,10 @@
 		</rule>
 		<rule object="AActionGoToR">
 			<id specification="PDF_1_2" clause="ActionGoToR" testNumber="22"/>
-			<description>ActionGoToR shall not contain entries SD in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>ActionGoToR shall not contain entry SD in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>ActionGoToR contains entry(ies) %1</message>
+				<message>ActionGoToR contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -3946,10 +3946,10 @@
 		</rule>
 		<rule object="AAppearanceCharacteristics">
 			<id specification="PDF_1_2" clause="AppearanceCharacteristics" testNumber="22"/>
-			<description>AppearanceCharacteristics shall not contain entries IF in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>AppearanceCharacteristics shall not contain entry IF in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'IF').length == 0</test>
 			<error>
-				<message>AppearanceCharacteristics contains entry(ies) %1</message>
+				<message>AppearanceCharacteristics contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'IF').toString()</argument>
 				</arguments>
@@ -6769,10 +6769,10 @@
 		</rule>
 		<rule object="ACMapStream">
 			<id specification="PDF_1_2" clause="CMapStream" testNumber="22"/>
-			<description>CMapStream shall not contain entries DL in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>CMapStream shall not contain entry DL in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>CMapStream contains entry(ies) %1</message>
+				<message>CMapStream contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -7956,10 +7956,10 @@
 		</rule>
 		<rule object="ADestDict">
 			<id specification="PDF_1_2" clause="DestDict" testNumber="22"/>
-			<description>DestDict shall not contain entries SD in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>DestDict shall not contain entry SD in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>DestDict contains entry(ies) %1</message>
+				<message>DestDict contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -13245,10 +13245,10 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="PDF_1_2" clause="FontFile2" testNumber="22"/>
-			<description>FontFile2 shall not contain entries DL in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>FontFile2 shall not contain entry DL in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFile2 contains entry(ies) %1</message>
+				<message>FontFile2 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -13523,10 +13523,10 @@
 		</rule>
 		<rule object="AFontFile3CIDType0">
 			<id specification="PDF_1_2" clause="FontFile3CIDType0" testNumber="22"/>
-			<description>FontFile3CIDType0 shall not contain entries DL in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>FontFile3CIDType0 shall not contain entry DL in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>FontFile3CIDType0 contains entry(ies) %1</message>
+				<message>FontFile3CIDType0 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -19685,10 +19685,10 @@
 		</rule>
 		<rule object="APatternType1">
 			<id specification="PDF_1_2" clause="PatternType1" testNumber="22"/>
-			<description>PatternType1 shall not contain entries DL in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>PatternType1 shall not contain entry DL in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>PatternType1 contains entry(ies) %1</message>
+				<message>PatternType1 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -20113,10 +20113,10 @@
 		</rule>
 		<rule object="AResource">
 			<id specification="PDF_1_2" clause="Resource" testNumber="22"/>
-			<description>Resource shall not contain entries Shading in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>Resource shall not contain entry Shading in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Shading').length == 0</test>
 			<error>
-				<message>Resource contains entry(ies) %1</message>
+				<message>Resource contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Shading').toString()</argument>
 				</arguments>
@@ -20325,10 +20325,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="PDF_1_2" clause="SoundObject" testNumber="22"/>
-			<description>SoundObject shall not contain entries DL in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>SoundObject shall not contain entry DL in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL').length == 0</test>
 			<error>
-				<message>SoundObject contains entry(ies) %1</message>
+				<message>SoundObject contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL').toString()</argument>
 				</arguments>
@@ -20873,10 +20873,10 @@
 		</rule>
 		<rule object="AThread">
 			<id specification="PDF_1_2" clause="Thread" testNumber="22"/>
-			<description>Thread shall not contain entries Metadata in PDF 1.2. These entries appear in later pdf versions</description>
+			<description>Thread shall not contain entry Metadata in PDF 1.2. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').length == 0</test>
 			<error>
-				<message>Thread contains entry(ies) %1</message>
+				<message>Thread contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').toString()</argument>
 				</arguments>

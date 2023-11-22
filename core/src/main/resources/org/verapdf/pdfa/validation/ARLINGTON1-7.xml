@@ -3574,10 +3574,10 @@
 		</rule>
 		<rule object="A3DStream">
 			<id specification="ISO_32000_1_7" clause="3DStream" testNumber="22"/>
-			<description>3DStream shall not contain entries ColorSpace in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>3DStream shall not contain entry ColorSpace in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ColorSpace').length == 0</test>
 			<error>
-				<message>3DStream contains entry(ies) %1</message>
+				<message>3DStream contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ColorSpace').toString()</argument>
 				</arguments>
@@ -4189,10 +4189,10 @@
 		</rule>
 		<rule object="A3DView">
 			<id specification="ISO_32000_1_7" clause="3DView" testNumber="22"/>
-			<description>3DView shall not contain entries MA in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>3DView shall not contain entry MA in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'MA').length == 0</test>
 			<error>
-				<message>3DView contains entry(ies) %1</message>
+				<message>3DView contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'MA').toString()</argument>
 				</arguments>
@@ -4859,10 +4859,10 @@
 		</rule>
 		<rule object="AActionGoTo">
 			<id specification="ISO_32000_1_7" clause="ActionGoTo" testNumber="22"/>
-			<description>ActionGoTo shall not contain entries SD in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>ActionGoTo shall not contain entry SD in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>ActionGoTo contains entry(ies) %1</message>
+				<message>ActionGoTo contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -5301,10 +5301,10 @@
 		</rule>
 		<rule object="AActionGoToR">
 			<id specification="ISO_32000_1_7" clause="ActionGoToR" testNumber="22"/>
-			<description>ActionGoToR shall not contain entries SD in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>ActionGoToR shall not contain entry SD in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>ActionGoToR contains entry(ies) %1</message>
+				<message>ActionGoToR contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -30026,10 +30026,10 @@
 		</rule>
 		<rule object="ACollectionColors">
 			<id specification="ISO_32000_1_7" clause="CollectionColors" testNumber="22"/>
-			<description>CollectionColors shall not contain entries Type in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>CollectionColors shall not contain entry Type in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Type').length == 0</test>
 			<error>
-				<message>CollectionColors contains entry(ies) %1</message>
+				<message>CollectionColors contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Type').toString()</argument>
 				</arguments>
@@ -30805,10 +30805,10 @@
 		</rule>
 		<rule object="ACollectionSplit">
 			<id specification="ISO_32000_1_7" clause="CollectionSplit" testNumber="22"/>
-			<description>CollectionSplit shall not contain entries Type in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>CollectionSplit shall not contain entry Type in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Type').length == 0</test>
 			<error>
-				<message>CollectionSplit contains entry(ies) %1</message>
+				<message>CollectionSplit contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Type').toString()</argument>
 				</arguments>
@@ -31555,10 +31555,10 @@
 		</rule>
 		<rule object="ADPart">
 			<id specification="ISO_32000_1_7" clause="DPart" testNumber="22"/>
-			<description>DPart shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>DPart shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>DPart contains entry(ies) %1</message>
+				<message>DPart contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -32258,10 +32258,10 @@
 		</rule>
 		<rule object="ADestDict">
 			<id specification="ISO_32000_1_7" clause="DestDict" testNumber="22"/>
-			<description>DestDict shall not contain entries SD in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>DestDict shall not contain entry SD in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
 			<error>
-				<message>DestDict contains entry(ies) %1</message>
+				<message>DestDict contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
 				</arguments>
@@ -33991,10 +33991,10 @@
 		</rule>
 		<rule object="AEncryptionPublicKey">
 			<id specification="ISO_32000_1_7" clause="EncryptionPublicKey" testNumber="22"/>
-			<description>EncryptionPublicKey shall not contain entries KDFSalt in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>EncryptionPublicKey shall not contain entry KDFSalt in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').length == 0</test>
 			<error>
-				<message>EncryptionPublicKey contains entry(ies) %1</message>
+				<message>EncryptionPublicKey contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').toString()</argument>
 				</arguments>
@@ -34289,10 +34289,10 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="ISO_32000_1_7" clause="EncryptionStandard" testNumber="22"/>
-			<description>EncryptionStandard shall not contain entries KDFSalt in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>EncryptionStandard shall not contain entry KDFSalt in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').length == 0</test>
 			<error>
-				<message>EncryptionStandard contains entry(ies) %1</message>
+				<message>EncryptionStandard contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').toString()</argument>
 				</arguments>
@@ -37499,10 +37499,10 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_7" clause="FileTrailer" testNumber="22"/>
-			<description>FileTrailer shall not contain entries AuthCode in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>FileTrailer shall not contain entry AuthCode in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').length == 0</test>
 			<error>
-				<message>FileTrailer contains entry(ies) %1</message>
+				<message>FileTrailer contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').toString()</argument>
 				</arguments>
@@ -60293,10 +60293,10 @@
 		</rule>
 		<rule object="ARichMediaAnimation">
 			<id specification="ISO_32000_1_7" clause="RichMediaAnimation" testNumber="22"/>
-			<description>RichMediaAnimation shall not contain entries AO in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>RichMediaAnimation shall not contain entry AO in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AO').length == 0</test>
 			<error>
-				<message>RichMediaAnimation contains entry(ies) %1</message>
+				<message>RichMediaAnimation contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AO').toString()</argument>
 				</arguments>
@@ -61207,10 +61207,10 @@
 		</rule>
 		<rule object="ARichMediaInstance">
 			<id specification="ISO_32000_1_7" clause="RichMediaInstance" testNumber="22"/>
-			<description>RichMediaInstance shall not contain entries Scene in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>RichMediaInstance shall not contain entry Scene in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Scene').length == 0</test>
 			<error>
-				<message>RichMediaInstance contains entry(ies) %1</message>
+				<message>RichMediaInstance contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Scene').toString()</argument>
 				</arguments>
@@ -70057,10 +70057,10 @@
 		</rule>
 		<rule object="AThread">
 			<id specification="ISO_32000_1_7" clause="Thread" testNumber="22"/>
-			<description>Thread shall not contain entries Metadata in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>Thread shall not contain entry Metadata in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').length == 0</test>
 			<error>
-				<message>Thread contains entry(ies) %1</message>
+				<message>Thread contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').toString()</argument>
 				</arguments>
@@ -71873,10 +71873,10 @@
 		</rule>
 		<rule object="AViewport">
 			<id specification="ISO_32000_1_7" clause="Viewport" testNumber="22"/>
-			<description>Viewport shall not contain entries PtData in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>Viewport shall not contain entry PtData in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'PtData').length == 0</test>
 			<error>
-				<message>Viewport contains entry(ies) %1</message>
+				<message>Viewport contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'PtData').toString()</argument>
 				</arguments>
@@ -73594,10 +73594,10 @@
 		</rule>
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_7" clause="XObjectFormPrinterMark" testNumber="22"/>
-			<description>XObjectFormPrinterMark shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XObjectFormPrinterMark shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>XObjectFormPrinterMark contains entry(ies) %1</message>
+				<message>XObjectFormPrinterMark contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -74172,10 +74172,10 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_7" clause="XObjectFormTrapNet" testNumber="22"/>
-			<description>XObjectFormTrapNet shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XObjectFormTrapNet shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>XObjectFormTrapNet contains entry(ies) %1</message>
+				<message>XObjectFormTrapNet contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -74786,10 +74786,10 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_7" clause="XObjectFormType1" testNumber="22"/>
-			<description>XObjectFormType1 shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XObjectFormType1 shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>XObjectFormType1 contains entry(ies) %1</message>
+				<message>XObjectFormType1 contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -75502,10 +75502,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_7" clause="XObjectImage" testNumber="22"/>
-			<description>XObjectImage shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XObjectImage shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>XObjectImage contains entry(ies) %1</message>
+				<message>XObjectImage contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -76378,10 +76378,10 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_7" clause="XObjectImageMask" testNumber="22"/>
-			<description>XObjectImageMask shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XObjectImageMask shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>XObjectImageMask contains entry(ies) %1</message>
+				<message>XObjectImageMask contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -77006,10 +77006,10 @@
 		</rule>
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_7" clause="XObjectImageSoftMask" testNumber="22"/>
-			<description>XObjectImageSoftMask shall not contain entries AF in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XObjectImageSoftMask shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
 			<error>
-				<message>XObjectImageSoftMask contains entry(ies) %1</message>
+				<message>XObjectImageSoftMask contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
 				</arguments>
@@ -77579,10 +77579,10 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_7" clause="XRefStream" testNumber="22"/>
-			<description>XRefStream shall not contain entries AuthCode in PDF 1.7. These entries appear in later pdf versions</description>
+			<description>XRefStream shall not contain entry AuthCode in PDF 1.7. This entry appears in later pdf versions</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').length == 0</test>
 			<error>
-				<message>XRefStream contains entry(ies) %1</message>
+				<message>XRefStream contains entry %1</message>
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').toString()</argument>
 				</arguments>
