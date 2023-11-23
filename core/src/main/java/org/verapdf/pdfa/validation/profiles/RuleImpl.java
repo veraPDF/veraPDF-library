@@ -112,7 +112,7 @@ final class RuleImpl implements Rule {
 
     @Override
     public Set<String> getTagsSet() {
-        return tags != null ? new HashSet<>(Arrays.asList(tags.split(","))) : Collections.emptySet();
+        return tags != null ? new LinkedHashSet<>(Arrays.asList(tags.split(","))) : Collections.emptySet();
     }
 
     /**
