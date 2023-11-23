@@ -74,13 +74,13 @@ final class ValidationProfileImpl implements ValidationProfile {
 
     private ValidationProfileImpl(final PDFAFlavour flavour,
                                   final ProfileDetails details, final String hash,
-                                  final SortedSet<Rule> rules, final Set<Variable> variables) {
+                                  final SortedSet<Rule> rules, final SortedSet<Variable> variables) {
         super();
         this.flavour = flavour;
         this.details = details;
         this.hash = hash;
         this.rules = rules;
-        this.variables = new HashSet<>(variables);
+        this.variables = variables;
     }
 
     /**
@@ -132,8 +132,7 @@ final class ValidationProfileImpl implements ValidationProfile {
             this.objectRuleMap = createObjectRuleMap(this.rules);
         }
         Set<Rule> objRules = this.objectRuleMap.get(objectName);
-        return (objRules == null) ? Collections.<Rule> emptySet() : Collections
-                .unmodifiableSet(objRules);
+        return objRules == null ? Collections.<Rule> emptySet() : Collections.unmodifiableSet(objRules);
     }
 
     /**
@@ -145,8 +144,7 @@ final class ValidationProfileImpl implements ValidationProfile {
             this.objectVariableMap = createObjectVariableMap(this.variables);
         }
         Set<Variable> objRules = this.objectVariableMap.get(objectName);
-        return (objRules == null) ? Collections.<Variable> emptySet() : Collections
-                .unmodifiableSet(objRules);
+        return objRules == null ? Collections.<Variable> emptySet() : Collections.unmodifiableSet(objRules);
     }
 
     /**
@@ -249,7 +247,7 @@ final class ValidationProfileImpl implements ValidationProfile {
 
     static ValidationProfile fromSortedValues(final PDFAFlavour flavour,
                                                   final ProfileDetails details, final String hash,
-                                                  final SortedSet<Rule> rules, final Set<Variable> variables) {
+                                                  final SortedSet<Rule> rules, final SortedSet<Variable> variables) {
         return new ValidationProfileImpl(flavour, details, hash, rules,
                 variables);
     }
