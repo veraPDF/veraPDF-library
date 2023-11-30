@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFUA_1">
-    <details creator="veraPDF Consortium" created="2020-04-07T14:37:52.486+03:00">
+    <details creator="veraPDF Consortium" created="2020-04-07T11:37:52.486Z">
         <name>PDF/UA-1 validation profile</name>
         <description>Validation rules against ISO 14289-1:2014</description>
     </details>
@@ -481,7 +481,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDAnnot" tags="structure,annotation,lang">
+        <rule object="PDAnnot" tags="lang,annotation,structure">
             <id specification="ISO_14289_1" clause="7.2" testNumber="24"/>
             <description>Natural language in the Contents entry for annotations shall be determined</description>
             <test>Contents == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
@@ -589,7 +589,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="XMPLangAlt" deferred="true" tags="metadata,lang">
+        <rule object="XMPLangAlt" deferred="true" tags="lang,metadata">
             <id specification="ISO_14289_1" clause="7.2" testNumber="33"/>
             <description>Natural language for document metadata shall be determined</description>
             <test>xDefault == false || gSizeCatalogLang != 0</test>
@@ -723,7 +723,7 @@
                 <reference specification="ISO 32000-1:2008" clause="14.8.4.3.4"/>
             </references>
         </rule>
-        <rule object="SEFigure" tags="structure,figure,alt-text">
+        <rule object="SEFigure" tags="alt-text,structure,figure">
             <id specification="ISO_14289_1" clause="7.3" testNumber="1"/>
             <description>Figure tags shall include an alternative representation or replacement text that represents the contents marked with the Figure tag as noted in ISO 32000-1:2008, 14.7.2, Table 323</description>
             <test>(Alt != null &amp;&amp; Alt != '') || ActualText != null</test>
