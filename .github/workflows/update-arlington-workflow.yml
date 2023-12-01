@@ -4,6 +4,20 @@ on:
   push:
     branches:
       - integration
+    paths-ignore:
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-1A.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-1B.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-2A.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-2B.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-2U.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-3A.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-3B.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-3U.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-4.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-4E.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-4F.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-1.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-2.xml'
 
 jobs:
   checkout-and-build:
