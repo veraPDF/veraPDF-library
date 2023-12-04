@@ -559,6 +559,9 @@ public final class Profiles {
 	public static class RuleIdComparator implements Comparator<RuleId> {
 		@Override
 		public int compare(RuleId firstId, RuleId secondId) {
+			if (!firstId.getSpecification().equals(secondId.getSpecification())) {
+				return firstId.getSpecification().compareTo(secondId.getSpecification());
+			}
 			if (firstId.getClause().equals(secondId.getClause())) {
 				return firstId.getTestNumber() - secondId.getTestNumber();
 			}
