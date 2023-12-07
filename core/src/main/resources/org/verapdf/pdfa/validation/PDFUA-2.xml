@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFUA_2">
-    <details creator="veraPDF Consortium" created="2023-11-08T10:56:03.539+03:00">
+    <details creator="veraPDF Consortium" created="2023-11-08T07:56:03.539Z">
         <name>PDF/UA-2 validation profile</name>
         <description>Validation rules against ISO 14289-2:202x</description>
     </details>
