@@ -23867,18 +23867,6 @@
 			<references/>
 		</rule>
 		<rule object="AArrayOfNamesForProcSetEntry">
-			<id specification="ISO_32000_1_7" clause="ArrayOfNamesForProcSetEntry" testNumber="5"/>
-			<description>Entry in ArrayOfNamesForProcSet is deprecated since PDF 1.4</description>
-			<test>false</test>
-			<error>
-				<message>Entry %keyName% in ArrayOfNamesForProcSet is present</message>
-				<arguments>
-					<argument name="keyName">keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AArrayOfNamesForProcSetEntry">
 			<id specification="ISO_32000_1_7" clause="ArrayOfNamesForProcSetEntry-Name" testNumber="6"/>
 			<description>Entry with type Name in ArrayOfNamesForProcSet shall have one of values: ImageI, PDF, ImageC, ImageB, Text</description>
 			<test>HasTypeName != true || NameValue == "PDF" || NameValue == "Text" || NameValue == "ImageB" || NameValue == "ImageC" || NameValue == "ImageI"</test>
