@@ -64,7 +64,7 @@ public class FeaturesReporter {
 	}
 
 	public FeaturesReporter(FeatureExtractorConfig config) {
-		this(config, Collections.<AbstractFeaturesExtractor>emptyList());
+		this(config, Collections.emptyList());
 	}
 
 	/**
@@ -73,11 +73,7 @@ public class FeaturesReporter {
 	 * @param extractor object for extract custom features
 	 */
 	private void registerFeaturesExtractor(AbstractFeaturesExtractor extractor) {
-		if (featuresExtractors.get(extractor.getType()) == null) {
-			featuresExtractors.put(extractor.getType(), new ArrayList<AbstractFeaturesExtractor>());
-		}
-
-		featuresExtractors.get(extractor.getType()).add(extractor);
+		featuresExtractors.computeIfAbsent(extractor.getType(), k -> new ArrayList<>()).add(extractor);
 	}
 
 	/**
@@ -127,13 +123,13 @@ public class FeaturesReporter {
 				}
 			}
 
-		} catch (FeatureParsingException ignore) {
+		} catch (FeatureParsingException exception) {
 			// The method logic should ensure this never happens, so if it does
 			// it's catastrophic. We'll throw an IllegalStateException with this
 			// as a cause. The only time it's ignored is when the unthinkable
 			// happens
 			throw new IllegalStateException(
-					"FeaturesReporter.report() illegal state.", ignore);
+					"FeaturesReporter.report() illegal state.", exception);
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 		}

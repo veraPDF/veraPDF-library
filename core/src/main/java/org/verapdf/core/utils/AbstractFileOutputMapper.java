@@ -72,7 +72,7 @@ abstract class AbstractFileOutputMapper implements FileOutputMapper {
 		return doMapFile(orig);
 	}
 
-	abstract protected File doMapFile(final File orig) throws VeraPDFException;
+	protected abstract File doMapFile(final File orig) throws VeraPDFException;
 
 	protected static String addPrefixAndSuffix(final File orig, final FileOutputMapper mapper) {
 		if (orig == null)

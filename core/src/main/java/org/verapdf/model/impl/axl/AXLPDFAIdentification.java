@@ -50,7 +50,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
     public Long getpart() {
         try {
             Integer part = this.metadata.getPDFAIdentificationPart();
-            return part == null ? null : Long.valueOf(part.longValue());
+            return part == null ? null : part.longValue();
         } catch (XMPException e) {
             LOGGER.log(Level.FINE, "Can not get PDF/A identification part", e);
             return null;

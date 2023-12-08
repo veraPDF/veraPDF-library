@@ -112,7 +112,7 @@ public enum PDFAFlavour {
     /** wcag PDF version 2.1 */
     WCAG2_1(Specification.WCAG_2_1, Level.NO_LEVEL);
 
-    private final static Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
+    private static final Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
         for (PDFAFlavour flavour : PDFAFlavour.values()) {
             FLAVOUR_LOOKUP.put(flavour.id, flavour);

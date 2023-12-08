@@ -63,7 +63,7 @@ final class FixerReportImpl implements MetadataFixerReport {
 	}
 
 	private FixerReportImpl() {
-		this("", 0, Collections.<String>emptyList(), Collections.<String>emptyList());
+		this("", 0, Collections.emptyList(), Collections.emptyList());
 	}
 
 	/**

@@ -49,18 +49,18 @@ public class XMPIdentificationTest {
                 .asList(new Object[][] {
                         {
                                 "org/verapdf/model/impl/axl/xmp-identification-check-1.xml",
-                                Integer.valueOf(1), Long.valueOf(1L), "B",
+                                1, 1L, "B",
                                 "pdfaid", "pdfaid", "pdfaid", "pdfaid" },
                         {
                                 "org/verapdf/model/impl/axl/xmp-identification-check-2.xml",
-                                Integer.valueOf(1), Long.valueOf(2L), "U",
+                                1, 2L, "U",
                                 "custom", "custom", "custom", "custom" },
                         {
                                 "org/verapdf/model/impl/axl/xmp-identification-check-3.xml",
-                                Integer.valueOf(1), null, null, "custom", null,
+                                1, null, null, "custom", null,
                                 "pdfaid", "pdfaid" },
                         { "org/verapdf/model/impl/axl/xmp-empty-rdf.xml",
-                                Integer.valueOf(0), null, null, null, null,
+                                0, null, null, null, null,
                                 null, null } });
     }
 
@@ -97,7 +97,7 @@ public class XMPIdentificationTest {
             List<? extends org.verapdf.model.baselayer.Object> list = pack
                     .getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
             assertEquals(this.identificationSchemaNumber, list.size());
-            if (list.size() != 0) {
+            if (!list.isEmpty()) {
                 AXLPDFAIdentification identification = (AXLPDFAIdentification) list
                         .get(0);
                 assertEquals(this.part, identification.getpart());

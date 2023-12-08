@@ -161,7 +161,7 @@ public class FeaturesNode {
 				char curChar = source.charAt(i);
 				if ('#' == curChar) {
 					formatter.format("#x%06X", //$NON-NLS-1$
-							Integer.valueOf("#".codePointAt(0))); //$NON-NLS-1$
+                            "#".codePointAt(0)); //$NON-NLS-1$
 				} else {
 					int codePoint = source.codePointAt(i);
 					if (Character.isHighSurrogate(curChar)) {
@@ -172,14 +172,14 @@ public class FeaturesNode {
 							|| (codePoint >= SP && codePoint <= XD7FF)
 							|| (codePoint >= XE000 && codePoint <= XFFFD)
 							|| (codePoint >= X10000 && codePoint <= X10FFFF)) {
-						formatter.format("%c", Character.valueOf(curChar)); //$NON-NLS-1$
+						formatter.format("%c", curChar); //$NON-NLS-1$
 						if (Character.isHighSurrogate(curChar)
 								&& i < source.length()) {
 							formatter.format("%c", //$NON-NLS-1$
-									Character.valueOf(source.charAt(i)));
+                                    source.charAt(i));
 						}
 					} else {
-						formatter.format("#x%06X", Integer.valueOf(codePoint)); //$NON-NLS-1$
+						formatter.format("#x%06X", codePoint); //$NON-NLS-1$
 					}
 				}
 			}

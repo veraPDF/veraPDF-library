@@ -258,14 +258,14 @@ public final class FontFeaturesData extends FeaturesData {
 		private Double italicAngle = null;
 		private Double ascent = null;
 		private Double descent = null;
-		private Double leading = Double.valueOf(0.);
+		private Double leading = 0.;
 		private Double capHeight = null;
-		private Double xHeight = Double.valueOf(0.);
+		private Double xHeight = 0.;
 		private Double stemV = null;
-		private Double stemH = Double.valueOf(0.);
-		private Double avgWidth = Double.valueOf(0.);
-		private Double maxWidth = Double.valueOf(0.);
-		private Double missingWidth = Double.valueOf(0.);
+		private Double stemH = 0.;
+		private Double avgWidth = 0.;
+		private Double maxWidth = 0.;
+		private Double missingWidth = 0.;
 		private String charSet = null;
 
 		public Builder(InputStream stream) {
@@ -340,7 +340,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (leading != null) {
 				this.leading = leading;
 			} else {
-				this.leading = Double.valueOf(0.0);
+				this.leading = 0.0;
 			}
 			return this;
 		}
@@ -354,7 +354,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (xHeight != null) {
 				this.xHeight = xHeight;
 			} else {
-				this.xHeight = Double.valueOf(0.0);
+				this.xHeight = 0.0;
 			}
 			return this;
 		}
@@ -368,7 +368,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (stemH != null) {
 				this.stemH = stemH;
 			} else {
-				this.stemH = Double.valueOf(0.0);
+				this.stemH = 0.0;
 			}
 			return this;
 		}
@@ -377,7 +377,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (avgWidth != null) {
 				this.avgWidth = avgWidth;
 			} else {
-				this.avgWidth = Double.valueOf(0.0);
+				this.avgWidth = 0.0;
 			}
 			return this;
 		}
@@ -386,7 +386,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (maxWidth != null) {
 				this.maxWidth = maxWidth;
 			} else {
-				this.maxWidth = Double.valueOf(0.0);
+				this.maxWidth = 0.0;
 			}
 			return this;
 		}
@@ -395,7 +395,7 @@ public final class FontFeaturesData extends FeaturesData {
 			if (missingWidth != null) {
 				this.missingWidth = missingWidth;
 			} else {
-				this.missingWidth = Double.valueOf(0.0);
+				this.missingWidth = 0.0;
 			}
 			return this;
 		}

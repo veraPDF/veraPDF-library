@@ -41,7 +41,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	private static final String parseExcepMessTmpl = "%s does not appear to be a valid PDF file and could not be parsed.\n";
 	private static final String pdfEncryptMessTmpl = "%s appears to be an encrypted PDF file and could not be processed.\n";
 	private static final String ruleMessTmpl = "  %s%s-%d\n"; //$NON-NLS-1$
-	private PrintWriter outputStreamWriter;
+	private final PrintWriter outputStreamWriter;
 	private final boolean isVerbose;
 	private final boolean logSuccess;
 	private ItemDetails item;
@@ -168,7 +168,7 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 
 	private void outputRules(final Set<RuleId> rules, final String messStart) throws IOException {
 		for (RuleId id : rules) {
-			this.outputStreamWriter.write(String.format(ruleMessTmpl, messStart, id.getClause(), Integer.valueOf(id.getTestNumber())));
+			this.outputStreamWriter.write(String.format(ruleMessTmpl, messStart, id.getClause(), id.getTestNumber()));
 		}
 	}
 

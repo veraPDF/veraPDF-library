@@ -48,16 +48,16 @@ public class XMPPropertiesNumberTest {
                 .asList(new Object[][] {
                         {
                                 "org/verapdf/model/impl/axl/xmp-properties-number-check-1.xml",
-                                Integer.valueOf(4), Integer.valueOf(4) },
+                                4, 4},
                         {
                                 "org/verapdf/model/impl/axl/xmp-properties-number-check-2.xml",
-                                Integer.valueOf(3), Integer.valueOf(3) },
+                                3, 3},
                         {
                                 "org/verapdf/model/impl/axl/xmp-properties-number-check-3.xml",
-                                Integer.valueOf(3), Integer.valueOf(3) },
+                                3, 3},
                         {
                                 "org/verapdf/model/impl/axl/xmp-properties-number-check-4.xml",
-                                Integer.valueOf(2), Integer.valueOf(2) } });
+                                2, 2} });
     }
 
     @Parameterized.Parameter

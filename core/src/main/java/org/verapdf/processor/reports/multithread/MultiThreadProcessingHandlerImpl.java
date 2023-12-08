@@ -4,7 +4,7 @@ import org.verapdf.processor.reports.ResultStructure;
 import org.verapdf.processor.reports.multithread.writer.ReportWriter;
 
 public class MultiThreadProcessingHandlerImpl implements MultiThreadProcessingHandler {
-	private ReportWriter reportWriter;
+	private final ReportWriter reportWriter;
 
 	public MultiThreadProcessingHandlerImpl(ReportWriter reportWriter) {
 		this.reportWriter = reportWriter;

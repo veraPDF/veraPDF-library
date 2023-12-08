@@ -31,9 +31,9 @@ import java.util.Map;
  */
 public class StructuredTypeValidator implements TypeValidator {
 
-    private String childNamespaceURI;
-    private Map<String, String> childrenTypes;
-    private ValidatorsContainer parentContainer;
+    private final String childNamespaceURI;
+    private final Map<String, String> childrenTypes;
+    private final ValidatorsContainer parentContainer;
 
     private StructuredTypeValidator(String childNamespaceURI, Map<String, String> childrenTypes, ValidatorsContainer parentContainer) {
         this.childNamespaceURI = childNamespaceURI;

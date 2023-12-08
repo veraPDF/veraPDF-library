@@ -42,11 +42,11 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ProfileDirectoryImplTest {
-    private static ValidationProfile DEFAULT = Profiles.defaultProfile();
-    private static ValidationProfile ARLINGTON_1_0 = getArlington_1_0();
-    private static Set<ValidationProfile> DEFAULT_ALONE = getSolitarySet(DEFAULT);
-    private static Set<ValidationProfile> ARLINGTON_1_0_ALONE = getSolitarySet(ARLINGTON_1_0);
-    private static Set<ValidationProfile> DUAL_PROFILE = getDualSet();
+    private static final ValidationProfile DEFAULT = Profiles.defaultProfile();
+    private static final ValidationProfile ARLINGTON_1_0 = getArlington_1_0();
+    private static final Set<ValidationProfile> DEFAULT_ALONE = getSolitarySet(DEFAULT);
+    private static final Set<ValidationProfile> ARLINGTON_1_0_ALONE = getSolitarySet(ARLINGTON_1_0);
+    private static final Set<ValidationProfile> DUAL_PROFILE = getDualSet();
 
     /**
      * Test method for

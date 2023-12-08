@@ -53,16 +53,16 @@ public class XMPExtensionSchemaTest {
                 .asList(new Object[][] {
                         {
                                 "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-1.xml",
-                                Boolean.TRUE, "pdfaExtension", Integer.valueOf(1)},
+                                Boolean.TRUE, "pdfaExtension", 1},
                         {
                                 "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-2.xml",
-                                Boolean.FALSE, "ext" ,  Integer.valueOf(1)},
+                                Boolean.FALSE, "ext" , 1},
                         {
                                 "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-3.xml",
-                                Boolean.FALSE, "pdfaExtension" ,  Integer.valueOf(1)},
+                                Boolean.FALSE, "pdfaExtension" , 1},
                         {
                                 "org/verapdf/model/impl/axl/xmp-extension-schema-container-type-check-4.xml",
-                                Boolean.FALSE, "smth" ,  Integer.valueOf(0)} });
+                                Boolean.FALSE, "smth" , 0} });
     }
 
     @Parameterized.Parameter
@@ -93,15 +93,15 @@ public class XMPExtensionSchemaTest {
             assertNotNull(linkedObjects);
             assertEquals(propertiesNumber, linkedObjects.size());
 
-            if (linkedObjects.size() != 0) {
+            if (!linkedObjects.isEmpty()) {
                 AXLExtensionSchemaDefinition definition = (AXLExtensionSchemaDefinition) linkedObjects.get(0);
 
-                assertFalse(definition.getcontainsUndefinedFields().booleanValue());
-                assertTrue(definition.getisNamespaceURIValidURI().booleanValue());
-                assertTrue(definition.getisPrefixValidText().booleanValue());
-                assertTrue(definition.getisPropertyValidSeq().booleanValue());
-                assertTrue(definition.getisSchemaValidText().booleanValue());
-                assertTrue(definition.getisValueTypeValidSeq().booleanValue());
+                assertFalse(definition.getcontainsUndefinedFields());
+                assertTrue(definition.getisNamespaceURIValidURI());
+                assertTrue(definition.getisPrefixValidText());
+                assertTrue(definition.getisPropertyValidSeq());
+                assertTrue(definition.getisSchemaValidText());
+                assertTrue(definition.getisValueTypeValidSeq());
 
                 assertEquals("pdfaSchema", definition.getnamespaceURIPrefix());
                 assertEquals("pdfaSchema", definition.getprefixPrefix());
@@ -117,15 +117,15 @@ public class XMPExtensionSchemaTest {
                 assertNotNull(valueTypes);
                 assertEquals(1, properties.size());
 
-                if (properties.size() != 0) {
+                if (!properties.isEmpty()) {
                     AXLExtensionSchemaProperty property = (AXLExtensionSchemaProperty) properties.get(0);
-                    assertFalse(property.getcontainsUndefinedFields().booleanValue());
+                    assertFalse(property.getcontainsUndefinedFields());
                     assertEquals("external", property.getcategory());
-                    assertTrue(property.getisCategoryValidText().booleanValue());
-                    assertTrue(property.getisDescriptionValidText().booleanValue());
-                    assertTrue(property.getisNameValidText().booleanValue());
-                    assertTrue(property.getisValueTypeValidText().booleanValue());
-                    assertTrue(property.getisValueTypeDefined().booleanValue());
+                    assertTrue(property.getisCategoryValidText());
+                    assertTrue(property.getisDescriptionValidText());
+                    assertTrue(property.getisNameValidText());
+                    assertTrue(property.getisValueTypeValidText());
+                    assertTrue(property.getisValueTypeDefined());
 
                     assertEquals("pdfaProperty", property.getcategoryPrefix());
                     assertEquals("pdfaProperty", property.getvalueTypePrefix());

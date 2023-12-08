@@ -36,7 +36,7 @@ import org.verapdf.core.VeraPDFException;
 
 final class RelativeDirectoryMapper extends AbstractFileOutputMapper {
 	static final String defaultRelativePath = ".";
-	private final static RelativeDirectoryMapper defaultInstance = new RelativeDirectoryMapper();
+	private static final RelativeDirectoryMapper defaultInstance = new RelativeDirectoryMapper();
 	private final String relDirPath;
 
 	private RelativeDirectoryMapper() {

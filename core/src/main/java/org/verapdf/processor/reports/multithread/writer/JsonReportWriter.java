@@ -15,6 +15,7 @@ public class JsonReportWriter extends ReportWriter {
 		super(outputStreamWriter, errorStreamWriter);
 	}
 
+	@Override
 	public void write(ResultStructure result) {
 		if (isFirstReport) {
 			isFirstReport = false;

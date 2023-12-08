@@ -38,8 +38,8 @@ final class VersionNumberImpl implements SemanticVersionNumber {
 
 	@Override
 	public String getVersionString() {
-		return String.format("%d.%d.%d", Integer.valueOf(this.major), //$NON-NLS-1$
-				Integer.valueOf(this.minor), Integer.valueOf(this.patch));
+		return String.format("%d.%d.%d", this.major, //$NON-NLS-1$
+                this.minor, this.patch);
 	}
 
 	@Override

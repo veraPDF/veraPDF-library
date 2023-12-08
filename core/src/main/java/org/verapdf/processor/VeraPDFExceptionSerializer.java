@@ -13,6 +13,7 @@ public class VeraPDFExceptionSerializer extends StdSerializer<VeraPDFException> 
 		super(t);
 	}
 
+	@Override
 	public void serialize(VeraPDFException exception, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
 			throws IOException {
 		jsonGenerator.writeString(exception.getMessage());

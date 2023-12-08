@@ -44,7 +44,7 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
 
     public static final String EXTENSION_SCHEMA_DEFINITIONS = "ExtensionSchemaDefinitions";
 
-    protected VeraPDFXMPNode xmpNode;
+    protected final VeraPDFXMPNode xmpNode;
     protected final Map<String, SchemasDefinition> containerForPDFA_1;
     protected final Map<String, SchemasDefinition> containerForPDFA_2_3;
     protected final PDFAFlavour flavour;
@@ -100,7 +100,7 @@ public class AXLExtensionSchemasContainer extends AXLXMPObject implements Extens
     @Override
     public Boolean getisValidBag() {
         PropertyOptions options = this.xmpNode.getOptions();
-        return Boolean.valueOf(options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate()));
+        return options.isArray() && !(options.isArrayOrdered() || options.isArrayAlternate());
     }
 
     @Override

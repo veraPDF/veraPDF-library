@@ -29,8 +29,8 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "fixerConfig")
 final class FixerConfigImpl implements MetadataFixerConfig {
-	public final static String DEFAULT_PREFIX = "veraFixMd_";  //$NON-NLS-1$
-	private final static MetadataFixerConfig defaultInstance = new FixerConfigImpl();
+	public static final String DEFAULT_PREFIX = "veraFixMd_";  //$NON-NLS-1$
+	private static final MetadataFixerConfig defaultInstance = new FixerConfigImpl();
 	@XmlAttribute
 	private final String fixesPrefix;
 
