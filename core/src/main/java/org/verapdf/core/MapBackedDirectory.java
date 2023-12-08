@@ -42,7 +42,7 @@ public class MapBackedDirectory<K, V> implements Directory<K, V> {
      * Creates an empty directory backed by an empty Map
      */
     public MapBackedDirectory() {
-        this(Collections.<K, V>emptyMap());
+        this(Collections.emptyMap());
     }
     /**
      * @param map

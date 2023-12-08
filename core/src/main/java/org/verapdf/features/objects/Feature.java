@@ -73,7 +73,7 @@ public class Feature {
 		STRING(PRESENT, NOT_PRESENT, IS_EQUAL,
 				NOT_EQUAL, STARTS_WITH, /*ENDS_WITH,*/ CONTAINS);
 
-		private EnumSet<SchematronOperation> legalOperations;
+		private final EnumSet<SchematronOperation> legalOperations;
 
 		FeatureType(SchematronOperation op, SchematronOperation... operations) {
 			this.legalOperations = EnumSet.of(op, operations);

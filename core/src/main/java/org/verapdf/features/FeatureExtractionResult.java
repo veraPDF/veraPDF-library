@@ -67,7 +67,7 @@ public final class FeatureExtractionResult {
 	 */
 	public List<FeatureTreeNode> getFeatureTreesForType(FeatureObjectType type) {
 		FeaturesStructure list = this.collection.get(type);
-		return (list == null || list.list == null) ? Collections.<FeatureTreeNode>emptyList() : list.list;
+		return (list == null || list.list == null) ? Collections.emptyList() : list.list;
 	}
 
 	/**
@@ -97,10 +97,10 @@ public final class FeatureExtractionResult {
 	 */
 	public List<String> getErrorsForType(FeatureObjectType type) {
 		FeaturesStructure list = this.collection.get(type);
-		return (list == null || list.errors == null) ? Collections.<String>emptyList() : list.errors;
+		return (list == null || list.errors == null) ? Collections.emptyList() : list.errors;
 	}
 
-	private class FeaturesStructure {
+	private static class FeaturesStructure {
 		List<FeatureTreeNode> list;
 		List<String> errors;
 
@@ -116,8 +116,8 @@ public final class FeatureExtractionResult {
 
 			FeaturesStructure that = (FeaturesStructure) o;
 
-			if (list != null ? !list.equals(that.list) : that.list != null) return false;
-			return errors != null ? errors.equals(that.errors) : that.errors == null;
+			if (!Objects.equals(list, that.list)) return false;
+			return Objects.equals(errors, that.errors);
 
 		}
 
@@ -136,7 +136,7 @@ public final class FeatureExtractionResult {
 
 		FeatureExtractionResult that = (FeatureExtractionResult) o;
 
-		return collection != null ? collection.equals(that.collection) : that.collection == null;
+		return Objects.equals(collection, that.collection);
 
 	}
 

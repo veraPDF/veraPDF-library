@@ -20,9 +20,9 @@ public class JavaScriptEvaluator {
 
 	private static Context context;
 
-	private static Map<String, Script> ruleScripts = new HashMap<>();
-	private static Map<String, Script> variableScripts = new HashMap<>();
-	private static Map<String, Script> argumentScripts = new HashMap<>();
+	private static final Map<String, Script> ruleScripts = new HashMap<>();
+	private static final Map<String, Script> variableScripts = new HashMap<>();
+	private static final Map<String, Script> argumentScripts = new HashMap<>();
 
 	public static synchronized ScriptableObject initialise() {
 		context = Context.enter();
@@ -119,7 +119,7 @@ public class JavaScriptEvaluator {
 			scr = ruleScripts.get(test);
 		}
 
-		boolean testEvalResult = ((Boolean) scr.exec(context, scope)).booleanValue();
+		boolean testEvalResult = (Boolean) scr.exec(context, scope);
 
 		return testEvalResult;
 	}

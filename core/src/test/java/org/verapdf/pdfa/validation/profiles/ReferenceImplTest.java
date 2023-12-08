@@ -34,7 +34,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ReferenceImplTest {
-	private final static String DEFAULT_REFERENCE_STRING = "Reference [specification=specification, clause=clause]";
+	private static final String DEFAULT_REFERENCE_STRING = "Reference [specification=specification, clause=clause]";
 
 	/**
 	 * Test method for

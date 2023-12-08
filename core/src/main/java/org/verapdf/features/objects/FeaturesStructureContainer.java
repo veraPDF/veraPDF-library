@@ -31,7 +31,7 @@ import java.util.Map;
  * @author Maksim Bezrukov
  */
 public final class FeaturesStructureContainer {
-	private static Map<FeatureObjectType, List<Feature>> featuresStructure =
+	private static final Map<FeatureObjectType, List<Feature>> featuresStructure =
 			new EnumMap<>(FeatureObjectType.class);
 
 	static {
@@ -64,6 +64,6 @@ public final class FeaturesStructureContainer {
 
 	public static List<Feature> getFeaturesListForType(FeatureObjectType type) {
 		List<Feature> res = featuresStructure.get(type);
-		return res == null ? Collections.<Feature>emptyList() : Collections.unmodifiableList(res);
+		return res == null ? Collections.emptyList() : Collections.unmodifiableList(res);
 	}
 }

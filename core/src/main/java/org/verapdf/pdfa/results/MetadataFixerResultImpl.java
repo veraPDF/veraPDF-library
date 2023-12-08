@@ -20,10 +20,7 @@
  */
 package org.verapdf.pdfa.results;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -43,7 +40,7 @@ public final class MetadataFixerResultImpl implements MetadataFixerResult {
 	private final List<String> appliedFixes;
 
 	private MetadataFixerResultImpl() {
-		this(RepairStatus.NO_ACTION, new ArrayList<String>());
+		this(RepairStatus.NO_ACTION, new ArrayList<>());
 	}
 
 	private MetadataFixerResultImpl(final RepairStatus status, final List<String> fixes) {
@@ -87,8 +84,7 @@ public final class MetadataFixerResultImpl implements MetadataFixerResult {
 
 		if (this.status != strings.status)
 			return false;
-		return this.appliedFixes != null ? this.appliedFixes.equals(strings.appliedFixes)
-				: strings.appliedFixes == null;
+		return Objects.equals(this.appliedFixes, strings.appliedFixes);
 
 	}
 

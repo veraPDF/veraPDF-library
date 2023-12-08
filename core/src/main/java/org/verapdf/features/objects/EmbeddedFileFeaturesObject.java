@@ -120,7 +120,7 @@ public class EmbeddedFileFeaturesObject extends FeaturesObject {
         builder.checkSum(efAdapter.getCheckSum());
         Long size = efAdapter.getSize();
         if (size != null) {
-            builder.size(Integer.valueOf(size.intValue()));
+            builder.size(size.intValue());
         }
         return builder.build();
     }

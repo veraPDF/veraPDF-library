@@ -50,7 +50,7 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFUA_1 = "processed.objects.path.pdfua_1";
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFUA_2 = "processed.objects.path.pdfua_2";
 
-    private static ClassLoader cl = XMLProcessedObjectsParser.class.getClassLoader();
+    private static final ClassLoader cl = XMLProcessedObjectsParser.class.getClassLoader();
     private static ProcessedObjectsParser instance;
 
     private XMLProcessedObjectsParser() {

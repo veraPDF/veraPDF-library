@@ -43,6 +43,7 @@ public abstract class AbstractXmlReportWriter extends ReportWriter {
 		}
 	}
 
+	@Override
 	public void endDocument() {
 		try {
 			this.reportHandler.printSummary();

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.math.BigInteger;
 
 public class DEREncodedValue {
-    public byte valueTag;
+    public final byte valueTag;
     public final DEREncodedInputStream in;
     private int length;
 

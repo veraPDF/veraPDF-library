@@ -105,6 +105,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 		return finishBatch();
 	}
 
+	@Override
 	public BatchSummary process(ItemDetails itemDetails, InputStream stream, BatchProcessingHandler resultHandler)
 			throws VeraPDFException {
 		this.initialise(resultHandler);

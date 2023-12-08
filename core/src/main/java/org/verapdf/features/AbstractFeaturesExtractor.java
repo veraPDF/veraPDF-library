@@ -42,7 +42,7 @@ public abstract class AbstractFeaturesExtractor {
 	}
 
 	public final void initialize(ExtractorDetails initialDetails) {
-		initialize(initialDetails, Collections.<String, String>emptyMap());
+		initialize(initialDetails, Collections.emptyMap());
 	}
 
 	public final void initialize(ExtractorDetails initialDetails, Map<String, String> initialAttributes) {

@@ -42,7 +42,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ReleaseDetailsTest {
-	private static String NAME = "verapdf-test";
+	private static final String NAME = "verapdf-test";
 
 	@BeforeClass
 	public static final void Before() {

@@ -86,12 +86,12 @@ public final class ErrorsHelper {
 				element.setAttribute(ERRORID, elementErrorID);
 			}
 			return id;
-		} catch (FeatureParsingException ignore) {
+		} catch (FeatureParsingException exception) {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "FeatureTreeNode root instance logic failure";
-			LOGGER.log(Level.SEVERE, message, ignore);
-			throw new IllegalStateException(message, ignore);
+			LOGGER.log(Level.SEVERE, message, exception);
+			throw new IllegalStateException(message, exception);
 		}
 	}
 }

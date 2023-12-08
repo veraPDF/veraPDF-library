@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  */
 public class ValidatorsContainerCreator {
 
-    public static ValidatorsContainer EMPTY_VALIDATORS_CONTAINER = new ValidatorsContainer();
+    public static final ValidatorsContainer EMPTY_VALIDATORS_CONTAINER = new ValidatorsContainer();
     private static ValidatorsContainer PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_1 = null;
     private static ValidatorsContainer PREDEFINED_CONTAINER_WITHOUT_CLOSED_CHOICE_FOR_PDFA_2_3 = null;
     private static ValidatorsContainer PREDEFINED_CONTAINER_WITH_CLOSED_CHOICE_FOR_PDFA_1 = null;

@@ -28,13 +28,13 @@ import java.util.Calendar;
  */
 public class SignatureFeaturesData extends FeaturesData {
 
-    private String filter;
-    private String subFilter;
-    private String name;
-    private Calendar signDate;
-    private String location;
-    private String reason;
-    private String contactInfo;
+    private final String filter;
+    private final String subFilter;
+    private final String name;
+    private final Calendar signDate;
+    private final String location;
+    private final String reason;
+    private final String contactInfo;
 
     public SignatureFeaturesData(InputStream stream, String filter, String subFilter, String name, Calendar signDate, String location, String reason, String contactInfo) {
         super(stream);

@@ -47,7 +47,7 @@ import org.verapdf.report.FeaturesReport;
  */
 @XmlRootElement(name = "processorResult")
 class ProcessorResultImpl implements ProcessorResult {
-	private final static ProcessorResult defaultInstance = new ProcessorResultImpl();
+	private static final ProcessorResult defaultInstance = new ProcessorResultImpl();
 	@XmlAttribute
 	private final boolean isPdf;
 	@XmlAttribute
