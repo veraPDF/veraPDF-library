@@ -26,6 +26,7 @@ package org.verapdf.pdfa.validation.profiles;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Objects;
 
 /**
  * JAXB serialisable implementation of {@link Reference} with safe methods for
@@ -102,17 +103,10 @@ final class ReferenceImpl implements Reference {
         if (!(obj instanceof Reference))
             return false;
         Reference other = (Reference) obj;
-        if (this.clause == null) {
-            if (other.getClause() != null)
-                return false;
-        } else if (!this.clause.equals(other.getClause()))
+        if (!Objects.equals(this.getClause(), other.getClause())) {
             return false;
-        if (this.specification == null) {
-            if (other.getSpecification() != null)
-                return false;
-        } else if (!this.specification.equals(other.getSpecification()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getSpecification(), other.getSpecification());
     }
 
     /*
