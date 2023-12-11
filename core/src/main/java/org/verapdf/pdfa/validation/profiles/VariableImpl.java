@@ -27,6 +27,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Objects;
 
 /**
  * JAXB serialisable implementation of {@link Variable} with safe methods for
@@ -130,27 +131,16 @@ final class VariableImpl implements Variable {
         if (!(obj instanceof Variable))
             return false;
         Variable other = (Variable) obj;
-        if (this.name == null) {
-            if (other.getName() != null)
-                return false;
-        } else if (!this.name.equals(other.getName()))
+        if (!Objects.equals(this.getName(), other.getName())) {
             return false;
-        if (this.value == null) {
-            if (other.getValue() != null)
-                return false;
-        } else if (!this.value.equals(other.getValue()))
+        }
+        if (!Objects.equals(this.getValue(), other.getValue())) {
             return false;
-        if (this.defaultValue == null) {
-            if (other.getDefaultValue() != null)
-                return false;
-        } else if (!this.defaultValue.equals(other.getDefaultValue()))
+        }
+        if (!Objects.equals(this.getDefaultValue(), other.getDefaultValue())) {
             return false;
-        if (this.object == null) {
-            if (other.getObject() != null)
-                return false;
-        } else if (!this.object.equals(other.getObject()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getObject(), other.getObject());
     }
 
     /*

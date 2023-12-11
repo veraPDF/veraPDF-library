@@ -24,6 +24,7 @@
 package org.verapdf.pdfa.validation.profiles;
 
 import java.util.Date;
+import java.util.Objects;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -120,27 +121,16 @@ final class ProfileDetailsImpl implements ProfileDetails {
         if (!(obj instanceof ProfileDetails))
             return false;
         ProfileDetails other = (ProfileDetails) obj;
-        if (this.created == null) {
-            if (other.getDateCreated() != null)
-                return false;
-        } else if (!this.created.equals(other.getDateCreated()))
+        if (!Objects.equals(this.getDateCreated(), other.getDateCreated())) {
             return false;
-        if (this.creator == null) {
-            if (other.getCreator() != null)
-                return false;
-        } else if (!this.creator.equals(other.getCreator()))
+        }
+        if (!Objects.equals(this.getCreator(), other.getCreator())) {
             return false;
-        if (this.description == null) {
-            if (other.getDescription() != null)
-                return false;
-        } else if (!this.description.equals(other.getDescription()))
+        }
+        if (!Objects.equals(this.getDescription(), other.getDescription())) {
             return false;
-        if (this.name == null) {
-            if (other.getName() != null)
-                return false;
-        } else if (!this.name.equals(other.getName()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getName(), other.getName());
     }
 
     /**

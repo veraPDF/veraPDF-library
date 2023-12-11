@@ -157,11 +157,7 @@ public final class VeraAppConfigImpl implements VeraAppConfig {
 		if (this.isVerbose != other.isVerbose) {
 			return false;
 		}
-		if (this.policyFile == null) {
-			if (other.policyFile != null) {
-				return false;
-			}
-		} else if (!this.policyFile.equals(other.policyFile)) {
+		if (!Objects.equals(this.policyFile, other.policyFile)) {
 			return false;
 		}
 		if (this.type != other.type) {

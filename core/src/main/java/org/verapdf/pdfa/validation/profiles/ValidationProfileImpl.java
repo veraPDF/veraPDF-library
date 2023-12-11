@@ -201,27 +201,16 @@ final class ValidationProfileImpl implements ValidationProfile {
         ValidationProfile other = (ValidationProfile) obj;
         if (this.flavour != other.getPDFAFlavour())
             return false;
-        if (this.hash == null) {
-            if (other.getHexSha1Digest() != null)
-                return false;
-        } else if (!this.hash.equals(other.getHexSha1Digest()))
+        if (!Objects.equals(this.getHexSha1Digest(), other.getHexSha1Digest())) {
             return false;
-        if (this.details == null) {
-            if (other.getDetails() != null)
-                return false;
-        } else if (!this.details.equals(other.getDetails()))
+        }
+        if (!Objects.equals(this.getDetails(), other.getDetails())) {
             return false;
-        if (this.rules == null) {
-            if (other.getRules() != null)
-                return false;
-        } else if (!this.rules.equals(other.getRules()))
+        }
+        if (!Objects.equals(this.getRules(), other.getRules())) {
             return false;
-        if (this.variables == null) {
-            if (other.getVariables() != null)
-                return false;
-        } else if (!this.variables.equals(other.getVariables()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getVariables(), other.getVariables());
     }
 
     /**

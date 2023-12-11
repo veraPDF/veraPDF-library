@@ -31,6 +31,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -150,18 +151,10 @@ class TaskResultImpl implements TaskResult {
 		if (this.type  != other.type) {
 			return false;
 		}
-		if (this.duration == null) {
-			if (other.duration != null) {
-				return false;
-			}
-		} else if (!this.duration.equals(other.duration)) {
+		if (!Objects.equals(this.duration, other.duration)) {
 			return false;
 		}
-		if (this.exception == null) {
-			if (other.exception != null) {
-				return false;
-			}
-		} else if (!this.exception.equals(other.exception)) {
+		if (!Objects.equals(this.exception, other.exception)) {
 			return false;
 		}
 		if (this.isExecuted != other.isExecuted) {

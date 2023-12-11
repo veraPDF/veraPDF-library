@@ -27,12 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -117,29 +112,23 @@ public final class ReleaseDetails {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		ReleaseDetails other = (ReleaseDetails) obj;
-		if (this.buildDate == null) {
-			if (other.buildDate != null)
-				return false;
-		} else if (!this.buildDate.equals(other.buildDate))
+		if (!Objects.equals(this.buildDate, other.buildDate)) {
 			return false;
-		if (this.id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!this.id.equals(other.id))
+		}
+		if (!Objects.equals(this.id, other.id)) {
 			return false;
-		if (this.version == null) {
-			if (other.version != null)
-				return false;
-		} else if (!this.version.equals(other.version))
-			return false;
-		return true;
+		}
+		return Objects.equals(this.version, other.version);
 	}
 
 	/**

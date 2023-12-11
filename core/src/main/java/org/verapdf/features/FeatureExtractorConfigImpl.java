@@ -21,6 +21,7 @@
 package org.verapdf.features;
 
 import java.util.EnumSet;
+import java.util.Objects;
 
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
@@ -90,12 +91,7 @@ final class FeatureExtractorConfigImpl implements FeatureExtractorConfig {
 		if (getClass() != obj.getClass())
 			return false;
 		FeatureExtractorConfigImpl other = (FeatureExtractorConfigImpl) obj;
-		if (this.enabledFeatures == null) {
-			if (other.enabledFeatures != null)
-				return false;
-		} else if (!this.enabledFeatures.equals(other.enabledFeatures))
-			return false;
-		return true;
+		return Objects.equals(this.enabledFeatures, other.enabledFeatures);
 	}
 
 	static class Adapter extends XmlAdapter<FeatureExtractorConfigImpl, FeatureExtractorConfig> {
