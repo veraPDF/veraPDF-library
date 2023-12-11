@@ -100,13 +100,13 @@ public final class FeatureTreeNode {
 			throw new IllegalArgumentException("Arg node cannot be null.");
 		if (this.isMetadataNode) {
 			throw new FeatureParsingException("You can not add a child for metadata nodes. Node name " + this.name
-					+ ", value: " + this.value + ".");
+					+ ", value: " + this.value + '.');
 		}
 		if (this.value == null) {
 			this.children.add(node);
 		} else {
 			throw new FeatureParsingException("You can not add a child for nodes with defined values. Node name "
-					+ this.name + ", value: " + this.value + ".");
+					+ this.name + ", value: " + this.value + '.');
 		}
 		return node;
 	}
@@ -129,7 +129,7 @@ public final class FeatureTreeNode {
 			this.value = value;
 		} else {
 			throw new FeatureParsingException(
-					"You can not add value for nodes with childrens. Node name " + this.name + ".");
+					"You can not add value for nodes with childrens. Node name " + this.name + '.');
 		}
 	}
 
@@ -179,38 +179,29 @@ public final class FeatureTreeNode {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		FeatureTreeNode other = (FeatureTreeNode) obj;
 		if (this.isMetadataNode != other.isMetadataNode) {
 			return false;
-		} else if (this.attributes == null) {
-			if (other.attributes != null)
-				return false;
-		} else if (!this.attributes.equals(other.attributes))
-			return false;
-		if (this.children == null) {
-			if (other.children != null)
-				return false;
-		} else if (!isChildrenMatch(this, other))
-			return false;
-		if (this.name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!this.name.equals(other.name))
-			return false;
-		if (this.value == null) {
-			if (other.value != null)
-				return false;
-		} else {
-			if (!this.value.equals(other.value))
-				return false;
 		}
-		return true;
+		if (!Objects.equals(this.attributes, other.attributes)) {
+			return false;
+		}
+		if (!isChildrenMatch(this, other)) {
+			return false;
+		}
+		if (!Objects.equals(this.name, other.name)) {
+			return false;
+		}
+		return Objects.equals(this.value, other.value);
 	}
 
 	/**
@@ -219,10 +210,11 @@ public final class FeatureTreeNode {
 	@Override
 	public String toString() {
 		return "FeatureTreeNode [name=" + this.name + ", value=" + this.value + ", isMetadataNode="
-				+ this.isMetadataNode + ", " + ", attributes=" + this.attributes + "]";
+				+ this.isMetadataNode + ", " + ", attributes=" + this.attributes + ']';
 	}
 
 	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
-		return Objects.equals(aThis.children, other.children);
+		return aThis.children == other.children || (aThis.children.size() == other.children.size() && 
+				new HashSet<>(aThis.children).containsAll(other.children));
 	}
 }

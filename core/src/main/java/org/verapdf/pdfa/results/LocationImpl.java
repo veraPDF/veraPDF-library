@@ -23,6 +23,7 @@
  */
 package org.verapdf.pdfa.results;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -100,17 +101,10 @@ final class LocationImpl implements Location {
         if (!(obj instanceof Location))
             return false;
         Location other = (Location) obj;
-        if (this.context == null) {
-            if (other.getContext() != null)
-                return false;
-        } else if (!this.context.equals(other.getContext()))
+        if (!Objects.equals(this.getContext(), other.getContext())) {
             return false;
-        if (this.level == null) {
-            if (other.getLevel() != null)
-                return false;
-        } else if (!this.level.equals(other.getLevel()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getLevel(), other.getLevel());
     }
 
     /**

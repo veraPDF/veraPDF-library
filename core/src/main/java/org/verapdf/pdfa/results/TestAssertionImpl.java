@@ -33,6 +33,7 @@ import org.verapdf.pdfa.validation.profiles.Profiles;
 import org.verapdf.pdfa.validation.profiles.RuleId;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -167,34 +168,21 @@ final class TestAssertionImpl implements TestAssertion {
         if (!(obj instanceof TestAssertion))
             return false;
         TestAssertion other = (TestAssertion) obj;
-        if (this.location == null) {
-            if (other.getLocation() != null)
-                return false;
-        } else if (!this.location.equals(other.getLocation()))
+        if (!Objects.equals(this.location, other.getLocation())) {
             return false;
-        if (this.message == null) {
-            if (other.getMessage() != null)
-                return false;
-        } else if (!this.message.equals(other.getMessage()))
+        }
+        if (!Objects.equals(this.message, other.getMessage())) {
             return false;
-        if (this.ruleId == null) {
-            if (other.getRuleId() != null)
-                return false;
-        } else if (!this.ruleId.equals(other.getRuleId()))
+        }
+        if (!Objects.equals(this.ruleId, other.getRuleId())) {
             return false;
+        }
         if (this.status != other.getStatus())
             return false;
-        if (this.locationContext == null) {
-            if (other.getLocationContext() != null)
-                return false;
-        } else if (!this.locationContext.equals(other.getLocationContext()))
+        if (!Objects.equals(this.getLocationContext(), other.getLocationContext())) {
             return false;
-        if (this.errorMessage == null) {
-            if (other.getErrorMessage() != null)
-                return false;
-        } else if (!this.errorMessage.equals(other.getErrorMessage()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getErrorMessage(), other.getErrorMessage());
     }
 
     /**

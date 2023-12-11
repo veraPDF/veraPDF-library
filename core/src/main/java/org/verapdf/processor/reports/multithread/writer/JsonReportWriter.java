@@ -26,11 +26,13 @@ public class JsonReportWriter extends ReportWriter {
 		deleteTemp(result);
 	}
 
+	@Override
 	public void startDocument() {
 		outputStreamWriter.write("{\"reports\":[");
 		isFirstReport = true;
 	}
 
+	@Override
 	public void endDocument() {
 		outputStreamWriter.write("]}");
 	}

@@ -101,15 +101,14 @@ final class VersioningMapper implements FileOutputMapper {
 
 	static String verStart(final File orig) {
 		final String origName = orig.getName();
-		final String verStart = (origName.lastIndexOf(".") < 1) ? origName + verPrefixOpen //$NON-NLS-1$
-				: origName.substring(0, origName.lastIndexOf(".")) + verPrefixOpen; //$NON-NLS-1$
+		final String verStart = (origName.lastIndexOf('.') < 1 ? origName : origName.substring(0, origName.lastIndexOf('.'))) + verPrefixOpen; //$NON-NLS-1$
 		return verStart;
 	}
 
 	static String verEnd(final File orig) {
 		final String origName = orig.getName();
-		final String verEnd = (origName.lastIndexOf(".") < 1) ? verPrefixClose //$NON-NLS-1$
-				: verPrefixClose + origName.substring(origName.lastIndexOf(".")); //$NON-NLS-1$
+		final String verEnd = (origName.lastIndexOf('.') < 1) ? verPrefixClose //$NON-NLS-1$
+				: verPrefixClose + origName.substring(origName.lastIndexOf('.')); //$NON-NLS-1$
 		return verEnd;
 	}
 
