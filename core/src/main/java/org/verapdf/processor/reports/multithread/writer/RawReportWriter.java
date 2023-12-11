@@ -14,12 +14,12 @@ import java.util.logging.Logger;
 public class RawReportWriter extends AbstractXmlReportWriter {
 	private static final Logger LOGGER = Logger.getLogger(RawReportWriter.class.getCanonicalName());
 
-	private final String RAW_RESULTS_TAG = "rawResults";
-	private final String ITEM_TAG = "item";
-	private final String VALIDATION_RESULT_TAG = "validationResult";
-	private final String PROCESSOR_CONFIG_TAG = "processorConfig";
-	private final String FEATURES_REPORT_TAG = "featuresReport";
-	private final String FIXER_RESULT_TAG = "fixerResult";
+	private static final String RAW_RESULTS_TAG = "rawResults";
+	private static final String ITEM_TAG = "item";
+	private static final String VALIDATION_RESULT_TAG = "validationResult";
+	private static final String PROCESSOR_CONFIG_TAG = "processorConfig";
+	private static final String FEATURES_REPORT_TAG = "featuresReport";
+	private static final String FIXER_RESULT_TAG = "fixerResult";
 
 	protected RawReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter) throws XMLStreamException, ParserConfigurationException, SAXException {
 		super(outputStreamWriter, errorStreamWriter);

@@ -36,7 +36,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class RuleIdImplTest {
-    private final static String DEFAULT_RULE_ID_STRING = "RuleId [specification=" + Specification.NO_STANDARD.toString() + ", clause=clause, testNumber=0]";
+    private static final String DEFAULT_RULE_ID_STRING = "RuleId [specification=" + Specification.NO_STANDARD + ", clause=clause, testNumber=0]";
     /**
      * Test method for {@link org.verapdf.pdfa.validation.profiles.RuleIdImpl#equals(java.lang.Object)}.
      */

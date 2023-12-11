@@ -42,8 +42,8 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ValidationProfileImplTest {
-	private final static String DEFAULT_PROFILE_STRING = "ValidationProfile [flavour="
-			+ PDFAFlavour.NO_FLAVOUR.toString() + ", details=" + ProfileDetailsImpl.defaultInstance()
+	private static final String DEFAULT_PROFILE_STRING = "ValidationProfile [flavour="
+			+ PDFAFlavour.NO_FLAVOUR + ", details=" + ProfileDetailsImpl.defaultInstance()
 			+ ", hash=hash, rules=[], variables=[]]";
 
 	/**
@@ -74,8 +74,8 @@ public class ValidationProfileImplTest {
 	public final void testFromValues() {
 		// Get an equivalent to the default instance
 		ValidationProfile rule = Profiles.profileFromValues(PDFAFlavour.NO_FLAVOUR,
-				ProfileDetailsImpl.defaultInstance(), "hash", Collections.<Rule>emptySet(),
-				Collections.<Variable>emptySet());
+				ProfileDetailsImpl.defaultInstance(), "hash", Collections.emptySet(),
+				Collections.emptySet());
 		ValidationProfile defaultInstance = Profiles.defaultProfile();
 		// Equivalent is NOT the same object as default instance
 		assertNotSame(rule, defaultInstance);

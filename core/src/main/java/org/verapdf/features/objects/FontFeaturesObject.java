@@ -133,11 +133,11 @@ public class FontFeaturesObject extends FeaturesObject {
 				TYPE3.equals(fontType)) {
 
 			Long fc = fontAdapter.getFirstChar();
-			if (fc != null && fc.longValue() != -1) {
+			if (fc != null && fc != -1) {
 				root.addChild("firstChar").setValue(String.valueOf(fc.longValue()));
 			}
 			Long lc = fontAdapter.getLastChar();
-			if (lc != null && lc.longValue() != -1) {
+			if (lc != null && lc != -1) {
 				root.addChild("lastChar").setValue(String.valueOf(lc.longValue()));
 			}
 
@@ -197,8 +197,8 @@ public class FontFeaturesObject extends FeaturesObject {
 			double[] rex = descriptor.getFontBoundingBox();
 			if (rex != null) {
 				List<Double> rect = new ArrayList<>(rex.length);
-				for (int i = 0; i < rex.length; ++i) {
-					rect.add(rex[i]);
+				for (double v : rex) {
+					rect.add(v);
 				}
 				builder.fontBBox(rect);
 			}
@@ -297,7 +297,7 @@ public class FontFeaturesObject extends FeaturesObject {
 				actualFontName = "";
 			}
 			boolean subset = actualFontName.matches("^[A-Z]{6}\\+.*");
-			String fontName = subset ? actualFontName.substring(7, actualFontName.length()) : actualFontName;
+			String fontName = subset ? actualFontName.substring(7) : actualFontName;
 			CreateNodeHelper.addNotEmptyNode(SUBSET, String.valueOf(subset), descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_NAME, fontName, descriptorNode);
 			CreateNodeHelper.addNotEmptyNode(FONT_FAMILY, descriptor.getFontFamily(), descriptorNode);

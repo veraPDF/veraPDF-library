@@ -92,7 +92,7 @@ public final class AuditDurationImpl implements AuditDuration {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Long.valueOf(this.start), Long.valueOf(this.finish));
+		return Objects.hash(this.start, this.finish);
 	}
 
 	@Override
@@ -122,8 +122,8 @@ public final class AuditDurationImpl implements AuditDuration {
 		long millis = difference % msInSec;
 
 		try (Formatter formatter = new Formatter()) {
-			formatter.format("%02d:%02d:%02d.%03d", Long.valueOf(hours), Long.valueOf(minutes), Long.valueOf(seconds), //$NON-NLS-1$
-					Long.valueOf(millis));
+			formatter.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, //$NON-NLS-1$
+					millis);
 			return formatter.toString();
 		}
 	}

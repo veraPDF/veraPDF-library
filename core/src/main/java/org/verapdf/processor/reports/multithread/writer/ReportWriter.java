@@ -11,9 +11,9 @@ import org.verapdf.processor.reports.ResultStructure;
 public abstract class ReportWriter {
 	private static final Logger LOGGER = Logger.getLogger(ReportWriter.class.getCanonicalName());
 
-	protected PrintWriter outputStreamWriter;
+	protected final PrintWriter outputStreamWriter;
 
-	private PrintWriter errorStreamWriter;
+	private final PrintWriter errorStreamWriter;
 
 	protected ReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter) {
 		this.outputStreamWriter = outputStreamWriter;

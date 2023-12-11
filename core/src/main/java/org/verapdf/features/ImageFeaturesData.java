@@ -135,7 +135,7 @@ public final class ImageFeaturesData extends FeaturesData {
 
 		Filter(String name, Map<String, String> properties, InputStream stream) {
 			this.name = name;
-			this.properties = properties == null ? new HashMap<String, String>() : new HashMap<>(properties);
+			this.properties = properties == null ? new HashMap<>() : new HashMap<>(properties);
 			this.stream = stream;
 		}
 

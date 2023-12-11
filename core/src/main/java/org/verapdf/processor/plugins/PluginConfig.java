@@ -58,7 +58,7 @@ public class PluginConfig {
 	}
 
 	private PluginConfig() {
-		this(false, "", "", "","", Collections.<Attribute>emptyList());  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
+		this(false, "", "", "","", Collections.emptyList());  //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$//$NON-NLS-4$
 	}
 
 	public static PluginConfig fromValues(boolean enabled, String name, String version, String description, String pluginFolder, List<Attribute> attributes) {
@@ -86,6 +86,6 @@ public class PluginConfig {
 	}
 
 	public List<Attribute> getAttributes() {
-		return this.attributes == null ? Collections.<Attribute>emptyList() : Collections.unmodifiableList(this.attributes);
+		return this.attributes == null ? Collections.emptyList() : Collections.unmodifiableList(this.attributes);
 	}
 }

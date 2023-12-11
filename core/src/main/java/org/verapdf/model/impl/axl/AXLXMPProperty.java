@@ -38,8 +38,8 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     private final boolean isClosedChoiceCheck;
     private final PDFAFlavour flavour;
     private final SchemasDefinition mainPackageSchemasDefinition;
-    private SchemasDefinition currentSchemasDefinitionPDFA_1;
-    private SchemasDefinition currentSchemasDefinitionPDFA_2_3;
+    private final SchemasDefinition currentSchemasDefinitionPDFA_1;
+    private final SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
     public AXLXMPProperty(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
         this(xmpNode, XMP_PROPERTY_TYPE, isMainMetadata, isClosedChoiceCheck, mainPackageSchemasDefinition, currentSchemasDefinitionPDFA_1, currentSchemasDefinitionPDFA_2_3, flavour);
@@ -64,26 +64,25 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisPredefinedInXMP2004() {
-        return Boolean.valueOf(SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode));
+        return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_1(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisPredefinedInXMP2005() {
-        return Boolean.valueOf(SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode));
+        return SchemasDefinitionCreator.getPredefinedSchemaDefinitionForPDFA_2_3(this.isClosedChoiceCheck).isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisDefinedInCurrentPackage() {
         if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
-            return Boolean.valueOf(this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode));
+            return this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode);
         }
-        return Boolean.valueOf(this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode));
+        return this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode);
     }
 
     @Override
     public Boolean getisDefinedInMainPackage() {
-        return this.isMainMetadata ? Boolean.valueOf(this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode)) :
-            Boolean.valueOf(this.mainPackageSchemasDefinition.isDefinedProperty(this.xmpNode));
+        return (this.isMainMetadata ? this.currentSchemasDefinitionPDFA_2_3 : this.mainPackageSchemasDefinition).isDefinedProperty(this.xmpNode);
     }
 
     @Override

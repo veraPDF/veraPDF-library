@@ -182,7 +182,7 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 						resFilters.add(ImageFeaturesData.Filter.newInstance(filterNameValue, getDCTFiltersMap(adapter), null));
 						break;
 					case "JBIG2Decode":
-						resFilters.add(ImageFeaturesData.Filter.newInstance(filterNameValue, new HashMap<String, String>(),
+						resFilters.add(ImageFeaturesData.Filter.newInstance(filterNameValue, new HashMap<>(),
 								adapter.getJBIG2Global()));
 						break;
 					case "Crypt":
@@ -193,7 +193,7 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 						//$FALL-THROUGH$
 					default:
 						resFilters.add(
-								ImageFeaturesData.Filter.newInstance(filterNameValue, new HashMap<String, String>(), null));
+								ImageFeaturesData.Filter.newInstance(filterNameValue, new HashMap<>(), null));
 				}
 			}
 		}
@@ -209,18 +209,17 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 			ImageXObjectFeaturesObjectAdapter.StreamFilterAdapter filter) {
 		Map<String, String> res = new HashMap<>();
 		if (filter != null) {
-			putIntegerAsStringWithDefault(res, "K", filter.getCCITTK(), Integer.valueOf(0));
+			putIntegerAsStringWithDefault(res, "K", filter.getCCITTK(), 0);
 			putBooleanAsStringWithDefault(res, "EndOfLine", filter.getCCITTEndOfLine(), Boolean.FALSE);
 			putBooleanAsStringWithDefault(res, "EncodedByteAlign", filter.getCCITTEncodedByteAlign(),
 					Boolean.FALSE);
-			putIntegerAsStringWithDefault(res, "Columns", filter.getCCITTColumns(),
-					Integer.valueOf(1728));
-			putIntegerAsStringWithDefault(res, "Rows", filter.getCCITTRows(), Integer.valueOf(0));
+			putIntegerAsStringWithDefault(res, "Columns", filter.getCCITTColumns(), 1728);
+			putIntegerAsStringWithDefault(res, "Rows", filter.getCCITTRows(), 0);
 			putBooleanAsStringWithDefault(res, "EndOfBlock", filter.getCCITTEndOfBlock(),
 					Boolean.TRUE);
 			putBooleanAsStringWithDefault(res, "BlackIs1", filter.getCCITTBlackIs1(), Boolean.FALSE);
 			putIntegerAsStringWithDefault(res, "DamagedRowsBeforeError",
-					filter.getCCITTDamagedRowsBeforeError(), Integer.valueOf(0));
+					filter.getCCITTDamagedRowsBeforeError(), 0);
 		} else {
 			res.put("K", "0");
 			res.put("EndOfLine", "false");
@@ -256,8 +255,7 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 		}
 
 		Map<String, String> retVal = createFlatFilterMap(filter);
-		putIntegerAsStringWithDefault(retVal, "EarlyChange", filter.getLZWEarlyChange(),
-				Integer.valueOf(1));
+		putIntegerAsStringWithDefault(retVal, "EarlyChange", filter.getLZWEarlyChange(), 1);
 		return retVal;
 
 	}
@@ -270,12 +268,10 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 
 		Map<String, String> res = new HashMap<>();
 
-		putIntegerAsStringWithDefault(res, "Predictor", filter.getFlatePredictor(),
-				Integer.valueOf(1));
-		putIntegerAsStringWithDefault(res, "Colors", filter.getFlateColors(), Integer.valueOf(1));
-		putIntegerAsStringWithDefault(res, "BitsPerComponent", filter.getFlateBitsPerComponent(),
-				Integer.valueOf(8));
-		putIntegerAsStringWithDefault(res, "Columns", filter.getFlateColumns(), Integer.valueOf(1));
+		putIntegerAsStringWithDefault(res, "Predictor", filter.getFlatePredictor(), 1);
+		putIntegerAsStringWithDefault(res, "Colors", filter.getFlateColors(), 1);
+		putIntegerAsStringWithDefault(res, "BitsPerComponent", filter.getFlateBitsPerComponent(), 8);
+		putIntegerAsStringWithDefault(res, "Columns", filter.getFlateColumns(), 1);
 		return res;
 	}
 
@@ -290,7 +286,7 @@ public class ImageXObjectFeaturesObject extends FeaturesObject {
 
 	private static Integer getIntegerWithDefault(Long value, Integer defaultValue) {
 		if (value != null) {
-			return Integer.valueOf(value.intValue());
+			return value.intValue();
 		}
 		return defaultValue;
 	}

@@ -116,10 +116,10 @@ public class SchematronGenerator {
 	}
 
 	public static class Assertion {
-		private FeatureObjectType featureType;
-		private Feature feature;
-		private SchematronOperation operation;
-		private String argument;
+		private final FeatureObjectType featureType;
+		private final Feature feature;
+		private final SchematronOperation operation;
+		private final String argument;
 
 		public Assertion(FeatureObjectType featureType, Feature feature, SchematronOperation operation, String argument) {
 			if (featureType == null || feature == null || operation == null) {

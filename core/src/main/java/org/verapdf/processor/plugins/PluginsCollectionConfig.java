@@ -42,11 +42,11 @@ public final class PluginsCollectionConfig {
 	private final List<PluginConfig> plugin;
 
 	public PluginsCollectionConfig() {
-		this(Collections.<PluginConfig>emptyList());
+		this(Collections.emptyList());
 	}
 
 	private PluginsCollectionConfig(List<PluginConfig> pluginsConfig) {
-		this.plugin = pluginsConfig == null ? Collections.<PluginConfig>emptyList() : new ArrayList<>(pluginsConfig);
+		this.plugin = pluginsConfig == null ? Collections.emptyList() : new ArrayList<>(pluginsConfig);
 	}
 
 	/**

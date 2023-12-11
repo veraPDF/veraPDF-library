@@ -15,19 +15,19 @@ import static org.verapdf.component.AuditDurationImpl.getStringDuration;
 public class ReportParserEventHandler extends DefaultHandler {
     private static final Logger LOGGER = Logger.getLogger(ReportParserEventHandler.class.getCanonicalName());
 
-    private final Set<String> BATCH_SUMMARY_TAGS =
+    private static final Set<String> BATCH_SUMMARY_TAGS =
             new HashSet<>(Arrays.asList("batchSummary", "validationReports", "featureReports", "repairReports"));
 
     private String element;
-    private Map<String, Map<String, Integer>> batchSummary = new LinkedHashMap<>();
-    private Map<String, Map<String, Integer>> current = new LinkedHashMap<>();
+    private final Map<String, Map<String, Integer>> batchSummary = new LinkedHashMap<>();
+    private final Map<String, Map<String, Integer>> current = new LinkedHashMap<>();
 
     private boolean isPrinting = false;
-    private long startTime;
+    private final long startTime;
 
     private boolean isAddReportToSummary = false;
 
-    private XMLStreamWriter writer;
+    private final XMLStreamWriter writer;
     
     public ReportParserEventHandler(XMLStreamWriter writer) {
         this.writer = writer;
@@ -36,12 +36,10 @@ public class ReportParserEventHandler extends DefaultHandler {
 
     @Override
     public void endDocument() {
-        if (current.size() > 0) {
-            if (batchSummary.size() > 0) {
-                Set<String> keySet = current.keySet();
-                keySet.forEach(k -> {
+        if (!current.isEmpty()) {
+            if (!batchSummary.isEmpty()) {
+                current.forEach((k, currentAttributesAndValues) -> {
                     Map<String, Integer> summaryAttributesAndValues = batchSummary.get(k);
-                    Map<String, Integer> currentAttributesAndValues = current.get(k);
                     currentAttributesAndValues.forEach((key, v) -> summaryAttributesAndValues.merge(key, v, Integer::sum));
                 });
             } else {

@@ -58,7 +58,7 @@ import jakarta.xml.bind.annotation.XmlAnyElement;
 public class JAXBCollection<T>
 {
     @XmlAnyElement (lax = true)
-    private List<T> items;
+    private final List<T> items;
 
     public JAXBCollection(Collection<T> contents)
     {
@@ -75,7 +75,7 @@ public class JAXBCollection<T>
 
     public JAXBCollection()
     {
-        this(new ArrayList<T>());
+        this(new ArrayList<>());
     }
 
     public List<T> getItems()

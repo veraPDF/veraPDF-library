@@ -61,13 +61,13 @@ class TaskResultImpl implements TaskResult {
 			return null;
 
 		Throwable e = this.exception;
-		String res = EXCEPTION + e.getMessage();
+		StringBuilder res = new StringBuilder(EXCEPTION + e.getMessage());
 		e = e.getCause();
 		while (e != null) {
-			res += CAUSED_BY + e.getMessage();
+			res.append(CAUSED_BY).append(e.getMessage());
 			e = e.getCause();
 		}
-		return res;
+		return res.toString();
 	}
 
 	private TaskResultImpl() {

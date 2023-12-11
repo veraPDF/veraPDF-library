@@ -40,8 +40,8 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 final class ValidationProfileImpl implements ValidationProfile {
     private Map<String, Set<Rule>> objectRuleMap;
     private Map<String, Set<Variable>> objectVariableMap;
-    private Map<RuleId, Rule> ruleLookup = new HashMap<>();
-    private final static ValidationProfileImpl DEFAULT = new ValidationProfileImpl();
+    private final Map<RuleId, Rule> ruleLookup = new HashMap<>();
+    private static final ValidationProfileImpl DEFAULT = new ValidationProfileImpl();
 
     @XmlAttribute
     private final PDFAFlavour flavour;
@@ -58,7 +58,7 @@ final class ValidationProfileImpl implements ValidationProfile {
 
     private ValidationProfileImpl() {
         this(PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),
-                "hash", Collections.<Rule> emptySet(), Collections.<Variable> emptySet());
+                "hash", Collections.emptySet(), Collections.emptySet());
     }
 
     private ValidationProfileImpl(final PDFAFlavour flavour,
@@ -132,7 +132,7 @@ final class ValidationProfileImpl implements ValidationProfile {
             this.objectRuleMap = createObjectRuleMap(this.rules);
         }
         Set<Rule> objRules = this.objectRuleMap.get(objectName);
-        return objRules == null ? Collections.<Rule> emptySet() : Collections.unmodifiableSet(objRules);
+        return objRules == null ? Collections.emptySet() : Collections.unmodifiableSet(objRules);
     }
 
     /**
@@ -144,7 +144,7 @@ final class ValidationProfileImpl implements ValidationProfile {
             this.objectVariableMap = createObjectVariableMap(this.variables);
         }
         Set<Variable> objRules = this.objectVariableMap.get(objectName);
-        return objRules == null ? Collections.<Variable> emptySet() : Collections.unmodifiableSet(objRules);
+        return objRules == null ? Collections.emptySet() : Collections.unmodifiableSet(objRules);
     }
 
     /**
@@ -272,7 +272,7 @@ final class ValidationProfileImpl implements ValidationProfile {
         for (Rule rule : rulesToSet) {
             this.ruleLookup.put(rule.getRuleId(), rule);
             if (!rulesByObject.containsKey(rule.getObject())) {
-                rulesByObject.put(rule.getObject(), new HashSet<Rule>());
+                rulesByObject.put(rule.getObject(), new HashSet<>());
             }
             rulesByObject.get(rule.getObject()).add(rule);
         }
@@ -284,8 +284,7 @@ final class ValidationProfileImpl implements ValidationProfile {
         Map<String, Set<Variable>> variablesByObject = new HashMap<>();
         for (Variable rule : variables) {
             if (!variablesByObject.containsKey(rule.getObject())) {
-                variablesByObject
-                        .put(rule.getObject(), new HashSet<Variable>());
+                variablesByObject.put(rule.getObject(), new HashSet<>());
             }
             variablesByObject.get(rule.getObject()).add(rule);
         }

@@ -34,8 +34,8 @@ public final class FeatureTreeNode {
 	private final String name;
 	private final boolean isMetadataNode;
 	private String value;
-	private Map<String, String> attributes = new HashMap<>();
-	private List<FeatureTreeNode> children = new ArrayList<>();
+	private final Map<String, String> attributes = new HashMap<>();
+	private final List<FeatureTreeNode> children = new ArrayList<>();
 
 	private FeatureTreeNode(String name) {
 		this(name, false);
@@ -223,7 +223,6 @@ public final class FeatureTreeNode {
 	}
 
 	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
-		return aThis.children == other.children || ((aThis.children == null) == (other.children == null))
-				&& aThis.children.size() == other.children.size() && aThis.children.containsAll(other.children);
+		return Objects.equals(aThis.children, other.children);
 	}
 }

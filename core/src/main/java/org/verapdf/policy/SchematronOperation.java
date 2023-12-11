@@ -33,8 +33,8 @@ public enum SchematronOperation {
 //	ENDS_WITH(true, "ends with"),
 	CONTAINS(true, "contains substring");
 
-	private boolean hasArguments;
-	private String description;
+	private final boolean hasArguments;
+	private final String description;
 
 	SchematronOperation(boolean hasArguments, String description) {
 		this.hasArguments = hasArguments;
@@ -116,8 +116,8 @@ public enum SchematronOperation {
 	}
 
 	public static class AssertionInformation {
-		private String testAssertion;
-		private String assertionDescription;
+		private final String testAssertion;
+		private final String assertionDescription;
 
 		private AssertionInformation(String testAssertion, String assertionDescription) {
 			this.testAssertion = testAssertion;

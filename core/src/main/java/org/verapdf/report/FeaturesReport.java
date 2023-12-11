@@ -34,7 +34,7 @@ import java.util.List;
 @XmlRootElement(name="featuresReport")
 public class FeaturesReport {
 
-	private final static String ERROR_STATUS = "Could not finish features collecting due to unexpected error."; //$NON-NLS-1$
+	private static final String ERROR_STATUS = "Could not finish features collecting due to unexpected error."; //$NON-NLS-1$
 
 	@XmlElement
 	private final String status;

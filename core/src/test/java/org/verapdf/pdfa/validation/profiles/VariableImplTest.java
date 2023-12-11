@@ -38,7 +38,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class VariableImplTest {
-    private final static String DEFAULT_VARIABLE_STRING = "Variable [name=name, object=object, defaultValue=defaultValue, value=value]";
+    private static final String DEFAULT_VARIABLE_STRING = "Variable [name=name, object=object, defaultValue=defaultValue, value=value]";
 
     /**
      * Test method for

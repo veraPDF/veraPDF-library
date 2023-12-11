@@ -43,8 +43,8 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
-    private final static String PROFILE_RESOURCE_ROOT = "org/verapdf/pdfa/validation/";
-    private final static String XML_SUFFIX = ".xml";
+    private static final String PROFILE_RESOURCE_ROOT = "org/verapdf/pdfa/validation/";
+    private static final String XML_SUFFIX = ".xml";
     private static final ProfileDirectoryImpl DEFAULT = makeVeraProfileDir();
 
     private final Directory<PDFAFlavour, ValidationProfile> profileDir;

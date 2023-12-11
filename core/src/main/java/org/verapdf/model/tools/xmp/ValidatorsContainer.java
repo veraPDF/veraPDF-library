@@ -32,8 +32,8 @@ import java.util.regex.Pattern;
  */
 public class ValidatorsContainer {
 
-    private Map<String, TypeValidator> validators;
-    private Map<String, ArrayTypeValidator> arrayValidators;
+    private final Map<String, TypeValidator> validators;
+    private final Map<String, ArrayTypeValidator> arrayValidators;
 
     /**
      * Creates new validators container and initialize all array types and simple types

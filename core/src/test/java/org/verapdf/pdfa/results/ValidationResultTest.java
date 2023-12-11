@@ -82,7 +82,7 @@ public class ValidationResultTest {
 	 */
 	@Test
 	public final void testFromValues() {
-		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(), false, JobEndStatus.NORMAL);
+		ValidationResult resultFromVals = ValidationResults.resultFromValues(Profiles.defaultProfile(), Collections.emptyList(), false, JobEndStatus.NORMAL);
 		assertEquals(resultFromVals, ValidationResults.defaultResult());
 		assertNotSame(resultFromVals, ValidationResults.defaultResult());
 	}

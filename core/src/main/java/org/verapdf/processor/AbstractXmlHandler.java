@@ -38,14 +38,14 @@ import java.util.logging.Logger;
 
 public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 	private static final Logger logger = Logger.getLogger(AbstractXmlHandler.class.getCanonicalName());
-	protected final static String strmExcpMessTmpl = "XmlStreamException caught when %s output writer."; //$NON-NLS-1$
-	protected final static String unmarshalErrMessage = "Unmarshalling exception when streaming %s."; //$NON-NLS-1$
-	protected final static String writingMessage = "writing"; //$NON-NLS-1$
-	private final static String encoding = "utf-8"; //$NON-NLS-1$
-	private final static String xmlVersion = "1.0"; //$NON-NLS-1$
-	private final static String lineSepProp = "line.separator"; //$NON-NLS-1$
-	private final static String newline = System.getProperty(lineSepProp);
-	private static XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
+	protected static final String strmExcpMessTmpl = "XmlStreamException caught when %s output writer."; //$NON-NLS-1$
+	protected static final String unmarshalErrMessage = "Unmarshalling exception when streaming %s."; //$NON-NLS-1$
+	protected static final String writingMessage = "writing"; //$NON-NLS-1$
+	private static final String encoding = "utf-8"; //$NON-NLS-1$
+	private static final String xmlVersion = "1.0"; //$NON-NLS-1$
+	private static final String lineSepProp = "line.separator"; //$NON-NLS-1$
+	private static final String newline = System.getProperty(lineSepProp);
+	private static final XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
 
 	protected XMLStreamWriter writer;
 

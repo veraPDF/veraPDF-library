@@ -41,7 +41,7 @@ import java.util.*;
  */
 @XmlRootElement(name = "rule")
 final class RuleImpl implements Rule {
-    private final static RuleImpl DEFAULT = new RuleImpl();
+    private static final RuleImpl DEFAULT = new RuleImpl();
     @XmlElement
     private final RuleId id;
     @XmlAttribute
@@ -62,7 +62,7 @@ final class RuleImpl implements Rule {
 
     private RuleImpl() {
         this(RuleIdImpl.defaultInstance(), "object", null, null, "description", "test",
-                ErrorDetailsImpl.defaultInstance(), Collections.<Reference> emptyList());
+                ErrorDetailsImpl.defaultInstance(), Collections.emptyList());
     }
 
     private RuleImpl(final RuleId id, final String object, final Boolean deferred, final String tags,

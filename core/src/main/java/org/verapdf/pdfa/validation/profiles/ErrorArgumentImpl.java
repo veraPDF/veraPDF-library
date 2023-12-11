@@ -31,7 +31,7 @@ import java.util.Objects;
 @XmlRootElement(name = "argument")
 @XmlAccessorType(XmlAccessType.NONE)
 public final class ErrorArgumentImpl implements ErrorArgument {
-    private final static ErrorArgumentImpl DEFAULT = new ErrorArgumentImpl();
+    private static final ErrorArgumentImpl DEFAULT = new ErrorArgumentImpl();
     @XmlValue
     private final String argument;
     @XmlAttribute(name = "name")

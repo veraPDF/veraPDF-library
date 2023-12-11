@@ -39,7 +39,7 @@ import jakarta.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "variable")
 final class VariableImpl implements Variable {
-    private final static VariableImpl DEFAULT = new VariableImpl();
+    private static final VariableImpl DEFAULT = new VariableImpl();
     @XmlAttribute
     private final String name;
     @XmlAttribute

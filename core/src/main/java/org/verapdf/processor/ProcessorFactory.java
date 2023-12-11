@@ -169,10 +169,10 @@ public final class ProcessorFactory {
 		private int encrypted = 0;
 		private int outOfMemory = 0;
 		private int veraExceptions = 0;
-		private Components.Timer timer = Components.Timer.start();
-		private Summarisers.ValidationSummaryBuilder validationBuilder = new Summarisers.ValidationSummaryBuilder();
-		private Summarisers.FeatureSummaryBuilder featureBuilder = new Summarisers.FeatureSummaryBuilder();
-		private Summarisers.RepairSummaryBuilder repairBuilder = new Summarisers.RepairSummaryBuilder();
+		private final Components.Timer timer = Components.Timer.start();
+		private final Summarisers.ValidationSummaryBuilder validationBuilder = new Summarisers.ValidationSummaryBuilder();
+		private final Summarisers.FeatureSummaryBuilder featureBuilder = new Summarisers.FeatureSummaryBuilder();
+		private final Summarisers.RepairSummaryBuilder repairBuilder = new Summarisers.RepairSummaryBuilder();
 
 		public BatchSummariser(ProcessorConfig config) {
 			if (config == null)

@@ -38,7 +38,7 @@ import jakarta.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "reference")
 final class ReferenceImpl implements Reference {
-    private final static ReferenceImpl DEFAULT = new ReferenceImpl();
+    private static final ReferenceImpl DEFAULT = new ReferenceImpl();
     @XmlAttribute
     private final String specification;
     @XmlAttribute

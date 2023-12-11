@@ -83,7 +83,7 @@ final class RuleSummaryImpl implements RuleSummary {
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final String description, final String object,
 			final String test, String tags) {
-		this(ruleId, status, 0, 0, tags, description, object, test, Collections.<Check>emptyList());
+		this(ruleId, status, 0, 0, tags, description, object, test, Collections.emptyList());
 	}
 
 	private RuleSummaryImpl() {

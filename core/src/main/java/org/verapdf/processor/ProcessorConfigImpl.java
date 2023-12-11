@@ -34,6 +34,7 @@ import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import java.util.EnumSet;
+import java.util.Objects;
 
 /**
  * @author Maksim Bezrukov
@@ -153,17 +154,17 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 
 		ProcessorConfigImpl that = (ProcessorConfigImpl) o;
 
-		if (tasks != null ? !tasks.equals(that.tasks) : that.tasks != null) return false;
-		if (validatorConfig != null ? !validatorConfig.equals(that.validatorConfig) : that.validatorConfig != null)
+		if (!Objects.equals(tasks, that.tasks)) return false;
+		if (!Objects.equals(validatorConfig, that.validatorConfig))
 			return false;
-		if (featureConfig != null ? !featureConfig.equals(that.featureConfig) : that.featureConfig != null)
+		if (!Objects.equals(featureConfig, that.featureConfig))
 			return false;
-		if (pluginsCollectionConfig != null ? !pluginsCollectionConfig.equals(that.pluginsCollectionConfig) : that.pluginsCollectionConfig != null)
+		if (!Objects.equals(pluginsCollectionConfig, that.pluginsCollectionConfig))
 			return false;
-		if (fixerConfig != null ? !fixerConfig.equals(that.fixerConfig) : that.fixerConfig != null) return false;
-		if (customProfile != null ? !customProfile.equals(that.customProfile) : that.customProfile != null)
+		if (!Objects.equals(fixerConfig, that.fixerConfig)) return false;
+		if (!Objects.equals(customProfile, that.customProfile))
 			return false;
-		return mdFolder != null ? mdFolder.equals(that.mdFolder) : that.mdFolder == null;
+		return Objects.equals(mdFolder, that.mdFolder);
 
 	}
 

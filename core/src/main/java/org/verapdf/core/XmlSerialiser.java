@@ -397,7 +397,7 @@ public final class XmlSerialiser {
 
 	private static Marshaller marshaller(JAXBContext ctx, boolean format, boolean fragment) throws JAXBException {
 		Marshaller m = ctx.createMarshaller();
-		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.valueOf(format));
+		m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, format);
 		if (fragment) {
 			m.setProperty(Marshaller.JAXB_FRAGMENT, Boolean.TRUE);
 		}

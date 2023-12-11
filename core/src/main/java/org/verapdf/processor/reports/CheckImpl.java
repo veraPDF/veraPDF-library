@@ -103,6 +103,7 @@ final class CheckImpl implements Check {
 	/**
 	 * @return the error arguments
 	 */
+	@Override
 	public List<String> getErrorArguments() {
 		return this.errorArguments;
 	}

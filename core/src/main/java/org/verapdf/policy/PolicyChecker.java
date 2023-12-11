@@ -85,7 +85,6 @@ public final class PolicyChecker {
 			Transformer transformer = cachedMergeXsl.newTransformer();
 			transformer.setParameter("policyResultPath", policyReport.getAbsolutePath()); //$NON-NLS-1$
 			transformer.transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
-			return;
 		} catch (TransformerException excep) {
 			throw new VeraPDFException("Problem merging XML files.", excep); //$NON-NLS-1$
 		}
