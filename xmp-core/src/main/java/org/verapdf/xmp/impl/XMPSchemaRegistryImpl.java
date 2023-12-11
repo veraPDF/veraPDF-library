@@ -22,6 +22,7 @@ import org.verapdf.xmp.XMPConst;
 import org.verapdf.xmp.XMPError;
 import org.verapdf.xmp.XMPException;
 import org.verapdf.xmp.XMPSchemaRegistry;
+import org.verapdf.xmp.containers.StaticXmpCoreContainers;
 import org.verapdf.xmp.options.AliasOptions;
 import org.verapdf.xmp.properties.XMPAliasInfo;
 
@@ -32,18 +33,25 @@ import org.verapdf.xmp.properties.XMPAliasInfo;
  * 
  * @since 27.01.2006
  */
-public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
-{
-	/** a map from a namespace URI to its registered prefix */
-	private Map namespaceToPrefixMap = new HashMap();
+public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst {
+	/**
+	 * a map from a namespace URI to its registered prefix
+	 */
+	private final Map<String, String> standardNamespaceToPrefixMap = new HashMap<>();
 
-	/** a map from a prefix to the associated namespace URI */
-	private Map prefixToNamespaceMap = new HashMap();
+	/**
+	 * a map from a prefix to the associated namespace URI
+	 */
+	private final Map<String, String> standardPrefixToNamespaceMap = new HashMap<>();
 
-	/** a map of all registered aliases. 
-	 *  The map is a relationship from a qname to an <code>XMPAliasInfo</code>-object. */
+	/**
+	 * a map of all registered aliases.
+	 * The map is a relationship from a qname to an <code>XMPAliasInfo</code>-object.
+	 */
 	private Map aliasMap = new HashMap();
-	/** The pattern that must not be contained in simple properties */
+	/**
+	 * The pattern that must not be contained in simple properties
+	 */
 	private Pattern p = Pattern.compile("[/*?\\[\\]]");
 
 	
@@ -51,15 +59,12 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	 * Performs the initialisation of the registry with the default namespaces, aliases and global
 	 * options.
 	 */
-	public XMPSchemaRegistryImpl()
-	{
-		try
-		{
+	public XMPSchemaRegistryImpl() {
+		try {
+			StaticXmpCoreContainers.clearAllContainers();
 			registerStandardNamespaces();
 			registerStandardAliases();
-		}
-		catch (XMPException e)
-		{
+		} catch (XMPException e) {
 			throw new RuntimeException("The XMPSchemaRegistry cannot be initialized!");
 		}
 	}
@@ -70,53 +75,56 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	
 
 	/**
-	 * @see XMPSchemaRegistry#registerNamespace(String, String)
+	 * @see XMPSchemaRegistry#registerNamespace(String, String, boolean)
 	 */
-	public synchronized String registerNamespace(String namespaceURI, String suggestedPrefix)
-			throws XMPException
-	{
+	public synchronized String registerNamespace(String namespaceURI, String suggestedPrefix, boolean isStandard)
+			throws XMPException {
 		ParameterAsserts.assertSchemaNS(namespaceURI);
 		ParameterAsserts.assertPrefix(suggestedPrefix);
 		
-		if (suggestedPrefix.charAt(suggestedPrefix.length() - 1) != ':')
-		{
+		if (suggestedPrefix.charAt(suggestedPrefix.length() - 1) != ':') {
 			suggestedPrefix += ':';
 		}
 		
 		if (!Utils.isXMLNameNS(suggestedPrefix.substring(0,
-				suggestedPrefix.length() - 1)))
-		{
+				suggestedPrefix.length() - 1))) {
 			throw new XMPException("The prefix is a bad XML name", XMPError.BADXML);
 		}
 		
-		String registeredPrefix = (String) namespaceToPrefixMap.get(namespaceURI);
-		String registeredNS = (String) prefixToNamespaceMap.get(suggestedPrefix);
-		if (registeredPrefix != null)
-		{
+		String registeredPrefix = getNamespacePrefix(namespaceURI);
+		String registeredNS = getNamespaceURI(suggestedPrefix);
+		if (registeredPrefix != null) {
 			// Return the actual prefix
 			return registeredPrefix;
-		}
-		else
-		{
-			if (registeredNS != null) 
-			{
+		} else {
+			if (registeredNS != null) {
 				// the namespace is new, but the prefix is already engaged,
 				// we generate a new prefix out of the suggested
 				String generatedPrefix = suggestedPrefix;
-				for (int i = 1; prefixToNamespaceMap.containsKey(generatedPrefix); i++)
-				{
-					generatedPrefix = suggestedPrefix
-							.substring(0, suggestedPrefix.length() - 1)
-							+ "_" + i + "_:";
+				for (int i = 1; containsPrefix(generatedPrefix); i++) {
+					generatedPrefix = suggestedPrefix.substring(0, suggestedPrefix.length() - 1) + "_" + i + "_:";
 				}
 				suggestedPrefix = generatedPrefix;
-			}			
-			prefixToNamespaceMap.put(suggestedPrefix, namespaceURI);
-			namespaceToPrefixMap.put(namespaceURI, suggestedPrefix);
+			}
+			if (isStandard) {
+				standardPrefixToNamespaceMap.put(suggestedPrefix, namespaceURI);
+				standardNamespaceToPrefixMap.put(namespaceURI, suggestedPrefix);
+			} else {
+				StaticXmpCoreContainers.getPrefixToNamespaceMap().put(suggestedPrefix, namespaceURI);
+				StaticXmpCoreContainers.getNamespaceToPrefixMap().put(namespaceURI, suggestedPrefix);
+			}
 			
 			// Return the suggested prefix
 			return suggestedPrefix;
 		}
+	}
+
+	public synchronized String registerStandardNamespace(String namespaceURI, String suggestedPrefix) throws XMPException {
+		return registerNamespace(namespaceURI, suggestedPrefix, true);
+	}
+	
+	private boolean containsPrefix(String namespacePrefix) {
+		return StaticXmpCoreContainers.getPrefixToNamespaceMap().containsKey(namespacePrefix) || standardPrefixToNamespaceMap.containsKey(namespacePrefix);
 	}
 
 
@@ -127,9 +135,11 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	{
 		String prefixToDelete = getNamespacePrefix(namespaceURI);
 		if (prefixToDelete != null)
-		{	
-			namespaceToPrefixMap.remove(namespaceURI);
-			prefixToNamespaceMap.remove(prefixToDelete);
+		{
+			StaticXmpCoreContainers.getNamespaceToPrefixMap().remove(namespaceURI);
+			StaticXmpCoreContainers.getPrefixToNamespaceMap().remove(prefixToDelete);
+			standardNamespaceToPrefixMap.remove(namespaceURI);
+			standardPrefixToNamespaceMap.remove(prefixToDelete);
 		}	
 	}
 
@@ -139,7 +149,11 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	 */
 	public synchronized String getNamespacePrefix(String namespaceURI)
 	{
-		return (String) namespaceToPrefixMap.get(namespaceURI);
+		String namespacePrefix = StaticXmpCoreContainers.getNamespaceToPrefixMap().get(namespaceURI);
+		if (namespacePrefix == null) {
+			namespacePrefix = standardNamespaceToPrefixMap.get(namespaceURI);
+		}
+		return namespacePrefix;
 	}
 
 
@@ -152,7 +166,11 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 		{
 			namespacePrefix += ":";
 		}
-		return (String) prefixToNamespaceMap.get(namespacePrefix);
+		String namespaceURI = StaticXmpCoreContainers.getPrefixToNamespaceMap().get(namespacePrefix);
+		if (namespaceURI == null) {
+			namespaceURI = standardPrefixToNamespaceMap.get(namespacePrefix);
+		}
+		return namespaceURI;
 	}
 
 
@@ -161,7 +179,9 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	 */
 	public synchronized Map getNamespaces()
 	{
-		return Collections.unmodifiableMap(new TreeMap(namespaceToPrefixMap));
+		Map<String, String> map = new TreeMap<>(StaticXmpCoreContainers.getNamespaceToPrefixMap());
+		map.putAll(standardNamespaceToPrefixMap);
+		return Collections.unmodifiableMap(map);
 	}
 	
 	
@@ -170,7 +190,9 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	 */
 	public synchronized Map getPrefixes()
 	{
-		return Collections.unmodifiableMap(new TreeMap(prefixToNamespaceMap));
+		Map<String, String> map = new TreeMap<>(StaticXmpCoreContainers.getPrefixToNamespaceMap());
+		map.putAll(standardPrefixToNamespaceMap);
+		return Collections.unmodifiableMap(map);
 	}
 	
 	
@@ -184,70 +206,70 @@ public final class XMPSchemaRegistryImpl implements XMPSchemaRegistry, XMPConst
 	private void registerStandardNamespaces() throws XMPException
 	{
 		// register standard namespaces
-		registerNamespace(NS_XML, "xml");
-		registerNamespace(NS_RDF, "rdf");
-		registerNamespace(NS_DC, "dc");
-		registerNamespace(NS_IPTCCORE, "Iptc4xmpCore");
-		registerNamespace(NS_IPTCEXT, "Iptc4xmpExt");
-		registerNamespace(NS_DICOM, "DICOM");
-		registerNamespace(NS_PLUS, "plus");
+		registerStandardNamespace(NS_XML, "xml");
+		registerStandardNamespace(NS_RDF, "rdf");
+		registerStandardNamespace(NS_DC, "dc");
+		registerStandardNamespace(NS_IPTCCORE, "Iptc4xmpCore");
+		registerStandardNamespace(NS_IPTCEXT, "Iptc4xmpExt");
+		registerStandardNamespace(NS_DICOM, "DICOM");
+		registerStandardNamespace(NS_PLUS, "plus");
 
 		// register Adobe standard namespaces
-		registerNamespace(NS_X, "x");
-		registerNamespace(NS_IX, "iX");
+		registerStandardNamespace(NS_X, "x");
+		registerStandardNamespace(NS_IX, "iX");
 
-		registerNamespace(NS_XMP, "xmp");
-		registerNamespace(NS_XMP_RIGHTS, "xmpRights");
-		registerNamespace(NS_XMP_MM, "xmpMM");
-		registerNamespace(NS_XMP_BJ, "xmpBJ");
-		registerNamespace(NS_XMP_NOTE, "xmpNote");
+		registerStandardNamespace(NS_XMP, "xmp");
+		registerStandardNamespace(NS_XMP_RIGHTS, "xmpRights");
+		registerStandardNamespace(NS_XMP_MM, "xmpMM");
+		registerStandardNamespace(NS_XMP_BJ, "xmpBJ");
+		registerStandardNamespace(NS_XMP_NOTE, "xmpNote");
 		
-		registerNamespace(NS_PDF, "pdf");
-		registerNamespace(NS_PDFX, "pdfx");
-		registerNamespace(NS_PDFX_ID, "pdfxid");
-		registerNamespace(NS_PDFA_SCHEMA, "pdfaSchema");
-		registerNamespace(NS_PDFA_PROPERTY, "pdfaProperty");
-		registerNamespace(NS_PDFA_TYPE, "pdfaType");
-		registerNamespace(NS_PDFA_FIELD, "pdfaField");
-		registerNamespace(NS_PDFA_ID, "pdfaid");
-		registerNamespace(NS_PDFA_EXTENSION, "pdfaExtension");
-		registerNamespace(NS_PHOTOSHOP, "photoshop");
-		registerNamespace(NS_PSALBUM, "album");
-		registerNamespace(NS_EXIF, "exif");
-		registerNamespace(NS_EXIFX, "exifEX");
-		registerNamespace(NS_EXIF_AUX, "aux");
-		registerNamespace(NS_TIFF, "tiff");
-		registerNamespace(NS_PNG, "png");
-		registerNamespace(NS_JPEG, "jpeg");
-		registerNamespace(NS_JP2K, "jp2k");
-		registerNamespace(NS_CAMERARAW, "crs");
-		registerNamespace(NS_ADOBESTOCKPHOTO, "bmsp");
-		registerNamespace(NS_CREATOR_ATOM, "creatorAtom");
-		registerNamespace(NS_ASF, "asf");
-		registerNamespace(NS_WAV, "wav");
-		registerNamespace(NS_BWF, "bext");
-		registerNamespace(NS_RIFFINFO, "riffinfo");
-		registerNamespace(NS_SCRIPT, "xmpScript");
-		registerNamespace(NS_TXMP, "txmp");
-		registerNamespace(NS_SWF, "swf");
+		registerStandardNamespace(NS_PDF, "pdf");
+		registerStandardNamespace(NS_PDFX, "pdfx");
+		registerStandardNamespace(NS_PDFX_ID, "pdfxid");
+		registerStandardNamespace(NS_PDFA_SCHEMA, "pdfaSchema");
+		registerStandardNamespace(NS_PDFA_PROPERTY, "pdfaProperty");
+		registerStandardNamespace(NS_PDFA_TYPE, "pdfaType");
+		registerStandardNamespace(NS_PDFA_FIELD, "pdfaField");
+		registerStandardNamespace(NS_PDFA_ID, "pdfaid");
+		registerStandardNamespace(NS_PDFA_EXTENSION, "pdfaExtension");
+		registerStandardNamespace(NS_PHOTOSHOP, "photoshop");
+		registerStandardNamespace(NS_PSALBUM, "album");
+		registerStandardNamespace(NS_EXIF, "exif");
+		registerStandardNamespace(NS_EXIFX, "exifEX");
+		registerStandardNamespace(NS_EXIF_AUX, "aux");
+		registerStandardNamespace(NS_TIFF, "tiff");
+		registerStandardNamespace(NS_PNG, "png");
+		registerStandardNamespace(NS_JPEG, "jpeg");
+		registerStandardNamespace(NS_JP2K, "jp2k");
+		registerStandardNamespace(NS_CAMERARAW, "crs");
+		registerStandardNamespace(NS_ADOBESTOCKPHOTO, "bmsp");
+		registerStandardNamespace(NS_CREATOR_ATOM, "creatorAtom");
+		registerStandardNamespace(NS_ASF, "asf");
+		registerStandardNamespace(NS_WAV, "wav");
+		registerStandardNamespace(NS_BWF, "bext");
+		registerStandardNamespace(NS_RIFFINFO, "riffinfo");
+		registerStandardNamespace(NS_SCRIPT, "xmpScript");
+		registerStandardNamespace(NS_TXMP, "txmp");
+		registerStandardNamespace(NS_SWF, "swf");
 		
 		// register Adobe private namespaces
-		registerNamespace(NS_DM, "xmpDM");
-		registerNamespace(NS_TRANSIENT, "xmpx");
+		registerStandardNamespace(NS_DM, "xmpDM");
+		registerStandardNamespace(NS_TRANSIENT, "xmpx");
 		
 		// register Adobe standard type namespaces
-		registerNamespace(TYPE_TEXT, "xmpT");
-		registerNamespace(TYPE_PAGEDFILE, "xmpTPg");
-		registerNamespace(TYPE_GRAPHICS, "xmpG");
-		registerNamespace(TYPE_IMAGE, "xmpGImg");
-		registerNamespace(TYPE_FONT, "stFnt");
-		registerNamespace(TYPE_DIMENSIONS, "stDim");
-		registerNamespace(TYPE_RESOURCEEVENT, "stEvt");
-		registerNamespace(TYPE_RESOURCEREF, "stRef");
-		registerNamespace(TYPE_ST_VERSION, "stVer");
-		registerNamespace(TYPE_ST_JOB, "stJob");
-		registerNamespace(TYPE_MANIFESTITEM, "stMfs");
-		registerNamespace(TYPE_IDENTIFIERQUAL, "xmpidq");
+		registerStandardNamespace(TYPE_TEXT, "xmpT");
+		registerStandardNamespace(TYPE_PAGEDFILE, "xmpTPg");
+		registerStandardNamespace(TYPE_GRAPHICS, "xmpG");
+		registerStandardNamespace(TYPE_IMAGE, "xmpGImg");
+		registerStandardNamespace(TYPE_FONT, "stFnt");
+		registerStandardNamespace(TYPE_DIMENSIONS, "stDim");
+		registerStandardNamespace(TYPE_RESOURCEEVENT, "stEvt");
+		registerStandardNamespace(TYPE_RESOURCEREF, "stRef");
+		registerStandardNamespace(TYPE_ST_VERSION, "stVer");
+		registerStandardNamespace(TYPE_ST_JOB, "stJob");
+		registerStandardNamespace(TYPE_MANIFESTITEM, "stMfs");
+		registerStandardNamespace(TYPE_IDENTIFIERQUAL, "xmpidq");
 	}
 	
 
