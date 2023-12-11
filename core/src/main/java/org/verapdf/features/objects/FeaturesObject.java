@@ -37,7 +37,7 @@ import java.util.List;
  */
 public abstract class FeaturesObject {
 
-	protected FeaturesObjectAdapter adapter;
+	protected final FeaturesObjectAdapter adapter;
 	protected final List<String> errors = new ArrayList<>();
 
 	FeaturesObject(FeaturesObjectAdapter adapter) {

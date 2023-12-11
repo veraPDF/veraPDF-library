@@ -30,8 +30,8 @@ import org.verapdf.model.tools.xmp.XMPConstants;
  */
 public class ArrayTypeValidator {
 
-    private ArrayTypeEnum type;
-    private ValidatorsContainer parentContainer;
+    private final ArrayTypeEnum type;
+    private final ValidatorsContainer parentContainer;
 
     private ArrayTypeValidator(ArrayTypeEnum type, ValidatorsContainer parentContainer) {
         this.type = type;
@@ -88,7 +88,7 @@ public class ArrayTypeValidator {
         ALT(XMPConstants.ALT),
         SEQ(XMPConstants.SEQ);
 
-        private String type;
+        private final String type;
 
         ArrayTypeEnum(String type) {
             this.type = type;

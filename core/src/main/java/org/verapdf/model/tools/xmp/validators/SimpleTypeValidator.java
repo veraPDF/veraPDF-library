@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  */
 public class SimpleTypeValidator implements TypeValidator {
 
-    private Pattern pattern;
+    private final Pattern pattern;
 
     private SimpleTypeValidator(Pattern pattern) {
         this.pattern = pattern;
@@ -71,8 +71,8 @@ public class SimpleTypeValidator implements TypeValidator {
         RATIONAL(XMPConstants.RATIONAL, "(?s)(^.*$)"),
         RENDITION_CLASS(XMPConstants.RENDITION_CLASS, "(?s)(^.*$)");
 
-        private String type;
-        private String regexp;
+        private final String type;
+        private final String regexp;
 
         SimpleTypeEnum(String type, String regexp) {
             this.type = type;

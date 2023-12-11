@@ -67,10 +67,10 @@ public class BaseValidator implements PDFAValidator {
 	protected final int maxNumberOfDisplayedFailedChecks;
 	protected boolean isCompliant = true;
 	private boolean showErrorMessages = false;
-	protected ValidationProgress validationProgress;
+	protected final ValidationProgress validationProgress;
 	protected volatile JobEndStatus jobEndStatus = JobEndStatus.NORMAL;
 
-	private Set<String> idSet = new HashSet<>();
+	private final Set<String> idSet = new HashSet<>();
 
 	protected String rootType;
 
@@ -297,7 +297,7 @@ public class BaseValidator implements PDFAValidator {
 
 	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
 		Boolean deferred = rule.getDeferred();
-		if (deferred != null && deferred.booleanValue()) {
+		if (deferred != null && deferred) {
 			List<ObjectWithContext> list = this.deferredRules.computeIfAbsent(rule, k -> new ArrayList<>());
 			list.add(new ObjectWithContext(checkObject, checkContext));
 			return true;

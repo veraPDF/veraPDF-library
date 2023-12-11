@@ -34,7 +34,7 @@ import java.util.Set;
  */
 public abstract class AXLExtensionSchemaObject extends AXLXMPObject implements ExtensionSchemaObject {
 
-    protected VeraPDFXMPNode xmpNode;
+    protected final VeraPDFXMPNode xmpNode;
     protected final ValidatorsContainer containerForPDFA_1;
     protected final ValidatorsContainer containerForPDFA_2_3;
     protected final PDFAFlavour flavour;

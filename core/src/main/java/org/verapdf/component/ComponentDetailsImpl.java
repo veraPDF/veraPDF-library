@@ -36,8 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "componentDetails")
 class ComponentDetailsImpl implements ComponentDetails {
-	private final static URI defaultId = URI.create("http://component.verapdf.org#default");
-	private final static ComponentDetailsImpl defaultInstance = new ComponentDetailsImpl();
+	private static final URI defaultId = URI.create("http://component.verapdf.org#default");
+	private static final ComponentDetailsImpl defaultInstance = new ComponentDetailsImpl();
 	@XmlAttribute
 	private final URI id;
 	@XmlAttribute

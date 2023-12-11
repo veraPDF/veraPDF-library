@@ -16,6 +16,7 @@ public class FeaturesNodeSerializer extends StdSerializer<FeaturesNode> {
 		super(t);
 	}
 
+	@Override
 	public void serialize(FeaturesNode featuresNode, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
 			throws IOException {
 

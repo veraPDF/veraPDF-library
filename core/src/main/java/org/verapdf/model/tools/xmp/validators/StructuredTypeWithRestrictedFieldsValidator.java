@@ -32,10 +32,10 @@ import java.util.regex.Pattern;
  */
 public class StructuredTypeWithRestrictedFieldsValidator implements TypeValidator {
 
-    private String childNamespaceURI;
-    private Map<String, String> childrenTypes;
-    private Map<String, Pattern> childrenChoiceTypes;
-    private ValidatorsContainer parentContainer;
+    private final String childNamespaceURI;
+    private final Map<String, String> childrenTypes;
+    private final Map<String, Pattern> childrenChoiceTypes;
+    private final ValidatorsContainer parentContainer;
 
     public StructuredTypeWithRestrictedFieldsValidator(String childNamespaceURI, Map<String, String> childrenTypes, Map<String, Pattern> childrenChoiceTypes, ValidatorsContainer parentContainer) {
         this.childNamespaceURI = childNamespaceURI;

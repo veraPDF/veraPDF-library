@@ -36,7 +36,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "error")
 final class ErrorDetailsImpl implements ErrorDetails {
-    private final static ErrorDetailsImpl DEFAULT = new ErrorDetailsImpl();
+    private static final ErrorDetailsImpl DEFAULT = new ErrorDetailsImpl();
     @XmlElement
     private final String message;
     @XmlElementWrapper
@@ -44,7 +44,7 @@ final class ErrorDetailsImpl implements ErrorDetails {
     private final List<ErrorArgument> arguments;
 
     private ErrorDetailsImpl() {
-        this("message", Collections.<ErrorArgument> emptyList());
+        this("message", Collections.emptyList());
     }
 
     private ErrorDetailsImpl(final String message, final List<ErrorArgument> arguments) {

@@ -35,7 +35,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class LocationTest {
-    private final static String DEFAULT_LOCATION_STRING = "Location [level=level, context=context]"; //$NON-NLS-1$
+    private static final String DEFAULT_LOCATION_STRING = "Location [level=level, context=context]"; //$NON-NLS-1$
 
     /**
      * Test method for {@link org.verapdf.pdfa.results.LocationImpl#hashCode()}.

@@ -10,11 +10,11 @@ import java.util.List;
 
 public class PKCS7Test {
     private PKCS7 parser;
-    String[] testPaths = new String[]{"src/test/resources/org/verapdf/pdfa/parsers/pkcs7/signed.txt",
+    final String[] testPaths = new String[]{"src/test/resources/org/verapdf/pdfa/parsers/pkcs7/signed.txt",
             "src/test/resources/org/verapdf/pdfa/parsers/pkcs7/signed2.txt",
             "src/test/resources/org/verapdf/pdfa/parsers/pkcs7/signed3.txt",
             "src/test/resources/org/verapdf/pdfa/parsers/pkcs7/signed4.txt"};
-    int[] correctNumOfCert = new int[]{3, 1, 1, 1};
+    final int[] correctNumOfCert = new int[]{3, 1, 1, 1};
 
     @Test
     public void getSignerInfosLength() throws IOException {

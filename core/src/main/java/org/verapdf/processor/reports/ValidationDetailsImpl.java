@@ -41,7 +41,7 @@ import java.util.*;
  * @version 0.1 Created 10 Nov 2016:08:34:32
  */
 final class ValidationDetailsImpl implements ValidationDetails {
-	private final static ValidationDetailsImpl defaultInstance = new ValidationDetailsImpl();
+	private static final ValidationDetailsImpl defaultInstance = new ValidationDetailsImpl();
 	@XmlAttribute
 	private final int passedRules;
 	@XmlAttribute
@@ -57,7 +57,7 @@ final class ValidationDetailsImpl implements ValidationDetails {
 	private final Set<RuleSummary> ruleSummaries;
 
 	private ValidationDetailsImpl() {
-		this(0, 0, 0, 0, Collections.<RuleSummary>emptySet(), null);
+		this(0, 0, 0, 0, Collections.emptySet(), null);
 	}
 	
 	private ValidationDetailsImpl(final int passedRules, final int failedRules, final int passedChecks,

@@ -44,7 +44,7 @@ public class Foundries {
 	private Foundries() {
 	}
 
-	private static Map<URI, VeraFoundryProvider> providers = new ConcurrentHashMap<>();
+	private static final Map<URI, VeraFoundryProvider> providers = new ConcurrentHashMap<>();
 
 	/**
 	 * return the {@link URI} identifying the default
