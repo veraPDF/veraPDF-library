@@ -108,7 +108,7 @@ public class XMPNodeUtils implements XMPConst
 				if (suggestedPrefix != null  &&  suggestedPrefix.length() != 0)
 				{
 					prefix = XMPMetaFactory.getSchemaRegistry().registerNamespace(namespaceURI,
-							suggestedPrefix);
+							suggestedPrefix, false);
 				}
 				else
 				{
