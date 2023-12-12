@@ -117,7 +117,7 @@ public final class FeatureTreeNode {
 	 * @param value
 	 *            value
 	 * @throws FeatureParsingException
-	 *             occurs when value adds to the node with childrens or if the
+	 *             occurs when value adds to the node with children or if the
 	 *             object is a metadata node and the value is not a hex string
 	 */
 	public void setValue(String value) throws FeatureParsingException {
@@ -129,7 +129,7 @@ public final class FeatureTreeNode {
 			this.value = value;
 		} else {
 			throw new FeatureParsingException(
-					"You can not add value for nodes with childrens. Node name " + this.name + '.');
+					"You can not add value for nodes with children. Node name " + this.name + '.');
 		}
 	}
 
@@ -170,7 +170,11 @@ public final class FeatureTreeNode {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((this.attributes == null) ? 0 : this.attributes.hashCode());
-		result = prime * result + ((this.children == null) ? 0 : this.children.hashCode());
+		int childrenHashCode = 0;
+		for (FeatureTreeNode child : this.children) {
+			childrenHashCode += child.hashCode();
+		}
+		result = prime * result + childrenHashCode;
 		result = prime * result + ((this.name == null) ? 0 : this.name.hashCode());
 		result = prime * result + ((this.value == null) ? 0 : this.value.hashCode());
 		result = prime * result + (this.isMetadataNode ? 1 : 0);
@@ -215,6 +219,6 @@ public final class FeatureTreeNode {
 
 	private static boolean isChildrenMatch(FeatureTreeNode aThis, FeatureTreeNode other) {
 		return aThis.children == other.children || (aThis.children.size() == other.children.size() && 
-				new HashSet<>(aThis.children).containsAll(other.children));
+				aThis.children.containsAll(other.children));
 	}
 }
