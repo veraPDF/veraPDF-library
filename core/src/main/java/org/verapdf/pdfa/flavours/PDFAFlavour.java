@@ -110,7 +110,9 @@ public enum PDFAFlavour {
     ARLINGTON1_7(Specification.ISO_32000_1_7, Level.NO_LEVEL),
     ARLINGTON2_0(Specification.ISO_32000_2_0, Level.NO_LEVEL),
     /** wcag PDF version 2.1 */
-    WCAG2_1(Specification.WCAG_2_1, Level.NO_LEVEL);
+    WCAG2_1(Specification.WCAG_2_1, Level.NO_LEVEL),
+    /** wcag PDF version 2.2 */
+    WCAG2_2(Specification.WCAG_2_2, Level.NO_LEVEL);
 
     private static final Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -134,13 +136,13 @@ public enum PDFAFlavour {
     }
 
     private static String getPrefix(final Specification standard) {
-        if (PDFAFlavours.PDFUA.equals(standard.family)) {
+        if (SpecificationFamily.PDF_UA == standard.family) {
             return PDFAFlavours.PDFUA_PREFIX;
-        } else if(PDFAFlavours.WCAG.equals(standard.family)) {
+        } else if (SpecificationFamily.WCAG == standard.family) {
             return PDFAFlavours.WCAG2_1_PREFIX;
-        } else if (PDFAFlavours.ARLINGTON_1.equals(standard.family)) {
+        } else if (SpecificationFamily.ARLINGTON_1 == standard.family) {
             return PDFAFlavours.ARLINGTON_1.toLowerCase() + ".";
-        } else if (PDFAFlavours.ARLINGTON_2.equals(standard.family)) {
+        } else if (SpecificationFamily.ARLINGTON_2 == standard.family) {
             return PDFAFlavours.ARLINGTON_2.toLowerCase() + ".";
         }
         return "";
@@ -180,65 +182,68 @@ public enum PDFAFlavour {
      */
     public enum Specification {
         /** PDF/A Version 1 */
-        NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFAFlavours.NONE, PDFAFlavours.NONE_ID,
+        NO_STANDARD(IsoStandardSeries.NO_SERIES, SpecificationFamily.NONE, PDFAFlavours.NONE_ID,
                 PDFAFlavours.NONE, PDFAFlavours.NONE),
         /** PDF/UA Version 1 */
-        ISO_14289_1(IsoStandardSeries.ISO_14289, PDFAFlavours.PDFUA, PDFAFlavours.ISO_14289_1_PART,
+        ISO_14289_1(IsoStandardSeries.ISO_14289, SpecificationFamily.PDF_UA, PDFAFlavours.ISO_14289_1_PART,
                 PDFAFlavours.ISO_14289_1_YEAR,
                 PDFAFlavours.ISO_14289_1_DESCRIPTION),
-        ISO_14289_2(IsoStandardSeries.ISO_14289, PDFAFlavours.PDFUA, PDFAFlavours.ISO_14289_2_PART,
+        ISO_14289_2(IsoStandardSeries.ISO_14289, SpecificationFamily.PDF_UA, PDFAFlavours.ISO_14289_2_PART,
                 PDFAFlavours.ISO_14289_2_YEAR,
                 PDFAFlavours.ISO_14289_2_DESCRIPTION),
         /** PDF/A Version 1 */
-        ISO_19005_1(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_1_PART,
+        ISO_19005_1(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_1_PART,
                 PDFAFlavours.ISO_19005_1_YEAR,
                 PDFAFlavours.ISO_19005_1_DESCRIPTION),
         /** PDF/A Version 2 */
-        ISO_19005_2(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_2_PART,
+        ISO_19005_2(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_2_PART,
                 PDFAFlavours.ISO_19005_2_YEAR,
                 PDFAFlavours.ISO_19005_2_DESCRIPTION),
         /** PDF/A Version 3 */
-        ISO_19005_3(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_3_PART,
+        ISO_19005_3(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_3_PART,
                 PDFAFlavours.ISO_19005_3_YEAR,
                 PDFAFlavours.ISO_19005_3_DESCRIPTION),
         /** PDF/A Version 4 */
-        ISO_19005_4(IsoStandardSeries.ISO_19005, PDFAFlavours.PDFA, PDFAFlavours.ISO_19005_4_PART,
+        ISO_19005_4(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_4_PART,
                     PDFAFlavours.ISO_19005_4_YEAR,
                     PDFAFlavours.ISO_19005_4_DESCRIPTION),
-        PDF_1_0(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 0,
+        PDF_1_0(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 0,
                 "1993", "Based on PDF 1.0"),
-        PDF_1_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 1,
+        PDF_1_1(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 1,
                 "1996", "Based on PDF 1.1"),
-        PDF_1_2(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 2,
+        PDF_1_2(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 2,
                 "1996", "Based on PDF 1.2"),
-        PDF_1_3(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 3,
+        PDF_1_3(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 3,
                 "2000", "Based on PDF 1.3"),
-        PDF_1_4(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 4,
+        PDF_1_4(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 4,
                 "2001", "Based on PDF 1.4"),
-        PDF_1_5(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 5,
+        PDF_1_5(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 5,
                 "2003", "Based on PDF 1.5"),
-        PDF_1_6(IsoStandardSeries.NO_SERIES, PDFAFlavours.ARLINGTON_1, 6,
+        PDF_1_6(IsoStandardSeries.NO_SERIES, SpecificationFamily.ARLINGTON_1, 6,
                 "2004", "Based on PDF 1.6"),
-        ISO_32000_1_7(IsoStandardSeries.ISO_32000, PDFAFlavours.ARLINGTON_1, 7,
+        ISO_32000_1_7(IsoStandardSeries.ISO_32000, SpecificationFamily.ARLINGTON_1, 7,
                 "2008", "Based on PDF 1.7"),
-        ISO_32000_2_0(IsoStandardSeries.ISO_32000, PDFAFlavours.ARLINGTON_2, 0,
+        ISO_32000_2_0(IsoStandardSeries.ISO_32000, SpecificationFamily.ARLINGTON_2, 0,
                 "2020", "Based on PDF 2.0"),
-        ISO_32005(IsoStandardSeries.ISO_32005, PDFAFlavours.TAGGED_PDF, PDFAFlavours.NONE_ID,
+        ISO_32005(IsoStandardSeries.ISO_32005, SpecificationFamily.TAGGED_PDF, PDFAFlavours.NONE_ID,
                 PDFAFlavours.ISO_32005_YEAR,
                 PDFAFlavours.ISO_32005_DESCRIPTION),
         /** WCAG Version 2.1 */
-        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFAFlavours.WCAG, PDFAFlavours.WCAG_2_1_PART,
-                PDFAFlavours.WCAG_2_1_YEAR, PDFAFlavours.WCAG_2_1_DESCRIPTION);
+        WCAG_2_1(IsoStandardSeries.NO_SERIES, SpecificationFamily.WCAG, PDFAFlavours.WCAG_2_1_PART,
+                PDFAFlavours.WCAG_2_1_YEAR, PDFAFlavours.WCAG_2_1_DESCRIPTION),
+        /** WCAG Version 2.2 */
+        WCAG_2_2(IsoStandardSeries.NO_SERIES, SpecificationFamily.WCAG, PDFAFlavours.WCAG_2_2_PART,
+                 PDFAFlavours.WCAG_2_2_YEAR, PDFAFlavours.WCAG_2_2_DESCRIPTION);
 
         private final IsoStandardSeries series;
         private final int partNumber;
         private final String id;
         private final String year;
-        private final String family;
+        private final SpecificationFamily family;
         private final String name;
         private final String description;
 
-        Specification(final IsoStandardSeries series, final String family, final int partNumber,
+        Specification(final IsoStandardSeries series, final SpecificationFamily family, final int partNumber,
                 final String year, final String description) {
             this.series = series;
             this.partNumber = partNumber;
@@ -256,11 +261,12 @@ public enum PDFAFlavour {
             if (PDFAFlavours.ISO_32005_DESCRIPTION.equals(description)) {
                 return this.series.getName() + ":" + this.getYear();
             }
-            if (PDFAFlavours.ARLINGTON_1.equals(family) && partNumber < 7) {
-                return "PDF Reference " + this.family.charAt(this.family.length() - 1) + "." + partNumber;
+            String familyString = family.getFamily();
+            if (SpecificationFamily.ARLINGTON_1 == family && partNumber < 7) {
+                return "PDF Reference " + familyString.charAt(familyString.length() - 1) + "." + partNumber;
             }
             if (series.equals(IsoStandardSeries.ISO_32000)) {
-                return this.series.getName() + "-" + this.family.charAt(this.family.length() - 1) + ":" + this.getYear();
+                return this.series.getName() + "-" + familyString.charAt(familyString.length() - 1) + ":" + this.getYear();
             }
             return this.series.getName() + "-" + this.getPartNumber() + ":" + this.getYear();
         }
@@ -296,7 +302,7 @@ public enum PDFAFlavour {
         /**
          * @return the family for the standard part
          */
-        public final String getFamily() {
+        public final SpecificationFamily getFamily() {
             return this.family;
         }
 
@@ -416,6 +422,27 @@ public enum PDFAFlavour {
             return this.getName() + " " + this.getDescription(); //$NON-NLS-1$
         }
     }
+
+    public enum SpecificationFamily {
+        NONE(PDFAFlavours.NONE),
+        PDF_A(PDFAFlavours.PDFA),
+        PDF_UA(PDFAFlavours.PDFUA),
+        TAGGED_PDF(PDFAFlavours.TAGGED_PDF),
+        ARLINGTON_1(PDFAFlavours.ARLINGTON_1),
+        ARLINGTON_2(PDFAFlavours.ARLINGTON_2),
+        WCAG(PDFAFlavours.WCAG);
+        
+        private final String family;
+        
+        SpecificationFamily(String family) {
+            this.family = family;
+        }
+        
+        public String getFamily() {
+            return family;
+        }
+    }
+    
 
     /**
      * Looks up a {@link PDFAFlavour} by two letter flavour identifier. The
