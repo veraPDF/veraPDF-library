@@ -23,6 +23,7 @@ package org.verapdf.metadata.fixer;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Objects;
 
 /**
  * @author Evgeniy Muravitskiy
@@ -77,14 +78,7 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 			return false;
 		}
 		FixerConfigImpl other = (FixerConfigImpl) obj;
-		if (this.fixesPrefix == null) {
-			if (other.fixesPrefix != null) {
-				return false;
-			}
-		} else if (!this.fixesPrefix.equals(other.fixesPrefix)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.fixesPrefix, other.fixesPrefix);
 	}
 
 	/**
