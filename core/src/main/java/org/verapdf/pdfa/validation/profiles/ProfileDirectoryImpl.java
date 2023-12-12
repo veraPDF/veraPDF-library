@@ -143,7 +143,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
     private static ProfileDirectoryImpl makeVeraProfileDir() {
         Set<ValidationProfile> profiles = new HashSet<>();
         for (PDFAFlavour flavour : PDFAFlavour.values()) {
-            String profilePath = PROFILE_RESOURCE_ROOT + flavour.getPart().getFamily().replace("/", "") //$NON-NLS-1$
+            String profilePath = PROFILE_RESOURCE_ROOT + flavour.getPart().getFamily().getFamily().replace("/", "") //$NON-NLS-1$
                     + "-" + flavour.getPart().getPartNumber() + flavour.getLevel().getCode().toUpperCase() + XML_SUFFIX; //$NON-NLS-1$
             try (InputStream is = ValidationProfileImpl.class.getClassLoader()
                     .getResourceAsStream(profilePath)) {

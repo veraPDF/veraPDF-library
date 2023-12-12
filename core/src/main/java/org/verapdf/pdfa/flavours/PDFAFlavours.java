@@ -57,7 +57,8 @@ final class PDFAFlavours {
     static final String ISO_19005_4_DESCRIPTION = "Use of ISO 32000-2"; //$NON-NLS-1$
     static final String ISO_32000_DESCRIPTION = "Document management -- Portable document format"; //$NON-NLS-1$
     static final String ISO_32005_DESCRIPTION = "Document management -- Portable document format -- PDF 1.7 and 2.0 structure namespace inclusion in ISO 32000-2"; //$NON-NLS-1$// fix
-    static final String WCAG_2_1_DESCRIPTION = "Web Content Accessibility Guidelines"; //$NON-NLS-1$
+    static final String WCAG_2_1_DESCRIPTION = "Web Content Accessibility Guidelines 2.1"; //$NON-NLS-1$
+    static final String WCAG_2_2_DESCRIPTION = "Web Content Accessibility Guidelines 2.2"; //$NON-NLS-1$
     static final int ISO_19005_1_PART = 1;
     static final int ISO_19005_2_PART = 2;
     static final int ISO_19005_3_PART = 3;
@@ -65,6 +66,7 @@ final class PDFAFlavours {
     static final int ISO_14289_1_PART = 1;
     static final int ISO_14289_2_PART = 2;
     static final int WCAG_2_1_PART = 2;
+    static final int WCAG_2_2_PART = 2;
     static final String LEVEL_A_CODE = "a"; //$NON-NLS-1$
     static final String LEVEL_B_CODE = "b"; //$NON-NLS-1$
     static final String LEVEL_U_CODE = "u"; //$NON-NLS-1$
@@ -83,6 +85,7 @@ final class PDFAFlavours {
     static final String ISO_19005_4_YEAR = "2020"; //$NON-NLS-1$
     static final String ISO_32005_YEAR = "202X"; //$NON-NLS-1$
     static final String WCAG_2_1_YEAR = "2018"; //$NON-NLS-1$
+    static final String WCAG_2_2_YEAR = "2023"; //$NON-NLS-1$
     static final String ISO_REFERENCE_SUFFIX = "(E)"; //$NON-NLS-1$
     static final String LEVEL_PREFIX = "Level "; //$NON-NLS-1$
 
