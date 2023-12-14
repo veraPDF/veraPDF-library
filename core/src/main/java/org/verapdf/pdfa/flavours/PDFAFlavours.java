@@ -40,6 +40,7 @@ public final class PDFAFlavours {
     static final String PDFUA = "PDF/UA"; //$NON-NLS-1$
     static final String TAGGED_PDF = "Tagged PDF"; //$NON-NLS-1$
     static final String WCAG_2_1 = "WCAG2.1"; //$NON-NLS-1$
+    static final String WCAG_2_2 = "WCAG2.2"; //$NON-NLS-1$
     static final String WCAG = "WCAG"; //$NON-NLS-1$
     public static final String ARLINGTON_PREFIX = "arlington"; //$NON-NLS-1$
     public static final float VERSION_1_4 = 1.4f;
