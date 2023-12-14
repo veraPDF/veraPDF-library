@@ -225,6 +225,9 @@ public enum PDFAFlavour {
             if (PDFAFlavours.WCAG_2_1_DESCRIPTION.equals(description)) {
                 return PDFAFlavours.WCAG_2_1;
             }
+            if (PDFAFlavours.WCAG_2_2_DESCRIPTION.equals(description)) {
+                return PDFAFlavours.WCAG_2_2;
+            }
             if (PDFAFlavours.ISO_32005_DESCRIPTION.equals(description)) {
                 return this.series.getName() + ":" + this.getYear();
             }

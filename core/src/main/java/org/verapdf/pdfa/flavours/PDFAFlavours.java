@@ -37,6 +37,7 @@ final class PDFAFlavours {
     static final String PDFUA = "PDF/UA"; //$NON-NLS-1$
     static final String TAGGED_PDF = "Tagged PDF"; //$NON-NLS-1$
     static final String WCAG_2_1 = "WCAG2.1"; //$NON-NLS-1$
+    static final String WCAG_2_2 = "WCAG2.2"; //$NON-NLS-1$
     static final String WCAG = "WCAG"; //$NON-NLS-1$
     static final String PDFUA_PREFIX = "ua"; //$NON-NLS-1$
     static final String WCAG2_1_PREFIX = "wcag"; //$NON-NLS-1$
