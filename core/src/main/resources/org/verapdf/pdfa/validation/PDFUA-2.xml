@@ -374,6 +374,19 @@
                 <reference specification="ISO 32000-2:2020" clause="14.8.5.7"/>
             </references>
         </rule>
+        <rule object="PDStructElem">
+            <id specification="ISO_14289_2" clause="8.2.5.27" testNumber="1"/>
+            <description>When present, the Caption element shall be the first or the last child of the structure element</description>
+            <test>kidsStandardTypes.indexOf('&amp;Caption&amp;') &lt; 0</test>
+            <error>
+                <message>Structure element %1 contains Caption as its %2 child instead of first or last one</message>
+                <arguments>
+                    <argument>objectKey</argument>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="SEFigure">
             <id specification="ISO_14289_2" clause="8.2.5.28.2" testNumber="1"/>
             <description>A Figure structure element shall have at least one of the following properties: a) an alternate description (Alt property), as specified in ISO 32000-2:2020, 14.9.3; b) a replacement text (ActualText property) that represents the content enclosed by the Figure structure element</description>
