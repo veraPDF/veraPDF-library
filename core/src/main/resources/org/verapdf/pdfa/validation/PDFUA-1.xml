@@ -197,6 +197,18 @@
                 <reference specification="ISO 32000-1:2008" clause="14.7"/>
             </references>
         </rule>
+        <rule object="PDStructElem" tags="structure">
+            <id specification="ISO_14289_1" clause="7.1" testNumber="12"/>
+            <description>A struct element shall contain the P entry according to ISO 32000-1:2008, 14.7.2, Table 355</description>
+            <test>containsParent == true</test>
+            <error>
+                <message>A struct element does not contain the P entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7.2, Table 355"/>
+            </references>
+        </rule>
         <rule object="PDOutline" tags="lang">
             <id specification="ISO_14289_1" clause="7.2" testNumber="2"/>
             <description>Natural language in the Outline entries shall be determined</description>
