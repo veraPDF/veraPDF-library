@@ -13543,6 +13543,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ADictionaryOfDictionariesEntry">
+			<id specification="PDF_1_3" clause="DictionaryOfDictionariesEntry" testNumber="8"/>
+			<description>Entry in DictionaryOfDictionaries shall have type Dictionary</description>
+			<test>HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in DictionaryOfDictionaries has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ADocInfo">
 			<id specification="PDF_1_3" clause="DocInfo-Author" testNumber="8"/>
 			<description>Entry Author in DocInfo shall have type StringText</description>
