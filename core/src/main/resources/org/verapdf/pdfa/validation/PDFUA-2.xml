@@ -76,7 +76,7 @@
                 <reference specification="ISO 32000-2:2020" clause="14.7"/>
             </references>
         </rule>
-        <rule object="PDDocument">
+        <rule object="PDStructElem">
             <id specification="ISO_14289_2" clause="8.2.1" testNumber="2"/>
             <description>Struct element shall contain the P entry according to ISO 32000-2:2020, 14.7.2, Table 323</description>
             <test>containsParent == true</test>
