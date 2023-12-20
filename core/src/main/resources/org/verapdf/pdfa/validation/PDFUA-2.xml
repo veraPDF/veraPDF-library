@@ -1079,7 +1079,7 @@
         <rule object="CosFileSpecification">
             <id specification="ISO_14289_2" clause="8.14.1" testNumber="1"/>
             <description>The Desc entry shall be present on all file specification dictionaries present in the EmbeddedFiles name tree of a conforming document</description>
-            <test>containsDesc == true</test>
+            <test>containsDesc == true || presentInEmbeddedFiles == false</test>
             <error>
                 <message>The file specification dictionary for an embedded file does not contain Desc key</message>
                 <arguments/>
