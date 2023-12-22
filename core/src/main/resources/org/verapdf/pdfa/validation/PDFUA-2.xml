@@ -671,7 +671,9 @@
                 <message>The document contains a reference to the .notdef glyph</message>
                 <arguments/>
             </error>
-            <references/>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.7.6.3"/>
+            </references>
         </rule>
         <rule object="SESimpleContentItem">
             <id specification="ISO_14289_2" clause="8.5.1" testNumber="1"/>
@@ -818,7 +820,9 @@
                 <message>Rubber stamp annotation contains neither Name nor Contents entry</message>
                 <arguments/>
             </error>
-            <references/>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.5.6.2"/>
+            </references>
         </rule>
         <rule object="PDInkAnnot">
             <id specification="ISO_14289_2" clause="8.9.2.4.8" testNumber="1"/>
@@ -847,7 +851,7 @@
         </rule>
         <rule object="PDFileAttachmentAnnot">
             <id specification="ISO_14289_2" clause="8.9.2.4.10" testNumber="1"/>
-            <description>When a file attachment annotation references a file specification dictionary in accordance with ISO 32000-2:2020, 7.11.3 using the FS entry in accordance with ISO 32000-2:2020, 12.5.6.15, that file specification dictionary shall include an AFRelationship entry</description>
+            <description>When a file attachment annotation references a file specification dictionary, the file specification dictionary shall include an AFRelationship entry</description>
             <test>containsFS == false || AFRelationship != null</test>
             <error>
                 <message>The file specification dictionary referenced by a file attachment annotation does not include AFRelationship entry</message>
@@ -890,7 +894,7 @@
         </rule>
         <rule object="PDWidgetAnnot">
             <id specification="ISO_14289_2" clause="8.9.2.4.13" testNumber="1"/>
-            <description>A widget annotation of zero height and width, accordance with ISO 32000-2:2020, 12.7.5.5 shall be an artifact</description>
+            <description>A widget annotation of zero height and width shall be an artifact</description>
             <test>width != 0 || height != 0 || structParentType == null || isArtifact == true</test>
             <error>
                 <message>A Widget annotation of zero height and width is not marked as an Artifact (structure tag = %1, standard type = %2)</message>
@@ -905,7 +909,7 @@
         </rule>
         <rule object="PDPrinterMarkAnnot">
             <id specification="ISO_14289_2" clause="8.9.2.4.14" testNumber="1"/>
-            <description>A printer's mark annotation as specified in ISO 32000-2:2020, 14.11.3 shall be an artifact</description>
+            <description>A printer's mark annotation shall be an artifact</description>
             <test>structParentType == null || isArtifact == true</test>
             <error>
                 <message>A PrinterMark annotation is included in logical structure with tag %1 (standard type = %2)</message>
@@ -980,7 +984,7 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_14289_2" clause="8.9.4.2" testNumber="1"/>
-            <description>Where both Contents and Alt entries are present for the annotation, they shall be identical</description>
+            <description>Where an annotation has a Contents entry and the directly enclosing structure element has an Alt entry, the values of Alt and Contents shall be identical</description>
             <test>Contents == null || Alt == null || Contents == Alt</test>
             <error>
                 <message>Both Contents and Alt entries are present for the annotation, but they are not identical (Contents = %1, Alt = %2)</message>
@@ -1016,6 +1020,18 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDAcroForm">
+            <id specification="ISO_14289_2" clause="8.10.1" testNumber="3"/>
+            <description>XFA forms shall not be present</description>
+            <test>containsXFA == false</test>
+            <error>
+                <message>XFA form is present</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="Annex K"/>
+            </references>
+        </rule>
         <rule object="PDWidgetAnnot">
             <id specification="ISO_14289_2" clause="8.10.2.3" testNumber="1"/>
             <description>If a label for a widget annotation is not present, a Contents entry shall be provided to supply description and context for the widget</description>
@@ -1025,6 +1041,18 @@
                 <arguments/>
             </error>
             <references/>
+        </rule>
+        <rule object="PDWidgetAnnot">
+            <id specification="ISO_14289_2" clause="8.10.2.3" testNumber="2"/>
+            <description>If an additional action (AA) entry is present in a widget annotation dictionary, the respective widget's Contents entry shall be present</description>
+            <test>containsAA == false || Contents != null</test>
+            <error>
+                <message>Widget annotation dictionary contains an AA entry, but not contains the Contents entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="Table 191"/>
+            </references>
         </rule>
         <rule object="PDTextField">
             <id specification="ISO_14289_2" clause="8.10.3.3" testNumber="1"/>
@@ -1037,7 +1065,10 @@
                     <argument>V</argument>
                 </arguments>
             </error>
-            <references/>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="Table 226"/>
+                <reference specification="ISO 32000-2:2020" clause="Table 228"/>
+            </references>
         </rule>
         <rule object="SELineArtItem">
             <id specification="ISO_14289_2" clause="8.10.3.5" testNumber="1"/>
