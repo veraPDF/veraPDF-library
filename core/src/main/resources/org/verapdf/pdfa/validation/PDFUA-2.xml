@@ -423,16 +423,6 @@
             </error>
             <references/>
         </rule>
-        <rule object="SEFormula">
-            <id specification="ISO_14289_2" clause="8.2.5.29" testNumber="2"/>
-            <description>Non-mathematical scientific formula enclosed within Formula structure elements shall have either an Alt entry or an ActualText entry in its structure element dictionary</description>
-            <test>Alt != null || ActualText != null || isMathFormula == true</test>
-            <error>
-                <message>A non-mathematical scientific formula enclosed within Formula structure elements contains neither Alt nor ActualText entry in its structure element dictionary</message>
-                <arguments/>
-            </error>
-            <references/>
-        </rule>
         <rule object="Glyph">
             <id specification="ISO_14289_2" clause="8.4.3" testNumber="1"/>
             <description>In all cases, where real content maps to Unicode PUA values, an ActualText or Alt entry shall be present</description>
@@ -932,6 +922,19 @@
             </error>
             <references/>
         </rule>
+        <rule object="PDWatermarkAnnot">
+            <id specification="ISO_14289_2" clause="8.9.2.4.16" testNumber="1"/>
+            <description>When used as real content, Watermark annotations shall be enclosed within Annot structure elements</description>
+            <test>structParentType == null || isArtifact == true || structParentStandardType == 'Annot'</test>
+            <error>
+                <message>A Watermark annotation is nested within %1 tag (standard type = %2) instead of Annot</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="PD3DAnnot">
             <id specification="ISO_14289_2" clause="8.9.2.4.19" testNumber="1"/>
             <description>3D annotation shall include alternate description in respective Contents entry</description>
@@ -967,20 +970,6 @@
                 </arguments>
             </error>
             <references/>
-        </rule>
-        <rule object="PDAnnot">
-            <id specification="ISO_14289_2" clause="8.9.4.1" testNumber="1"/>
-            <description>Except Widget annotations, Contents entries in annotation dictionaries shall provide an alternative description of the annotation. If Contents cannot be used for this purpose, an alternate description shall be provided for the annotation via one of the other mechanisms defined in ISO 32000-2:2020, 14.9.3</description>
-            <test>Subtype == 'Widget' || Contents != null || Alt != null</test>
-            <error>
-                <message>%1 annotation neither has a Contents entry nor alternate description</message>
-                <arguments>
-                    <argument>Subtype</argument>
-                </arguments>
-            </error>
-            <references>
-                <reference specification="ISO 32000-2:2020" clause="14.9.3"/>
-            </references>
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_14289_2" clause="8.9.4.2" testNumber="1"/>
