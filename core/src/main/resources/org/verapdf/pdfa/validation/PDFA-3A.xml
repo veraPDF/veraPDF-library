@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
-    <details creator="veraPDF Consortium" created="2017-08-25T05:00:12.789-03:00">
+    <details creator="veraPDF Consortium" created="2017-08-25T08:00:12.789Z">
         <name>PDF/A-3A validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
@@ -1719,7 +1719,7 @@
         <rule object="SENonStandard">
             <id specification="ISO_19005_3" clause="6.7.3.4" testNumber="1"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as defined in ISO 32000-1:2008, 14.8.4, in the role map dictionary of the structure tree root</description>
-            <test>circularMappingExist == true</test>
+            <test>isNotMappedToStandardType == false</test>
             <error>
                 <message>Non-standard structure type %1 is not mapped to a standard type</message>
                 <arguments>
@@ -1744,12 +1744,26 @@
                 <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
             </references>
         </rule>
+        <rule object="SENonStandard">
+            <id specification="ISO_19005_3" clause="6.7.3.4" testNumber="3"/>
+            <description>Standard tags shall not be remapped to a non-standard type</description>
+            <test>remappedStandardType == null</test>
+            <error>
+                <message>The standard structure type %1 is remapped to a non-standard type</message>
+                <arguments>
+                    <argument>remappedStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.8.4"/>
+            </references>
+        </rule>
         <rule object="CosLang">
             <id specification="ISO_19005_3" clause="6.7.4" testNumber="1"/>
             <description>If the Lang entry is present in the document's Catalog dictionary or in a structure element dictionary or property list, its value shall be a language identifier as described in ISO 32000-1:2008, 14.9.2. A language identifier shall either be the empty text string, to indicate that the language is unknown, or a Language-Tag as defined in RFC 3066, Tags for the Identification of Languages</description>
             <test>unicodeValue == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(unicodeValue)</test>
             <error>
-                <message>Value %1 of the Lang entry is not Language-Tag</message>
+                <message>Value %1 of the Lang entry is not a Language-Tag</message>
                 <arguments>
                     <argument>unicodeValue</argument>
                 </arguments>
