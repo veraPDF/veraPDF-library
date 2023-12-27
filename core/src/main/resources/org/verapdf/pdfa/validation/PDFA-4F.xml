@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_4_F">
-    <details creator="veraPDF Consortium" created="2020-12-25T04:59:15.826-03:00">
+    <details creator="veraPDF Consortium" created="2020-12-25T07:59:15.826Z">
         <name>PDF/A-4F validation profile</name>
         <description>Validation rules against ISO 19005-4:2020, Level F</description>
     </details>
@@ -890,7 +890,7 @@
             <description>The ActualText entry shall not contain any PUA values</description>
             <test>containsPUA == false</test>
             <error>
-                <message>The ActualText entry contains a Private Unicoide Area value</message>
+                <message>The ActualText entry contains a Private Unicode Area value</message>
                 <arguments/>
             </error>
             <references/>

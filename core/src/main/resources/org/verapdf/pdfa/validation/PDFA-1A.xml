@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_1_A">
-    <details creator="veraPDF Consortium" created="2017-09-06T10:12:11.281-03:00">
+    <details creator="veraPDF Consortium" created="2017-09-06T13:12:11.281Z">
         <name>PDF/A-1A validation profile</name>
         <description>Validation rules against ISO 19005-1:2005, Cor.1:2007 and Cor.2:2011, Level A</description>
     </details>
@@ -1652,7 +1652,7 @@
         <rule object="SENonStandard">
             <id specification="ISO_19005_1" clause="6.8.3.4" testNumber="1"/>
             <description>All non-standard structure types shall be mapped to the nearest functionally equivalent standard type, as defined in PDF Reference 9.7.4, in the role map dictionary of the structure tree root</description>
-            <test>circularMappingExist == true</test>
+            <test>isNotMappedToStandardType == false</test>
             <error>
                 <message>Non-standard structure type %1 is not mapped to a standard type</message>
                 <arguments>
@@ -1682,7 +1682,7 @@
             <description>If the Lang entry is present in the document catalog dictionary or in a structure element dictionary or property list, its value shall be a language identifier as defined by RFC 1766, Tags for the Identification of Languages, as described in PDF Reference 9.8.1</description>
             <test>unicodeValue == '' || /^[a-zA-Z]{1,8}(-[a-zA-Z]{1,8})*$/.test(unicodeValue)</test>
             <error>
-                <message>Value %1 of the Lang entry is not Language-Tag</message>
+                <message>Value %1 of the Lang entry is not a Language-Tag</message>
                 <arguments>
                     <argument>unicodeValue</argument>
                 </arguments>
