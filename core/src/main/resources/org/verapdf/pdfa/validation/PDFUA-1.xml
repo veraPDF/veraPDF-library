@@ -67,11 +67,11 @@
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="1"/>
             <description>Content marked as Artifact should not present inside tagged content</description>
-            <test>tag != 'Artifact' || parentStructureTag == null</test>
+            <test>tag != 'Artifact' || isTaggedContent == false</test>
             <error>
-                <message>Content marked as Artifact is present inside tagged content (tag %1)</message>
+                <message>Content marked as Artifact is present inside tagged content (parent struct element %1)</message>
                 <arguments>
-                    <argument>parentStructureTag</argument>
+                    <argument>parentStructureElementObjectKey</argument>
                 </arguments>
             </error>
             <references/>
@@ -79,11 +79,11 @@
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
             <description>Tagged content should not present inside content marked as Artifact</description>
-            <test>parentStructureTag == null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
+            <test>isTaggedContent == false || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
             <error>
-                <message>Tagged content (tag %1) is present inside content marked as Artifact</message>
+                <message>Tagged content (parent struct element %1) is present inside content marked as Artifact</message>
                 <arguments>
-                    <argument>parentStructureTag</argument>
+                    <argument>parentStructureElementObjectKey</argument>
                 </arguments>
             </error>
             <references/>
@@ -91,7 +91,7 @@
         <rule object="SESimpleContentItem" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="3"/>
             <description>Content shall be marked as Artifact or tagged as real content</description>
-            <test>parentStructureTag != null || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <test>isTaggedContent == true || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
             <error>
                 <message>Content is neither marked as Artifact nor tagged as real content</message>
                 <arguments/>
