@@ -41,7 +41,7 @@ import java.util.*;
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
-@XmlRootElement(name = "validationResult")
+@XmlRootElement(name = "arlingtonResult")
 final class ValidationResultImpl implements ValidationResult {
 	private static final ValidationResultImpl DEFAULT = new ValidationResultImpl();
 	@XmlAttribute

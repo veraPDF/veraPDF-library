@@ -33,7 +33,7 @@ import org.verapdf.component.Components;
 @XmlRootElement(name = "batchSummary")
 final class BatchSummaryImpl implements BatchSummary {
 	private static final BatchSummary DEFAULT = new BatchSummaryImpl();
-	@XmlElement
+	@XmlElement(name="arlingtonReports")
 	private final ValidationBatchSummary validationReports;
 	@XmlElement
 	private final FeaturesBatchSummary featureReports;

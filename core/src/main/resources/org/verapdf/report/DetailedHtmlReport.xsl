@@ -92,7 +92,7 @@
             <xsl:variable name="validClass">
                 <xsl:choose>
                     <xsl:when
-                            test="/report/jobs/job/validationReport/@isCompliant = 'true'">
+                            test="/report/jobs/job/arlingtonReport/@isCompliant = 'true'">
                         <xsl:value-of select="'valid'"/>
                     </xsl:when>
                     <xsl:otherwise>
@@ -110,27 +110,27 @@
                         <xsl:value-of select="/report/jobs/job/item/name"/>
                     </td>
                 </tr>
-                <xsl:if test="/report/jobs/job/validationReport/@profileName">
+                <xsl:if test="/report/jobs/job/arlingtonReport/@profileName">
                     <tr>
                         <td width="200">
                             <b>Profile:</b>
                         </td>
                         <td>
                             <xsl:value-of
-                                    select="/report/jobs/job/validationReport/@profileName"/>
+                                    select="/report/jobs/job/arlingtonReport/@profileName"/>
                         </td>
                     </tr>
                 </xsl:if>
-<!--                <xsl:if test="/report/jobs/job/validationReport/@isCompliant">-->
+<!--                <xsl:if test="/report/jobs/job/arlingtonReport/@isCompliant">-->
 <!--                    <tr>-->
 <!--                        <td width="200" class="{$validClass}">-->
 <!--                            Compliance:-->
 <!--                        </td>-->
 <!--                        <td class="{$validClass}">-->
-<!--                            <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">-->
+<!--                            <xsl:if test="/report/jobs/job/arlingtonReport/@isCompliant = 'true'">-->
 <!--                                Passed-->
 <!--                            </xsl:if>-->
-<!--                            <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">-->
+<!--                            <xsl:if test="/report/jobs/job/arlingtonReport/@isCompliant = 'false'">-->
 <!--                                Failed-->
 <!--                            </xsl:if>-->
 <!--                        </td>-->
@@ -201,36 +201,36 @@
                         <xsl:value-of select="/report/jobs/job/duration"/>
                     </td>
                 </tr>
-                <xsl:if test="/report/jobs/job/validationReport/details/@passedRules or /report/jobs/job/validationReport/details/@failedRules">
+                <xsl:if test="/report/jobs/job/arlingtonReport/details/@passedRules or /report/jobs/job/arlingtonReport/details/@failedRules">
                     <tr>
                         <td width="250">
                             <b>Total rules in Profile:</b>
                         </td>
                         <td>
                             <xsl:value-of
-                                    select="/report/jobs/job/validationReport/details/@passedRules + /report/jobs/job/validationReport/details/@failedRules"/>
+                                    select="/report/jobs/job/arlingtonReport/details/@passedRules + /report/jobs/job/arlingtonReport/details/@failedRules"/>
                         </td>
                     </tr>
                 </xsl:if>
-                <xsl:if test="/report/jobs/job/validationReport/details/@passedChecks">
+                <xsl:if test="/report/jobs/job/arlingtonReport/details/@passedChecks">
                     <tr>
                         <td width="250">
                             <b>Checks:</b>
                         </td>
                         <td>
                             <xsl:value-of
-                                    select="/report/jobs/job/validationReport/details/@passedChecks"/>
+                                    select="/report/jobs/job/arlingtonReport/details/@passedChecks"/>
                         </td>
                     </tr>
                 </xsl:if>
-                <xsl:if test="/report/jobs/job/validationReport/details/@failedChecks">
+                <xsl:if test="/report/jobs/job/arlingtonReport/details/@failedChecks">
                     <tr>
                         <td width="250">
                             <b>Deviations:</b>
                         </td>
                         <td>
                             <xsl:value-of
-                                    select="/report/jobs/job/validationReport/details/@failedChecks"/>
+                                    select="/report/jobs/job/arlingtonReport/details/@failedChecks"/>
                         </td>
                     </tr>
                 </xsl:if>
@@ -300,7 +300,7 @@
                 </table>
             </xsl:if>
 
-            <xsl:if test="/report/jobs/job/validationReport/details/rule">
+            <xsl:if test="/report/jobs/job/arlingtonReport/details/rule">
                 <h2>Analysis messages</h2>
 
                 <table border="0" id="table3">
@@ -313,7 +313,7 @@
                         </td>
                     </tr>
                     <xsl:apply-templates
-                            select="/report/jobs/job/validationReport/details/rule"/>
+                            select="/report/jobs/job/arlingtonReport/details/rule"/>
                 </table>
             </xsl:if>
 
@@ -397,7 +397,7 @@
     </xsl:template>
 
     <!-- Validation Information -->
-    <xsl:template match="/report/jobs/job/validationReport/details/rule">
+    <xsl:template match="/report/jobs/job/arlingtonReport/details/rule">
 
         <xsl:param name="idWithDots" select="concat(@clause, 't', @testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>

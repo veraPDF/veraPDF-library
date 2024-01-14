@@ -42,13 +42,10 @@ import java.util.*;
  */
 final class ValidationDetailsImpl implements ValidationDetails {
 	private static final ValidationDetailsImpl defaultInstance = new ValidationDetailsImpl();
-	@XmlAttribute
 	private final int passedRules;
-	@XmlAttribute
 	private final int failedRules;
-	@XmlAttribute
 	private final int passedChecks;
-	@XmlAttribute
+	@XmlAttribute(name="deviations")
 	private final int failedChecks;
 
 	private final Set<String> tags;

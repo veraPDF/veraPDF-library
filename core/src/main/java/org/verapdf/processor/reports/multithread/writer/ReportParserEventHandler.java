@@ -16,7 +16,7 @@ public class ReportParserEventHandler extends DefaultHandler {
     private static final Logger LOGGER = Logger.getLogger(ReportParserEventHandler.class.getCanonicalName());
 
     private static final Set<String> BATCH_SUMMARY_TAGS =
-            new HashSet<>(Arrays.asList("batchSummary", "validationReports", "featureReports", "repairReports"));
+            new HashSet<>(Arrays.asList("batchSummary", "arlingtonReports", "featureReports", "repairReports"));
 
     private String element;
     private final Map<String, Map<String, Integer>> batchSummary = new LinkedHashMap<>();

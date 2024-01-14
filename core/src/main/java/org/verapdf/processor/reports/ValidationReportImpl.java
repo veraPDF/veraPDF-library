@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 10 Nov 2016:08:18:17
  */
-@XmlRootElement(name = "validationReport")
+@XmlRootElement(name = "arlingtonReport")
 final class ValidationReportImpl implements ValidationReport {
 	private static final ValidationReportImpl defaultInstance = new ValidationReportImpl();
 	@XmlElement

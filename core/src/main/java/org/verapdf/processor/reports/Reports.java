@@ -36,7 +36,7 @@ public final class Reports {
 
 	private static final String STATEMENT_PREFIX = "PDF file is ";
 	private static final String NOT_INSERT = "not ";
-	private static final String STATEMENT_SUFFIX = "compliant with Validation Profile requirements.";
+	private static final String STATEMENT_SUFFIX = "compliant with Profile requirements.";
 	private static final String COMPLIANT_STATEMENT = STATEMENT_PREFIX
 			+ STATEMENT_SUFFIX;
 	private static final String NONCOMPLIANT_STATEMENT = STATEMENT_PREFIX

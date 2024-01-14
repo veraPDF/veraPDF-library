@@ -16,7 +16,7 @@ public class RawReportWriter extends AbstractXmlReportWriter {
 
 	private static final String RAW_RESULTS_TAG = "rawResults";
 	private static final String ITEM_TAG = "item";
-	private static final String VALIDATION_RESULT_TAG = "validationResult";
+	private static final String VALIDATION_RESULT_TAG = "arlingtonResult";
 	private static final String PROCESSOR_CONFIG_TAG = "processorConfig";
 	private static final String FEATURES_REPORT_TAG = "featuresReport";
 	private static final String FIXER_RESULT_TAG = "fixerResult";

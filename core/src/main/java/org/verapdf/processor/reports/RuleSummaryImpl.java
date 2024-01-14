@@ -49,9 +49,8 @@ final class RuleSummaryImpl implements RuleSummary {
 	private final int testNumber;
 	@XmlAttribute
 	private final String status;
-	@XmlAttribute
 	private final Integer passedChecks;
-	@XmlAttribute
+	@XmlAttribute(name="deviations")
 	private final int failedChecks;
 	@XmlAttribute
 	private final String tags;

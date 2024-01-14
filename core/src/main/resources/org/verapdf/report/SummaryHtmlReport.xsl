@@ -176,10 +176,10 @@
                   <xsl:value-of select="@encrypted"/>
               </td>
               <td>
-                  <xsl:value-of select="validationReports/@compliant"/>
+                  <xsl:value-of select="arlingtonReports/@compliant"/>
               </td>
               <td>
-                  <xsl:value-of select="validationReports/@nonCompliant"/>
+                  <xsl:value-of select="arlingtonReports/@nonCompliant"/>
               </td>
               <xsl:if test="$isPolicy">
                 <td>
