@@ -692,6 +692,18 @@
                 <reference specification="ISO 32000-2:2020" clause="14.8.4.8.6"/>
             </references>
         </rule>
+        <rule object="CosTextString">
+            <id specification="ISO_14289_2" clause="8.6" testNumber="1"/>
+            <description>Text strings intended to be human readable shall not use the Unicode PUA</description>
+            <test>containsPUA == false</test>
+            <error>
+                <message>Text string intended to be human readable uses Unicode PUA</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.9.2.2"/>
+            </references>
+        </rule>
         <rule object="PDOCConfig">
             <id specification="ISO_14289_2" clause="8.7" testNumber="1"/>
             <description>All optional content configuration dictionaries in the document, including the default optional content configuration dictionary, shall contain a Name entry (see ISO 32000-2:2020, Table 96) whose value is a non-empty text string when: a) a document contains a Configs entry in the OCProperties entry of the catalog dictionary (see ISO 32000-2:2020, Table 29), and b) the Configs entry contains at least one optional content configuration dictionary</description>
