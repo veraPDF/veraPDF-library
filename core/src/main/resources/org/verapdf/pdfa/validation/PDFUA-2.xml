@@ -1028,7 +1028,7 @@
             <description>A Form structure element shall contain at most one widget annotation</description>
             <test>widgetAnnotsCount &lt;= 1</test>
             <error>
-                <message>A Form structure element contains %1 annotations</message>
+                <message>A Form structure element contains %1 widget annotations</message>
                 <arguments>
                     <argument>widgetAnnotsCount</argument>
                 </arguments>
