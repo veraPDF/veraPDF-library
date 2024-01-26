@@ -1107,10 +1107,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="1"/>
-            <description>The value of CreationDate entry from the document information dictionary, if present, and its analogous XMP property xmp:CreateDate shall be equivalent</description>
+            <description>The value of CreationDate entry from the document information dictionary, if present, and its analogous XMP property "xmp:CreateDate" shall be equivalent</description>
             <test>doCreationDatesMatch != false</test>
             <error>
-                <message>The value of CreationDate entry from the document Info dictionary and its matching XMP property xmp:CreateDate are not equivalent (Info /CreationDate = %1, XMP xmp:CreateDate = %2)</message>
+                <message>The value of CreationDate entry from the document Info dictionary and its matching XMP property "xmp:CreateDate" are not equivalent (Info /CreationDate = %1, XMP xmp:CreateDate = %2)</message>
                 <arguments>
                     <argument>CreationDate</argument>
                     <argument>XMPCreateDate</argument>
@@ -1122,10 +1122,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="2"/>
-            <description>The value of Title entry from the document information dictionary, if present, and its analogous XMP property dc:title['x-default'] shall be equivalent</description>
+            <description>The value of Title entry from the document information dictionary, if present, and its analogous XMP property "dc:title['x-default']" shall be equivalent</description>
             <test>Title == null || Title == XMPTitle</test>
             <error>
-                <message>The value of Title entry from the document Info dictionary and its matching XMP property dc:title['x-default'] are not equivalent (Info /Title = %1, XMP dc:title['x-default'] = %2)</message>
+                <message>The value of Title entry from the document Info dictionary and its matching XMP property "dc:title['x-default']" are not equivalent (Info /Title = %1, XMP dc:title['x-default'] = %2)</message>
                 <arguments>
                     <argument>Title</argument>
                     <argument>XMPTitle</argument>
@@ -1137,10 +1137,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="3"/>
-            <description>The value of Author entry from the document information dictionary, if present, and its analogous XMP property dc:creator shall be equivalent. dc:creator shall contain exactly one entry</description>
+            <description>The value of Author entry from the document information dictionary, if present, and its analogous XMP property "dc:creator" shall be equivalent. dc:creator shall contain exactly one entry</description>
             <test>Author == null || (Author == XMPCreator &amp;&amp; XMPCreatorSize == 1)</test>
             <error>
-                <message>The value of Author entry from the document Info dictionary and its matching XMP property dc:creator are not equivalent (Info /Author = %1, XMP dc:creator = %2)</message>
+                <message>The value of Author entry from the document Info dictionary and its matching XMP property "dc:creator" are not equivalent (Info /Author = %1, XMP dc:creator = %2)</message>
                 <arguments>
                     <argument>Author</argument>
                     <argument>XMPCreator</argument>
@@ -1152,10 +1152,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="4"/>
-            <description>The value of Subject entry from the document information dictionary, if present, and its analogous XMP property dc:description['x-default'] shall be equivalent</description>
+            <description>The value of Subject entry from the document information dictionary, if present, and its analogous XMP property "dc:description['x-default']" shall be equivalent</description>
             <test>Subject == null || Subject == XMPDescription</test>
             <error>
-                <message>The value of Subject entry from the document Info dictionary and its matching XMP property dc:description['x-default'] are not equivalent (Info /Subject = %1, XMP dc:description['x-default'] = %2)</message>
+                <message>The value of Subject entry from the document Info dictionary and its matching XMP property "dc:description['x-default']" are not equivalent (Info /Subject = %1, XMP dc:description['x-default'] = %2)</message>
                 <arguments>
                     <argument>Subject</argument>
                     <argument>XMPDescription</argument>
@@ -1167,10 +1167,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="5"/>
-            <description>The value of Keywords entry from the document information dictionary, if present, and its analogous XMP property pdf:Keywords shall be equivalent</description>
+            <description>The value of Keywords entry from the document information dictionary, if present, and its analogous XMP property "pdf:Keywords" shall be equivalent</description>
             <test>Keywords == null || Keywords == XMPKeywords</test>
             <error>
-                <message>The value of Keywords entry from the document Info dictionary and its matching XMP property pdf:Keywords are not equivalent (Info /Keywords = %1, XMP pdf:Keywords = %2)</message>
+                <message>The value of Keywords entry from the document Info dictionary and its matching XMP property "pdf:Keywords" are not equivalent (Info /Keywords = %1, XMP pdf:Keywords = %2)</message>
                 <arguments>
                     <argument>Keywords</argument>
                     <argument>XMPKeywords</argument>
@@ -1182,10 +1182,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="6"/>
-            <description>The value of Creator entry from the document information dictionary, if present, and its analogous XMP property xmp:CreatorTool shall be equivalent</description>
+            <description>The value of Creator entry from the document information dictionary, if present, and its analogous XMP property "xmp:CreatorTool" shall be equivalent</description>
             <test>Creator == null || Creator == XMPCreatorTool</test>
             <error>
-                <message>The value of Creator entry from the document Info dictionary and its matching XMP property xmp:CreatorTool are not equivalent (Info /Creator = %1, XMP xmp:CreatorTool = %2)</message>
+                <message>The value of Creator entry from the document Info dictionary and its matching XMP property "xmp:CreatorTool" are not equivalent (Info /Creator = %1, XMP xmp:CreatorTool = %2)</message>
                 <arguments>
                     <argument>Creator</argument>
                     <argument>XMPCreatorTool</argument>
@@ -1197,10 +1197,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="7"/>
-            <description>The value of Producer entry from the document information dictionary, if present, and its analogous XMP property pdf:Producer shall be equivalent</description>
+            <description>The value of Producer entry from the document information dictionary, if present, and its analogous XMP property "pdf:Producer" shall be equivalent</description>
             <test>Producer == null || Producer == XMPProducer</test>
             <error>
-                <message>The value of Producer entry from the document Info dictionary and its matching XMP property pdf:Producer are not equivalent (Info /Producer = %1, XMP pdf:Producer = %2)</message>
+                <message>The value of Producer entry from the document Info dictionary and its matching XMP property "pdf:Producer" are not equivalent (Info /Producer = %1, XMP pdf:Producer = %2)</message>
                 <arguments>
                     <argument>Producer</argument>
                     <argument>XMPProducer</argument>
@@ -1212,10 +1212,10 @@
         </rule>
         <rule object="CosInfo">
             <id specification="ISO_19005_1" clause="6.7.3" testNumber="8"/>
-            <description>The value of ModDate entry from the document information dictionary, if present, and its analogous XMP property xmp:ModifyDate shall be equivalent</description>
+            <description>The value of ModDate entry from the document information dictionary, if present, and its analogous XMP property "xmp:ModifyDate" shall be equivalent</description>
             <test>doModDatesMatch != false</test>
             <error>
-                <message>The value of ModDate entry from the document Info dictionary and its matching XMP property xmp:ModifyDate are not equivalent (Info /ModDate = %1, XMP xmp:ModifyDate = %2)</message>
+                <message>The value of ModDate entry from the document Info dictionary and its matching XMP property "xmp:ModifyDate" are not equivalent (Info /ModDate = %1, XMP xmp:ModifyDate = %2)</message>
                 <arguments>
                     <argument>ModDate</argument>
                     <argument>XMPModifyDate</argument>
@@ -1554,7 +1554,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="2"/>
-            <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms</description>
+            <description>The value of "pdfaid:part" shall be the part number of ISO 19005 to which the file conforms</description>
             <test>part == 1</test>
             <error>
                 <message>The "part" property of the PDF/A Identification Schema is %1 instead of 1 for PDF/A-1 conforming file</message>
@@ -1566,7 +1566,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="3"/>
-            <description>A Level A conforming file shall specify the value of pdfaid:conformance as A. A Level B conforming file shall specify the value of pdfaid:conformance as B</description>
+            <description>A Level A conforming file shall specify the value of "pdfaid:conformance" as A. A Level B conforming file shall specify the value of "pdfaid:conformance" as B</description>
             <test>conformance == "B" || conformance == "A"</test>
             <error>
                 <message>The "conformance" property of the PDF/A Identification Schema is %1 instead of "B" for PDF/A-1b conforming file</message>
@@ -1578,10 +1578,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="4"/>
-            <description>Property part of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "part" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>partPrefix == null || partPrefix == "pdfaid"</test>
             <error>
-                <message>Property part of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "part" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>partPrefix</argument>
                 </arguments>
@@ -1590,10 +1590,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="5"/>
-            <description>Property conformance of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "conformance" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>conformancePrefix == null || conformancePrefix == "pdfaid"</test>
             <error>
-                <message>Property conformance of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "conformance" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>conformancePrefix</argument>
                 </arguments>
@@ -1602,10 +1602,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="6"/>
-            <description>Property amd of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "amd" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>amdPrefix == null || amdPrefix == "pdfaid"</test>
             <error>
-                <message>Property amd of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "amd" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>amdPrefix</argument>
                 </arguments>

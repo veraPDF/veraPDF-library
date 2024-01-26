@@ -1148,7 +1148,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="2"/>
-            <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms</description>
+            <description>The value of "pdfaid:part" shall be the part number of ISO 19005 to which the file conforms</description>
             <test>part == 4</test>
             <error>
                 <message>The "part" property of the PDF/A Identification Schema is %1 instead of 4 for PDF/A-4 conforming file</message>
@@ -1160,7 +1160,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="3"/>
-            <description>A PDF/A-4f conforming file (as described in Annex A) shall specify the value of pdfaid:conformance as F</description>
+            <description>A PDF/A-4f conforming file (as described in Annex A) shall specify the value of "pdfaid:conformance" as F</description>
             <test>conformance == "F"</test>
             <error>
                 <message>The "conformance" property of the PDF/A Identification Schema is %1 instead of "F" for PDF/A-4F conforming file</message>
@@ -1174,10 +1174,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="4"/>
-            <description>Property part of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "part" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>partPrefix == null || partPrefix == "pdfaid"</test>
             <error>
-                <message>Property part of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "part" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>partPrefix</argument>
                 </arguments>
@@ -1186,10 +1186,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="5"/>
-            <description>The value of pdfaid:rev shall be the four digit year</description>
+            <description>The value of "pdfaid:rev" shall be the four digit year</description>
             <test>/^\d{4}$/.test(rev)</test>
             <error>
-                <message>The value of pdfaid:rev (%1) not the four digit year</message>
+                <message>The value of "pdfaid:rev" (%1) not the four digit year</message>
                 <arguments>
                     <argument>rev</argument>
                 </arguments>
@@ -1198,10 +1198,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="6"/>
-            <description>Property rev of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "rev" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>revPrefix == null || revPrefix == "pdfaid"</test>
             <error>
-                <message>Property rev of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "rev" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>revPrefix</argument>
                 </arguments>
