@@ -18,7 +18,7 @@
         </rule>
         <rule object="PDFUAIdentification" tags="metadata">
             <id specification="ISO_14289_1" clause="5" testNumber="2"/>
-            <description>The value of pdfuaid:part shall be the part number of the International Standard to which the file conforms</description>
+            <description>The value of "pdfuaid:part" shall be the part number of the International Standard to which the file conforms</description>
             <test>part == 1</test>
             <error>
                 <message>The "part" property of the PDF/UA Identification Schema is %1 instead of 1 for PDF/UA-1 conforming file</message>
@@ -30,10 +30,10 @@
         </rule>
         <rule object="PDFUAIdentification" tags="metadata">
             <id specification="ISO_14289_1" clause="5" testNumber="3"/>
-            <description>Property part of the PDF/UA Identification Schema shall have namespace prefix pdfuaid</description>
+            <description>Property "part" of the PDF/UA Identification Schema shall have namespace prefix "pdfuaid"</description>
             <test>partPrefix == null || partPrefix == "pdfuaid"</test>
             <error>
-                <message>Property part of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "part" of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>partPrefix</argument>
                 </arguments>
@@ -42,10 +42,10 @@
         </rule>
         <rule object="PDFUAIdentification" tags="metadata">
             <id specification="ISO_14289_1" clause="5" testNumber="4"/>
-            <description>Property amd of the PDF/UA Identification Schema shall have namespace prefix pdfuaid</description>
+            <description>Property "amd" of the PDF/UA Identification Schema shall have namespace prefix "pdfuaid"</description>
             <test>amdPrefix == null || amdPrefix == "pdfuaid"</test>
             <error>
-                <message>Property amd of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "amd" of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>amdPrefix</argument>
                 </arguments>
@@ -54,10 +54,10 @@
         </rule>
         <rule object="PDFUAIdentification" tags="metadata">
             <id specification="ISO_14289_1" clause="5" testNumber="5"/>
-            <description>Property corr of the PDF/UA Identification Schema shall have namespace prefix pdfuaid</description>
+            <description>Property "corr" of the PDF/UA Identification Schema shall have namespace prefix "pdfuaid"</description>
             <test>corrPrefix == null || corrPrefix == "pdfuaid"</test>
             <error>
-                <message>Property corr of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "corr" of the PDF/UA Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>corrPrefix</argument>
                 </arguments>
@@ -199,10 +199,10 @@
         </rule>
         <rule object="PDStructElem" tags="structure">
             <id specification="ISO_14289_1" clause="7.1" testNumber="12"/>
-            <description>A struct element shall contain the P entry according to ISO 32000-1:2008, 14.7.2, Table 355</description>
+            <description>A structure element dictionary shall contain the P (parent) entry according to ISO 32000-1:2008, 14.7.2, Table 355</description>
             <test>containsParent == true</test>
             <error>
-                <message>A struct element does not contain the P entry</message>
+                <message>A structure element dictionary does not contain the P (parent) entry</message>
                 <arguments/>
             </error>
             <references>
