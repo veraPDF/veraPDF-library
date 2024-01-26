@@ -1619,7 +1619,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_3" clause="6.6.4" testNumber="2"/>
-            <description>The value of pdfaid:part shall be the part number of ISO 19005 to which the file conforms</description>
+            <description>The value of "pdfaid:part" shall be the part number of ISO 19005 to which the file conforms</description>
             <test>part == 3</test>
             <error>
                 <message>The "part" property of the PDF/A Identification Schema is %1 instead of 3 for PDF/A-3 conforming file</message>
@@ -1631,7 +1631,7 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_3" clause="6.6.4" testNumber="3"/>
-            <description>A Level A conforming file shall specify the value of pdfaid:conformance as A. A Level B conforming file shall specify the value of pdfaid:conformance as B. A Level U conforming file shall specify the value of pdfaid:conformance as U</description>
+            <description>A Level A conforming file shall specify the value of "pdfaid:conformance" as A. A Level B conforming file shall specify the value of "pdfaid:conformance" as B. A Level U conforming file shall specify the value of "pdfaid:conformance" as U</description>
             <test>conformance == "A"</test>
             <error>
                 <message>The "conformance" property of the PDF/A Identification Schema is %1 instead of "A" for PDF/A-3A conforming file</message>
@@ -1643,10 +1643,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_3" clause="6.6.4" testNumber="4"/>
-            <description>Property part of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "part" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>partPrefix == null || partPrefix == "pdfaid"</test>
             <error>
-                <message>Property part of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "part" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>partPrefix</argument>
                 </arguments>
@@ -1655,10 +1655,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_3" clause="6.6.4" testNumber="5"/>
-            <description>Property conformance of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "conformance" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>conformancePrefix == null || conformancePrefix == "pdfaid"</test>
             <error>
-                <message>Property conformance of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "conformance" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>conformancePrefix</argument>
                 </arguments>
@@ -1667,10 +1667,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_3" clause="6.6.4" testNumber="6"/>
-            <description>Property amd of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "amd" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>amdPrefix == null || amdPrefix == "pdfaid"</test>
             <error>
-                <message>Property amd of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "amd" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>amdPrefix</argument>
                 </arguments>
@@ -1679,10 +1679,10 @@
         </rule>
         <rule object="PDFAIdentification">
             <id specification="ISO_19005_3" clause="6.6.4" testNumber="7"/>
-            <description>Property corr of the PDF/A Identification Schema shall have namespace prefix pdfaid</description>
+            <description>Property "corr" of the PDF/A Identification Schema shall have namespace prefix "pdfaid"</description>
             <test>corrPrefix == null || corrPrefix == "pdfaid"</test>
             <error>
-                <message>Property corr of the PDF/A Identification Schema has invalid namespace prefix %1</message>
+                <message>Property "corr" of the PDF/A Identification Schema has invalid namespace prefix %1</message>
                 <arguments>
                     <argument>corrPrefix</argument>
                 </arguments>
