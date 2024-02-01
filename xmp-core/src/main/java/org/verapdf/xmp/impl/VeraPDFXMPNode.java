@@ -146,6 +146,10 @@ public class VeraPDFXMPNode {
     public List<VeraPDFXMPNode> getChildren() {
         return children;
     }
+    
+    protected XMPNode getOriginalNode() {
+        return originalNode;
+    }
 
     public PropertyOptions getOptions() {
         return options;
