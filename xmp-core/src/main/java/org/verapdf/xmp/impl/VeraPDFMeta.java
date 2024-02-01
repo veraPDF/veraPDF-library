@@ -2,6 +2,8 @@ package org.verapdf.xmp.impl;
 
 import org.verapdf.xmp.*;
 import org.verapdf.xmp.options.ParseOptions;
+import org.verapdf.xmp.impl.xpath.XMPPath;
+import org.verapdf.xmp.impl.xpath.XMPPathParser;
 import org.verapdf.xmp.options.PropertyOptions;
 import org.verapdf.xmp.options.SerializeOptions;
 import org.verapdf.xmp.properties.XMPProperty;
@@ -16,6 +18,8 @@ public class VeraPDFMeta {
 
     public static final String PDFAID_PREFIX = "pdfaid";
     public static final String PDFUAID_PREFIX = "pdfuaid";
+    public static final String PDFA_EXTENSION_PREFIX = "pdfaExtension";
+    public static final String SCHEMAS = "schemas";
     public static final String CONFORMANCE = "conformance";
     public static final String PART = "part";
     public static final String REVISION_YEAR = "rev";
@@ -57,13 +61,28 @@ public class VeraPDFMeta {
                 int prefixEndIndex = originalName.indexOf(":");
                 String name = originalName.substring(prefixEndIndex + 1, originalName.length());
                 String namespaceURI = registry.getNamespaceURI(originalName.substring(0, Math.max(prefixEndIndex, 0)));
-                if (XMPMetaImpl.NS_PDFA_EXTENSION.equals(namespaceURI) && "schemas".equals(name)) {
+                if (XMPMetaImpl.NS_PDFA_EXTENSION.equals(namespaceURI) && SCHEMAS.equals(name)) {
                     this.extensionSchemasNode = VeraPDFXMPNode.fromXMPNode(xmpChild);
                 } else {
                     this.properties.add(VeraPDFXMPNode.fromXMPNode(xmpChild));
                 }
             }
         }
+    }
+    
+    public VeraPDFExtensionSchemasContainer getExtensionSchema() throws XMPException {
+        final XMPPath expPath = XMPPathParser.expandXPath(XMPMetaImpl.NS_PDFA_EXTENSION, SCHEMAS);
+        final XMPNode propNode = XMPNodeUtils.findNode(meta.getRoot(), expPath, false, null);
+        return propNode != null ? new VeraPDFExtensionSchemasContainer(VeraPDFXMPNode.fromXMPNode(propNode)) : null;
+    }
+    
+    public void createExtensionSchema() throws XMPException {
+        XMPNode extension = new XMPNode(PDFA_EXTENSION_PREFIX + ":" + SCHEMAS, "", 
+                new PropertyOptions(PropertyOptions.ARRAY), PDFA_EXTENSION_PREFIX);
+        XMPNode node = new XMPNode(XMPConst.NS_PDFA_EXTENSION, PDFA_EXTENSION_PREFIX + ":", 
+                new PropertyOptions(PropertyOptions.SCHEMA_NODE), null);
+        node.addChild(extension);
+        meta.getRoot().addChild(node);
     }
 
     public static VeraPDFMeta create() {
