@@ -201,36 +201,14 @@
                         <xsl:value-of select="/report/jobs/job/duration"/>
                     </td>
                 </tr>
-                <xsl:if test="/report/jobs/job/arlingtonReport/details/@passedRules or /report/jobs/job/arlingtonReport/details/@failedRules">
-                    <tr>
-                        <td width="250">
-                            <b>Total rules in Profile:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/arlingtonReport/details/@passedRules + /report/jobs/job/arlingtonReport/details/@failedRules"/>
-                        </td>
-                    </tr>
-                </xsl:if>
-                <xsl:if test="/report/jobs/job/arlingtonReport/details/@passedChecks">
-                    <tr>
-                        <td width="250">
-                            <b>Checks:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/arlingtonReport/details/@passedChecks"/>
-                        </td>
-                    </tr>
-                </xsl:if>
-                <xsl:if test="/report/jobs/job/arlingtonReport/details/@failedChecks">
+                <xsl:if test="/report/jobs/job/arlingtonReport/details/@deviations">
                     <tr>
                         <td width="250">
                             <b>Deviations:</b>
                         </td>
                         <td>
                             <xsl:value-of
-                                    select="/report/jobs/job/arlingtonReport/details/@failedChecks"/>
+                                    select="/report/jobs/job/arlingtonReport/details/@deviations"/>
                         </td>
                     </tr>
                 </xsl:if>
@@ -540,10 +518,10 @@
                 </b>
             </td>
         </tr>
-        <xsl:if test="@failedChecks > 0">
+        <xsl:if test="@deviations > 0">
             <tr style="BACKGROUND: #dcdaf6">
                 <td width="800">
-                    <xsl:value-of select="@failedChecks"/> occurrences
+                    <xsl:value-of select="@deviations"/> occurrences
                 </td>
                 <td width="50">
                     <xsl:if test="@status = 'failed'">

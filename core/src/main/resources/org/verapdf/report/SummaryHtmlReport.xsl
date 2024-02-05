@@ -202,10 +202,7 @@
         <tr>
           <th>File Name</th>
           <th>Profile</th>
-          <th>Passed Rules</th>
-          <th>Failed Rules</th>
-          <th>Passed Checks</th>
-          <th>Failed Checks</th>
+          <th>Deviations</th>
           <xsl:if test="$isPolicy">
             <th>Policy Check</th>
           </xsl:if>
@@ -217,7 +214,7 @@
         <xsl:for-each select="job">
           <xsl:variable name="validClass">
             <xsl:choose>
-              <xsl:when test="validationReport/@isCompliant = 'true'">
+              <xsl:when test="arlingtonReport/@isCompliant = 'true'">
                 <xsl:value-of select="'valid'" />
                 </xsl:when>
                 <xsl:otherwise>
@@ -227,12 +224,12 @@
           </xsl:variable>
           <xsl:variable name="validResult">
             <xsl:choose>
-              <xsl:when test="validationReport/@isCompliant = 'true'">
+              <xsl:when test="arlingtonReport/@isCompliant = 'true'">
                 <xsl:value-of select="'Passed'" />
               </xsl:when>
               <xsl:otherwise>
                   <xsl:choose>
-                      <xsl:when test="validationReport/@isCompliant = 'false'">
+                      <xsl:when test="arlingtonReport/@isCompliant = 'false'">
                           <xsl:value-of select="'Failed'" />
                       </xsl:when>
                       <xsl:otherwise>
@@ -254,19 +251,10 @@
               <xsl:value-of select="item/name" />
             </td>
             <td>
-              <xsl:value-of select="validationReport/@profileName" />
+              <xsl:value-of select="arlingtonReport/@profileName" />
             </td>
             <td>
-              <xsl:value-of select="validationReport/details/@passedRules" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@failedRules" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@passedChecks" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@failedChecks" />
+              <xsl:value-of select="arlingtonReport/details/@deviations" />
             </td>
             <xsl:apply-templates select="policyReport" />
             <xsl:if test="$hasLogs">
