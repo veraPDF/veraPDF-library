@@ -1,3 +1,34 @@
+Version 1.26 RC (February 9, 2023)
+==================================
+
+### Applications
+- Redesigned main GUI window
+- Improved CLI output (help, debug logs)
+- Add new CLI option to support reuse of GUI config files
+- Fixed GUI check for the availability of a newer version 
+
+### PDF Model
+- Cleanup of the unused properties and links
+
+### PDF Parser
+- Updated predefined CMaps
+- Added support for structure attributes defined via ClassMap 
+- Fixed parsing of inline images of undefined length
+- Detect and generate warning when dictionary contains duplicated keys
+- Detect and generate warning when the embedded font has duplicated glyph names
+- Fixed decryption of string objects
+- Fix default whitepoint for CIELab in JPEG2000
+- Optimized use of temporary files
+
+### Validation
+- (PDF/UA-2) added support for PDF/UA-2 (draft)
+- (PDF/UA-1) fixes related to annotations in structure tree
+- (PDF/A-1) added check for BitsPerComponent != 16
+- (PDF/A-1) added check that the document does not use xref stream
+
+### Core library
+- added support for Java 21
+
 Version 1.24 RC2 (June 2, 2023)
 ==================================
 
@@ -15,6 +46,7 @@ Version 1.24 RC2 (June 2, 2023)
 -  (PDF/A-1) fixed comparison of Info dictionary Author and XMP dc:creator in case of multiple authors/creators
 -  (PDF/A-2,3,4) fixed handling of Default color spaces for DeviceN colorants
 -  (PDF/UA-1) reverted Table Scope determination algorithm from PDF 2.0 to PDF 1.7
+
 
 Version 1.24 RC (April 27, 2023)
 ==================================
