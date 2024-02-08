@@ -2,7 +2,7 @@ Version 1.26 RC (February 9, 2023)
 ==================================
 
 ### Applications
-- Imporved REST API: more logical endpoints, documentation, web demo page, automatic deployment of the docker image to DockerHub.com
+- Improved REST API: more logical endpoints, documentation, web demo page, automatic deployment of the docker image to DockerHub.com
 - Redesigned main GUI window
 - Improved CLI output (help, debug logs, text report, JSON report formatting)
 - Improved XML report schema in case of exceptions
