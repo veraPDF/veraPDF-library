@@ -2,10 +2,11 @@ Version 1.26 RC (February 9, 2023)
 ==================================
 
 ### Applications
+- Imporved REST API: more logical endpoints, documentation, web demo page, automatic deployment of the docker image to DockerHub.com
 - Redesigned main GUI window
-- Improved CLI output (help, debug logs)
-- Add new CLI option to support reuse of GUI config files
-- Fixed GUI check for the availability of a newer version 
+- Improved CLI output (help, debug logs, text report, JSON report formatting)
+- Improved XML report schema in case of exceptions
+- Fixed GUI check for the availability of a newer version
 
 ### PDF Model
 - Cleanup of the unused properties and links
@@ -14,20 +15,21 @@ Version 1.26 RC (February 9, 2023)
 - Updated predefined CMaps
 - Added support for structure attributes defined via ClassMap 
 - Fixed parsing of inline images of undefined length
-- Detect and generate warning when dictionary contains duplicated keys
-- Detect and generate warning when the embedded font has duplicated glyph names
+- Detect and generate a warning when dictionary contains duplicated keys
+- Detect and generate a warning when the embedded font has duplicated glyph names
+- Detect and generate a warning in case of loops in document structure tree
 - Fixed decryption of string objects
 - Fix default whitepoint for CIELab in JPEG2000
 - Optimized use of temporary files
 
 ### Validation
 - (PDF/UA-2) added support for PDF/UA-2 (draft)
-- (PDF/UA-1) fixes related to annotations in structure tree
+- (PDF/UA-1) fixed checks related to role maps between standard and non-standard tags
+- (PDF/UA-1) fixed rules related to annotations in structure tree
+- (PDF/UA-1) added checks for XMP prefixes in the identification metadata
 - (PDF/A-1) added check for BitsPerComponent != 16
 - (PDF/A-1) added check that the document does not use xref stream
-
-### Core library
-- added support for Java 21
+- (PDF/A-1) Fix syncing XMP with Info dictionary in case of multiple creators
 
 Version 1.24 RC2 (June 2, 2023)
 ==================================
