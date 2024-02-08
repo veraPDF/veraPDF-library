@@ -24,10 +24,12 @@ Version 1.26 RC (February 9, 2023)
 
 ### Validation
 - (PDF/UA-2) added support for PDF/UA-2 (draft)
+- (PDF/UA-1) detect and report structure elements with missing parent
 - (PDF/UA-1) fixed checks related to role maps between standard and non-standard tags
 - (PDF/UA-1) fixed rules related to annotations in structure tree
 - (PDF/UA-1) added checks for XMP prefixes in the identification metadata
-- (PDF/A-1) added check for BitsPerComponent != 16
+- (PDF/A-1,2,3,4) added check for valid values of BitsPerComponent
+- (PDF/A-2,3,4) apply the rule on identical tint transform also to /All and /None
 - (PDF/A-1) added check that the document does not use xref stream
 - (PDF/A-1) Fix syncing XMP with Info dictionary in case of multiple creators
 
