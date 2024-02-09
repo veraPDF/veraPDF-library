@@ -6,7 +6,7 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-library-jakarta</artifactId>
-    <version>1.25.0-SNAPSHOT</version>
+    <version>1.26.0-RC1</version>
   </parent>
 
   <artifactId>verapdf-xmp-core-coverage-jakarta</artifactId>
