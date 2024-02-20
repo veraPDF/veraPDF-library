@@ -361,7 +361,7 @@
             <description>If Table element contains TFoot kid, Table element should contain one or more TBody kids</description>
             <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TFoot').length == 0 || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TBody').length &gt; 0</test>
             <error>
-                <message>Table element contains TFoot kid, but not contains TBody kids</message>
+                <message>Table element contains TFoot kid, but does not contain TBody kids</message>
                 <arguments/>
             </error>
             <references>
@@ -373,7 +373,7 @@
             <description>If Table element contains THead kid, Table element should contain one or more TBody kids</description>
             <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'THead').length == 0 || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'TBody').length &gt; 0</test>
             <error>
-                <message>Table element contains THead kid, but not contains TBody kids</message>
+                <message>Table element contains THead kid, but does not contain TBody kids</message>
                 <arguments/>
             </error>
             <references>
@@ -1272,7 +1272,7 @@
             <description>The Unicode values specified in the ToUnicode CMap shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE</description>
             <test>toUnicode == null || (toUnicode.indexOf("\u0000") == -1 &amp;&amp; toUnicode.indexOf("\uFFFE") == -1 &amp;&amp; toUnicode.indexOf("\uFEFF") == -1)</test>
             <error>
-                <message>The glyph has an invalid Unicode value, which is either 0, or is equal to U+FEFF or U+FFFE</message>
+                <message>The glyph has Unicode value 0, U+FEFF or U+FFFE, which is invalid by Unicode standard</message>
                 <arguments/>
             </error>
             <references/>
