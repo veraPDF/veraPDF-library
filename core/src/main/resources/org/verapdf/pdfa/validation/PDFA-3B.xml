@@ -1103,7 +1103,7 @@
         </rule>
         <rule object="PDWidgetAnnot">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="1"/>
-            <description>A Widget annotation dictionary shall not contains the A or AA keys</description>
+            <description>A Widget annotation dictionary shall not contain the A or AA keys</description>
             <test>containsA == false &amp;&amp; containsAA == false</test>
             <error>
                 <message>A Widget annotation contains %1 key(s)</message>
@@ -1115,7 +1115,7 @@
         </rule>
         <rule object="PDFormField">
             <id specification="ISO_19005_3" clause="6.4.1" testNumber="2"/>
-            <description>A Field dictionary shall not contains the A or AA keys</description>
+            <description>A Field dictionary shall not contain the A or AA keys</description>
             <test>containsAA == false</test>
             <error>
                 <message>A Form field dictionary contains the AA entry</message>
