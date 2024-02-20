@@ -126,7 +126,7 @@
         </rule>
         <rule object="PDStructElem" tags="structure">
             <id specification="ISO_14289_2" clause="8.2.4" testNumber="3"/>
-            <description>Structure types shall not be role mapped to other structure types in the same namespace</description>
+            <description>Within a given explicitly provided namespace, structure types shall not be role mapped to other structure types in the same namespace</description>
             <test>roleMapToSameNamespaceTag == null</test>
             <error>
                 <message>Structure type %1 is role mapped to other structure type in the same namespace</message>
@@ -339,7 +339,7 @@
             <description>Tables shall be regular. Row groupings formed by THead, TBody and TFoot structure elements shall be regular. Table columns shall have the same number of rows (taking into account row spans) in table and each row groupings formed by THead, TBody and TFoot structure elements</description>
             <test>numberOfColumnWithWrongRowSpan == null</test>
             <error>
-                <message>Columns 1 and %1 span different number of rows in table or one of row groupings formed by THead, TBody and TFoot structure elements</message>
+                <message>Columns 1 and %1 span different number of rows in table, or within one of row groupings formed by THead, TBody and TFoot structure elements</message>
                 <arguments>
                     <argument>numberOfColumnWithWrongRowSpan + 1</argument>
                 </arguments>
@@ -452,7 +452,7 @@
             <description>The ActualText entry shall not contain any PUA values</description>
             <test>containsPUA == false</test>
             <error>
-                <message>The ActualText entry contains a Private Unicode Area value</message>
+                <message>The ActualText entry contains Unicode PUA (Private Use Area) code points</message>
                 <arguments/>
             </error>
             <references/>
@@ -462,7 +462,7 @@
             <description>The Alt entry shall not contain any PUA values</description>
             <test>containsPUA == false</test>
             <error>
-                <message>The Alt entry contains a Private Unicode Area value</message>
+                <message>The Alt entry contains Unicode PUA (Private Use Area) code points</message>
                 <arguments/>
             </error>
             <references/>
@@ -605,7 +605,7 @@
             <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain at least Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1), or Macintosh Roman (1,0 – Platform ID=1, Encoding ID=0) 'cmap' subtable</description>
             <test>isSymbolic == true || cmap31Present == true || cmap10Present == true</test>
             <error>
-                <message>The embedded font program for a non-symbolic TrueType font does not contain Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) or the Mac Roman (1,0 – Platform ID=1, Encoding ID=0) encoding</message>
+                <message>The embedded font program for a non-symbolic TrueType font does not contain Microsoft Symbol (3,1 – Platform ID=3, Encoding ID=1) or the Mac Roman (1,0 – Platform ID=1, Encoding ID=0) encoding</message>
                 <arguments/>
             </error>
             <references/>
@@ -662,7 +662,7 @@
             <description> If a ToUnicode CMap is present, the Unicode values it specifies shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE</description>
             <test>toUnicode == null || (toUnicode.indexOf("\u0000") == -1 &amp;&amp; toUnicode.indexOf("\uFFFE") == -1 &amp;&amp; toUnicode.indexOf("\uFEFF") == -1)</test>
             <error>
-                <message>The glyph has an invalid Unicode value, which is either 0, or is equal to U+FEFF or U+FFFE</message>
+                <message>The glyph has Unicode value 0, U+FEFF or U+FFFE, which is invalid by Unicode standard</message>
                 <arguments/>
             </error>
             <references/>
@@ -755,7 +755,7 @@
         </rule>
         <rule object="PDAnnot" tags="annotation,structure">
             <id specification="ISO_14289_2" clause="8.9.2.1" testNumber="1"/>
-            <description>Annotations shall be included in the structure tree unless explicitly excluded by the following subclauses</description>
+            <description>Annotations shall be included in the structure tree unless explicitly excluded by the specification (popups, printer marks, invisible annotations)</description>
             <test>(structParentType != null &amp;&amp; isArtifact == false) || (Subtype == "Popup") || (Subtype == "PrinterMark") || (Subtype == "Widget" &amp;&amp; width == 0 &amp;&amp; height == 0) || ((F &amp; 1) == 1) || ((F &amp; 32) == 1 &amp;&amp; (F &amp; 256) == 0) </test>
             <error>
                 <message>Annotation is not included in the structure tree</message>
@@ -790,7 +790,7 @@
             <description>Annotations shall be artifacts if the NoView flag is set and the ToggleNoView flag is not set in accordance with ISO 32000-2:2020, Table 167</description>
             <test>structParentType == null || isArtifact == true || ((F &amp; 32) == 0 || (F &amp; 256) == 1)</test>
             <error>
-                <message>An invisible annotation is included in logical structure with tag %1 (standard type = %2, NoView = %3, ToggleNoView = %4)</message>
+                <message>A no-view annotation is included in logical structure with tag %1 (standard type = %2, NoView = %3, ToggleNoView = %4)</message>
                 <arguments>
                     <argument>structParentType</argument>
                     <argument>structParentStandardType</argument>
@@ -853,7 +853,7 @@
         <rule object="PDPopupAnnot" tags="annotation,artifact">
             <id specification="ISO_14289_2" clause="8.9.2.4.9" testNumber="1"/>
             <description>Popup annotations shall not be present in the structure tree</description>
-            <test>structParentType == null || isArtifact == true</test>
+            <test>structParentType == null</test>
             <error>
                 <message>A Popup annotation is included in logical structure with tag %1 (standard type = %2)</message>
                 <arguments>
@@ -1062,7 +1062,7 @@
             <description>If an additional action (AA) entry is present in a widget annotation dictionary, the respective widget's Contents entry shall be present</description>
             <test>containsAA == false || Contents != null</test>
             <error>
-                <message>Widget annotation dictionary contains an AA entry, but not contains the Contents entry</message>
+                <message>Widget annotation dictionary contains an AA entry, but does not contain the Contents entry</message>
                 <arguments/>
             </error>
             <references>
