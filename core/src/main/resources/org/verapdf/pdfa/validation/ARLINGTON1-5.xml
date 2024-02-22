@@ -12770,12 +12770,12 @@
 		</rule>
 		<rule object="AAnnotWidgetField">
 			<id specification="PDF_1_5" clause="AnnotWidgetField" testNumber="1"/>
-			<description>AnnotWidgetField shall not contain entries except A, TU, C, Parent, F, H, M, P, BS, OC, StructParent, T, MK, AA, Ff, Rect, Kids, AP, AS, Type, Contents, TM, Border, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetField shall not contain entries except A, TU, C, Parent, F, H, M, P, BS, OC, StructParent, T, MK, AA, Ff, Rect, AP, AS, Type, Contents, TM, Border, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetField contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -12972,18 +12972,6 @@
 				<message>Entry H with type Name in AnnotWidgetField has incorrect value %1 instead of P, T, I, N, O</message>
 				<arguments>
 					<argument>HNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetField">
-			<id specification="PDF_1_5" clause="AnnotWidgetField-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetField shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetField has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -13220,12 +13208,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnCheckbox">
 			<id specification="PDF_1_5" clause="AnnotWidgetFieldBtnCheckbox" testNumber="1"/>
-			<description>AnnotWidgetFieldBtnCheckbox shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, Opt, OC, StructParent, T, V, MK, AA, Ff, Rect, Kids, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetFieldBtnCheckbox shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, Opt, OC, StructParent, T, V, MK, AA, Ff, Rect, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnCheckbox contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -13502,18 +13490,6 @@
 				<message>Entry H with type Name in AnnotWidgetFieldBtnCheckbox has incorrect value %1 instead of P, T, I, N, O</message>
 				<arguments>
 					<argument>HNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetFieldBtnCheckbox">
-			<id specification="PDF_1_5" clause="AnnotWidgetFieldBtnCheckbox-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetFieldBtnCheckbox shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetFieldBtnCheckbox has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -13820,12 +13796,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnPush">
 			<id specification="PDF_1_5" clause="AnnotWidgetFieldBtnPush" testNumber="1"/>
-			<description>AnnotWidgetFieldBtnPush shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, OC, StructParent, T, V, MK, AA, Ff, Rect, Kids, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetFieldBtnPush shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, OC, StructParent, T, V, MK, AA, Ff, Rect, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnPush contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -14102,18 +14078,6 @@
 				<message>Entry H with type Name in AnnotWidgetFieldBtnPush has incorrect value %1 instead of P, T, I, N, O</message>
 				<arguments>
 					<argument>HNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetFieldBtnPush">
-			<id specification="PDF_1_5" clause="AnnotWidgetFieldBtnPush-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetFieldBtnPush shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetFieldBtnPush has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -14408,12 +14372,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnRadio">
 			<id specification="PDF_1_5" clause="AnnotWidgetFieldBtnRadio" testNumber="1"/>
-			<description>AnnotWidgetFieldBtnRadio shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, Opt, OC, StructParent, T, V, MK, AA, Ff, Rect, Kids, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetFieldBtnRadio shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, Opt, OC, StructParent, T, V, MK, AA, Ff, Rect, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnRadio contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -14690,18 +14654,6 @@
 				<message>Entry H with type Name in AnnotWidgetFieldBtnRadio has incorrect value %1 instead of P, T, I, N, O</message>
 				<arguments>
 					<argument>HNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetFieldBtnRadio">
-			<id specification="PDF_1_5" clause="AnnotWidgetFieldBtnRadio-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetFieldBtnRadio shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetFieldBtnRadio has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -15008,12 +14960,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldChoice">
 			<id specification="PDF_1_5" clause="AnnotWidgetFieldChoice" testNumber="1"/>
-			<description>AnnotWidgetFieldChoice shall not contain entries except A, TU, C, RV, Parent, F, H, I, M, FT, DS, P, BS, Q, DV, Opt, OC, StructParent, T, V, MK, AA, Ff, Rect, Kids, AP, AS, Type, Contents, TI, TM, Border, DA, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'I' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TI' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetFieldChoice shall not contain entries except A, TU, C, RV, Parent, F, H, I, M, FT, DS, P, BS, Q, DV, Opt, OC, StructParent, T, V, MK, AA, Ff, Rect, AP, AS, Type, Contents, TI, TM, Border, DA, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'I' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TI' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldChoice contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'I' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TI' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'I' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TI' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -15313,18 +15265,6 @@
 			<error>
 				<message>Entry I with type Array in AnnotWidgetFieldChoice does not satisfy special case: fn:Eval(fn:ArraySortAscending(I, 1))</message>
 				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetFieldChoice">
-			<id specification="PDF_1_5" clause="AnnotWidgetFieldChoice-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetFieldChoice shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetFieldChoice has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
-				</arguments>
 			</error>
 			<references/>
 		</rule>
@@ -15652,12 +15592,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldSig">
 			<id specification="PDF_1_5" clause="AnnotWidgetFieldSig" testNumber="1"/>
-			<description>AnnotWidgetFieldSig shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, OC, StructParent, T, V, MK, AA, Ff, Rect, SV, Kids, AP, Lock, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'SV' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'Lock' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetFieldSig shall not contain entries except A, TU, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, OC, StructParent, T, V, MK, AA, Ff, Rect, SV, AP, Lock, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'SV' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'Lock' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldSig contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'SV' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'Lock' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'SV' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'Lock' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -15934,18 +15874,6 @@
 				<message>Entry H with type Name in AnnotWidgetFieldSig has incorrect value %1 instead of P, T, I, N, O</message>
 				<arguments>
 					<argument>HNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetFieldSig">
-			<id specification="PDF_1_5" clause="AnnotWidgetFieldSig-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetFieldSig shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetFieldSig has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -16294,12 +16222,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldTx">
 			<id specification="PDF_1_5" clause="AnnotWidgetFieldTx" testNumber="1"/>
-			<description>AnnotWidgetFieldTx shall not contain entries except A, TU, MaxLen, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, OC, StructParent, T, V, MK, AA, Ff, Rect, Kids, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'MaxLen' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotWidgetFieldTx shall not contain entries except A, TU, MaxLen, C, RV, Parent, F, H, M, FT, DS, P, BS, Q, DV, OC, StructParent, T, V, MK, AA, Ff, Rect, AP, AS, Type, Contents, TM, Border, DA, Subtype, NM</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'MaxLen' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldTx contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'MaxLen' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'MaxLen' &amp;&amp; elem != 'C' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -16586,18 +16514,6 @@
 				<message>Entry H with type Name in AnnotWidgetFieldTx has incorrect value %1 instead of P, T, I, N, O</message>
 				<arguments>
 					<argument>HNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotWidgetFieldTx">
-			<id specification="PDF_1_5" clause="AnnotWidgetFieldTx-Kids" testNumber="8"/>
-			<description>Entry Kids in AnnotWidgetFieldTx shall have type Array</description>
-			<test>containsKids == false || KidsHasTypeArray == true</test>
-			<error>
-				<message>Entry Kids in AnnotWidgetFieldTx has type %1 instead of type Array</message>
-				<arguments>
-					<argument>KidsType</argument>
 				</arguments>
 			</error>
 			<references/>
