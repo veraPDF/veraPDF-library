@@ -29,7 +29,7 @@ Quick Start
 
 In order to build the library you'll need:
 
- * Java 8 - 17, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
+ * Java 8 - 21, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
  * [Maven v3+](https://maven.apache.org/)
 
 Life will be easier if you also use [Git](https://git-scm.com/) to obtain and manage the source.
