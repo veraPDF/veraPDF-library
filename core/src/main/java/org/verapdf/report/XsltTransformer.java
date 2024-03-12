@@ -23,8 +23,12 @@ package org.verapdf.report;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
@@ -34,8 +38,11 @@ import javax.xml.transform.stream.StreamSource;
  * @author Maksim Bezrukov
  */
 public final class XsltTransformer {
-	private static final TransformerFactory factory = TransformerFactory.newInstance();
 
+	private static final Logger LOGGER = Logger.getLogger(XsltTransformer.class.getCanonicalName());
+
+	private static final TransformerFactory factory = getTransformerFactory();
+	
 	private XsltTransformer() {
 	}
 
@@ -67,5 +74,16 @@ public final class XsltTransformer {
 		}
 
 		transformer.transform(new StreamSource(source), new StreamResult(destination));
+	}
+
+	private static TransformerFactory getTransformerFactory() {
+		TransformerFactory fact = TransformerFactory.newInstance();
+		try {
+			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
+		} catch (TransformerConfigurationException e) {
+			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
+		}
+		return fact;
 	}
 }

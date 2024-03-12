@@ -20,15 +20,15 @@ package org.verapdf.policy;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.utils.FileUtils;
 
-import javax.xml.transform.Templates;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.XMLConstants;
+import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The veraPDF policy checker which is simply an abstraction that makes applying
@@ -39,7 +39,10 @@ import java.util.List;
  * @version 0.1 Created 12 Dec 2016:17:51:12
  */
 public final class PolicyChecker {
-	private static final TransformerFactory factory = TransformerFactory.newInstance();
+
+	private static final Logger LOGGER = Logger.getLogger(PolicyChecker.class.getCanonicalName());
+
+	private static final TransformerFactory factory = getTransformerFactory();
 	public static final String SCHEMA_EXT = "sch"; //$NON-NLS-1$
 	public static final String XSL_EXT = "xsl"; //$NON-NLS-1$
 	public static final String XSLT_EXT = "xslt"; //$NON-NLS-1$
@@ -203,5 +206,16 @@ public final class PolicyChecker {
 			final OutputStream policyReport) throws TransformerException {
 		Transformer transformer = factory.newTransformer(new StreamSource(schematronXsl));
 		transformer.transform(new StreamSource(xmlReport), new StreamResult(policyReport));
+	}
+
+	private static TransformerFactory getTransformerFactory() {
+		TransformerFactory fact = TransformerFactory.newInstance();
+		try {
+			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
+		} catch (TransformerConfigurationException e) {
+			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
+		}
+		return fact;
 	}
 }
