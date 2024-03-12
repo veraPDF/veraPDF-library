@@ -17,6 +17,7 @@
  */
 package org.verapdf.policy;
 
+import javax.xml.XMLConstants;
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
@@ -31,8 +32,7 @@ import java.util.logging.Logger;
  */
 
 final class SchematronPipeline {
-	private static final Logger LOGGER = Logger
-			.getLogger(SchematronPipeline.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(SchematronPipeline.class.getName());
 
 	static final ClassLoader cl = SchematronPipeline.class.getClassLoader();
 	private static final TransformerFactory factory = getTransformerFactory();
@@ -85,6 +85,12 @@ final class SchematronPipeline {
 
 	private static TransformerFactory getTransformerFactory() {
 		TransformerFactory fact = TransformerFactory.newInstance();
+		try {
+			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
+		} catch (TransformerConfigurationException e) {
+			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
+		}
 		fact.setURIResolver(new ClasspathResourceURIResolver());
 		return fact;
 	}
