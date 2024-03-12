@@ -41,16 +41,7 @@ public final class XsltTransformer {
 
 	private static final Logger LOGGER = Logger.getLogger(XsltTransformer.class.getCanonicalName());
 
-	private static final TransformerFactory factory = TransformerFactory.newInstance();
-
-	static {
-		try {
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException ignored) {
-			LOGGER.log(Level.WARNING, "Unable to secure xslt transformer");
-		}
-	}
+	private static final TransformerFactory factory = getTransformerFactory();
 	
 	private XsltTransformer() {
 	}
@@ -83,5 +74,16 @@ public final class XsltTransformer {
 		}
 
 		transformer.transform(new StreamSource(source), new StreamResult(destination));
+	}
+
+	private static TransformerFactory getTransformerFactory() {
+		TransformerFactory fact = TransformerFactory.newInstance();
+		try {
+			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
+		} catch (TransformerConfigurationException e) {
+			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
+		}
+		return fact;
 	}
 }
