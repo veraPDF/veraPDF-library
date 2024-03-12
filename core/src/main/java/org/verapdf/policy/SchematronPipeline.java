@@ -45,15 +45,6 @@ final class SchematronPipeline {
 	private static final Templates cachedExpXsl = createCachedTransform(isoExpXsl);
 	private static final Templates cachedIsoSvrlXsl = createCachedTransform(isoSvrlXsl);
 
-	static {
-		try {
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException ignored) {
-			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
-		}
-	}
-
 	private SchematronPipeline() {
 	}
 
@@ -97,7 +88,8 @@ final class SchematronPipeline {
 		try {
 			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException ignored) {
+		} catch (TransformerConfigurationException e) {
+			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
 		}
 		fact.setURIResolver(new ClasspathResourceURIResolver());
 		return fact;
