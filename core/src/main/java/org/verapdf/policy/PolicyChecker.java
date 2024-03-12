@@ -42,7 +42,7 @@ public final class PolicyChecker {
 
 	private static final Logger LOGGER = Logger.getLogger(PolicyChecker.class.getCanonicalName());
 
-	private static final TransformerFactory factory = TransformerFactory.newInstance();
+	private static final TransformerFactory factory = getTransformerFactory();
 	public static final String SCHEMA_EXT = "sch"; //$NON-NLS-1$
 	public static final String XSL_EXT = "xsl"; //$NON-NLS-1$
 	public static final String XSLT_EXT = "xslt"; //$NON-NLS-1$
@@ -62,15 +62,6 @@ public final class PolicyChecker {
 	private static final String resourcePath = "org/verapdf/policy/"; //$NON-NLS-1$
 	private static final String mergeXsl = resourcePath + "MergeMrrPolicy" + '.' + XSL_EXT; //$NON-NLS-1$
 	private static final Templates cachedMergeXsl = SchematronPipeline.createCachedTransform(mergeXsl);
-
-	static {
-		try {
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			factory.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException ignored) {
-			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
-		}
-	}
 
 	private PolicyChecker() {
 
@@ -97,6 +88,7 @@ public final class PolicyChecker {
 			Transformer transformer = cachedMergeXsl.newTransformer();
 			transformer.setParameter("policyResultPath", policyReport.getAbsolutePath()); //$NON-NLS-1$
 			transformer.transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
+			return;
 		} catch (TransformerException excep) {
 			throw new VeraPDFException("Problem merging XML files.", excep); //$NON-NLS-1$
 		}
@@ -214,5 +206,16 @@ public final class PolicyChecker {
 			final OutputStream policyReport) throws TransformerException {
 		Transformer transformer = factory.newTransformer(new StreamSource(schematronXsl));
 		transformer.transform(new StreamSource(xmlReport), new StreamResult(policyReport));
+	}
+
+	private static TransformerFactory getTransformerFactory() {
+		TransformerFactory fact = TransformerFactory.newInstance();
+		try {
+			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
+		} catch (TransformerConfigurationException e) {
+			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
+		}
+		return fact;
 	}
 }
