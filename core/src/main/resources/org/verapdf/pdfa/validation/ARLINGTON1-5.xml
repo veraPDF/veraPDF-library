@@ -45107,11 +45107,23 @@
 		<rule object="AOptContentGroup">
 			<id specification="PDF_1_5" clause="OptContentGroup" testNumber="1"/>
 			<description>OptContentGroup shall not contain entries except Type, Usage, Intent, Name</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'GTS_Metadata' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>OptContentGroup contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'GTS_Metadata' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOptContentGroup">
+			<id specification="PDF_1_5" clause="OptContentGroup" testNumber="22"/>
+			<description>OptContentGroup shall not contain entry GTS_Metadata in PDF 1.5. This entry appears in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Metadata').length == 0</test>
+			<error>
+				<message>OptContentGroup contains entry %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Metadata').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
