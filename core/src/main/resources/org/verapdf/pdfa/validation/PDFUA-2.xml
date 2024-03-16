@@ -57,7 +57,7 @@
             <description>The value of "pdfuaid:rev" shall be the four digit year</description>
             <test>/^\d{4}$/.test(rev)</test>
             <error>
-                <message>The value of "pdfuaid:rev" (%1) not the four digit year</message>
+                <message>The value of "pdfuaid:rev" (%1) is not the four digit year</message>
                 <arguments>
                     <argument>rev</argument>
                 </arguments>
@@ -226,8 +226,20 @@
             </error>
             <references/>
         </rule>
-        <rule object="SEFENote" tags="structure,note">
+        <rule object="SEFENote" deferred="true" tags="structure,note">
             <id specification="ISO_14289_2" clause="8.2.5.14" testNumber="3"/>
+            <description>Real content that refers to footnotes or endnotes (real content enclosed in FENote structure elements) shall use the Ref entry on the referring structure element to reference the FENote. The corresponding FENote shall also use the Ref entry to identify all citations that reference it</description>
+            <test>ghostRefs == null</test>
+            <error>
+                <message>Ref entry in the FENote reference structure elements with object numbers %1, while these structure elements do not reference this FENote</message>
+                <arguments>
+                    <argument>ghostRefs</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEFENote" tags="structure,note">
+            <id specification="ISO_14289_2" clause="8.2.5.14" testNumber="4"/>
             <description>The value of the NoteType attribute of the FENote structure element shall be Footnote, Endnote or None</description>
             <test>NoteType == 'Footnote' || NoteType == 'Endnote' || NoteType == 'None'</test>
             <error>
@@ -326,7 +338,7 @@
         </rule>
         <rule object="SETableCell" tags="structure,table">
             <id specification="ISO_14289_2" clause="8.2.5.26" testNumber="1"/>
-            <description>Tables shall be regular. Table cell shall not have intersection with other cells</description>
+            <description>Tables shall be regular. A table cell shall not have intersection with other cells</description>
             <test>hasIntersection != true</test>
             <error>
                 <message>Table cell has intersection with other cells</message>
@@ -679,19 +691,6 @@
                 <reference specification="ISO 32000-2:2020" clause="9.7.6.3"/>
             </references>
         </rule>
-        <rule object="SESimpleContentItem" tags="structure,alt-text,artifact">
-            <id specification="ISO_14289_2" clause="8.5.1" testNumber="1"/>
-            <description>Real content that does not possess the semantics of text objects and does not have an alternate textual representation shall be enclosed within Figure or Formula structure elements as appropriate</description>
-            <test>itemType == 'text' || isTaggedContent == false || ActualText != null || isArtifact == true || isFigure == true || isFormula == true</test>
-            <error>
-                <message>Real content that does not possess the semantics of text objects and does not have an alternate textual representation is not enclosed within Figure or Formula structure elements</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO 32000-2:2020" clause="14.8.4.8.5"/>
-                <reference specification="ISO 32000-2:2020" clause="14.8.4.8.6"/>
-            </references>
-        </rule>
         <rule object="CosTextString" tags="text">
             <id specification="ISO_14289_2" clause="8.6" testNumber="1"/>
             <description>Text strings intended to be human readable shall not use the Unicode PUA</description>
@@ -732,7 +731,7 @@
             <description>All destinations whose target lies within the current document shall be structure destinations</description>
             <test>isStructDestination == true</test>
             <error>
-                <message>Destination in Outline item or Link annotation is not a structure destination</message>
+                <message>Destination in Outline item, OpenAction or Link annotation is not a structure destination</message>
                 <arguments/>
             </error>
             <references>
@@ -751,22 +750,6 @@
             <references>
                 <reference specification="ISO 32000-2:2020" clause="12.3.2"/>
                 <reference specification="ISO 32000-2:2020" clause="12.3.2.3"/>
-            </references>
-        </rule>
-        <rule object="PDAnnot" tags="annotation,structure">
-            <id specification="ISO_14289_2" clause="8.9.2.1" testNumber="1"/>
-            <description>Annotations shall be included in the structure tree unless explicitly excluded by the specification (popups, printer marks, invisible annotations)</description>
-            <test>(structParentType != null &amp;&amp; isArtifact == false) || (Subtype == "Popup") || (Subtype == "PrinterMark") || (Subtype == "Widget" &amp;&amp; width == 0 &amp;&amp; height == 0) || ((F &amp; 1) == 1) || ((F &amp; 32) == 1 &amp;&amp; (F &amp; 256) == 0) </test>
-            <error>
-                <message>Annotation is not included in the structure tree</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO 32000-2:2020" clause="12.5"/>
-                <reference specification="ISO 14289-2:202x" clause="8.9.2.2"/>
-                <reference specification="ISO 14289-2:202x" clause="8.9.2.4.9"/>
-                <reference specification="ISO 14289-2:202x" clause="8.9.2.4.13"/>
-                <reference specification="ISO 14289-2:202x" clause="8.9.2.4.14"/>
             </references>
         </rule>
         <rule object="PDAnnot" tags="annotation,artifact">
