@@ -49609,11 +49609,23 @@
 		<rule object="AOptContentGroup">
 			<id specification="PDF_1_6" clause="OptContentGroup" testNumber="1"/>
 			<description>OptContentGroup shall not contain entries except Type, Usage, Intent, Name</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'GTS_Metadata' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>OptContentGroup contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'GTS_Metadata' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOptContentGroup">
+			<id specification="PDF_1_6" clause="OptContentGroup" testNumber="22"/>
+			<description>OptContentGroup shall not contain entry GTS_Metadata in PDF 1.6. This entry appears in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Metadata').length == 0</test>
+			<error>
+				<message>OptContentGroup contains entry %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Metadata').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -60872,6 +60884,16 @@
 			<references/>
 		</rule>
 		<rule object="ATarget">
+			<id specification="PDF_1_6" clause="Target-A" testNumber="11"/>
+			<description>Entry A in Target is required, when (@R == C) &amp;&amp; fn:IsPresent(P)</description>
+			<test>containsA == true || ((RNameValue != "C") || (containsP != true))</test>
+			<error>
+				<message>Entry A in Target is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATarget">
 			<id specification="PDF_1_6" clause="Target-A-Integer" testNumber="14"/>
 			<description>Entry A with type Integer in Target shall satisfy possible value predicate: fn:Eval((@A &gt;= 0) &amp;&amp; (@A &lt; fn:ArrayLength(fn:PageProperty(@P, Annots))))</description>
 			<test>AHasTypeInteger != true || (AIntegerValue &gt;= 0) &amp;&amp; (pagePAnnotsHasTypeArray == false || (AIntegerValue &lt; pagePAnnotsArraySize))</test>
@@ -60922,6 +60944,16 @@
 				<arguments>
 					<argument>PType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATarget">
+			<id specification="PDF_1_6" clause="Target-P" testNumber="11"/>
+			<description>Entry P in Target is required, when (@R == C) &amp;&amp; fn:IsPresent(A)</description>
+			<test>containsP == true || ((RNameValue != "C") || (containsA != true))</test>
+			<error>
+				<message>Entry P in Target is missing</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -60985,6 +61017,150 @@
 			<test>containsT == false || THasTypeDictionary == true</test>
 			<error>
 				<message>Entry T in Target has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>TType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded" testNumber="1"/>
+			<description>TargetEmbedded shall not contain entries except P, A, R, T, N</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'A' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<error>
+				<message>TargetEmbedded contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'A' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-A" testNumber="8"/>
+			<description>Entry A in TargetEmbedded shall have one of types: Integer, StringText</description>
+			<test>containsA == false || AHasTypeInteger == true || AHasTypeStringText == true</test>
+			<error>
+				<message>Entry A in TargetEmbedded has type %1 instead of one of types: Integer, StringText</message>
+				<arguments>
+					<argument>AType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-A" testNumber="11"/>
+			<description>Entry A in TargetEmbedded is required, when (@R == C) &amp;&amp; fn:IsPresent(P)</description>
+			<test>containsA == true || ((RNameValue != "C") || (containsP != true))</test>
+			<error>
+				<message>Entry A in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-A-Integer" testNumber="14"/>
+			<description>Entry A with type Integer in TargetEmbedded shall satisfy possible value predicate: fn:Eval(@A &gt;= 0)</description>
+			<test>AHasTypeInteger != true || AIntegerValue &gt;= 0</test>
+			<error>
+				<message>Entry A with type Integer in TargetEmbedded does not satisfy possible value predicate: fn:Eval(@A &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-N" testNumber="8"/>
+			<description>Entry N in TargetEmbedded shall have type StringByte</description>
+			<test>containsN == false || NHasTypeStringByte == true</test>
+			<error>
+				<message>Entry N in TargetEmbedded has type %1 instead of type StringByte</message>
+				<arguments>
+					<argument>NType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-N" testNumber="11"/>
+			<description>Entry N in TargetEmbedded is required, when fn:Not(fn:IsPresent(P) || fn:IsPresent(A))</description>
+			<test>containsN == true || ((containsP == true) || (containsA == true))</test>
+			<error>
+				<message>Entry N in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-P" testNumber="8"/>
+			<description>Entry P in TargetEmbedded shall have one of types: Integer, StringByte</description>
+			<test>containsP == false || PHasTypeInteger == true || PHasTypeStringByte == true</test>
+			<error>
+				<message>Entry P in TargetEmbedded has type %1 instead of one of types: Integer, StringByte</message>
+				<arguments>
+					<argument>PType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-P" testNumber="11"/>
+			<description>Entry P in TargetEmbedded is required, when (@R == C) &amp;&amp; fn:IsPresent(A)</description>
+			<test>containsP == true || ((RNameValue != "C") || (containsA != true))</test>
+			<error>
+				<message>Entry P in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-P-Integer" testNumber="14"/>
+			<description>Entry P with type Integer in TargetEmbedded shall satisfy possible value predicate: fn:Eval(@P &gt;= 0)</description>
+			<test>PHasTypeInteger != true || PIntegerValue &gt;= 0</test>
+			<error>
+				<message>Entry P with type Integer in TargetEmbedded does not satisfy possible value predicate: fn:Eval(@P &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-R" testNumber="8"/>
+			<description>Entry R in TargetEmbedded shall have type Name</description>
+			<test>containsR == false || RHasTypeName == true</test>
+			<error>
+				<message>Entry R in TargetEmbedded has type %1 instead of type Name</message>
+				<arguments>
+					<argument>RType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-R" testNumber="7"/>
+			<description>Entry R in TargetEmbedded is required</description>
+			<test>containsR == true</test>
+			<error>
+				<message>Entry R in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-R-Name" testNumber="6"/>
+			<description>Entry R with type Name in TargetEmbedded shall have one of values: P, C</description>
+			<test>RHasTypeName != true || RNameValue == "P" || RNameValue == "C"</test>
+			<error>
+				<message>Entry R with type Name in TargetEmbedded has incorrect value %1 instead of P, C</message>
+				<arguments>
+					<argument>RNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="PDF_1_6" clause="TargetEmbedded-T" testNumber="8"/>
+			<description>Entry T in TargetEmbedded shall have type Dictionary</description>
+			<test>containsT == false || THasTypeDictionary == true</test>
+			<error>
+				<message>Entry T in TargetEmbedded has type %1 instead of type Dictionary</message>
 				<arguments>
 					<argument>TType</argument>
 				</arguments>

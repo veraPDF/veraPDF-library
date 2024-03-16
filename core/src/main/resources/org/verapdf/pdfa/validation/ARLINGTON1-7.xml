@@ -49355,6 +49355,118 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup" testNumber="1"/>
+			<description>GTS_ProcStepsGroup shall not contain entries except GTS_ProcStepsGroup, GTS_ProcStepsType, GWG__ProcStepsColorants</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'GTS_ProcStepsGroup' &amp;&amp; elem != 'GTS_ProcStepsType' &amp;&amp; elem != 'GWG__ProcStepsColorants' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<error>
+				<message>GTS_ProcStepsGroup contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'GTS_ProcStepsGroup' &amp;&amp; elem != 'GTS_ProcStepsType' &amp;&amp; elem != 'GWG__ProcStepsColorants' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsGroup" testNumber="8"/>
+			<description>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup shall have type Name</description>
+			<test>containsGTS_ProcStepsGroup == false || GTS_ProcStepsGroupHasTypeName == true</test>
+			<error>
+				<message>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup has type %1 instead of type Name</message>
+				<arguments>
+					<argument>GTS_ProcStepsGroupType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsGroup" testNumber="7"/>
+			<description>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup is required</description>
+			<test>containsGTS_ProcStepsGroup == true</test>
+			<error>
+				<message>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsGroup" testNumber="23"/>
+			<description>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup can only be present, if satisfy predicate fn:Extension(ISO_19593)</description>
+			<test>containsGTS_ProcStepsGroup == false || hasExtensionISO_19593 == true</test>
+			<error>
+				<message>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsGroup-Name" testNumber="6"/>
+			<description>Entry GTS_ProcStepsGroup with type Name in GTS_ProcStepsGroup shall have one of values: Braille, Legend, GWG__Primer, White, Structural, Positions, Dimensions, GWG__PlateMaking, Varnish</description>
+			<test>GTS_ProcStepsGroupHasTypeName != true || GTS_ProcStepsGroupNameValue == "Structural" || GTS_ProcStepsGroupNameValue == "Dimensions" || GTS_ProcStepsGroupNameValue == "Braille" || GTS_ProcStepsGroupNameValue == "Legend" || GTS_ProcStepsGroupNameValue == "Positions" || GTS_ProcStepsGroupNameValue == "White" || GTS_ProcStepsGroupNameValue == "Varnish" || GTS_ProcStepsGroupNameValue == "GWG__Primer" || GTS_ProcStepsGroupNameValue == "GWG__PlateMaking"</test>
+			<error>
+				<message>Entry GTS_ProcStepsGroup with type Name in GTS_ProcStepsGroup has incorrect value %1 instead of Braille, Legend, GWG__Primer, White, Structural, Positions, Dimensions, GWG__PlateMaking, Varnish</message>
+				<arguments>
+					<argument>GTS_ProcStepsGroupNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsType" testNumber="8"/>
+			<description>Entry GTS_ProcStepsType in GTS_ProcStepsGroup shall have type Name</description>
+			<test>containsGTS_ProcStepsType == false || GTS_ProcStepsTypeHasTypeName == true</test>
+			<error>
+				<message>Entry GTS_ProcStepsType in GTS_ProcStepsGroup has type %1 instead of type Name</message>
+				<arguments>
+					<argument>GTS_ProcStepsTypeType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsType" testNumber="23"/>
+			<description>Entry GTS_ProcStepsType in GTS_ProcStepsGroup can only be present, if satisfy predicate fn:Extension(ISO_19593)</description>
+			<test>containsGTS_ProcStepsType == false || hasExtensionISO_19593 == true</test>
+			<error>
+				<message>Entry GTS_ProcStepsType in GTS_ProcStepsGroup is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsType-Name" testNumber="6"/>
+			<description>Entry GTS_ProcStepsType with type Name in GTS_ProcStepsGroup shall have one of values: Hologram, Gluing, ReverseCreasing, VarnishFree, GWG__StationInfo, Bleed, CodingMarking, Debossing, Cutting, ReversePartialCuttingCreasing, Stapling, Imprinting, Folding, PartialCuttingCreasing, Drilling, Creasing, FoilStamping, Embossing, Punching, GWG__OverstepArea, InkVarnishFree, ContentArea, GWG__Cutting, CuttingCreasing, Perforating, PartialCutting, ReverseCuttingCreasing, InkFree, ColdFoilStamping, Barcode, GWG__Bleed, ReversePartialCutting, GWG__NoMark, GWG__PlateStamping</description>
+			<test>GTS_ProcStepsTypeHasTypeName != true || GTS_ProcStepsTypeNameValue == "Cutting" || GTS_ProcStepsTypeNameValue == "PartialCutting" || GTS_ProcStepsTypeNameValue == "ReversePartialCutting" || GTS_ProcStepsTypeNameValue == "Creasing" || GTS_ProcStepsTypeNameValue == "ReverseCreasing" || GTS_ProcStepsTypeNameValue == "CuttingCreasing" || GTS_ProcStepsTypeNameValue == "ReverseCuttingCreasing" || GTS_ProcStepsTypeNameValue == "PartialCuttingCreasing" || GTS_ProcStepsTypeNameValue == "ReversePartialCuttingCreasing" || GTS_ProcStepsTypeNameValue == "Drilling" || GTS_ProcStepsTypeNameValue == "Gluing" || GTS_ProcStepsTypeNameValue == "FoilStamping" || GTS_ProcStepsTypeNameValue == "ColdFoilStamping" || GTS_ProcStepsTypeNameValue == "Embossing" || GTS_ProcStepsTypeNameValue == "Debossing" || GTS_ProcStepsTypeNameValue == "Perforating" || GTS_ProcStepsTypeNameValue == "Bleed" || GTS_ProcStepsTypeNameValue == "VarnishFree" || GTS_ProcStepsTypeNameValue == "InkFree" || GTS_ProcStepsTypeNameValue == "InkVarnishFree" || GTS_ProcStepsTypeNameValue == "Folding" || GTS_ProcStepsTypeNameValue == "Punching" || GTS_ProcStepsTypeNameValue == "Stapling" || GTS_ProcStepsTypeNameValue == "Hologram" || GTS_ProcStepsTypeNameValue == "Barcode" || GTS_ProcStepsTypeNameValue == "ContentArea" || GTS_ProcStepsTypeNameValue == "CodingMarking" || GTS_ProcStepsTypeNameValue == "Imprinting" || GTS_ProcStepsTypeNameValue == "GWG__StationInfo" || GTS_ProcStepsTypeNameValue == "GWG__PlateStamping" || GTS_ProcStepsTypeNameValue == "GWG__OverstepArea" || GTS_ProcStepsTypeNameValue == "GWG__Cutting" || GTS_ProcStepsTypeNameValue == "GWG__Bleed" || GTS_ProcStepsTypeNameValue == "GWG__NoMark"</test>
+			<error>
+				<message>Entry GTS_ProcStepsType with type Name in GTS_ProcStepsGroup has incorrect value %1 instead of Hologram, Gluing, ReverseCreasing, VarnishFree, GWG__StationInfo, Bleed, CodingMarking, Debossing, Cutting, ReversePartialCuttingCreasing, Stapling, Imprinting, Folding, PartialCuttingCreasing, Drilling, Creasing, FoilStamping, Embossing, Punching, GWG__OverstepArea, InkVarnishFree, ContentArea, GWG__Cutting, CuttingCreasing, Perforating, PartialCutting, ReverseCuttingCreasing, InkFree, ColdFoilStamping, Barcode, GWG__Bleed, ReversePartialCutting, GWG__NoMark, GWG__PlateStamping</message>
+				<arguments>
+					<argument>GTS_ProcStepsTypeNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GWG__ProcStepsColorants" testNumber="8"/>
+			<description>Entry GWG__ProcStepsColorants in GTS_ProcStepsGroup shall have type Name</description>
+			<test>containsGWG__ProcStepsColorants == false || GWG__ProcStepsColorantsHasTypeName == true</test>
+			<error>
+				<message>Entry GWG__ProcStepsColorants in GTS_ProcStepsGroup has type %1 instead of type Name</message>
+				<arguments>
+					<argument>GWG__ProcStepsColorantsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GWG__ProcStepsColorants" testNumber="23"/>
+			<description>Entry GWG__ProcStepsColorants in GTS_ProcStepsGroup can only be present, if satisfy predicate fn:Extension(ISO_19593)</description>
+			<test>containsGWG__ProcStepsColorants == false || hasExtensionISO_19593 == true</test>
+			<error>
+				<message>Entry GWG__ProcStepsColorants in GTS_ProcStepsGroup is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AGammaArray">
 			<id specification="ISO_32000_1_7" clause="GammaArray" testNumber="2"/>
 			<description>GammaArray shall contain exactly 3 elements</description>
@@ -59422,13 +59534,35 @@
 		</rule>
 		<rule object="AOptContentGroup">
 			<id specification="ISO_32000_1_7" clause="OptContentGroup" testNumber="1"/>
-			<description>OptContentGroup shall not contain entries except Type, Usage, Intent, Name</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>OptContentGroup shall not contain entries except Type, Usage, GTS_Metadata, Intent, Name</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'GTS_Metadata' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>OptContentGroup contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Usage' &amp;&amp; elem != 'GTS_Metadata' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOptContentGroup">
+			<id specification="ISO_32000_1_7" clause="OptContentGroup-GTS_Metadata" testNumber="8"/>
+			<description>Entry GTS_Metadata in OptContentGroup shall have type Dictionary</description>
+			<test>containsGTS_Metadata == false || GTS_MetadataHasTypeDictionary == true</test>
+			<error>
+				<message>Entry GTS_Metadata in OptContentGroup has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>GTS_MetadataType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOptContentGroup">
+			<id specification="ISO_32000_1_7" clause="OptContentGroup-GTS_Metadata" testNumber="23"/>
+			<description>Entry GTS_Metadata in OptContentGroup can only be present, if satisfy predicate fn:Extension(ISO_19593)</description>
+			<test>containsGTS_Metadata == false || hasExtensionISO_19593 == true</test>
+			<error>
+				<message>Entry GTS_Metadata in OptContentGroup is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -74159,6 +74293,16 @@
 			<references/>
 		</rule>
 		<rule object="ATarget">
+			<id specification="ISO_32000_1_7" clause="Target-A" testNumber="11"/>
+			<description>Entry A in Target is required, when (@R == C) &amp;&amp; fn:IsPresent(P)</description>
+			<test>containsA == true || ((RNameValue != "C") || (containsP != true))</test>
+			<error>
+				<message>Entry A in Target is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATarget">
 			<id specification="ISO_32000_1_7" clause="Target-A-Integer" testNumber="14"/>
 			<description>Entry A with type Integer in Target shall satisfy possible value predicate: fn:Eval((@A &gt;= 0) &amp;&amp; (@A &lt; fn:ArrayLength(fn:PageProperty(@P, Annots))))</description>
 			<test>AHasTypeInteger != true || (AIntegerValue &gt;= 0) &amp;&amp; (pagePAnnotsHasTypeArray == false || (AIntegerValue &lt; pagePAnnotsArraySize))</test>
@@ -74209,6 +74353,16 @@
 				<arguments>
 					<argument>PType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATarget">
+			<id specification="ISO_32000_1_7" clause="Target-P" testNumber="11"/>
+			<description>Entry P in Target is required, when (@R == C) &amp;&amp; fn:IsPresent(A)</description>
+			<test>containsP == true || ((RNameValue != "C") || (containsA != true))</test>
+			<error>
+				<message>Entry P in Target is missing</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -74272,6 +74426,150 @@
 			<test>containsT == false || THasTypeDictionary == true</test>
 			<error>
 				<message>Entry T in Target has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>TType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded" testNumber="1"/>
+			<description>TargetEmbedded shall not contain entries except P, A, R, T, N</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'A' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<error>
+				<message>TargetEmbedded contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'A' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-A" testNumber="8"/>
+			<description>Entry A in TargetEmbedded shall have one of types: Integer, StringText</description>
+			<test>containsA == false || AHasTypeInteger == true || AHasTypeStringText == true</test>
+			<error>
+				<message>Entry A in TargetEmbedded has type %1 instead of one of types: Integer, StringText</message>
+				<arguments>
+					<argument>AType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-A" testNumber="11"/>
+			<description>Entry A in TargetEmbedded is required, when (@R == C) &amp;&amp; fn:IsPresent(P)</description>
+			<test>containsA == true || ((RNameValue != "C") || (containsP != true))</test>
+			<error>
+				<message>Entry A in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-A-Integer" testNumber="14"/>
+			<description>Entry A with type Integer in TargetEmbedded shall satisfy possible value predicate: fn:Eval(@A &gt;= 0)</description>
+			<test>AHasTypeInteger != true || AIntegerValue &gt;= 0</test>
+			<error>
+				<message>Entry A with type Integer in TargetEmbedded does not satisfy possible value predicate: fn:Eval(@A &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-N" testNumber="8"/>
+			<description>Entry N in TargetEmbedded shall have type StringByte</description>
+			<test>containsN == false || NHasTypeStringByte == true</test>
+			<error>
+				<message>Entry N in TargetEmbedded has type %1 instead of type StringByte</message>
+				<arguments>
+					<argument>NType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-N" testNumber="11"/>
+			<description>Entry N in TargetEmbedded is required, when fn:Not(fn:IsPresent(P) || fn:IsPresent(A))</description>
+			<test>containsN == true || ((containsP == true) || (containsA == true))</test>
+			<error>
+				<message>Entry N in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-P" testNumber="8"/>
+			<description>Entry P in TargetEmbedded shall have one of types: Integer, StringByte</description>
+			<test>containsP == false || PHasTypeInteger == true || PHasTypeStringByte == true</test>
+			<error>
+				<message>Entry P in TargetEmbedded has type %1 instead of one of types: Integer, StringByte</message>
+				<arguments>
+					<argument>PType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-P" testNumber="11"/>
+			<description>Entry P in TargetEmbedded is required, when (@R == C) &amp;&amp; fn:IsPresent(A)</description>
+			<test>containsP == true || ((RNameValue != "C") || (containsA != true))</test>
+			<error>
+				<message>Entry P in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-P-Integer" testNumber="14"/>
+			<description>Entry P with type Integer in TargetEmbedded shall satisfy possible value predicate: fn:Eval(@P &gt;= 0)</description>
+			<test>PHasTypeInteger != true || PIntegerValue &gt;= 0</test>
+			<error>
+				<message>Entry P with type Integer in TargetEmbedded does not satisfy possible value predicate: fn:Eval(@P &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-R" testNumber="8"/>
+			<description>Entry R in TargetEmbedded shall have type Name</description>
+			<test>containsR == false || RHasTypeName == true</test>
+			<error>
+				<message>Entry R in TargetEmbedded has type %1 instead of type Name</message>
+				<arguments>
+					<argument>RType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-R" testNumber="7"/>
+			<description>Entry R in TargetEmbedded is required</description>
+			<test>containsR == true</test>
+			<error>
+				<message>Entry R in TargetEmbedded is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-R-Name" testNumber="6"/>
+			<description>Entry R with type Name in TargetEmbedded shall have one of values: P, C</description>
+			<test>RHasTypeName != true || RNameValue == "P" || RNameValue == "C"</test>
+			<error>
+				<message>Entry R with type Name in TargetEmbedded has incorrect value %1 instead of P, C</message>
+				<arguments>
+					<argument>RNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATargetEmbedded">
+			<id specification="ISO_32000_1_7" clause="TargetEmbedded-T" testNumber="8"/>
+			<description>Entry T in TargetEmbedded shall have type Dictionary</description>
+			<test>containsT == false || THasTypeDictionary == true</test>
+			<error>
+				<message>Entry T in TargetEmbedded has type %1 instead of type Dictionary</message>
 				<arguments>
 					<argument>TType</argument>
 				</arguments>
