@@ -382,7 +382,7 @@
         </rule>
         <rule object="SETableCell" tags="structure,table">
             <id specification="ISO_14289_1" clause="7.2" testNumber="15"/>
-            <description>Table cell shall not have intersection with other cells</description>
+            <description>A table cell shall not have intersection with other cells</description>
             <test>hasIntersection != true</test>
             <error>
                 <message>Table cell has intersection with other cells</message>
