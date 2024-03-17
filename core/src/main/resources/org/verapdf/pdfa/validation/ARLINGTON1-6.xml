@@ -1212,12 +1212,10 @@
 		<rule object="AActionGoTo">
 			<id specification="PDF_1_6" clause="ActionGoTo" testNumber="22"/>
 			<description>ActionGoTo shall not contain entry SD in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
+			<test>containsSD == false</test>
 			<error>
-				<message>ActionGoTo contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
-				</arguments>
+				<message>ActionGoTo contains entry SD</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -1654,12 +1652,10 @@
 		<rule object="AActionGoToR">
 			<id specification="PDF_1_6" clause="ActionGoToR" testNumber="22"/>
 			<description>ActionGoToR shall not contain entry SD in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
+			<test>containsSD == false</test>
 			<error>
-				<message>ActionGoToR contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
-				</arguments>
+				<message>ActionGoToR contains entry SD</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -27345,12 +27341,10 @@
 		<rule object="ADPart">
 			<id specification="PDF_1_6" clause="DPart" testNumber="22"/>
 			<description>DPart shall not contain entry AF in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
+			<test>containsAF == false</test>
 			<error>
-				<message>DPart contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
-				</arguments>
+				<message>DPart contains entry AF</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -28048,12 +28042,10 @@
 		<rule object="ADestDict">
 			<id specification="PDF_1_6" clause="DestDict" testNumber="22"/>
 			<description>DestDict shall not contain entry SD in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
+			<test>containsSD == false</test>
 			<error>
-				<message>DestDict contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
-				</arguments>
+				<message>DestDict contains entry SD</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -29660,12 +29652,10 @@
 		<rule object="AEncryptionPublicKey">
 			<id specification="PDF_1_6" clause="EncryptionPublicKey" testNumber="22"/>
 			<description>EncryptionPublicKey shall not contain entry KDFSalt in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').length == 0</test>
+			<test>containsKDFSalt == false</test>
 			<error>
-				<message>EncryptionPublicKey contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').toString()</argument>
-				</arguments>
+				<message>EncryptionPublicKey contains entry KDFSalt</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -29958,12 +29948,10 @@
 		<rule object="AEncryptionStandard">
 			<id specification="PDF_1_6" clause="EncryptionStandard" testNumber="22"/>
 			<description>EncryptionStandard shall not contain entry KDFSalt in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').length == 0</test>
+			<test>containsKDFSalt == false</test>
 			<error>
-				<message>EncryptionStandard contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'KDFSalt').toString()</argument>
-				</arguments>
+				<message>EncryptionStandard contains entry KDFSalt</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -32335,12 +32323,10 @@
 		<rule object="AFileSpecEF">
 			<id specification="PDF_1_6" clause="FileSpecEF" testNumber="22"/>
 			<description>FileSpecEF shall not contain entry UF in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'UF').length == 0</test>
+			<test>containsUF == false</test>
 			<error>
-				<message>FileSpecEF contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'UF').toString()</argument>
-				</arguments>
+				<message>FileSpecEF contains entry UF</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -32381,12 +32367,10 @@
 		<rule object="AFileSpecRF">
 			<id specification="PDF_1_6" clause="FileSpecRF" testNumber="22"/>
 			<description>FileSpecRF shall not contain entry UF in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'UF').length == 0</test>
+			<test>containsUF == false</test>
 			<error>
-				<message>FileSpecRF contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'UF').toString()</argument>
-				</arguments>
+				<message>FileSpecRF contains entry UF</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -32635,12 +32619,10 @@
 		<rule object="AFileTrailer">
 			<id specification="PDF_1_6" clause="FileTrailer" testNumber="22"/>
 			<description>FileTrailer shall not contain entry AuthCode in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').length == 0</test>
+			<test>containsAuthCode == false</test>
 			<error>
-				<message>FileTrailer contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').toString()</argument>
-				</arguments>
+				<message>FileTrailer contains entry AuthCode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -47648,12 +47630,10 @@
 		<rule object="AName">
 			<id specification="PDF_1_6" clause="Name" testNumber="22"/>
 			<description>Name shall not contain entry XFAResources in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'XFAResources').length == 0</test>
+			<test>containsXFAResources == false</test>
 			<error>
-				<message>Name contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'XFAResources').toString()</argument>
-				</arguments>
+				<message>Name contains entry XFAResources</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -49621,12 +49601,10 @@
 		<rule object="AOptContentGroup">
 			<id specification="PDF_1_6" clause="OptContentGroup" testNumber="22"/>
 			<description>OptContentGroup shall not contain entry GTS_Metadata in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Metadata').length == 0</test>
+			<test>containsGTS_Metadata == false</test>
 			<error>
-				<message>OptContentGroup contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Metadata').toString()</argument>
-				</arguments>
+				<message>OptContentGroup contains entry GTS_Metadata</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -52799,12 +52777,10 @@
 		<rule object="AProjection">
 			<id specification="PDF_1_6" clause="Projection" testNumber="22"/>
 			<description>Projection shall not contain entry OB in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'OB').length == 0</test>
+			<test>containsOB == false</test>
 			<error>
-				<message>Projection contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'OB').toString()</argument>
-				</arguments>
+				<message>Projection contains entry OB</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -56341,12 +56317,10 @@
 		<rule object="ASigFieldLock">
 			<id specification="PDF_1_6" clause="SigFieldLock" testNumber="22"/>
 			<description>SigFieldLock shall not contain entry P in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'P').length == 0</test>
+			<test>containsP == false</test>
 			<error>
-				<message>SigFieldLock contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'P').toString()</argument>
-				</arguments>
+				<message>SigFieldLock contains entry P</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -57143,12 +57117,10 @@
 		<rule object="ASignatureBuildDataSigQDict">
 			<id specification="PDF_1_6" clause="SignatureBuildDataSigQDict" testNumber="22"/>
 			<description>SignatureBuildDataSigQDict shall not contain entry Preview in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Preview').length == 0</test>
+			<test>containsPreview == false</test>
 			<error>
-				<message>SignatureBuildDataSigQDict contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Preview').toString()</argument>
-				</arguments>
+				<message>SignatureBuildDataSigQDict contains entry Preview</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -61182,12 +61154,10 @@
 		<rule object="AThread">
 			<id specification="PDF_1_6" clause="Thread" testNumber="22"/>
 			<description>Thread shall not contain entry Metadata in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').length == 0</test>
+			<test>containsMetadata == false</test>
 			<error>
-				<message>Thread contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').toString()</argument>
-				</arguments>
+				<message>Thread contains entry Metadata</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -62832,12 +62802,10 @@
 		<rule object="AViewport">
 			<id specification="PDF_1_6" clause="Viewport" testNumber="22"/>
 			<description>Viewport shall not contain entry PtData in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'PtData').length == 0</test>
+			<test>containsPtData == false</test>
 			<error>
-				<message>Viewport contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'PtData').toString()</argument>
-				</arguments>
+				<message>Viewport contains entry PtData</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -67705,12 +67673,10 @@
 		<rule object="AXObjectImageSoftMask">
 			<id specification="PDF_1_6" clause="XObjectImageSoftMask" testNumber="22"/>
 			<description>XObjectImageSoftMask shall not contain entry AF in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF').length == 0</test>
+			<test>containsAF == false</test>
 			<error>
-				<message>XObjectImageSoftMask contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF').toString()</argument>
-				</arguments>
+				<message>XObjectImageSoftMask contains entry AF</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -68278,12 +68244,10 @@
 		<rule object="AXRefStream">
 			<id specification="PDF_1_6" clause="XRefStream" testNumber="22"/>
 			<description>XRefStream shall not contain entry AuthCode in PDF 1.6. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').length == 0</test>
+			<test>containsAuthCode == false</test>
 			<error>
-				<message>XRefStream contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode').toString()</argument>
-				</arguments>
+				<message>XRefStream contains entry AuthCode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
