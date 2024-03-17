@@ -2952,12 +2952,10 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="PDF_1_0" clause="FontMultipleMaster" testNumber="22"/>
 			<description>FontMultipleMaster shall not contain entry ToUnicode in PDF 1.0. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').length == 0</test>
+			<test>containsToUnicode == false</test>
 			<error>
-				<message>FontMultipleMaster contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').toString()</argument>
-				</arguments>
+				<message>FontMultipleMaster contains entry ToUnicode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -3210,12 +3208,10 @@
 		<rule object="AFontTrueType">
 			<id specification="PDF_1_0" clause="FontTrueType" testNumber="22"/>
 			<description>FontTrueType shall not contain entry ToUnicode in PDF 1.0. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').length == 0</test>
+			<test>containsToUnicode == false</test>
 			<error>
-				<message>FontTrueType contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').toString()</argument>
-				</arguments>
+				<message>FontTrueType contains entry ToUnicode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -3468,12 +3464,10 @@
 		<rule object="AFontType1">
 			<id specification="PDF_1_0" clause="FontType1" testNumber="22"/>
 			<description>FontType1 shall not contain entry ToUnicode in PDF 1.0. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').length == 0</test>
+			<test>containsToUnicode == false</test>
 			<error>
-				<message>FontType1 contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').toString()</argument>
-				</arguments>
+				<message>FontType1 contains entry ToUnicode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>

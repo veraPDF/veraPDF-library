@@ -411,12 +411,10 @@
 		<rule object="AActionThread">
 			<id specification="PDF_1_1" clause="ActionThread" testNumber="22"/>
 			<description>ActionThread shall not contain entry Next in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Next').length == 0</test>
+			<test>containsNext == false</test>
 			<error>
-				<message>ActionThread contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Next').toString()</argument>
-				</arguments>
+				<message>ActionThread contains entry Next</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -579,12 +577,10 @@
 		<rule object="AActionURI">
 			<id specification="PDF_1_1" clause="ActionURI" testNumber="22"/>
 			<description>ActionURI shall not contain entry Next in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Next').length == 0</test>
+			<test>containsNext == false</test>
 			<error>
-				<message>ActionURI contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Next').toString()</argument>
-				</arguments>
+				<message>ActionURI contains entry Next</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -3101,12 +3097,10 @@
 		<rule object="ADestDict">
 			<id specification="PDF_1_1" clause="DestDict" testNumber="22"/>
 			<description>DestDict shall not contain entry SD in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD').length == 0</test>
+			<test>containsSD == false</test>
 			<error>
-				<message>DestDict contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD').toString()</argument>
-				</arguments>
+				<message>DestDict contains entry SD</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -5772,12 +5766,10 @@
 		<rule object="AFontMultipleMaster">
 			<id specification="PDF_1_1" clause="FontMultipleMaster" testNumber="22"/>
 			<description>FontMultipleMaster shall not contain entry ToUnicode in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').length == 0</test>
+			<test>containsToUnicode == false</test>
 			<error>
-				<message>FontMultipleMaster contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').toString()</argument>
-				</arguments>
+				<message>FontMultipleMaster contains entry ToUnicode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -6020,12 +6012,10 @@
 		<rule object="AFontTrueType">
 			<id specification="PDF_1_1" clause="FontTrueType" testNumber="22"/>
 			<description>FontTrueType shall not contain entry ToUnicode in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').length == 0</test>
+			<test>containsToUnicode == false</test>
 			<error>
-				<message>FontTrueType contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').toString()</argument>
-				</arguments>
+				<message>FontTrueType contains entry ToUnicode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -6268,12 +6258,10 @@
 		<rule object="AFontType1">
 			<id specification="PDF_1_1" clause="FontType1" testNumber="22"/>
 			<description>FontType1 shall not contain entry ToUnicode in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').length == 0</test>
+			<test>containsToUnicode == false</test>
 			<error>
-				<message>FontType1 contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode').toString()</argument>
-				</arguments>
+				<message>FontType1 contains entry ToUnicode</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -8510,12 +8498,10 @@
 		<rule object="AThread">
 			<id specification="PDF_1_1" clause="Thread" testNumber="22"/>
 			<description>Thread shall not contain entry Metadata in PDF 1.1. This entry appears in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').length == 0</test>
+			<test>containsMetadata == false</test>
 			<error>
-				<message>Thread contains entry %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Metadata').toString()</argument>
-				</arguments>
+				<message>Thread contains entry Metadata</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
