@@ -143,8 +143,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
     private static ProfileDirectoryImpl makeVeraProfileDir() {
         Set<ValidationProfile> profiles = new HashSet<>();
         for (PDFAFlavour flavour : PDFAFlavour.values()) {
-            String profilePath = PROFILE_RESOURCE_ROOT + flavour.getPart().getFamily().getFamily().replace("/", "") //$NON-NLS-1$
-                    + "-" + flavour.getPart().getPartNumber() + flavour.getLevel().getCode().toUpperCase() + XML_SUFFIX; //$NON-NLS-1$
+            String profilePath = getProfilePath(flavour);
             try (InputStream is = ValidationProfileImpl.class.getClassLoader()
                     .getResourceAsStream(profilePath)) {
                 if (is != null)
@@ -155,6 +154,17 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
             }
         }
         return ProfileDirectoryImpl.fromProfileSet(profiles);
+    }
+    
+    private static String getProfilePath(PDFAFlavour flavour) {
+        StringBuilder profilePath = new StringBuilder();
+        profilePath.append(PROFILE_RESOURCE_ROOT).append(flavour.getPart().getFamily().getFamily().replace("/", "") //$NON-NLS-1$
+        ).append("-").append(flavour.getPart().getPartNumber()).append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
+        if (flavour == PDFAFlavour.PDFUA_2) {
+            profilePath.append("-").append("ISO32005");
+        }
+        profilePath.append(XML_SUFFIX);
+        return profilePath.toString();
     }
 
 }
