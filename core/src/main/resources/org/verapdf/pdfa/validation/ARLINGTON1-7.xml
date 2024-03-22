@@ -39311,6 +39311,28 @@
 			<references/>
 		</rule>
 		<rule object="AExtensions">
+			<id specification="ISO_32000_1_7" clause="Extensions-ISO_" testNumber="8"/>
+			<description>Entry ISO_ in Extensions shall have type Dictionary</description>
+			<test>containsISO_ == false || ISO_HasTypeDictionary == true</test>
+			<error>
+				<message>Entry ISO_ in Extensions has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>ISO_Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AExtensions">
+			<id specification="ISO_32000_1_7" clause="Extensions-ISO_-Dictionary" testNumber="10"/>
+			<description>Entry ISO_ with type Dictionary in Extensions shall be direct</description>
+			<test>ISO_HasTypeDictionary != true || isISO_Indirect == false</test>
+			<error>
+				<message>Entry ISO_ with type Dictionary in Extensions is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AExtensions">
 			<id specification="ISO_32000_1_7" clause="Extensions-Type" testNumber="8"/>
 			<description>Entry Type in Extensions shall have type Name</description>
 			<test>containsType == false || TypeHasTypeName == true</test>
@@ -52596,6 +52618,162 @@
 			<error>
 				<message>Entry Range with type Array in ICCProfileStream does not satisfy special case: fn:Eval(fn:ArrayLength(Range) == (2 * @N))</message>
 				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions" testNumber="1"/>
+			<description>ISO_DevExtensions shall not contain entries except Type, BaseVersion, ExtensionLevel</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ExtensionRevision' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseVersion' &amp;&amp; elem != 'ExtensionLevel' &amp;&amp; elem != 'URL' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<error>
+				<message>ISO_DevExtensions contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ExtensionRevision' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseVersion' &amp;&amp; elem != 'ExtensionLevel' &amp;&amp; elem != 'URL' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions" testNumber="22"/>
+			<description>ISO_DevExtensions shall not contain entries ExtensionRevision, URL in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ExtensionRevision' || elem == 'URL').length == 0</test>
+			<error>
+				<message>ISO_DevExtensions contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ExtensionRevision' || elem == 'URL').toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-BaseVersion" testNumber="8"/>
+			<description>Entry BaseVersion in ISO_DevExtensions shall have type Name</description>
+			<test>containsBaseVersion == false || BaseVersionHasTypeName == true</test>
+			<error>
+				<message>Entry BaseVersion in ISO_DevExtensions has type %1 instead of type Name</message>
+				<arguments>
+					<argument>BaseVersionType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-BaseVersion" testNumber="7"/>
+			<description>Entry BaseVersion in ISO_DevExtensions is required</description>
+			<test>containsBaseVersion == true</test>
+			<error>
+				<message>Entry BaseVersion in ISO_DevExtensions is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-BaseVersion-Name" testNumber="10"/>
+			<description>Entry BaseVersion with type Name in ISO_DevExtensions shall be direct</description>
+			<test>BaseVersionHasTypeName != true || isBaseVersionIndirect == false</test>
+			<error>
+				<message>Entry BaseVersion with type Name in ISO_DevExtensions is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-BaseVersion-Name" testNumber="6"/>
+			<description>Entry BaseVersion with type Name in ISO_DevExtensions shall have value 2.0</description>
+			<test>BaseVersionHasTypeName != true || BaseVersionNameValue == "2.0"</test>
+			<error>
+				<message>Entry BaseVersion with type Name in ISO_DevExtensions has incorrect value %1 instead of 2.0</message>
+				<arguments>
+					<argument>BaseVersionNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-ExtensionLevel" testNumber="8"/>
+			<description>Entry ExtensionLevel in ISO_DevExtensions shall have type Integer</description>
+			<test>containsExtensionLevel == false || ExtensionLevelHasTypeInteger == true</test>
+			<error>
+				<message>Entry ExtensionLevel in ISO_DevExtensions has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>ExtensionLevelType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-ExtensionLevel" testNumber="7"/>
+			<description>Entry ExtensionLevel in ISO_DevExtensions is required</description>
+			<test>containsExtensionLevel == true</test>
+			<error>
+				<message>Entry ExtensionLevel in ISO_DevExtensions is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-ExtensionLevel-Integer" testNumber="10"/>
+			<description>Entry ExtensionLevel with type Integer in ISO_DevExtensions shall be direct</description>
+			<test>ExtensionLevelHasTypeInteger != true || isExtensionLevelIndirect == false</test>
+			<error>
+				<message>Entry ExtensionLevel with type Integer in ISO_DevExtensions is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-ExtensionLevel-Integer" testNumber="6"/>
+			<description>Entry ExtensionLevel with type Integer in ISO_DevExtensions shall have one of values: 32003, 32001, 24064, 32002, 32007</description>
+			<test>ExtensionLevelHasTypeInteger != true || ExtensionLevelIntegerValue == 32001 || ExtensionLevelIntegerValue == 32002 || ExtensionLevelIntegerValue == 32003 || ExtensionLevelIntegerValue == 24064 || ExtensionLevelIntegerValue == 32007</test>
+			<error>
+				<message>Entry ExtensionLevel with type Integer in ISO_DevExtensions has incorrect value %1 instead of 32003, 32001, 24064, 32002, 32007</message>
+				<arguments>
+					<argument>ExtensionLevelIntegerValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-Type" testNumber="8"/>
+			<description>Entry Type in ISO_DevExtensions shall have type Name</description>
+			<test>containsType == false || TypeHasTypeName == true</test>
+			<error>
+				<message>Entry Type in ISO_DevExtensions has type %1 instead of type Name</message>
+				<arguments>
+					<argument>TypeType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-Type" testNumber="7"/>
+			<description>Entry Type in ISO_DevExtensions is required</description>
+			<test>containsType == true</test>
+			<error>
+				<message>Entry Type in ISO_DevExtensions is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-Type-Name" testNumber="10"/>
+			<description>Entry Type with type Name in ISO_DevExtensions shall be direct</description>
+			<test>TypeHasTypeName != true || isTypeIndirect == false</test>
+			<error>
+				<message>Entry Type with type Name in ISO_DevExtensions is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AISO_DevExtensions">
+			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-Type-Name" testNumber="6"/>
+			<description>Entry Type with type Name in ISO_DevExtensions shall have value DeveloperExtensions</description>
+			<test>TypeHasTypeName != true || TypeNameValue == "DeveloperExtensions"</test>
+			<error>
+				<message>Entry Type with type Name in ISO_DevExtensions has incorrect value %1 instead of DeveloperExtensions</message>
+				<arguments>
+					<argument>TypeNameValue</argument>
+				</arguments>
 			</error>
 			<references/>
 		</rule>
