@@ -17,7 +17,7 @@ on:
       - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-4E.xml'
       - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-4F.xml'
       - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-1.xml'
-      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-2.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-2-ISO32005.xml'
 
 jobs:
   checkout-and-build:
