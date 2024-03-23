@@ -468,10 +468,11 @@
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="hasLink"
-                      select="starts-with(@specification, 'ISO 19005-1') or starts-with(@specification, 'ISO 32000') or
+                      select="(starts-with(@specification, 'ISO 19005-1') or starts-with(@specification, 'ISO 32000') or
                             starts-with(@specification, 'ISO 19005-2') or starts-with(@specification, 'ISO 19005-3') or
                             starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1') or 
-                            starts-with(@specification, 'ISO 14289-2') or starts-with(@specification, 'PDF Reference')"/>
+                            starts-with(@specification, 'ISO 14289-2') or starts-with(@specification, 'PDF Reference')) and 
+                            (not(object = 'ADocument'))"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,
