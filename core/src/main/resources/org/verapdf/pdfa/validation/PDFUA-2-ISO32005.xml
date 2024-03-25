@@ -452,7 +452,7 @@
         <rule object="Glyph" tags="text,alt-text">
             <id specification="ISO_14289_2" clause="8.4.3" testNumber="1"/>
             <description>In all cases, where real content maps to Unicode PUA values, an ActualText or Alt entry shall be present</description>
-            <test>unicodePUA == false || actualTextPresent == true || altPresent == true</test>
+            <test>isRealContent == false || unicodePUA == false || actualTextPresent == true || altPresent == true</test>
             <error>
                 <message>Real content maps to Unicode PUA values, but ActualText and Alt entry are not present</message>
                 <arguments/>
