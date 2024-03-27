@@ -1,4 +1,29 @@
-Version 1.26 RC (February 9, 2023)
+Version 1.26 RC2 (April 2, 2024)
+==================================
+
+### Applications
+- set secure parameter for xslt transformation ([CVE-2024-28109])
+- improved multithreading performance of JavaScript evaluation
+
+### Core library
+- added support for Java 21
+
+### PDF Parser
+- fixed MathML parsing exception
+- added warning for duplicated MCID in content stream
+- fixed CIDFontType2 font program parsing for OpenType fonts
+- fixed ROS operator finding for CFF fonts
+
+### Validation
+- (PDF/UA-2) include ISO 32005 rules to PDF/UA-2 profile
+- (PDF/UA-2) added rule about Ref entry of Note structure element
+- (PDF/UA-2) supported validation of Open Action destination
+- (PDF/UA-2) disabled ActualText and Alt validation for non-real content
+- (PDF/UA-2) fixed checking of role mapping structure types to the same namespace
+
+[CVE-2024-28109]: https://github.com/veraPDF/veraPDF-library/security/advisories/GHSA-qxqf-2mfx-x8jw
+
+Version 1.26 RC (February 9, 2024)
 ==================================
 
 ### Applications
@@ -62,7 +87,7 @@ Version 1.24 RC (April 27, 2023)
 - added new `--progress` parameter in CLI to report progress info
 - added new `--config` parameter in CLI to support config file as a new CLI argument
 - renamed `xml` report format option to `raw` in CLI (`xml` is now reserved for the default report format)
-- enchanced validation error messages and their variable data
+- enhanced validation error messages and their variable data
 - support feature report in json format
 - added warnings on incompatible CLI arguments
 - fixed saving GUI application settings
