@@ -1115,20 +1115,6 @@
             </error>
             <references/>
         </rule>
-        <rule object="SENonStandard" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="1"/>
-            <description>Every structure type should be mapped to a standard structure type</description>
-            <test>isNotMappedToStandardType == false</test>
-            <error>
-                <message>Non-standard structure type %1 is not mapped to a standard type</message>
-                <arguments>
-                    <argument>valueS</argument>
-                </arguments>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="PDStructTreeRoot" tags="structure">
             <id specification="ISO_32005" clause="6.2" testNumber="2"/>
             <description>StructTreeRoot shall contain exactly one &lt;Document&gt;</description>
@@ -20972,72 +20958,6 @@
             <error>
                 <message>&lt;Artifact&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SENonStandard" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="1656"/>
-            <description>A circular mapping shall not exist</description>
-            <test>circularMappingExist != true</test>
-            <error>
-                <message>A circular mapping exists for %1 structure type</message>
-                <arguments>
-                    <argument>valueS</argument>
-                </arguments>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SENonStandard" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="1657"/>
-            <description>Standard tags shall not be remapped to a non-standard type</description>
-            <test>remappedStandardType == null</test>
-            <error>
-                <message>The standard structure type %1 is remapped to a non-standard type</message>
-                <arguments>
-                    <argument>remappedStandardType</argument>
-                </arguments>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="PDDocument" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="1658"/>
-            <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-2:2020, 14.7</description>
-            <test>StructTreeRoot_size == 1</test>
-            <error>
-                <message>StructTreeRoot entry is not present in the document catalog</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="PDStructElem" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="1659"/>
-            <description>A structure element dictionary shall contain the P (parent) entry according to ISO 32000-2:2020, 14.7.2, Table 323</description>
-            <test>containsParent == true</test>
-            <error>
-                <message>A structure element dictionary does not contain the P (parent) entry</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEMathMLStructureElement" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="1660"/>
-            <description>The math structure type shall occur only as a child of a Formula structure element</description>
-            <test>parentStandardType == 'Formula' || parentStandardType == 'MathML'</test>
-            <error>
-                <message>The math structure type is nested within %1 tag instead of Formula</message>
-                <arguments>
-                    <argument>parentStandardType</argument>
-                </arguments>
             </error>
             <references>
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
