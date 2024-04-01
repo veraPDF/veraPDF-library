@@ -79,12 +79,12 @@ final class PDFAFlavours {
     static final String LEVEL_E_NAME = "engineering"; //$NON-NLS-1$
     static final String LEVEL_F_NAME = "embedded files"; //$NON-NLS-1$
     static final String ISO_14289_1_YEAR = "2014"; //$NON-NLS-1$
-    static final String ISO_14289_2_YEAR = "202x"; //$NON-NLS-1$
+    static final String ISO_14289_2_YEAR = "2024"; //$NON-NLS-1$
     static final String ISO_19005_1_YEAR = "2005"; //$NON-NLS-1$
     static final String ISO_19005_2_YEAR = "2011"; //$NON-NLS-1$
     static final String ISO_19005_3_YEAR = "2012"; //$NON-NLS-1$
     static final String ISO_19005_4_YEAR = "2020"; //$NON-NLS-1$
-    static final String ISO_32005_YEAR = "202X"; //$NON-NLS-1$
+    static final String ISO_32005_YEAR = "2023"; //$NON-NLS-1$
     static final String WCAG_2_1_YEAR = "2018"; //$NON-NLS-1$
     static final String WCAG_2_2_YEAR = "2023"; //$NON-NLS-1$
     static final String ISO_REFERENCE_SUFFIX = "(E)"; //$NON-NLS-1$
