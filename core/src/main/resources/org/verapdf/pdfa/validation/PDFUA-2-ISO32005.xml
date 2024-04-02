@@ -323,7 +323,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 14289-2:202x" clause="Annex B, 2"/>
+                <reference specification="ISO 14289-2:2024" clause="Annex B, 2"/>
             </references>
         </rule>
         <rule object="SELI" tags="structure,list">
