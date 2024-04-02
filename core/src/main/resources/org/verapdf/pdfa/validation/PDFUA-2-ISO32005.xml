@@ -2,7 +2,7 @@
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFUA_2">
     <details creator="veraPDF Consortium" created="2023-11-08T07:56:03.539Z">
         <name>PDF/UA-2 + Tagged PDF validation profile</name>
-        <description>Validation rules against ISO 14289-2:202x and ISO 32005</description>
+        <description>Validation rules against ISO 14289-2:2024 and ISO 32005</description>
     </details>
     <hash></hash>
     <rules>
