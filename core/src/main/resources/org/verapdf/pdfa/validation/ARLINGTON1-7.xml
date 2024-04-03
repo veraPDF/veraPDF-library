@@ -41724,12 +41724,12 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="ISO_32000_1_7" clause="FileTrailer" testNumber="1"/>
-			<description>FileTrailer shall not contain entries except XRefStm, Root, Prev, Size, ID, Info, Encrypt</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FileTrailer shall not contain entries except XRefStm, Root, Prev, Size, AdditionalStreams, ID, Info, Encrypt, DocChecksum</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'DocChecksum' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FileTrailer contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'DocChecksum' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -41740,6 +41740,80 @@
 			<test>containsAuthCode == false</test>
 			<error>
 				<message>FileTrailer contains entry AuthCode</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-AdditionalStreams" testNumber="8"/>
+			<description>Entry AdditionalStreams in FileTrailer shall have type Array</description>
+			<test>containsAdditionalStreams == false || AdditionalStreamsHasTypeArray == true</test>
+			<error>
+				<message>Entry AdditionalStreams in FileTrailer has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AdditionalStreamsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-AdditionalStreams" testNumber="23"/>
+			<description>Entry AdditionalStreams in FileTrailer can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<test>containsAdditionalStreams == false || hasExtensionOpenOffice == true</test>
+			<error>
+				<message>Entry AdditionalStreams in FileTrailer is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-AdditionalStreams-Array" testNumber="10"/>
+			<description>Entry AdditionalStreams with type Array in FileTrailer shall be direct</description>
+			<test>AdditionalStreamsHasTypeArray != true || isAdditionalStreamsIndirect == false</test>
+			<error>
+				<message>Entry AdditionalStreams with type Array in FileTrailer is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-AdditionalStreams-Array" testNumber="9"/>
+			<description>Entry AdditionalStreams with type Array in FileTrailer shall satisfy special case: fn:Eval((fn:ArrayLength(AdditionalStreams) mod 2) == 0)</description>
+			<test>AdditionalStreamsHasTypeArray != true || ((AdditionalStreamsArraySize % 2) == 0)</test>
+			<error>
+				<message>Entry AdditionalStreams with type Array in FileTrailer does not satisfy special case: fn:Eval((fn:ArrayLength(AdditionalStreams) mod 2) == 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-DocChecksum" testNumber="8"/>
+			<description>Entry DocChecksum in FileTrailer shall have type Name</description>
+			<test>containsDocChecksum == false || DocChecksumHasTypeName == true</test>
+			<error>
+				<message>Entry DocChecksum in FileTrailer has type %1 instead of type Name</message>
+				<arguments>
+					<argument>DocChecksumType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-DocChecksum" testNumber="23"/>
+			<description>Entry DocChecksum in FileTrailer can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<test>containsDocChecksum == false || hasExtensionOpenOffice == true</test>
+			<error>
+				<message>Entry DocChecksum in FileTrailer is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="ISO_32000_1_7" clause="FileTrailer-DocChecksum-Name" testNumber="10"/>
+			<description>Entry DocChecksum with type Name in FileTrailer shall be direct</description>
+			<test>DocChecksumHasTypeName != true || isDocChecksumIndirect == false</test>
+			<error>
+				<message>Entry DocChecksum with type Name in FileTrailer is indirect</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -58318,6 +58392,74 @@
 			<test>containsU == true</test>
 			<error>
 				<message>Entry U in NumberFormat is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArray">
+			<id specification="ISO_32000_1_7" clause="OOAdditionalStmsArray" testNumber="3"/>
+			<description>OOAdditionalStmsArray shall contain 2 * n elements</description>
+			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<error>
+				<message>OOAdditionalStmsArray contains %1 element(s)</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="ISO_32000_1_7" clause="OOAdditionalStmsArraySubArray" testNumber="2"/>
+			<description>OOAdditionalStmsArraySubArray shall contain exactly 2 elements</description>
+			<test>size == 2</test>
+			<error>
+				<message>OOAdditionalStmsArraySubArray contains %1 element(s) instead of 2</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="ISO_32000_1_7" clause="OOAdditionalStmsArraySubArray-0" testNumber="8"/>
+			<description>Entry 0 in OOAdditionalStmsArraySubArray shall have type Name</description>
+			<test>size &lt;= 0 || entry0HasTypeName == true</test>
+			<error>
+				<message>Entry 0 in OOAdditionalStmsArraySubArray has type %1 instead of type Name</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="ISO_32000_1_7" clause="OOAdditionalStmsArraySubArray-0-Name" testNumber="10"/>
+			<description>Entry 0 with type Name in OOAdditionalStmsArraySubArray shall be direct</description>
+			<test>entry0HasTypeName != true || isentry0Indirect == false</test>
+			<error>
+				<message>Entry 0 with type Name in OOAdditionalStmsArraySubArray is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="ISO_32000_1_7" clause="OOAdditionalStmsArraySubArray-1" testNumber="8"/>
+			<description>Entry 1 in OOAdditionalStmsArraySubArray shall have type Stream</description>
+			<test>size &lt;= 1 || entry1HasTypeStream == true</test>
+			<error>
+				<message>Entry 1 in OOAdditionalStmsArraySubArray has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>entry1Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="ISO_32000_1_7" clause="OOAdditionalStmsArraySubArray-1-Stream" testNumber="10"/>
+			<description>Entry 1 with type Stream in OOAdditionalStmsArraySubArray shall be indirect</description>
+			<test>entry1HasTypeStream != true || isentry1Indirect == true</test>
+			<error>
+				<message>Entry 1 with type Stream in OOAdditionalStmsArraySubArray is direct</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -82236,12 +82378,12 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_7" clause="XRefStream" testNumber="1"/>
-			<description>XRefStream shall not contain entries except Root, F, Size, DL, DecodeParms, Index, Info, Encrypt, FDecodeParms, Type, Filter, Length, Prev, W, ID, FFilter</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Index' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'W' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>XRefStream shall not contain entries except Root, F, Size, DL, DecodeParms, Index, Info, Encrypt, FDecodeParms, Type, Filter, Length, Prev, W, AdditionalStreams, ID, DocChecksum, FFilter</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Index' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'W' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'DocChecksum' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XRefStream contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Index' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'W' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Index' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'W' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'DocChecksum' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -82252,6 +82394,48 @@
 			<test>containsAuthCode == false</test>
 			<error>
 				<message>XRefStream contains entry AuthCode</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-AdditionalStreams" testNumber="8"/>
+			<description>Entry AdditionalStreams in XRefStream shall have type Array</description>
+			<test>containsAdditionalStreams == false || AdditionalStreamsHasTypeArray == true</test>
+			<error>
+				<message>Entry AdditionalStreams in XRefStream has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AdditionalStreamsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-AdditionalStreams" testNumber="23"/>
+			<description>Entry AdditionalStreams in XRefStream can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<test>containsAdditionalStreams == false || hasExtensionOpenOffice == true</test>
+			<error>
+				<message>Entry AdditionalStreams in XRefStream is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-AdditionalStreams-Array" testNumber="10"/>
+			<description>Entry AdditionalStreams with type Array in XRefStream shall be direct</description>
+			<test>AdditionalStreamsHasTypeArray != true || isAdditionalStreamsIndirect == false</test>
+			<error>
+				<message>Entry AdditionalStreams with type Array in XRefStream is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-AdditionalStreams-Array" testNumber="9"/>
+			<description>Entry AdditionalStreams with type Array in XRefStream shall satisfy special case: fn:Eval((fn:ArrayLength(AdditionalStreams) mod 2) == 0)</description>
+			<test>AdditionalStreamsHasTypeArray != true || ((AdditionalStreamsArraySize % 2) == 0)</test>
+			<error>
+				<message>Entry AdditionalStreams with type Array in XRefStream does not satisfy special case: fn:Eval((fn:ArrayLength(AdditionalStreams) mod 2) == 0)</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -82336,6 +82520,38 @@
 			<test>DecodeParmsHasTypeDictionary != true || isDecodeParmsIndirect == false</test>
 			<error>
 				<message>Entry DecodeParms with type Dictionary in XRefStream is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-DocChecksum" testNumber="8"/>
+			<description>Entry DocChecksum in XRefStream shall have type Name</description>
+			<test>containsDocChecksum == false || DocChecksumHasTypeName == true</test>
+			<error>
+				<message>Entry DocChecksum in XRefStream has type %1 instead of type Name</message>
+				<arguments>
+					<argument>DocChecksumType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-DocChecksum" testNumber="23"/>
+			<description>Entry DocChecksum in XRefStream can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<test>containsDocChecksum == false || hasExtensionOpenOffice == true</test>
+			<error>
+				<message>Entry DocChecksum in XRefStream is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXRefStream">
+			<id specification="ISO_32000_1_7" clause="XRefStream-DocChecksum-Name" testNumber="10"/>
+			<description>Entry DocChecksum with type Name in XRefStream shall be direct</description>
+			<test>DocChecksumHasTypeName != true || isDocChecksumIndirect == false</test>
+			<error>
+				<message>Entry DocChecksum with type Name in XRefStream is indirect</message>
 				<arguments/>
 			</error>
 			<references/>

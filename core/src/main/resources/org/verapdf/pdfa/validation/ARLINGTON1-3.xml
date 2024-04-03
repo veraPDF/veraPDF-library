@@ -20310,12 +20310,12 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="PDF_1_3" clause="FileTrailer" testNumber="1"/>
-			<description>FileTrailer shall not contain entries except Root, Prev, Size, ID, Info, Encrypt</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FileTrailer shall not contain entries except Root, Prev, Size, AdditionalStreams, ID, Info, Encrypt, DocChecksum</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'DocChecksum' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FileTrailer contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'DocChecksum' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -20329,6 +20329,80 @@
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'XRefStm' || elem == 'AuthCode').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-AdditionalStreams" testNumber="8"/>
+			<description>Entry AdditionalStreams in FileTrailer shall have type Array</description>
+			<test>containsAdditionalStreams == false || AdditionalStreamsHasTypeArray == true</test>
+			<error>
+				<message>Entry AdditionalStreams in FileTrailer has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AdditionalStreamsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-AdditionalStreams" testNumber="23"/>
+			<description>Entry AdditionalStreams in FileTrailer can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<test>containsAdditionalStreams == false || hasExtensionOpenOffice == true</test>
+			<error>
+				<message>Entry AdditionalStreams in FileTrailer is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-AdditionalStreams-Array" testNumber="10"/>
+			<description>Entry AdditionalStreams with type Array in FileTrailer shall be direct</description>
+			<test>AdditionalStreamsHasTypeArray != true || isAdditionalStreamsIndirect == false</test>
+			<error>
+				<message>Entry AdditionalStreams with type Array in FileTrailer is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-AdditionalStreams-Array" testNumber="9"/>
+			<description>Entry AdditionalStreams with type Array in FileTrailer shall satisfy special case: fn:Eval((fn:ArrayLength(AdditionalStreams) mod 2) == 0)</description>
+			<test>AdditionalStreamsHasTypeArray != true || ((AdditionalStreamsArraySize % 2) == 0)</test>
+			<error>
+				<message>Entry AdditionalStreams with type Array in FileTrailer does not satisfy special case: fn:Eval((fn:ArrayLength(AdditionalStreams) mod 2) == 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-DocChecksum" testNumber="8"/>
+			<description>Entry DocChecksum in FileTrailer shall have type Name</description>
+			<test>containsDocChecksum == false || DocChecksumHasTypeName == true</test>
+			<error>
+				<message>Entry DocChecksum in FileTrailer has type %1 instead of type Name</message>
+				<arguments>
+					<argument>DocChecksumType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-DocChecksum" testNumber="23"/>
+			<description>Entry DocChecksum in FileTrailer can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<test>containsDocChecksum == false || hasExtensionOpenOffice == true</test>
+			<error>
+				<message>Entry DocChecksum in FileTrailer is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileTrailer">
+			<id specification="PDF_1_3" clause="FileTrailer-DocChecksum-Name" testNumber="10"/>
+			<description>Entry DocChecksum with type Name in FileTrailer shall be direct</description>
+			<test>DocChecksumHasTypeName != true || isDocChecksumIndirect == false</test>
+			<error>
+				<message>Entry DocChecksum with type Name in FileTrailer is indirect</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -31562,6 +31636,74 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AOOAdditionalStmsArray">
+			<id specification="PDF_1_3" clause="OOAdditionalStmsArray" testNumber="3"/>
+			<description>OOAdditionalStmsArray shall contain 2 * n elements</description>
+			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<error>
+				<message>OOAdditionalStmsArray contains %1 element(s)</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="PDF_1_3" clause="OOAdditionalStmsArraySubArray" testNumber="2"/>
+			<description>OOAdditionalStmsArraySubArray shall contain exactly 2 elements</description>
+			<test>size == 2</test>
+			<error>
+				<message>OOAdditionalStmsArraySubArray contains %1 element(s) instead of 2</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="PDF_1_3" clause="OOAdditionalStmsArraySubArray-0" testNumber="8"/>
+			<description>Entry 0 in OOAdditionalStmsArraySubArray shall have type Name</description>
+			<test>size &lt;= 0 || entry0HasTypeName == true</test>
+			<error>
+				<message>Entry 0 in OOAdditionalStmsArraySubArray has type %1 instead of type Name</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="PDF_1_3" clause="OOAdditionalStmsArraySubArray-0-Name" testNumber="10"/>
+			<description>Entry 0 with type Name in OOAdditionalStmsArraySubArray shall be direct</description>
+			<test>entry0HasTypeName != true || isentry0Indirect == false</test>
+			<error>
+				<message>Entry 0 with type Name in OOAdditionalStmsArraySubArray is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="PDF_1_3" clause="OOAdditionalStmsArraySubArray-1" testNumber="8"/>
+			<description>Entry 1 in OOAdditionalStmsArraySubArray shall have type Stream</description>
+			<test>size &lt;= 1 || entry1HasTypeStream == true</test>
+			<error>
+				<message>Entry 1 in OOAdditionalStmsArraySubArray has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>entry1Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AOOAdditionalStmsArraySubArray">
+			<id specification="PDF_1_3" clause="OOAdditionalStmsArraySubArray-1-Stream" testNumber="10"/>
+			<description>Entry 1 with type Stream in OOAdditionalStmsArraySubArray shall be indirect</description>
+			<test>entry1HasTypeStream != true || isentry1Indirect == true</test>
+			<error>
+				<message>Entry 1 with type Stream in OOAdditionalStmsArraySubArray is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AOPIVersion13">
 			<id specification="PDF_1_3" clause="OPIVersion13" testNumber="1"/>
 			<description>OPIVersion13 shall not contain entries except 1.3</description>
@@ -42392,10 +42534,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_3" clause="XObjectImage-ImageMask-Boolean" testNumber="9"/>
-			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace))) || (@ImageMask == false))</description>
-			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true)) || (ImageMaskBooleanValue == false))</test>
+			<description>Entry ImageMask with type Boolean in XObjectImage shall satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</description>
+			<test>ImageMaskHasTypeBoolean != true || (((ImageMaskBooleanValue == true) &amp;&amp; (BitsPerComponentHasTypeInteger == false || (BitsPerComponentIntegerValue == 1)) &amp;&amp; (containsColorSpace != true) &amp;&amp; (containsMask != true)) || (ImageMaskBooleanValue == false))</test>
 			<error>
-				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace))) || (@ImageMask == false))</message>
+				<message>Entry ImageMask with type Boolean in XObjectImage does not satisfy special case: fn:Eval(((@ImageMask == true) &amp;&amp; (@BitsPerComponent == 1) &amp;&amp; fn:Not(fn:IsPresent(ColorSpace)) &amp;&amp; fn:Not(fn:IsPresent(Mask))) || (@ImageMask == false))</message>
 				<arguments/>
 			</error>
 			<references/>
