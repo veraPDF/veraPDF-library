@@ -82412,7 +82412,7 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_7" clause="XRefStream-AdditionalStreams" testNumber="23"/>
-			<description>Entry AdditionalStreams in XRefStream can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<description>Entry AdditionalStreams in XRefStream can only be present, if satisfy predicate fn:Extension(OpenOffice, 1.5)</description>
 			<test>containsAdditionalStreams == false || hasExtensionOpenOffice == true</test>
 			<error>
 				<message>Entry AdditionalStreams in XRefStream is present</message>
@@ -82538,7 +82538,7 @@
 		</rule>
 		<rule object="AXRefStream">
 			<id specification="ISO_32000_1_7" clause="XRefStream-DocChecksum" testNumber="23"/>
-			<description>Entry DocChecksum in XRefStream can only be present, if satisfy predicate fn:Extension(OpenOffice)</description>
+			<description>Entry DocChecksum in XRefStream can only be present, if satisfy predicate fn:Extension(OpenOffice, 1.5)</description>
 			<test>containsDocChecksum == false || hasExtensionOpenOffice == true</test>
 			<error>
 				<message>Entry DocChecksum in XRefStream is present</message>

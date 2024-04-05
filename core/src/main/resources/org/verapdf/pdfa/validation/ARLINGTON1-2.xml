@@ -7905,6 +7905,42 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOf_2StringsText">
+			<id specification="PDF_1_2" clause="ArrayOf_2StringsText" testNumber="2"/>
+			<description>ArrayOf_2StringsText shall contain exactly 2 elements</description>
+			<test>size == 2</test>
+			<error>
+				<message>ArrayOf_2StringsText contains %1 element(s) instead of 2</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOf_2StringsText">
+			<id specification="PDF_1_2" clause="ArrayOf_2StringsText-0" testNumber="8"/>
+			<description>Entry 0 in ArrayOf_2StringsText shall have type StringText</description>
+			<test>size &lt;= 0 || entry0HasTypeStringText == true</test>
+			<error>
+				<message>Entry 0 in ArrayOf_2StringsText has type %1 instead of type StringText</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOf_2StringsText">
+			<id specification="PDF_1_2" clause="ArrayOf_2StringsText-1" testNumber="8"/>
+			<description>Entry 1 in ArrayOf_2StringsText shall have type StringText</description>
+			<test>size &lt;= 1 || entry1HasTypeStringText == true</test>
+			<error>
+				<message>Entry 1 in ArrayOf_2StringsText has type %1 instead of type StringText</message>
+				<arguments>
+					<argument>entry1Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOf_4AnnotBorderCharacteristics">
 			<id specification="PDF_1_2" clause="ArrayOf_4AnnotBorderCharacteristics" testNumber="24"/>
 			<description>ArrayOf_4AnnotBorderCharacteristics shall contain 3 to 4 elements</description>

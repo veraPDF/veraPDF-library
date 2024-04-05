@@ -5668,6 +5668,262 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2" testNumber="1"/>
+			<description>FontFile2 shall not contain entries except FDecodeParms, Filter, Length, F, DecodeParms, Length1, Length3, Length2, Subtype, FFilter</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<error>
+				<message>FontFile2 contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2" testNumber="22"/>
+			<description>FontFile2 shall not contain entry DL in PDF 1.1. This entry appears in later pdf versions</description>
+			<test>containsDL == false</test>
+			<error>
+				<message>FontFile2 contains entry DL</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-DecodeParms" testNumber="8"/>
+			<description>Entry DecodeParms in FontFile2 shall have one of types: Array, Dictionary</description>
+			<test>containsDecodeParms == false || DecodeParmsHasTypeArray == true || DecodeParmsHasTypeDictionary == true</test>
+			<error>
+				<message>Entry DecodeParms in FontFile2 has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>DecodeParmsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-DecodeParms-Array" testNumber="9"/>
+			<description>Entry DecodeParms with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<error>
+				<message>Entry DecodeParms with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-F" testNumber="8"/>
+			<description>Entry F in FontFile2 shall have one of types: Dictionary, String</description>
+			<test>containsF == false || FHasTypeDictionary == true || FHasTypeString == true</test>
+			<error>
+				<message>Entry F in FontFile2 has type %1 instead of one of types: Dictionary, String</message>
+				<arguments>
+					<argument>FType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-FDecodeParms" testNumber="8"/>
+			<description>Entry FDecodeParms in FontFile2 shall have one of types: Array, Dictionary</description>
+			<test>containsFDecodeParms == false || FDecodeParmsHasTypeArray == true || FDecodeParmsHasTypeDictionary == true</test>
+			<error>
+				<message>Entry FDecodeParms in FontFile2 has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>FDecodeParmsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-FDecodeParms-Array" testNumber="9"/>
+			<description>Entry FDecodeParms with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<error>
+				<message>Entry FDecodeParms with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-FFilter" testNumber="8"/>
+			<description>Entry FFilter in FontFile2 shall have one of types: Array, Name</description>
+			<test>containsFFilter == false || FFilterHasTypeArray == true || FFilterHasTypeName == true</test>
+			<error>
+				<message>Entry FFilter in FontFile2 has type %1 instead of one of types: Array, Name</message>
+				<arguments>
+					<argument>FFilterType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-FFilter-Array" testNumber="9"/>
+			<description>Entry FFilter with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<error>
+				<message>Entry FFilter with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-FFilter-Name" testNumber="6"/>
+			<description>Entry FFilter with type Name in FontFile2 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode</description>
+			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "RunLengthDecode"</test>
+			<error>
+				<message>Entry FFilter with type Name in FontFile2 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode</message>
+				<arguments>
+					<argument>FFilterNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Filter" testNumber="8"/>
+			<description>Entry Filter in FontFile2 shall have one of types: Array, Name</description>
+			<test>containsFilter == false || FilterHasTypeArray == true || FilterHasTypeName == true</test>
+			<error>
+				<message>Entry Filter in FontFile2 has type %1 instead of one of types: Array, Name</message>
+				<arguments>
+					<argument>FilterType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Filter-Array" testNumber="9"/>
+			<description>Entry Filter with type Array in FontFile2 shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<error>
+				<message>Entry Filter with type Array in FontFile2 does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Filter-Name" testNumber="6"/>
+			<description>Entry Filter with type Name in FontFile2 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode</description>
+			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "RunLengthDecode"</test>
+			<error>
+				<message>Entry Filter with type Name in FontFile2 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode</message>
+				<arguments>
+					<argument>FilterNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length" testNumber="8"/>
+			<description>Entry Length in FontFile2 shall have type Integer</description>
+			<test>containsLength == false || LengthHasTypeInteger == true</test>
+			<error>
+				<message>Entry Length in FontFile2 has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>LengthType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length" testNumber="7"/>
+			<description>Entry Length in FontFile2 is required</description>
+			<test>containsLength == true</test>
+			<error>
+				<message>Entry Length in FontFile2 is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length1" testNumber="8"/>
+			<description>Entry Length1 in FontFile2 shall have type Integer</description>
+			<test>containsLength1 == false || Length1HasTypeInteger == true</test>
+			<error>
+				<message>Entry Length1 in FontFile2 has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>Length1Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length1" testNumber="11"/>
+			<description>Entry Length1 in FontFile2 is required, when parent::parent::@Subtype == TrueType</description>
+			<test>containsLength1 == true || (parentparentSubtypeNameValue != "TrueType")</test>
+			<error>
+				<message>Entry Length1 in FontFile2 is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length1-Integer" testNumber="9"/>
+			<description>Entry Length1 with type Integer in FontFile2 shall satisfy special case: fn:Eval(@Length1 &gt;= 0)</description>
+			<test>Length1HasTypeInteger != true || (Length1IntegerValue &gt;= 0)</test>
+			<error>
+				<message>Entry Length1 with type Integer in FontFile2 does not satisfy special case: fn:Eval(@Length1 &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length2" testNumber="8"/>
+			<description>Entry Length2 in FontFile2 shall have type Integer</description>
+			<test>containsLength2 == false || Length2HasTypeInteger == true</test>
+			<error>
+				<message>Entry Length2 in FontFile2 has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>Length2Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length2-Integer" testNumber="9"/>
+			<description>Entry Length2 with type Integer in FontFile2 shall satisfy special case: fn:Eval(@Length2 &gt;= 0)</description>
+			<test>Length2HasTypeInteger != true || (Length2IntegerValue &gt;= 0)</test>
+			<error>
+				<message>Entry Length2 with type Integer in FontFile2 does not satisfy special case: fn:Eval(@Length2 &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length3" testNumber="8"/>
+			<description>Entry Length3 in FontFile2 shall have type Integer</description>
+			<test>containsLength3 == false || Length3HasTypeInteger == true</test>
+			<error>
+				<message>Entry Length3 in FontFile2 has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>Length3Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Length3-Integer" testNumber="9"/>
+			<description>Entry Length3 with type Integer in FontFile2 shall satisfy special case: fn:Eval(@Length3 &gt;= 0)</description>
+			<test>Length3HasTypeInteger != true || (Length3IntegerValue &gt;= 0)</test>
+			<error>
+				<message>Entry Length3 with type Integer in FontFile2 does not satisfy special case: fn:Eval(@Length3 &gt;= 0)</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_1" clause="FontFile2-Subtype" testNumber="8"/>
+			<description>Entry Subtype in FontFile2 shall have type Name</description>
+			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
+			<error>
+				<message>Entry Subtype in FontFile2 has type %1 instead of type Name</message>
+				<arguments>
+					<argument>SubtypeType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_1" clause="FontFileType1" testNumber="1"/>
 			<description>FontFileType1 shall not contain entries except Length1, Length3, Length2, Subtype</description>
