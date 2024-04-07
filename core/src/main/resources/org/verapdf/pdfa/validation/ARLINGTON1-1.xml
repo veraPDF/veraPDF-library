@@ -8,24 +8,24 @@
 	<rules>
 		<rule object="AActionGoTo">
 			<id specification="PDF_1_1" clause="ActionGoTo" testNumber="1"/>
-			<description>ActionGoTo shall not contain entries except Type, S, D</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'Next' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionGoTo shall not contain entries except D, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionGoTo contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'Next' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AActionGoTo">
 			<id specification="PDF_1_1" clause="ActionGoTo" testNumber="22"/>
-			<description>ActionGoTo shall not contain entries SD, Next in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD' || elem == 'Next').length == 0</test>
+			<description>ActionGoTo shall not contain entries Next, SD in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Next' || elem == 'SD').length == 0</test>
 			<error>
 				<message>ActionGoTo contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD' || elem == 'Next').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Next' || elem == 'SD').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -122,24 +122,24 @@
 		</rule>
 		<rule object="AActionGoToR">
 			<id specification="PDF_1_1" clause="ActionGoToR" testNumber="1"/>
-			<description>ActionGoToR shall not contain entries except Type, S, D, F</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionGoToR shall not contain entries except D, F, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionGoToR contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'SD' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AActionGoToR">
 			<id specification="PDF_1_1" clause="ActionGoToR" testNumber="22"/>
-			<description>ActionGoToR shall not contain entries SD, NewWindow, Next in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SD' || elem == 'NewWindow' || elem == 'Next').length == 0</test>
+			<description>ActionGoToR shall not contain entries NewWindow, Next, SD in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'NewWindow' || elem == 'Next' || elem == 'SD').length == 0</test>
 			<error>
 				<message>ActionGoToR contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SD' || elem == 'NewWindow' || elem == 'Next').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'NewWindow' || elem == 'Next' || elem == 'SD').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -258,12 +258,12 @@
 		</rule>
 		<rule object="AActionLaunch">
 			<id specification="PDF_1_1" clause="ActionLaunch" testNumber="1"/>
-			<description>ActionLaunch shall not contain entries except Unix, Type, S, F, Win, Mac</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Unix' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'F' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'Win' &amp;&amp; elem != 'Mac' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionLaunch shall not contain entries except F, Mac, S, Type, Unix, Win</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'F' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Unix' &amp;&amp; elem != 'Win' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionLaunch contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Unix' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'F' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'Win' &amp;&amp; elem != 'Mac' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'F' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'NewWindow' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Unix' &amp;&amp; elem != 'Win' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -398,12 +398,12 @@
 		</rule>
 		<rule object="AActionThread">
 			<id specification="PDF_1_1" clause="ActionThread" testNumber="1"/>
-			<description>ActionThread shall not contain entries except B, Type, S, D, F</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'B' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Next' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionThread shall not contain entries except B, D, F, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'B' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionThread contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'B' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Next' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'B' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -564,12 +564,12 @@
 		</rule>
 		<rule object="AActionURI">
 			<id specification="PDF_1_1" clause="ActionURI" testNumber="1"/>
-			<description>ActionURI shall not contain entries except Type, S, IsMap, URI</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'IsMap' &amp;&amp; elem != 'URI' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionURI shall not contain entries except IsMap, S, Type, URI</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'IsMap' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'URI' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionURI contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'IsMap' &amp;&amp; elem != 'URI' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'IsMap' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'URI' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -678,24 +678,24 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="PDF_1_1" clause="AnnotLink" testNumber="1"/>
-			<description>AnnotLink shall not contain entries except A, C, F, M, Dest, Rect, Type, Contents, Border, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'PA' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotLink shall not contain entries except A, Border, C, Contents, Dest, F, M, Rect, Subtype, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PA' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'P' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'PA' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'QuadPoints' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PA' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="PDF_1_1" clause="AnnotLink" testNumber="22"/>
-			<description>AnnotLink shall not contain entries H, BM, P, BS, OC, StructParent, CA, ca, Path, AF, Lang, AP, PA, AS, NM, QuadPoints in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'H' || elem == 'BM' || elem == 'P' || elem == 'BS' || elem == 'OC' || elem == 'StructParent' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang' || elem == 'AP' || elem == 'PA' || elem == 'AS' || elem == 'NM' || elem == 'QuadPoints').length == 0</test>
+			<description>AnnotLink shall not contain entries AF, AP, AS, BM, BS, CA, H, Lang, NM, OC, P, PA, Path, QuadPoints, StructParent, ca in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'AP' || elem == 'AS' || elem == 'BM' || elem == 'BS' || elem == 'CA' || elem == 'H' || elem == 'Lang' || elem == 'NM' || elem == 'OC' || elem == 'P' || elem == 'PA' || elem == 'Path' || elem == 'QuadPoints' || elem == 'StructParent' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'H' || elem == 'BM' || elem == 'P' || elem == 'BS' || elem == 'OC' || elem == 'StructParent' || elem == 'CA' || elem == 'ca' || elem == 'Path' || elem == 'AF' || elem == 'Lang' || elem == 'AP' || elem == 'PA' || elem == 'AS' || elem == 'NM' || elem == 'QuadPoints').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'AP' || elem == 'AS' || elem == 'BM' || elem == 'BS' || elem == 'CA' || elem == 'H' || elem == 'Lang' || elem == 'NM' || elem == 'OC' || elem == 'P' || elem == 'PA' || elem == 'Path' || elem == 'QuadPoints' || elem == 'StructParent' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -896,24 +896,24 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="PDF_1_1" clause="AnnotText" testNumber="1"/>
-			<description>AnnotText shall not contain entries except C, F, M, Name, Open, T, Rect, Type, Contents, Border, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Open' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'State' &amp;&amp; elem != 'StateModel' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotText shall not contain entries except Border, C, Contents, F, M, Name, Open, Rect, Subtype, T, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Open' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'State' &amp;&amp; elem != 'StateModel' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CreationDate' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'C' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Open' &amp;&amp; elem != 'P' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'ca' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'State' &amp;&amp; elem != 'StateModel' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'NM' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Open' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'State' &amp;&amp; elem != 'StateModel' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="PDF_1_1" clause="AnnotText" testNumber="22"/>
-			<description>AnnotText shall not contain entries CreationDate, RT, IRT, BM, P, OC, StructParent, Popup, CA, ca, ExData, AF, Lang, IT, Subj, AP, RC, AS, State, StateModel, NM in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'P' || elem == 'OC' || elem == 'StructParent' || elem == 'Popup' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'AP' || elem == 'RC' || elem == 'AS' || elem == 'State' || elem == 'StateModel' || elem == 'NM').length == 0</test>
+			<description>AnnotText shall not contain entries AF, AP, AS, BM, CA, CreationDate, ExData, IRT, IT, Lang, NM, OC, P, Popup, RC, RT, State, StateModel, StructParent, Subj, ca in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'AP' || elem == 'AS' || elem == 'BM' || elem == 'CA' || elem == 'CreationDate' || elem == 'ExData' || elem == 'IRT' || elem == 'IT' || elem == 'Lang' || elem == 'NM' || elem == 'OC' || elem == 'P' || elem == 'Popup' || elem == 'RC' || elem == 'RT' || elem == 'State' || elem == 'StateModel' || elem == 'StructParent' || elem == 'Subj' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CreationDate' || elem == 'RT' || elem == 'IRT' || elem == 'BM' || elem == 'P' || elem == 'OC' || elem == 'StructParent' || elem == 'Popup' || elem == 'CA' || elem == 'ca' || elem == 'ExData' || elem == 'AF' || elem == 'Lang' || elem == 'IT' || elem == 'Subj' || elem == 'AP' || elem == 'RC' || elem == 'AS' || elem == 'State' || elem == 'StateModel' || elem == 'NM').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'AP' || elem == 'AS' || elem == 'BM' || elem == 'CA' || elem == 'CreationDate' || elem == 'ExData' || elem == 'IRT' || elem == 'IT' || elem == 'Lang' || elem == 'NM' || elem == 'OC' || elem == 'P' || elem == 'Popup' || elem == 'RC' || elem == 'RT' || elem == 'State' || elem == 'StateModel' || elem == 'StructParent' || elem == 'Subj' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1789,12 +1789,12 @@
 		</rule>
 		<rule object="ABead">
 			<id specification="PDF_1_1" clause="Bead" testNumber="1"/>
-			<description>Bead shall not contain entries except P, R, Type, T, V, N</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Bead shall not contain entries except N, P, R, T, Type, V</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'N' &amp;&amp; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Bead contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'N' &amp;&amp; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1985,12 +1985,12 @@
 		</rule>
 		<rule object="ABeadFirst">
 			<id specification="PDF_1_1" clause="BeadFirst" testNumber="1"/>
-			<description>BeadFirst shall not contain entries except P, R, Type, T, V, N</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>BeadFirst shall not contain entries except N, P, R, T, Type, V</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'N' &amp;&amp; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>BeadFirst contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'T' &amp;&amp; elem != 'V' &amp;&amp; elem != 'N' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'N' &amp;&amp; elem != 'P' &amp;&amp; elem != 'R' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2317,12 +2317,12 @@
 		</rule>
 		<rule object="ACalGrayDict">
 			<id specification="PDF_1_1" clause="CalGrayDict" testNumber="1"/>
-			<description>CalGrayDict shall not contain entries except Gamma, WhitePoint, BlackPoint</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Gamma' &amp;&amp; elem != 'WhitePoint' &amp;&amp; elem != 'BlackPoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>CalGrayDict shall not contain entries except BlackPoint, Gamma, WhitePoint</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BlackPoint' &amp;&amp; elem != 'Gamma' &amp;&amp; elem != 'WhitePoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>CalGrayDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Gamma' &amp;&amp; elem != 'WhitePoint' &amp;&amp; elem != 'BlackPoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BlackPoint' &amp;&amp; elem != 'Gamma' &amp;&amp; elem != 'WhitePoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2433,12 +2433,12 @@
 		</rule>
 		<rule object="ACalRGBDict">
 			<id specification="PDF_1_1" clause="CalRGBDict" testNumber="1"/>
-			<description>CalRGBDict shall not contain entries except Gamma, WhitePoint, Matrix, BlackPoint</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Gamma' &amp;&amp; elem != 'WhitePoint' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'BlackPoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>CalRGBDict shall not contain entries except BlackPoint, Gamma, Matrix, WhitePoint</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BlackPoint' &amp;&amp; elem != 'Gamma' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'WhitePoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>CalRGBDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Gamma' &amp;&amp; elem != 'WhitePoint' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'BlackPoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BlackPoint' &amp;&amp; elem != 'Gamma' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'WhitePoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -2503,24 +2503,24 @@
 		</rule>
 		<rule object="ACatalog">
 			<id specification="PDF_1_1" clause="Catalog" testNumber="1"/>
-			<description>Catalog shall not contain entries except NeedsRendering, URI, Outlines, Dests, PageMode, Pages, Threads, Type, OpenAction, PageLayout</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DPartRoot' &amp;&amp; elem != 'Legal' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'NeedsRendering' &amp;&amp; elem != 'PageLabels' &amp;&amp; elem != 'Extensions' &amp;&amp; elem != 'URI' &amp;&amp; elem != 'Requirements' &amp;&amp; elem != 'Names' &amp;&amp; elem != 'Version' &amp;&amp; elem != 'AcroForm' &amp;&amp; elem != 'Outlines' &amp;&amp; elem != 'Dests' &amp;&amp; elem != 'SpiderInfo' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'PageMode' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'DSS' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'OCProperties' &amp;&amp; elem != 'Pages' &amp;&amp; elem != 'Threads' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'OpenAction' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'PageLayout' &amp;&amp; elem != 'Collection' &amp;&amp; elem != 'ViewerPreferences' &amp;&amp; elem != 'MarkInfo' &amp;&amp; elem != 'StructTreeRoot' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Catalog shall not contain entries except Dests, NeedsRendering, OpenAction, Outlines, PageLayout, PageMode, Pages, Threads, Type, URI</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AcroForm' &amp;&amp; elem != 'Collection' &amp;&amp; elem != 'DPartRoot' &amp;&amp; elem != 'DSS' &amp;&amp; elem != 'Dests' &amp;&amp; elem != 'Extensions' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Legal' &amp;&amp; elem != 'MarkInfo' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Names' &amp;&amp; elem != 'NeedsRendering' &amp;&amp; elem != 'OCProperties' &amp;&amp; elem != 'OpenAction' &amp;&amp; elem != 'Outlines' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PageLabels' &amp;&amp; elem != 'PageLayout' &amp;&amp; elem != 'PageMode' &amp;&amp; elem != 'Pages' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'Requirements' &amp;&amp; elem != 'SpiderInfo' &amp;&amp; elem != 'StructTreeRoot' &amp;&amp; elem != 'Threads' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'URI' &amp;&amp; elem != 'Version' &amp;&amp; elem != 'ViewerPreferences' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Catalog contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DPartRoot' &amp;&amp; elem != 'Legal' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'NeedsRendering' &amp;&amp; elem != 'PageLabels' &amp;&amp; elem != 'Extensions' &amp;&amp; elem != 'URI' &amp;&amp; elem != 'Requirements' &amp;&amp; elem != 'Names' &amp;&amp; elem != 'Version' &amp;&amp; elem != 'AcroForm' &amp;&amp; elem != 'Outlines' &amp;&amp; elem != 'Dests' &amp;&amp; elem != 'SpiderInfo' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'PageMode' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'DSS' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'OCProperties' &amp;&amp; elem != 'Pages' &amp;&amp; elem != 'Threads' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'OpenAction' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'PageLayout' &amp;&amp; elem != 'Collection' &amp;&amp; elem != 'ViewerPreferences' &amp;&amp; elem != 'MarkInfo' &amp;&amp; elem != 'StructTreeRoot' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AcroForm' &amp;&amp; elem != 'Collection' &amp;&amp; elem != 'DPartRoot' &amp;&amp; elem != 'DSS' &amp;&amp; elem != 'Dests' &amp;&amp; elem != 'Extensions' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Legal' &amp;&amp; elem != 'MarkInfo' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Names' &amp;&amp; elem != 'NeedsRendering' &amp;&amp; elem != 'OCProperties' &amp;&amp; elem != 'OpenAction' &amp;&amp; elem != 'Outlines' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PageLabels' &amp;&amp; elem != 'PageLayout' &amp;&amp; elem != 'PageMode' &amp;&amp; elem != 'Pages' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'Requirements' &amp;&amp; elem != 'SpiderInfo' &amp;&amp; elem != 'StructTreeRoot' &amp;&amp; elem != 'Threads' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'URI' &amp;&amp; elem != 'Version' &amp;&amp; elem != 'ViewerPreferences' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="ACatalog">
 			<id specification="PDF_1_1" clause="Catalog" testNumber="22"/>
-			<description>Catalog shall not contain entries DPartRoot, Legal, Metadata, PageLabels, Extensions, Requirements, Names, Version, AcroForm, SpiderInfo, AA, AF, DSS, OutputIntents, PieceInfo, Lang, OCProperties, Perms, Collection, ViewerPreferences, MarkInfo, StructTreeRoot in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DPartRoot' || elem == 'Legal' || elem == 'Metadata' || elem == 'PageLabels' || elem == 'Extensions' || elem == 'Requirements' || elem == 'Names' || elem == 'Version' || elem == 'AcroForm' || elem == 'SpiderInfo' || elem == 'AA' || elem == 'AF' || elem == 'DSS' || elem == 'OutputIntents' || elem == 'PieceInfo' || elem == 'Lang' || elem == 'OCProperties' || elem == 'Perms' || elem == 'Collection' || elem == 'ViewerPreferences' || elem == 'MarkInfo' || elem == 'StructTreeRoot').length == 0</test>
+			<description>Catalog shall not contain entries AA, AF, AcroForm, Collection, DPartRoot, DSS, Extensions, Lang, Legal, MarkInfo, Metadata, Names, OCProperties, OutputIntents, PageLabels, Perms, PieceInfo, Requirements, SpiderInfo, StructTreeRoot, Version, ViewerPreferences in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AA' || elem == 'AF' || elem == 'AcroForm' || elem == 'Collection' || elem == 'DPartRoot' || elem == 'DSS' || elem == 'Extensions' || elem == 'Lang' || elem == 'Legal' || elem == 'MarkInfo' || elem == 'Metadata' || elem == 'Names' || elem == 'OCProperties' || elem == 'OutputIntents' || elem == 'PageLabels' || elem == 'Perms' || elem == 'PieceInfo' || elem == 'Requirements' || elem == 'SpiderInfo' || elem == 'StructTreeRoot' || elem == 'Version' || elem == 'ViewerPreferences').length == 0</test>
 			<error>
 				<message>Catalog contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DPartRoot' || elem == 'Legal' || elem == 'Metadata' || elem == 'PageLabels' || elem == 'Extensions' || elem == 'Requirements' || elem == 'Names' || elem == 'Version' || elem == 'AcroForm' || elem == 'SpiderInfo' || elem == 'AA' || elem == 'AF' || elem == 'DSS' || elem == 'OutputIntents' || elem == 'PieceInfo' || elem == 'Lang' || elem == 'OCProperties' || elem == 'Perms' || elem == 'Collection' || elem == 'ViewerPreferences' || elem == 'MarkInfo' || elem == 'StructTreeRoot').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AA' || elem == 'AF' || elem == 'AcroForm' || elem == 'Collection' || elem == 'DPartRoot' || elem == 'DSS' || elem == 'Extensions' || elem == 'Lang' || elem == 'Legal' || elem == 'MarkInfo' || elem == 'Metadata' || elem == 'Names' || elem == 'OCProperties' || elem == 'OutputIntents' || elem == 'PageLabels' || elem == 'Perms' || elem == 'PieceInfo' || elem == 'Requirements' || elem == 'SpiderInfo' || elem == 'StructTreeRoot' || elem == 'Version' || elem == 'ViewerPreferences').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3085,11 +3085,11 @@
 		<rule object="ADestDict">
 			<id specification="PDF_1_1" clause="DestDict" testNumber="1"/>
 			<description>DestDict shall not contain entries except D</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'SD' &amp;&amp; elem != 'D' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'SD' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>DestDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'SD' &amp;&amp; elem != 'D' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'SD' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3420,12 +3420,12 @@
 		</rule>
 		<rule object="AEncoding">
 			<id specification="PDF_1_1" clause="Encoding" testNumber="1"/>
-			<description>Encoding shall not contain entries except Type, Differences, BaseEncoding</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Differences' &amp;&amp; elem != 'BaseEncoding' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Encoding shall not contain entries except BaseEncoding, Differences, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BaseEncoding' &amp;&amp; elem != 'Differences' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Encoding contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'Differences' &amp;&amp; elem != 'BaseEncoding' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BaseEncoding' &amp;&amp; elem != 'Differences' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3493,23 +3493,23 @@
 		<rule object="AEncryptionPublicKey">
 			<id specification="PDF_1_1" clause="EncryptionPublicKey" testNumber="1"/>
 			<description>EncryptionPublicKey shall not contain entries except Filter, V</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'Recipients' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'V' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'StmF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Recipients' &amp;&amp; elem != 'StmF' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>EncryptionPublicKey contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'Recipients' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'V' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'StmF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Recipients' &amp;&amp; elem != 'StmF' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AEncryptionPublicKey">
 			<id specification="PDF_1_1" clause="EncryptionPublicKey" testNumber="22"/>
-			<description>EncryptionPublicKey shall not contain entries P, SubFilter, StrF, CF, EFF, Recipients, Length, KDFSalt, StmF, EncryptMetadata in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'P' || elem == 'SubFilter' || elem == 'StrF' || elem == 'CF' || elem == 'EFF' || elem == 'Recipients' || elem == 'Length' || elem == 'KDFSalt' || elem == 'StmF' || elem == 'EncryptMetadata').length == 0</test>
+			<description>EncryptionPublicKey shall not contain entries CF, EFF, EncryptMetadata, KDFSalt, Length, P, Recipients, StmF, StrF, SubFilter in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CF' || elem == 'EFF' || elem == 'EncryptMetadata' || elem == 'KDFSalt' || elem == 'Length' || elem == 'P' || elem == 'Recipients' || elem == 'StmF' || elem == 'StrF' || elem == 'SubFilter').length == 0</test>
 			<error>
 				<message>EncryptionPublicKey contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'P' || elem == 'SubFilter' || elem == 'StrF' || elem == 'CF' || elem == 'EFF' || elem == 'Recipients' || elem == 'Length' || elem == 'KDFSalt' || elem == 'StmF' || elem == 'EncryptMetadata').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CF' || elem == 'EFF' || elem == 'EncryptMetadata' || elem == 'KDFSalt' || elem == 'Length' || elem == 'P' || elem == 'Recipients' || elem == 'StmF' || elem == 'StrF' || elem == 'SubFilter').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3594,24 +3594,24 @@
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="PDF_1_1" clause="EncryptionStandard" testNumber="1"/>
-			<description>EncryptionStandard shall not contain entries except EFF, O, P, UE, R, Filter, Perms, U, OE, V</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'UE' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'R' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'U' &amp;&amp; elem != 'OE' &amp;&amp; elem != 'V' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'StmF' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>EncryptionStandard shall not contain entries except EFF, Filter, O, OE, P, Perms, R, U, UE, V</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'O' &amp;&amp; elem != 'OE' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'R' &amp;&amp; elem != 'StmF' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'U' &amp;&amp; elem != 'UE' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>EncryptionStandard contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'UE' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'R' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'U' &amp;&amp; elem != 'OE' &amp;&amp; elem != 'V' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'StmF' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CF' &amp;&amp; elem != 'EFF' &amp;&amp; elem != 'EncryptMetadata' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'KDFSalt' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'O' &amp;&amp; elem != 'OE' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'R' &amp;&amp; elem != 'StmF' &amp;&amp; elem != 'StrF' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'U' &amp;&amp; elem != 'UE' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AEncryptionStandard">
 			<id specification="PDF_1_1" clause="EncryptionStandard" testNumber="22"/>
-			<description>EncryptionStandard shall not contain entries CF, EncryptMetadata, SubFilter, StrF, Length, KDFSalt, StmF in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CF' || elem == 'EncryptMetadata' || elem == 'SubFilter' || elem == 'StrF' || elem == 'Length' || elem == 'KDFSalt' || elem == 'StmF').length == 0</test>
+			<description>EncryptionStandard shall not contain entries CF, EncryptMetadata, KDFSalt, Length, StmF, StrF, SubFilter in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'CF' || elem == 'EncryptMetadata' || elem == 'KDFSalt' || elem == 'Length' || elem == 'StmF' || elem == 'StrF' || elem == 'SubFilter').length == 0</test>
 			<error>
 				<message>EncryptionStandard contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CF' || elem == 'EncryptMetadata' || elem == 'SubFilter' || elem == 'StrF' || elem == 'Length' || elem == 'KDFSalt' || elem == 'StmF').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'CF' || elem == 'EncryptMetadata' || elem == 'KDFSalt' || elem == 'Length' || elem == 'StmF' || elem == 'StrF' || elem == 'SubFilter').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3944,24 +3944,24 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="PDF_1_1" clause="FileSpecification" testNumber="1"/>
-			<description>FileSpecification shall not contain entries except Unix, F, DOS, FS, Mac, ID</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Unix' &amp;&amp; elem != 'EF' &amp;&amp; elem != 'CI' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'DOS' &amp;&amp; elem != 'EP' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'AFRelationship' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'UF' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'RF' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ID' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FileSpecification shall not contain entries except DOS, F, FS, ID, Mac, Unix</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AFRelationship' &amp;&amp; elem != 'CI' &amp;&amp; elem != 'DOS' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EF' &amp;&amp; elem != 'EP' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'RF' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UF' &amp;&amp; elem != 'Unix' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FileSpecification contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Unix' &amp;&amp; elem != 'EF' &amp;&amp; elem != 'CI' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'DOS' &amp;&amp; elem != 'EP' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'AFRelationship' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'UF' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'RF' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ID' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AFRelationship' &amp;&amp; elem != 'CI' &amp;&amp; elem != 'DOS' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EF' &amp;&amp; elem != 'EP' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'RF' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UF' &amp;&amp; elem != 'Unix' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="PDF_1_1" clause="FileSpecification" testNumber="22"/>
-			<description>FileSpecification shall not contain entries EF, CI, Thumb, EP, AFRelationship, Desc, UF, Type, RF, V in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'EF' || elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'Desc' || elem == 'UF' || elem == 'Type' || elem == 'RF' || elem == 'V').length == 0</test>
+			<description>FileSpecification shall not contain entries AFRelationship, CI, Desc, EF, EP, RF, Thumb, Type, UF, V in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AFRelationship' || elem == 'CI' || elem == 'Desc' || elem == 'EF' || elem == 'EP' || elem == 'RF' || elem == 'Thumb' || elem == 'Type' || elem == 'UF' || elem == 'V').length == 0</test>
 			<error>
 				<message>FileSpecification contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'EF' || elem == 'CI' || elem == 'Thumb' || elem == 'EP' || elem == 'AFRelationship' || elem == 'Desc' || elem == 'UF' || elem == 'Type' || elem == 'RF' || elem == 'V').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AFRelationship' || elem == 'CI' || elem == 'Desc' || elem == 'EF' || elem == 'EP' || elem == 'RF' || elem == 'Thumb' || elem == 'Type' || elem == 'UF' || elem == 'V').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4050,24 +4050,24 @@
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="PDF_1_1" clause="FileTrailer" testNumber="1"/>
-			<description>FileTrailer shall not contain entries except Root, Prev, Size, AdditionalStreams, ID, Info, Encrypt, DocChecksum</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'DocChecksum' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FileTrailer shall not contain entries except AdditionalStreams, DocChecksum, Encrypt, ID, Info, Prev, Root, Size</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AdditionalStreams' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'DocChecksum' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'XRefStm' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FileTrailer contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'XRefStm' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'AdditionalStreams' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'DocChecksum' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AdditionalStreams' &amp;&amp; elem != 'AuthCode' &amp;&amp; elem != 'DocChecksum' &amp;&amp; elem != 'Encrypt' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Info' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'Root' &amp;&amp; elem != 'Size' &amp;&amp; elem != 'XRefStm' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AFileTrailer">
 			<id specification="PDF_1_1" clause="FileTrailer" testNumber="22"/>
-			<description>FileTrailer shall not contain entries XRefStm, AuthCode in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'XRefStm' || elem == 'AuthCode').length == 0</test>
+			<description>FileTrailer shall not contain entries AuthCode, XRefStm in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode' || elem == 'XRefStm').length == 0</test>
 			<error>
 				<message>FileTrailer contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'XRefStm' || elem == 'AuthCode').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AuthCode' || elem == 'XRefStm').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4330,12 +4330,12 @@
 		</rule>
 		<rule object="AFilterCCITTFaxDecode">
 			<id specification="PDF_1_1" clause="FilterCCITTFaxDecode" testNumber="1"/>
-			<description>FilterCCITTFaxDecode shall not contain entries except BlackIs1, Blackls1, EndOfBlock, EndOfLine, DamagedRowsBeforeError, Columns, K, EncodedByteAlign, Rows</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BlackIs1' &amp;&amp; elem != 'Blackls1' &amp;&amp; elem != 'EndOfBlock' &amp;&amp; elem != 'EndOfLine' &amp;&amp; elem != 'DamagedRowsBeforeError' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'K' &amp;&amp; elem != 'EncodedByteAlign' &amp;&amp; elem != 'Rows' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FilterCCITTFaxDecode shall not contain entries except BlackIs1, Blackls1, Columns, DamagedRowsBeforeError, EncodedByteAlign, EndOfBlock, EndOfLine, K, Rows</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BlackIs1' &amp;&amp; elem != 'Blackls1' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'DamagedRowsBeforeError' &amp;&amp; elem != 'EncodedByteAlign' &amp;&amp; elem != 'EndOfBlock' &amp;&amp; elem != 'EndOfLine' &amp;&amp; elem != 'K' &amp;&amp; elem != 'Rows' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FilterCCITTFaxDecode contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BlackIs1' &amp;&amp; elem != 'Blackls1' &amp;&amp; elem != 'EndOfBlock' &amp;&amp; elem != 'EndOfLine' &amp;&amp; elem != 'DamagedRowsBeforeError' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'K' &amp;&amp; elem != 'EncodedByteAlign' &amp;&amp; elem != 'Rows' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BlackIs1' &amp;&amp; elem != 'Blackls1' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'DamagedRowsBeforeError' &amp;&amp; elem != 'EncodedByteAlign' &amp;&amp; elem != 'EndOfBlock' &amp;&amp; elem != 'EndOfLine' &amp;&amp; elem != 'K' &amp;&amp; elem != 'Rows' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4526,12 +4526,12 @@
 		</rule>
 		<rule object="AFilterLZWDecode">
 			<id specification="PDF_1_1" clause="FilterLZWDecode" testNumber="1"/>
-			<description>FilterLZWDecode shall not contain entries except Colors, Predictor, Columns, EarlyChange, BitsPerComponent</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Colors' &amp;&amp; elem != 'Predictor' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'EarlyChange' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FilterLZWDecode shall not contain entries except BitsPerComponent, Colors, Columns, EarlyChange, Predictor</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BitsPerComponent' &amp;&amp; elem != 'Colors' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'EarlyChange' &amp;&amp; elem != 'Predictor' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FilterLZWDecode contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Colors' &amp;&amp; elem != 'Predictor' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'EarlyChange' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BitsPerComponent' &amp;&amp; elem != 'Colors' &amp;&amp; elem != 'Columns' &amp;&amp; elem != 'EarlyChange' &amp;&amp; elem != 'Predictor' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -4644,12 +4644,12 @@
 		</rule>
 		<rule object="AFontDescriptorTrueType">
 			<id specification="PDF_1_1" clause="FontDescriptorTrueType" testNumber="1"/>
-			<description>FontDescriptorTrueType shall not contain entries except FontFile2, FontBBox, StemV, CapHeight, Flags, Type, ItalicAngle, Ascent, FontFile, MaxWidth, FontName, StemH, AvgWidth, Descent, XHeight, Leading, MissingWidth</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontDescriptorTrueType shall not contain entries except Ascent, AvgWidth, CapHeight, Descent, Flags, FontBBox, FontFile, FontFile2, FontName, ItalicAngle, Leading, MaxWidth, MissingWidth, StemH, StemV, Type, XHeight</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontDescriptorTrueType contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5034,24 +5034,24 @@
 		</rule>
 		<rule object="AFontDescriptorType1">
 			<id specification="PDF_1_1" clause="FontDescriptorType1" testNumber="1"/>
-			<description>FontDescriptorType1 shall not contain entries except FontBBox, CharSet, StemV, CapHeight, Flags, Type, ItalicAngle, Ascent, FontFile, MaxWidth, FontName, StemH, AvgWidth, Descent, XHeight, Leading, MissingWidth</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'CharSet' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontDescriptorType1 shall not contain entries except Ascent, AvgWidth, CapHeight, CharSet, Descent, Flags, FontBBox, FontFile, FontName, ItalicAngle, Leading, MaxWidth, MissingWidth, StemH, StemV, Type, XHeight</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'CharSet' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontDescriptorType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'CharSet' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'CharSet' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorType1">
 			<id specification="PDF_1_1" clause="FontDescriptorType1" testNumber="22"/>
-			<description>FontDescriptorType1 shall not contain entries FontFamily, FontStretch, FontFile3, FontWeight in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontStretch' || elem == 'FontFile3' || elem == 'FontWeight').length == 0</test>
+			<description>FontDescriptorType1 shall not contain entries FontFamily, FontFile3, FontStretch, FontWeight in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontFile3' || elem == 'FontStretch' || elem == 'FontWeight').length == 0</test>
 			<error>
 				<message>FontDescriptorType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontStretch' || elem == 'FontFile3' || elem == 'FontWeight').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'FontFamily' || elem == 'FontFile3' || elem == 'FontStretch' || elem == 'FontWeight').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5394,12 +5394,12 @@
 		</rule>
 		<rule object="AFontDescriptorType3">
 			<id specification="PDF_1_1" clause="FontDescriptorType3" testNumber="1"/>
-			<description>FontDescriptorType3 shall not contain entries except FontBBox, StemV, CapHeight, Flags, Type, ItalicAngle, Ascent, MaxWidth, FontName, StemH, AvgWidth, Descent, XHeight, Leading, MissingWidth</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontDescriptorType3 shall not contain entries except Ascent, AvgWidth, CapHeight, Descent, Flags, FontBBox, FontName, ItalicAngle, Leading, MaxWidth, MissingWidth, StemH, StemV, Type, XHeight</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontDescriptorType3 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FontFamily' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Ascent' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'XHeight' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MissingWidth' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5670,12 +5670,12 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="PDF_1_1" clause="FontFile2" testNumber="1"/>
-			<description>FontFile2 shall not contain entries except FDecodeParms, Filter, Length, F, DecodeParms, Length1, Length3, Length2, Subtype, FFilter</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFile2 shall not contain entries except DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFile2 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -5926,24 +5926,24 @@
 		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_1" clause="FontFileType1" testNumber="1"/>
-			<description>FontFileType1 shall not contain entries except Length1, Length3, Length2, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFileType1 shall not contain entries except Length1, Length2, Length3, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFileType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_1" clause="FontFileType1" testNumber="22"/>
-			<description>FontFileType1 shall not contain entries FDecodeParms, Filter, Length, F, DL, DecodeParms, FFilter in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'FDecodeParms' || elem == 'Filter' || elem == 'Length' || elem == 'F' || elem == 'DL' || elem == 'DecodeParms' || elem == 'FFilter').length == 0</test>
+			<description>FontFileType1 shall not contain entries DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL' || elem == 'DecodeParms' || elem == 'F' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'Filter' || elem == 'Length').length == 0</test>
 			<error>
 				<message>FontFileType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'FDecodeParms' || elem == 'Filter' || elem == 'Length' || elem == 'F' || elem == 'DL' || elem == 'DecodeParms' || elem == 'FFilter').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL' || elem == 'DecodeParms' || elem == 'F' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'Filter' || elem == 'Length').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6083,12 +6083,12 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="PDF_1_1" clause="FontMultipleMaster" testNumber="1"/>
-			<description>FontMultipleMaster shall not contain entries except Widths, Type, BaseFont, LastChar, Encoding, Subtype, FirstChar, FontDescriptor, Name</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ToUnicode' &amp;&amp; elem != 'Widths' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseFont' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontMultipleMaster shall not contain entries except BaseFont, Encoding, FirstChar, FontDescriptor, LastChar, Name, Subtype, Type, Widths</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BaseFont' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontMultipleMaster contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ToUnicode' &amp;&amp; elem != 'Widths' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseFont' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BaseFont' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6329,12 +6329,12 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="PDF_1_1" clause="FontTrueType" testNumber="1"/>
-			<description>FontTrueType shall not contain entries except Widths, Type, BaseFont, LastChar, Encoding, Subtype, FirstChar, FontDescriptor, Name</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ToUnicode' &amp;&amp; elem != 'Widths' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseFont' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontTrueType shall not contain entries except BaseFont, Encoding, FirstChar, FontDescriptor, LastChar, Name, Subtype, Type, Widths</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BaseFont' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontTrueType contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ToUnicode' &amp;&amp; elem != 'Widths' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseFont' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BaseFont' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6575,12 +6575,12 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="PDF_1_1" clause="FontType1" testNumber="1"/>
-			<description>FontType1 shall not contain entries except Widths, Type, BaseFont, LastChar, Encoding, Subtype, FirstChar, FontDescriptor, Name</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ToUnicode' &amp;&amp; elem != 'Widths' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseFont' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontType1 shall not contain entries except BaseFont, Encoding, FirstChar, FontDescriptor, LastChar, Name, Subtype, Type, Widths</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BaseFont' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ToUnicode' &amp;&amp; elem != 'Widths' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'BaseFont' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'Name' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BaseFont' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6831,24 +6831,24 @@
 		</rule>
 		<rule object="AFontType3">
 			<id specification="PDF_1_1" clause="FontType3" testNumber="1"/>
-			<description>FontType3 shall not contain entries except Widths, CharProcs, FontBBox, Encoding, Name, Type, FontMatrix, LastChar, Subtype, FirstChar, FontDescriptor</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Widths' &amp;&amp; elem != 'CharProcs' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'FontMatrix' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontType3 shall not contain entries except CharProcs, Encoding, FirstChar, FontBBox, FontDescriptor, FontMatrix, LastChar, Name, Subtype, Type, Widths</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CharProcs' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'FontMatrix' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontType3 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Widths' &amp;&amp; elem != 'CharProcs' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'FontMatrix' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CharProcs' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'FirstChar' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontDescriptor' &amp;&amp; elem != 'FontMatrix' &amp;&amp; elem != 'LastChar' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'ToUnicode' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Widths' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AFontType3">
 			<id specification="PDF_1_1" clause="FontType3" testNumber="22"/>
-			<description>FontType3 shall not contain entries ToUnicode, Resources in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode' || elem == 'Resources').length == 0</test>
+			<description>FontType3 shall not contain entries Resources, ToUnicode in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Resources' || elem == 'ToUnicode').length == 0</test>
 			<error>
 				<message>FontType3 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ToUnicode' || elem == 'Resources').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Resources' || elem == 'ToUnicode').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -7371,12 +7371,12 @@
 		</rule>
 		<rule object="ALabDict">
 			<id specification="PDF_1_1" clause="LabDict" testNumber="1"/>
-			<description>LabDict shall not contain entries except WhitePoint, BlackPoint, Range</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'WhitePoint' &amp;&amp; elem != 'BlackPoint' &amp;&amp; elem != 'Range' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>LabDict shall not contain entries except BlackPoint, Range, WhitePoint</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BlackPoint' &amp;&amp; elem != 'Range' &amp;&amp; elem != 'WhitePoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>LabDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'WhitePoint' &amp;&amp; elem != 'BlackPoint' &amp;&amp; elem != 'Range' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BlackPoint' &amp;&amp; elem != 'Range' &amp;&amp; elem != 'WhitePoint' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -7529,12 +7529,12 @@
 		</rule>
 		<rule object="AMicrosoftWindowsLaunchParam">
 			<id specification="PDF_1_1" clause="MicrosoftWindowsLaunchParam" testNumber="1"/>
-			<description>MicrosoftWindowsLaunchParam shall not contain entries except P, D, F, O</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'O' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>MicrosoftWindowsLaunchParam shall not contain entries except D, F, O, P</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>MicrosoftWindowsLaunchParam contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'P' &amp;&amp; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'O' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'D' &amp;&amp; elem != 'F' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -7679,12 +7679,12 @@
 		</rule>
 		<rule object="AOutline">
 			<id specification="PDF_1_1" clause="Outline" testNumber="1"/>
-			<description>Outline shall not contain entries except Last, Type, Count, First</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Last' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'First' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Outline shall not contain entries except Count, First, Last, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Count' &amp;&amp; elem != 'First' &amp;&amp; elem != 'Last' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Outline contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Last' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'First' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Count' &amp;&amp; elem != 'First' &amp;&amp; elem != 'Last' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -7781,24 +7781,24 @@
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="PDF_1_1" clause="OutlineItem" testNumber="1"/>
-			<description>OutlineItem shall not contain entries except A, Dest, Last, Parent, Prev, Next, Title, Count, First</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'Last' &amp;&amp; elem != 'SE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'Title' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'First' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>OutlineItem shall not contain entries except A, Count, Dest, First, Last, Next, Parent, Prev, Title</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'F' &amp;&amp; elem != 'First' &amp;&amp; elem != 'Last' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'SE' &amp;&amp; elem != 'Title' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>OutlineItem contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'Last' &amp;&amp; elem != 'SE' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'Title' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'First' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'C' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'F' &amp;&amp; elem != 'First' &amp;&amp; elem != 'Last' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Prev' &amp;&amp; elem != 'SE' &amp;&amp; elem != 'Title' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AOutlineItem">
 			<id specification="PDF_1_1" clause="OutlineItem" testNumber="22"/>
-			<description>OutlineItem shall not contain entries SE, C, F in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SE' || elem == 'C' || elem == 'F').length == 0</test>
+			<description>OutlineItem shall not contain entries C, F, SE in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'C' || elem == 'F' || elem == 'SE').length == 0</test>
 			<error>
 				<message>OutlineItem contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SE' || elem == 'C' || elem == 'F').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'C' || elem == 'F' || elem == 'SE').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8053,24 +8053,24 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="PDF_1_1" clause="PageObject" testNumber="1"/>
-			<description>PageObject shall not contain entries except B, Rotate, Parent, MediaBox, Trans, Dur, Annots, CropBox, Hid, Thumb, Type, Contents, Resources</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Group' &amp;&amp; elem != 'B' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'TemplateInstantiated' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'PZ' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'BleedBox' &amp;&amp; elem != 'SeparationInfo' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Trans' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Dur' &amp;&amp; elem != 'Annots' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'Hid' &amp;&amp; elem != 'BoxColorInfo' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'TrimBox' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'ArtBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DPart' &amp;&amp; elem != 'PresSteps' &amp;&amp; elem != 'UserUnit' &amp;&amp; elem != 'Tabs' &amp;&amp; elem != 'VP' &amp;&amp; elem != 'Resources' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>PageObject shall not contain entries except Annots, B, Contents, CropBox, Dur, Hid, MediaBox, Parent, Resources, Rotate, Thumb, Trans, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Annots' &amp;&amp; elem != 'ArtBox' &amp;&amp; elem != 'B' &amp;&amp; elem != 'BleedBox' &amp;&amp; elem != 'BoxColorInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'DPart' &amp;&amp; elem != 'Dur' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'Hid' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PZ' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PresSteps' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'SeparationInfo' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Tabs' &amp;&amp; elem != 'TemplateInstantiated' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'Trans' &amp;&amp; elem != 'TrimBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UserUnit' &amp;&amp; elem != 'VP' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>PageObject contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Group' &amp;&amp; elem != 'B' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'TemplateInstantiated' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'PZ' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'BleedBox' &amp;&amp; elem != 'SeparationInfo' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Trans' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'Dur' &amp;&amp; elem != 'Annots' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'Hid' &amp;&amp; elem != 'BoxColorInfo' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'TrimBox' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'ArtBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DPart' &amp;&amp; elem != 'PresSteps' &amp;&amp; elem != 'UserUnit' &amp;&amp; elem != 'Tabs' &amp;&amp; elem != 'VP' &amp;&amp; elem != 'Resources' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Annots' &amp;&amp; elem != 'ArtBox' &amp;&amp; elem != 'B' &amp;&amp; elem != 'BleedBox' &amp;&amp; elem != 'BoxColorInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'DPart' &amp;&amp; elem != 'Dur' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'Hid' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PZ' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PresSteps' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'SeparationInfo' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Tabs' &amp;&amp; elem != 'TemplateInstantiated' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'Trans' &amp;&amp; elem != 'TrimBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UserUnit' &amp;&amp; elem != 'VP' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="APageObject">
 			<id specification="PDF_1_1" clause="PageObject" testNumber="22"/>
-			<description>PageObject shall not contain entries Group, StructParents, TemplateInstantiated, Metadata, PZ, LastModified, BleedBox, SeparationInfo, ID, AA, BoxColorInfo, AF, TrimBox, OutputIntents, PieceInfo, ArtBox, DPart, PresSteps, UserUnit, Tabs, VP in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Group' || elem == 'StructParents' || elem == 'TemplateInstantiated' || elem == 'Metadata' || elem == 'PZ' || elem == 'LastModified' || elem == 'BleedBox' || elem == 'SeparationInfo' || elem == 'ID' || elem == 'AA' || elem == 'BoxColorInfo' || elem == 'AF' || elem == 'TrimBox' || elem == 'OutputIntents' || elem == 'PieceInfo' || elem == 'ArtBox' || elem == 'DPart' || elem == 'PresSteps' || elem == 'UserUnit' || elem == 'Tabs' || elem == 'VP').length == 0</test>
+			<description>PageObject shall not contain entries AA, AF, ArtBox, BleedBox, BoxColorInfo, DPart, Group, ID, LastModified, Metadata, OutputIntents, PZ, PieceInfo, PresSteps, SeparationInfo, StructParents, Tabs, TemplateInstantiated, TrimBox, UserUnit, VP in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AA' || elem == 'AF' || elem == 'ArtBox' || elem == 'BleedBox' || elem == 'BoxColorInfo' || elem == 'DPart' || elem == 'Group' || elem == 'ID' || elem == 'LastModified' || elem == 'Metadata' || elem == 'OutputIntents' || elem == 'PZ' || elem == 'PieceInfo' || elem == 'PresSteps' || elem == 'SeparationInfo' || elem == 'StructParents' || elem == 'Tabs' || elem == 'TemplateInstantiated' || elem == 'TrimBox' || elem == 'UserUnit' || elem == 'VP').length == 0</test>
 			<error>
 				<message>PageObject contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Group' || elem == 'StructParents' || elem == 'TemplateInstantiated' || elem == 'Metadata' || elem == 'PZ' || elem == 'LastModified' || elem == 'BleedBox' || elem == 'SeparationInfo' || elem == 'ID' || elem == 'AA' || elem == 'BoxColorInfo' || elem == 'AF' || elem == 'TrimBox' || elem == 'OutputIntents' || elem == 'PieceInfo' || elem == 'ArtBox' || elem == 'DPart' || elem == 'PresSteps' || elem == 'UserUnit' || elem == 'Tabs' || elem == 'VP').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AA' || elem == 'AF' || elem == 'ArtBox' || elem == 'BleedBox' || elem == 'BoxColorInfo' || elem == 'DPart' || elem == 'Group' || elem == 'ID' || elem == 'LastModified' || elem == 'Metadata' || elem == 'OutputIntents' || elem == 'PZ' || elem == 'PieceInfo' || elem == 'PresSteps' || elem == 'SeparationInfo' || elem == 'StructParents' || elem == 'Tabs' || elem == 'TemplateInstantiated' || elem == 'TrimBox' || elem == 'UserUnit' || elem == 'VP').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8355,12 +8355,12 @@
 		</rule>
 		<rule object="APageTreeNode">
 			<id specification="PDF_1_1" clause="PageTreeNode" testNumber="1"/>
-			<description>PageTreeNode shall not contain entries except CropBox, Type, Rotate, Parent, Count, Resources, Kids, MediaBox</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CropBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>PageTreeNode shall not contain entries except Count, CropBox, Kids, MediaBox, Parent, Resources, Rotate, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Count' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>PageTreeNode contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CropBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Count' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8565,12 +8565,12 @@
 		</rule>
 		<rule object="APageTreeNodeRoot">
 			<id specification="PDF_1_1" clause="PageTreeNodeRoot" testNumber="1"/>
-			<description>PageTreeNodeRoot shall not contain entries except CropBox, Type, Rotate, Count, Resources, Kids, MediaBox</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CropBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>PageTreeNodeRoot shall not contain entries except Count, CropBox, Kids, MediaBox, Resources, Rotate, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Count' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>PageTreeNodeRoot contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CropBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Count' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Count' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8723,24 +8723,24 @@
 		</rule>
 		<rule object="AResource">
 			<id specification="PDF_1_1" clause="Resource" testNumber="1"/>
-			<description>Resource shall not contain entries except ColorSpace, ProcSet, Font, XObject</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Pattern' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Resource shall not contain entries except ColorSpace, Font, ProcSet, XObject</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'Pattern' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Resource contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Pattern' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'Pattern' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AResource">
 			<id specification="PDF_1_1" clause="Resource" testNumber="22"/>
-			<description>Resource shall not contain entries Pattern, Shading, ExtGState, Properties in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Pattern' || elem == 'Shading' || elem == 'ExtGState' || elem == 'Properties').length == 0</test>
+			<description>Resource shall not contain entries ExtGState, Pattern, Properties, Shading in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ExtGState' || elem == 'Pattern' || elem == 'Properties' || elem == 'Shading').length == 0</test>
 			<error>
 				<message>Resource contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Pattern' || elem == 'Shading' || elem == 'ExtGState' || elem == 'Properties').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ExtGState' || elem == 'Pattern' || elem == 'Properties' || elem == 'Shading').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8883,12 +8883,12 @@
 		</rule>
 		<rule object="AThread">
 			<id specification="PDF_1_1" clause="Thread" testNumber="1"/>
-			<description>Thread shall not contain entries except Type, F, I</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'I' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Thread shall not contain entries except F, I, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'F' &amp;&amp; elem != 'I' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Thread contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Type' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'I' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'F' &amp;&amp; elem != 'I' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -8973,24 +8973,24 @@
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_1" clause="Thumbnail" testNumber="1"/>
-			<description>Thumbnail shall not contain entries except ColorSpace, Decode, BitsPerComponent, Type, Height, Subtype, Width</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Thumbnail shall not contain entries except BitsPerComponent, ColorSpace, Decode, Height, Subtype, Type, Width</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BitsPerComponent' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Thumbnail contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BitsPerComponent' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_1" clause="Thumbnail" testNumber="22"/>
-			<description>Thumbnail shall not contain entries F, DL, DecodeParms, FDecodeParms, Filter, Length, FFilter in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'F' || elem == 'DL' || elem == 'DecodeParms' || elem == 'FDecodeParms' || elem == 'Filter' || elem == 'Length' || elem == 'FFilter').length == 0</test>
+			<description>Thumbnail shall not contain entries DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'DL' || elem == 'DecodeParms' || elem == 'F' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'Filter' || elem == 'Length').length == 0</test>
 			<error>
 				<message>Thumbnail contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'F' || elem == 'DL' || elem == 'DecodeParms' || elem == 'FDecodeParms' || elem == 'Filter' || elem == 'Length' || elem == 'FFilter').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'DL' || elem == 'DecodeParms' || elem == 'F' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'Filter' || elem == 'Length').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -9225,24 +9225,24 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="PDF_1_1" clause="Transition" testNumber="1"/>
-			<description>Transition shall not contain entries except Type, S, D, Di, Dm, M</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'SS' &amp;&amp; elem != 'B' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'Di' &amp;&amp; elem != 'Dm' &amp;&amp; elem != 'M' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Transition shall not contain entries except D, Di, Dm, M, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'B' &amp;&amp; elem != 'D' &amp;&amp; elem != 'Di' &amp;&amp; elem != 'Dm' &amp;&amp; elem != 'M' &amp;&amp; elem != 'S' &amp;&amp; elem != 'SS' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Transition contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'SS' &amp;&amp; elem != 'B' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'S' &amp;&amp; elem != 'D' &amp;&amp; elem != 'Di' &amp;&amp; elem != 'Dm' &amp;&amp; elem != 'M' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'B' &amp;&amp; elem != 'D' &amp;&amp; elem != 'Di' &amp;&amp; elem != 'Dm' &amp;&amp; elem != 'M' &amp;&amp; elem != 'S' &amp;&amp; elem != 'SS' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="ATransition">
 			<id specification="PDF_1_1" clause="Transition" testNumber="22"/>
-			<description>Transition shall not contain entries SS, B in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'SS' || elem == 'B').length == 0</test>
+			<description>Transition shall not contain entries B, SS in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'B' || elem == 'SS').length == 0</test>
 			<error>
 				<message>Transition contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'SS' || elem == 'B').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'B' || elem == 'SS').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -9547,12 +9547,12 @@
 		</rule>
 		<rule object="AXObjectFormPS">
 			<id specification="PDF_1_1" clause="XObjectFormPS" testNumber="1"/>
-			<description>XObjectFormPS shall not contain entries except Type, Filter, Length, F, DecodeParms, Level1, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>XObjectFormPS shall not contain entries except DecodeParms, F, Filter, Length, Level1, Subtype, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectFormPS contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -9741,12 +9741,12 @@
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="PDF_1_1" clause="XObjectFormPSpassthrough" testNumber="1"/>
-			<description>XObjectFormPSpassthrough shall not contain entries except PS, F, FormType, Subtype2, DecodeParms, Type, Matrix, Filter, Length, BBox, Level1, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'PS' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'Subtype2' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>XObjectFormPSpassthrough shall not contain entries except BBox, DecodeParms, F, Filter, FormType, Length, Level1, Matrix, PS, Subtype, Subtype2, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BBox' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'PS' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Subtype2' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectFormPSpassthrough contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'PS' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'Subtype2' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BBox' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Level1' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'PS' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Subtype2' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -10079,24 +10079,24 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="PDF_1_1" clause="XObjectFormType1" testNumber="1"/>
-			<description>XObjectFormType1 shall not contain entries except Name, Matrix, FormType, DecodeParms, XUID, Type, Filter, Length, BBox, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'XUID' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>XObjectFormType1 shall not contain entries except BBox, DecodeParms, Filter, FormType, Length, Matrix, Name, Subtype, Type, XUID</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XUID' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectFormType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'XUID' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XUID' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="PDF_1_1" clause="XObjectFormType1" testNumber="22"/>
-			<description>XObjectFormType1 shall not contain entries GTS_Encapsulated, Group, StructParents, F, DL, Metadata, OPI, FDecodeParms, LastModified, OC, StructParent, GTS_XID, Measure, GTS_Scope, AF, PtData, PieceInfo, Ref, GTS_Env, Resources, FFilter in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Encapsulated' || elem == 'Group' || elem == 'StructParents' || elem == 'F' || elem == 'DL' || elem == 'Metadata' || elem == 'OPI' || elem == 'FDecodeParms' || elem == 'LastModified' || elem == 'OC' || elem == 'StructParent' || elem == 'GTS_XID' || elem == 'Measure' || elem == 'GTS_Scope' || elem == 'AF' || elem == 'PtData' || elem == 'PieceInfo' || elem == 'Ref' || elem == 'GTS_Env' || elem == 'Resources' || elem == 'FFilter').length == 0</test>
+			<description>XObjectFormType1 shall not contain entries AF, DL, F, FDecodeParms, FFilter, GTS_Encapsulated, GTS_Env, GTS_Scope, GTS_XID, Group, LastModified, Measure, Metadata, OC, OPI, PieceInfo, PtData, Ref, Resources, StructParent, StructParents in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'DL' || elem == 'F' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'GTS_Encapsulated' || elem == 'GTS_Env' || elem == 'GTS_Scope' || elem == 'GTS_XID' || elem == 'Group' || elem == 'LastModified' || elem == 'Measure' || elem == 'Metadata' || elem == 'OC' || elem == 'OPI' || elem == 'PieceInfo' || elem == 'PtData' || elem == 'Ref' || elem == 'Resources' || elem == 'StructParent' || elem == 'StructParents').length == 0</test>
 			<error>
 				<message>XObjectFormType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Encapsulated' || elem == 'Group' || elem == 'StructParents' || elem == 'F' || elem == 'DL' || elem == 'Metadata' || elem == 'OPI' || elem == 'FDecodeParms' || elem == 'LastModified' || elem == 'OC' || elem == 'StructParent' || elem == 'GTS_XID' || elem == 'Measure' || elem == 'GTS_Scope' || elem == 'AF' || elem == 'PtData' || elem == 'PieceInfo' || elem == 'Ref' || elem == 'GTS_Env' || elem == 'Resources' || elem == 'FFilter').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'DL' || elem == 'F' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'GTS_Encapsulated' || elem == 'GTS_Env' || elem == 'GTS_Scope' || elem == 'GTS_XID' || elem == 'Group' || elem == 'LastModified' || elem == 'Measure' || elem == 'Metadata' || elem == 'OC' || elem == 'OPI' || elem == 'PieceInfo' || elem == 'PtData' || elem == 'Ref' || elem == 'Resources' || elem == 'StructParent' || elem == 'StructParents').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -10351,24 +10351,24 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_1" clause="XObjectImage" testNumber="1"/>
-			<description>XObjectImage shall not contain entries except ColorSpace, F, Decode, BitsPerComponent, Name, ImageMask, Height, Width, DecodeParms, Intent, Type, Interpolate, Filter, Length, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'SMaskInData' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Mask' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'SMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Alternates' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>XObjectImage shall not contain entries except BitsPerComponent, ColorSpace, Decode, DecodeParms, F, Filter, Height, ImageMask, Intent, Interpolate, Length, Name, Subtype, Type, Width</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'Alternates' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Mask' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'SMask' &amp;&amp; elem != 'SMaskInData' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectImage contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'F' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'SMaskInData' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Mask' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'SMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Alternates' &amp;&amp; elem != 'FFilter' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'Alternates' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Mask' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'SMask' &amp;&amp; elem != 'SMaskInData' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_1" clause="XObjectImage" testNumber="22"/>
-			<description>XObjectImage shall not contain entries GTS_Encapsulated, DL, Metadata, OPI, FDecodeParms, OC, StructParent, GTS_XID, Measure, ID, SMaskInData, GTS_Scope, AF, Mask, PtData, SMask, GTS_Env, Alternates, FFilter in PDF 1.1. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Encapsulated' || elem == 'DL' || elem == 'Metadata' || elem == 'OPI' || elem == 'FDecodeParms' || elem == 'OC' || elem == 'StructParent' || elem == 'GTS_XID' || elem == 'Measure' || elem == 'ID' || elem == 'SMaskInData' || elem == 'GTS_Scope' || elem == 'AF' || elem == 'Mask' || elem == 'PtData' || elem == 'SMask' || elem == 'GTS_Env' || elem == 'Alternates' || elem == 'FFilter').length == 0</test>
+			<description>XObjectImage shall not contain entries AF, Alternates, DL, FDecodeParms, FFilter, GTS_Encapsulated, GTS_Env, GTS_Scope, GTS_XID, ID, Mask, Measure, Metadata, OC, OPI, PtData, SMask, SMaskInData, StructParent in PDF 1.1. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Alternates' || elem == 'DL' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'GTS_Encapsulated' || elem == 'GTS_Env' || elem == 'GTS_Scope' || elem == 'GTS_XID' || elem == 'ID' || elem == 'Mask' || elem == 'Measure' || elem == 'Metadata' || elem == 'OC' || elem == 'OPI' || elem == 'PtData' || elem == 'SMask' || elem == 'SMaskInData' || elem == 'StructParent').length == 0</test>
 			<error>
 				<message>XObjectImage contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'GTS_Encapsulated' || elem == 'DL' || elem == 'Metadata' || elem == 'OPI' || elem == 'FDecodeParms' || elem == 'OC' || elem == 'StructParent' || elem == 'GTS_XID' || elem == 'Measure' || elem == 'ID' || elem == 'SMaskInData' || elem == 'GTS_Scope' || elem == 'AF' || elem == 'Mask' || elem == 'PtData' || elem == 'SMask' || elem == 'GTS_Env' || elem == 'Alternates' || elem == 'FFilter').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Alternates' || elem == 'DL' || elem == 'FDecodeParms' || elem == 'FFilter' || elem == 'GTS_Encapsulated' || elem == 'GTS_Env' || elem == 'GTS_Scope' || elem == 'GTS_XID' || elem == 'ID' || elem == 'Mask' || elem == 'Measure' || elem == 'Metadata' || elem == 'OC' || elem == 'OPI' || elem == 'PtData' || elem == 'SMask' || elem == 'SMaskInData' || elem == 'StructParent').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
