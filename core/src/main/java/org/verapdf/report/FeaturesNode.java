@@ -80,7 +80,6 @@ public class FeaturesNode {
 	static FeaturesNode fromValues(FeatureExtractionResult collection,
 			FeatureObjectType... types) {
 		List<Object> qChildren = new ArrayList<>();
-		Map<QName, Object> attr = new HashMap<>();
 		StringBuilder builder = new StringBuilder();
 		for (FeatureObjectType type : types) {
 			List<FeatureTreeNode> children = collection.getFeatureTreesForType(type);
@@ -104,6 +103,7 @@ public class FeaturesNode {
 				}
 			}
 		}
+		Map<QName, Object> attr = new HashMap<>();
 		if (!builder.toString().isEmpty()) {
 			attr.put(new QName(ErrorsHelper.ERRORID), builder.toString());
 		}

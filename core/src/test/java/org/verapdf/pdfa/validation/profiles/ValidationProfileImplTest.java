@@ -113,8 +113,8 @@ public class ValidationProfileImplTest {
 	@Test
 	public final void testToXmlStream() throws JAXBException, IOException {
 		Set<Rule> rules = new HashSet<>();
-		Set<Variable> vars = new HashSet<>();
 		rules.add(Profiles.defaultRule());
+		Set<Variable> vars = new HashSet<>();
 		vars.add(Profiles.defaultVariable());
 		ValidationProfile profile = Profiles.profileFromValues(PDFAFlavour.NO_FLAVOUR,
 				ProfileDetailsImpl.defaultInstance(), "hash", rules, vars);

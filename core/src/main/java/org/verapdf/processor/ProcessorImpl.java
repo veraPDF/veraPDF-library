@@ -269,13 +269,13 @@ final class ProcessorImpl implements ItemProcessor {
 	}
 
 	private void fixMetadata(final PDFAParser parser, final String fileName) {
-		TaskType type = TaskType.FIX_METADATA;
 		Components.Timer timer = Components.Timer.start();
 		File orig = new File(fileName);
 		if (!orig.isFile()) {
 			// FIXME: This needs to handle the unnamed input stream case.
 		}
 		File fxfl;
+		TaskType type = TaskType.FIX_METADATA;
 		try {
 			fxfl = this.mdFixMapper.mapFile(orig);
 		} catch (VeraPDFException excep) {
