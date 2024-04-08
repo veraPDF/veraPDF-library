@@ -116,12 +116,12 @@ public final class AuditDurationImpl implements AuditDuration {
 	}
 
 	public static String getStringDuration(final long difference) {
-		long hours = difference / (minInHour * secInMin * msInSec);
-		long minutes = difference / (secInMin * msInSec) % minInHour;
-		long seconds = difference / msInSec % secInMin;
-		long millis = difference % msInSec;
 
 		try (Formatter formatter = new Formatter()) {
+			long hours = difference / (minInHour * secInMin * msInSec);
+			long minutes = difference / (secInMin * msInSec) % minInHour;
+			long seconds = difference / msInSec % secInMin;
+			long millis = difference % msInSec;
 			formatter.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, //$NON-NLS-1$
 					millis);
 			return formatter.toString();

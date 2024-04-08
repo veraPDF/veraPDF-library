@@ -51,7 +51,7 @@ public class BaseValidator implements PDFAValidator {
 	public static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
 	private static final int MAX_CHECKS_NUMBER = 10_000;
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
-	private static final String componentName = "veraPDF PDF/A Validator";
+	private static final String componentName = "veraPDF Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
 	private final ValidationProfile profile;
 	private ScriptableObject scope;

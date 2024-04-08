@@ -221,8 +221,7 @@ public final class CreateNodeHelper {
 		if (metadata == null) {
 			return null;
 		}
-		FeatureTreeNode node;
-		node = parent.addMetadataChild(nodeName);
+		FeatureTreeNode node = parent.addMetadataChild(nodeName);
 		try {
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			byte[] buffer = new byte[1024];

@@ -177,10 +177,10 @@ public final class VeraAppConfigImpl implements VeraAppConfig {
 	}
 
 	static String toXml(final VeraAppConfig toConvert, Boolean prettyXml) throws JAXBException, IOException {
-		String retVal = ""; //$NON-NLS-1$
 		try (StringWriter writer = new StringWriter()) {
 			toXml(toConvert, writer, prettyXml);
-			retVal = writer.toString();
+			//$NON-NLS-1$
+			String retVal = writer.toString();
 			return retVal;
 		}
 	}
