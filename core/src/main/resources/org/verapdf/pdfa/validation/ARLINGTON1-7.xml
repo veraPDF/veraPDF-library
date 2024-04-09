@@ -8631,7 +8631,7 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_7" clause="AnnotCaret" testNumber="1"/>
-			<description>AnnotCaret shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, RC, RD, RT, Rect, StructParent, Subj, Subtype, Sy, T, Type</description>
+			<description>AnnotCaret shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, RC, RD, RT, Rect, StructParent, Subj, Subtype, Sy, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Sy' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotCaret contains entry(ies) %1</message>
@@ -8643,13 +8643,35 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="ISO_32000_1_7" clause="AnnotCaret" testNumber="22"/>
-			<description>AnnotCaret shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotCaret shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotCaret contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCaret">
+			<id specification="ISO_32000_1_7" clause="AnnotCaret-AF" testNumber="8"/>
+			<description>Entry AF in AnnotCaret shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotCaret has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCaret">
+			<id specification="ISO_32000_1_7" clause="AnnotCaret-AF" testNumber="23"/>
+			<description>Entry AF in AnnotCaret can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotCaret is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -9145,7 +9167,7 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_7" clause="AnnotCircle" testNumber="1"/>
-			<description>AnnotCircle shall not contain entries except AP, AS, BE, BS, Border, C, CA, Contents, CreationDate, ExData, F, IC, IRT, IT, M, NM, OC, P, Popup, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotCircle shall not contain entries except AF, AP, AS, BE, BS, Border, C, CA, Contents, CreationDate, ExData, F, IC, IRT, IT, M, NM, OC, P, Popup, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotCircle contains entry(ies) %1</message>
@@ -9157,13 +9179,35 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="ISO_32000_1_7" clause="AnnotCircle" testNumber="22"/>
-			<description>AnnotCircle shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotCircle shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotCircle contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCircle">
+			<id specification="ISO_32000_1_7" clause="AnnotCircle-AF" testNumber="8"/>
+			<description>Entry AF in AnnotCircle shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotCircle has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotCircle">
+			<id specification="ISO_32000_1_7" clause="AnnotCircle-AF" testNumber="23"/>
+			<description>Entry AF in AnnotCircle can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotCircle is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -9671,7 +9715,7 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_7" clause="AnnotFileAttachment" testNumber="1"/>
-			<description>AnnotFileAttachment shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, FS, IRT, IT, M, NM, Name, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotFileAttachment shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, FS, IRT, IT, M, NM, Name, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotFileAttachment contains entry(ies) %1</message>
@@ -9683,13 +9727,35 @@
 		</rule>
 		<rule object="AAnnotFileAttachment">
 			<id specification="ISO_32000_1_7" clause="AnnotFileAttachment" testNumber="22"/>
-			<description>AnnotFileAttachment shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotFileAttachment shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotFileAttachment contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFileAttachment">
+			<id specification="ISO_32000_1_7" clause="AnnotFileAttachment-AF" testNumber="8"/>
+			<description>Entry AF in AnnotFileAttachment shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotFileAttachment has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFileAttachment">
+			<id specification="ISO_32000_1_7" clause="AnnotFileAttachment-AF" testNumber="23"/>
+			<description>Entry AF in AnnotFileAttachment can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotFileAttachment is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -10173,7 +10239,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_7" clause="AnnotFreeText" testNumber="1"/>
-			<description>AnnotFreeText shall not contain entries except AP, AS, BE, BS, Border, C, CA, CL, Contents, CreationDate, DA, DS, ExData, F, IRT, IT, LE, M, NM, OC, P, Popup, Q, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotFreeText shall not contain entries except AF, AP, AS, BE, BS, Border, C, CA, CL, Contents, CreationDate, DA, DS, ExData, F, IRT, IT, LE, M, NM, OC, P, Popup, Q, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'CL' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
@@ -10185,13 +10251,35 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="ISO_32000_1_7" clause="AnnotFreeText" testNumber="22"/>
-			<description>AnnotFreeText shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotFreeText shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFreeText">
+			<id specification="ISO_32000_1_7" clause="AnnotFreeText-AF" testNumber="8"/>
+			<description>Entry AF in AnnotFreeText shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotFreeText has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotFreeText">
+			<id specification="ISO_32000_1_7" clause="AnnotFreeText-AF" testNumber="23"/>
+			<description>Entry AF in AnnotFreeText can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotFreeText is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -10793,7 +10881,7 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_7" clause="AnnotHighlight" testNumber="1"/>
-			<description>AnnotHighlight shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotHighlight shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotHighlight contains entry(ies) %1</message>
@@ -10805,13 +10893,35 @@
 		</rule>
 		<rule object="AAnnotHighlight">
 			<id specification="ISO_32000_1_7" clause="AnnotHighlight" testNumber="22"/>
-			<description>AnnotHighlight shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotHighlight shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotHighlight contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotHighlight">
+			<id specification="ISO_32000_1_7" clause="AnnotHighlight-AF" testNumber="8"/>
+			<description>Entry AF in AnnotHighlight shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotHighlight has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotHighlight">
+			<id specification="ISO_32000_1_7" clause="AnnotHighlight-AF" testNumber="23"/>
+			<description>Entry AF in AnnotHighlight can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotHighlight is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -11283,7 +11393,7 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_7" clause="AnnotInk" testNumber="1"/>
-			<description>AnnotInk shall not contain entries except AP, AS, BS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, InkList, M, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotInk shall not contain entries except AF, AP, AS, BS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, InkList, M, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'InkList' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotInk contains entry(ies) %1</message>
@@ -11295,13 +11405,35 @@
 		</rule>
 		<rule object="AAnnotInk">
 			<id specification="ISO_32000_1_7" clause="AnnotInk" testNumber="22"/>
-			<description>AnnotInk shall not contain entries AF, BM, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
+			<description>AnnotInk shall not contain entries BM, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotInk contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotInk">
+			<id specification="ISO_32000_1_7" clause="AnnotInk-AF" testNumber="8"/>
+			<description>Entry AF in AnnotInk shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotInk has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotInk">
+			<id specification="ISO_32000_1_7" clause="AnnotInk-AF" testNumber="23"/>
+			<description>Entry AF in AnnotInk can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotInk is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -11785,7 +11917,7 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_7" clause="AnnotLine" testNumber="1"/>
-			<description>AnnotLine shall not contain entries except AP, AS, BS, Border, C, CA, CO, CP, Cap, Contents, CreationDate, ExData, F, IC, IRT, IT, L, LE, LL, LLE, LLO, M, Measure, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotLine shall not contain entries except AF, AP, AS, BS, Border, C, CA, CO, CP, Cap, Contents, CreationDate, ExData, F, IC, IRT, IT, L, LE, LL, LLE, LLO, M, Measure, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'CO' &amp;&amp; elem != 'CP' &amp;&amp; elem != 'Cap' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'L' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'LL' &amp;&amp; elem != 'LLE' &amp;&amp; elem != 'LLO' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotLine contains entry(ies) %1</message>
@@ -11797,13 +11929,35 @@
 		</rule>
 		<rule object="AAnnotLine">
 			<id specification="ISO_32000_1_7" clause="AnnotLine" testNumber="22"/>
-			<description>AnnotLine shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotLine shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotLine contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLine">
+			<id specification="ISO_32000_1_7" clause="AnnotLine-AF" testNumber="8"/>
+			<description>Entry AF in AnnotLine shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotLine has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLine">
+			<id specification="ISO_32000_1_7" clause="AnnotLine-AF" testNumber="23"/>
+			<description>Entry AF in AnnotLine can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotLine is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -12449,7 +12603,7 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_7" clause="AnnotLink" testNumber="1"/>
-			<description>AnnotLink shall not contain entries except A, AP, AS, BS, Border, C, Contents, Dest, F, H, M, NM, OC, P, PA, QuadPoints, Rect, StructParent, Subtype, Type</description>
+			<description>AnnotLink shall not contain entries except A, AF, AP, AS, BS, Border, C, Contents, Dest, F, H, M, NM, OC, P, PA, QuadPoints, Rect, StructParent, Subtype, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Dest' &amp;&amp; elem != 'F' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PA' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
@@ -12461,12 +12615,12 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="ISO_32000_1_7" clause="AnnotLink" testNumber="22"/>
-			<description>AnnotLink shall not contain entries AF, BM, CA, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
+			<description>AnnotLink shall not contain entries BM, CA, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotLink contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -12490,6 +12644,28 @@
 				<arguments>
 					<argument>AType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLink">
+			<id specification="ISO_32000_1_7" clause="AnnotLink-AF" testNumber="8"/>
+			<description>Entry AF in AnnotLink shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotLink has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotLink">
+			<id specification="ISO_32000_1_7" clause="AnnotLink-AF" testNumber="23"/>
+			<description>Entry AF in AnnotLink can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotLink is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -13151,7 +13327,7 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_7" clause="AnnotPolyLine" testNumber="1"/>
-			<description>AnnotPolyLine shall not contain entries except AP, AS, BE, BS, Border, C, CA, Contents, CreationDate, ExData, F, IC, IRT, IT, LE, M, Measure, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type, Vertices</description>
+			<description>AnnotPolyLine shall not contain entries except AF, AP, AS, BE, BS, Border, C, CA, Contents, CreationDate, ExData, F, IC, IRT, IT, LE, M, Measure, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type, Vertices</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Vertices' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotPolyLine contains entry(ies) %1</message>
@@ -13163,13 +13339,35 @@
 		</rule>
 		<rule object="AAnnotPolyLine">
 			<id specification="ISO_32000_1_7" clause="AnnotPolyLine" testNumber="22"/>
-			<description>AnnotPolyLine shall not contain entries AF, BM, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
+			<description>AnnotPolyLine shall not contain entries BM, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotPolyLine contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolyLine">
+			<id specification="ISO_32000_1_7" clause="AnnotPolyLine-AF" testNumber="8"/>
+			<description>Entry AF in AnnotPolyLine shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotPolyLine has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolyLine">
+			<id specification="ISO_32000_1_7" clause="AnnotPolyLine-AF" testNumber="23"/>
+			<description>Entry AF in AnnotPolyLine can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotPolyLine is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -13713,7 +13911,7 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_7" clause="AnnotPolygon" testNumber="1"/>
-			<description>AnnotPolygon shall not contain entries except AP, AS, BE, BS, Border, C, CA, Contents, CreationDate, ExData, F, IC, IRT, IT, LE, M, Measure, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type, Vertices</description>
+			<description>AnnotPolygon shall not contain entries except AF, AP, AS, BE, BS, Border, C, CA, Contents, CreationDate, ExData, F, IC, IRT, IT, LE, M, Measure, NM, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type, Vertices</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Path' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Vertices' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotPolygon contains entry(ies) %1</message>
@@ -13725,13 +13923,35 @@
 		</rule>
 		<rule object="AAnnotPolygon">
 			<id specification="ISO_32000_1_7" clause="AnnotPolygon" testNumber="22"/>
-			<description>AnnotPolygon shall not contain entries AF, BM, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
+			<description>AnnotPolygon shall not contain entries BM, Lang, Path, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotPolygon contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'Path' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolygon">
+			<id specification="ISO_32000_1_7" clause="AnnotPolygon-AF" testNumber="8"/>
+			<description>Entry AF in AnnotPolygon shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotPolygon has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPolygon">
+			<id specification="ISO_32000_1_7" clause="AnnotPolygon-AF" testNumber="23"/>
+			<description>Entry AF in AnnotPolygon can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotPolygon is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -14275,7 +14495,7 @@
 		</rule>
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_7" clause="AnnotPopup" testNumber="1"/>
-			<description>AnnotPopup shall not contain entries except AP, AS, Border, C, Contents, F, M, NM, OC, Open, P, Parent, Rect, StructParent, Subtype, Type</description>
+			<description>AnnotPopup shall not contain entries except AF, AP, AS, Border, C, Contents, F, M, NM, OC, Open, P, Parent, Rect, StructParent, Subtype, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Open' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotPopup contains entry(ies) %1</message>
@@ -14287,13 +14507,35 @@
 		</rule>
 		<rule object="AAnnotPopup">
 			<id specification="ISO_32000_1_7" clause="AnnotPopup" testNumber="22"/>
-			<description>AnnotPopup shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotPopup shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotPopup contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPopup">
+			<id specification="ISO_32000_1_7" clause="AnnotPopup-AF" testNumber="8"/>
+			<description>Entry AF in AnnotPopup shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotPopup has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPopup">
+			<id specification="ISO_32000_1_7" clause="AnnotPopup-AF" testNumber="23"/>
+			<description>Entry AF in AnnotPopup can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotPopup is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -14585,7 +14827,7 @@
 		</rule>
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_7" clause="AnnotPrinterMark" testNumber="1"/>
-			<description>AnnotPrinterMark shall not contain entries except AP, AS, Border, C, Contents, F, M, MN, NM, OC, P, Rect, StructParent, Subtype, Type</description>
+			<description>AnnotPrinterMark shall not contain entries except AF, AP, AS, Border, C, Contents, F, M, MN, NM, OC, P, Rect, StructParent, Subtype, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MN' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotPrinterMark contains entry(ies) %1</message>
@@ -14597,13 +14839,35 @@
 		</rule>
 		<rule object="AAnnotPrinterMark">
 			<id specification="ISO_32000_1_7" clause="AnnotPrinterMark" testNumber="22"/>
-			<description>AnnotPrinterMark shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotPrinterMark shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotPrinterMark contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPrinterMark">
+			<id specification="ISO_32000_1_7" clause="AnnotPrinterMark-AF" testNumber="8"/>
+			<description>Entry AF in AnnotPrinterMark shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotPrinterMark has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotPrinterMark">
+			<id specification="ISO_32000_1_7" clause="AnnotPrinterMark-AF" testNumber="23"/>
+			<description>Entry AF in AnnotPrinterMark can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotPrinterMark is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -15591,7 +15855,7 @@
 		</rule>
 		<rule object="AAnnotRedact">
 			<id specification="ISO_32000_1_7" clause="AnnotRedact" testNumber="1"/>
-			<description>AnnotRedact shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, DA, ExData, F, IC, IRT, IT, M, NM, OC, OverlayText, P, Popup, Q, QuadPoints, RC, RO, RT, Rect, Repeat, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotRedact shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, DA, ExData, F, IC, IRT, IT, M, NM, OC, OverlayText, P, Popup, Q, QuadPoints, RC, RO, RT, Rect, Repeat, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OverlayText' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RO' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'Repeat' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotRedact contains entry(ies) %1</message>
@@ -15603,13 +15867,35 @@
 		</rule>
 		<rule object="AAnnotRedact">
 			<id specification="ISO_32000_1_7" clause="AnnotRedact" testNumber="22"/>
-			<description>AnnotRedact shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotRedact shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotRedact contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotRedact">
+			<id specification="ISO_32000_1_7" clause="AnnotRedact-AF" testNumber="8"/>
+			<description>Entry AF in AnnotRedact shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotRedact has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotRedact">
+			<id specification="ISO_32000_1_7" clause="AnnotRedact-AF" testNumber="23"/>
+			<description>Entry AF in AnnotRedact can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotRedact is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -17481,7 +17767,7 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_7" clause="AnnotSquare" testNumber="1"/>
-			<description>AnnotSquare shall not contain entries except AP, AS, BE, BS, Border, C, Contents, CreationDate, ExData, F, IC, IRT, IT, M, NM, OC, P, Popup, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotSquare shall not contain entries except AF, AP, AS, BE, BS, Border, C, Contents, CreationDate, ExData, F, IC, IRT, IT, M, NM, OC, P, Popup, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IC' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotSquare contains entry(ies) %1</message>
@@ -17493,13 +17779,35 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="ISO_32000_1_7" clause="AnnotSquare" testNumber="22"/>
-			<description>AnnotSquare shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotSquare shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotSquare contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquare">
+			<id specification="ISO_32000_1_7" clause="AnnotSquare-AF" testNumber="8"/>
+			<description>Entry AF in AnnotSquare shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotSquare has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquare">
+			<id specification="ISO_32000_1_7" clause="AnnotSquare-AF" testNumber="23"/>
+			<description>Entry AF in AnnotSquare can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotSquare is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -17985,7 +18293,7 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_7" clause="AnnotSquiggly" testNumber="1"/>
-			<description>AnnotSquiggly shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotSquiggly shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotSquiggly contains entry(ies) %1</message>
@@ -17997,13 +18305,35 @@
 		</rule>
 		<rule object="AAnnotSquiggly">
 			<id specification="ISO_32000_1_7" clause="AnnotSquiggly" testNumber="22"/>
-			<description>AnnotSquiggly shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotSquiggly shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotSquiggly contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquiggly">
+			<id specification="ISO_32000_1_7" clause="AnnotSquiggly-AF" testNumber="8"/>
+			<description>Entry AF in AnnotSquiggly shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotSquiggly has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotSquiggly">
+			<id specification="ISO_32000_1_7" clause="AnnotSquiggly-AF" testNumber="23"/>
+			<description>Entry AF in AnnotSquiggly can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotSquiggly is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -18475,7 +18805,7 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_7" clause="AnnotStamp" testNumber="1"/>
-			<description>AnnotStamp shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, M, NM, Name, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotStamp shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, M, NM, Name, OC, P, Popup, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotStamp contains entry(ies) %1</message>
@@ -18487,13 +18817,35 @@
 		</rule>
 		<rule object="AAnnotStamp">
 			<id specification="ISO_32000_1_7" clause="AnnotStamp" testNumber="22"/>
-			<description>AnnotStamp shall not contain entries AF, BM, IT, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'IT' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotStamp shall not contain entries BM, IT, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'IT' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotStamp contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'IT' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'IT' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStamp">
+			<id specification="ISO_32000_1_7" clause="AnnotStamp-AF" testNumber="8"/>
+			<description>Entry AF in AnnotStamp shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotStamp has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStamp">
+			<id specification="ISO_32000_1_7" clause="AnnotStamp-AF" testNumber="23"/>
+			<description>Entry AF in AnnotStamp can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotStamp is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -18943,7 +19295,7 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_7" clause="AnnotStrikeOut" testNumber="1"/>
-			<description>AnnotStrikeOut shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotStrikeOut shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotStrikeOut contains entry(ies) %1</message>
@@ -18955,13 +19307,35 @@
 		</rule>
 		<rule object="AAnnotStrikeOut">
 			<id specification="ISO_32000_1_7" clause="AnnotStrikeOut" testNumber="22"/>
-			<description>AnnotStrikeOut shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotStrikeOut shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotStrikeOut contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStrikeOut">
+			<id specification="ISO_32000_1_7" clause="AnnotStrikeOut-AF" testNumber="8"/>
+			<description>Entry AF in AnnotStrikeOut shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotStrikeOut has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotStrikeOut">
+			<id specification="ISO_32000_1_7" clause="AnnotStrikeOut-AF" testNumber="23"/>
+			<description>Entry AF in AnnotStrikeOut can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotStrikeOut is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -19433,7 +19807,7 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_7" clause="AnnotText" testNumber="1"/>
-			<description>AnnotText shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, Name, OC, Open, P, Popup, RC, RT, Rect, State, StateModel, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotText shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, Name, OC, Open, P, Popup, RC, RT, Rect, State, StateModel, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Open' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'State' &amp;&amp; elem != 'StateModel' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotText contains entry(ies) %1</message>
@@ -19445,13 +19819,35 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="ISO_32000_1_7" clause="AnnotText" testNumber="22"/>
-			<description>AnnotText shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotText shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotText">
+			<id specification="ISO_32000_1_7" clause="AnnotText-AF" testNumber="8"/>
+			<description>Entry AF in AnnotText shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotText has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotText">
+			<id specification="ISO_32000_1_7" clause="AnnotText-AF" testNumber="23"/>
+			<description>Entry AF in AnnotText can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotText is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -19995,7 +20391,7 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_7" clause="AnnotTrapNetwork" testNumber="1"/>
-			<description>AnnotTrapNetwork shall not contain entries except AP, AS, AnnotStates, Border, C, Contents, F, FontFauxing, LastModified, M, NM, OC, P, Rect, StructParent, Subtype, Type, Version</description>
+			<description>AnnotTrapNetwork shall not contain entries except AF, AP, AS, AnnotStates, Border, C, Contents, F, FontFauxing, LastModified, M, NM, OC, P, Rect, StructParent, Subtype, Type, Version</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'AnnotStates' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FontFauxing' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Version' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotTrapNetwork contains entry(ies) %1</message>
@@ -20007,13 +20403,35 @@
 		</rule>
 		<rule object="AAnnotTrapNetwork">
 			<id specification="ISO_32000_1_7" clause="AnnotTrapNetwork" testNumber="22"/>
-			<description>AnnotTrapNetwork shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotTrapNetwork shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotTrapNetwork contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotTrapNetwork">
+			<id specification="ISO_32000_1_7" clause="AnnotTrapNetwork-AF" testNumber="8"/>
+			<description>Entry AF in AnnotTrapNetwork shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotTrapNetwork has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotTrapNetwork">
+			<id specification="ISO_32000_1_7" clause="AnnotTrapNetwork-AF" testNumber="23"/>
+			<description>Entry AF in AnnotTrapNetwork can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotTrapNetwork is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -20369,7 +20787,7 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_7" clause="AnnotUnderline" testNumber="1"/>
-			<description>AnnotUnderline shall not contain entries except AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotUnderline shall not contain entries except AF, AP, AS, Border, C, CA, Contents, CreationDate, ExData, F, IRT, IT, M, NM, OC, P, Popup, QuadPoints, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'QuadPoints' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotUnderline contains entry(ies) %1</message>
@@ -20381,13 +20799,35 @@
 		</rule>
 		<rule object="AAnnotUnderline">
 			<id specification="ISO_32000_1_7" clause="AnnotUnderline" testNumber="22"/>
-			<description>AnnotUnderline shall not contain entries AF, BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotUnderline shall not contain entries BM, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotUnderline contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotUnderline">
+			<id specification="ISO_32000_1_7" clause="AnnotUnderline-AF" testNumber="8"/>
+			<description>Entry AF in AnnotUnderline shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotUnderline has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotUnderline">
+			<id specification="ISO_32000_1_7" clause="AnnotUnderline-AF" testNumber="23"/>
+			<description>Entry AF in AnnotUnderline can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotUnderline is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -20859,7 +21299,7 @@
 		</rule>
 		<rule object="AAnnotWatermark">
 			<id specification="ISO_32000_1_7" clause="AnnotWatermark" testNumber="1"/>
-			<description>AnnotWatermark shall not contain entries except AP, AS, Border, C, Contents, F, FixedPrint, M, NM, OC, P, Rect, StructParent, Subtype, Type</description>
+			<description>AnnotWatermark shall not contain entries except AF, AP, AS, Border, C, Contents, F, FixedPrint, M, NM, OC, P, Rect, StructParent, Subtype, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FixedPrint' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWatermark contains entry(ies) %1</message>
@@ -20871,13 +21311,35 @@
 		</rule>
 		<rule object="AAnnotWatermark">
 			<id specification="ISO_32000_1_7" clause="AnnotWatermark" testNumber="22"/>
-			<description>AnnotWatermark shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWatermark shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWatermark contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWatermark">
+			<id specification="ISO_32000_1_7" clause="AnnotWatermark-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWatermark shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWatermark has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWatermark">
+			<id specification="ISO_32000_1_7" clause="AnnotWatermark-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWatermark can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWatermark is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -21147,7 +21609,7 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_7" clause="AnnotWidget" testNumber="1"/>
-			<description>AnnotWidget shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, F, Ff, H, Kids, M, MK, NM, OC, P, PMD, Parent, Rect, StructParent, Subtype, T, TM, TU, Type</description>
+			<description>AnnotWidget shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, F, Ff, H, Kids, M, MK, NM, OC, P, PMD, Parent, Rect, StructParent, Subtype, T, TM, TU, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Kids' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidget contains entry(ies) %1</message>
@@ -21159,12 +21621,12 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="ISO_32000_1_7" clause="AnnotWidget" testNumber="22"/>
-			<description>AnnotWidget shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidget shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidget contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -21200,6 +21662,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidget">
+			<id specification="ISO_32000_1_7" clause="AnnotWidget-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidget shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidget has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidget">
+			<id specification="ISO_32000_1_7" clause="AnnotWidget-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidget can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidget is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -21609,7 +22093,7 @@
 		</rule>
 		<rule object="AAnnotWidgetField">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetField" testNumber="1"/>
-			<description>AnnotWidgetField shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, F, Ff, H, M, MK, NM, OC, P, PMD, Parent, Rect, StructParent, Subtype, T, TM, TU, Type</description>
+			<description>AnnotWidgetField shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, F, Ff, H, M, MK, NM, OC, P, PMD, Parent, Rect, StructParent, Subtype, T, TM, TU, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetField contains entry(ies) %1</message>
@@ -21621,12 +22105,12 @@
 		</rule>
 		<rule object="AAnnotWidgetField">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetField" testNumber="22"/>
-			<description>AnnotWidgetField shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetField shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetField contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -21662,6 +22146,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetField">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetField-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetField shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetField has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetField">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetField-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetField can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetField is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -22069,7 +22575,7 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnCheckbox">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnCheckbox" testNumber="1"/>
-			<description>AnnotWidgetFieldBtnCheckbox shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, NM, OC, Opt, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
+			<description>AnnotWidgetFieldBtnCheckbox shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, NM, OC, Opt, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnCheckbox contains entry(ies) %1</message>
@@ -22081,12 +22587,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnCheckbox">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnCheckbox" testNumber="22"/>
-			<description>AnnotWidgetFieldBtnCheckbox shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetFieldBtnCheckbox shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnCheckbox contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -22122,6 +22628,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldBtnCheckbox">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnCheckbox-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetFieldBtnCheckbox shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldBtnCheckbox has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldBtnCheckbox">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnCheckbox-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetFieldBtnCheckbox can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldBtnCheckbox is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -22679,7 +23207,7 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnPush">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnPush" testNumber="1"/>
-			<description>AnnotWidgetFieldBtnPush shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, NM, OC, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
+			<description>AnnotWidgetFieldBtnPush shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, NM, OC, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnPush contains entry(ies) %1</message>
@@ -22691,12 +23219,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnPush">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnPush" testNumber="22"/>
-			<description>AnnotWidgetFieldBtnPush shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetFieldBtnPush shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnPush contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -22732,6 +23260,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldBtnPush">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnPush-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetFieldBtnPush shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldBtnPush has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldBtnPush">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnPush-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetFieldBtnPush can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldBtnPush is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -23277,7 +23827,7 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnRadio">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnRadio" testNumber="1"/>
-			<description>AnnotWidgetFieldBtnRadio shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, NM, OC, Opt, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
+			<description>AnnotWidgetFieldBtnRadio shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, NM, OC, Opt, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnRadio contains entry(ies) %1</message>
@@ -23289,12 +23839,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnRadio">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnRadio" testNumber="22"/>
-			<description>AnnotWidgetFieldBtnRadio shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetFieldBtnRadio shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldBtnRadio contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -23330,6 +23880,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldBtnRadio">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnRadio-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetFieldBtnRadio shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldBtnRadio has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldBtnRadio">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldBtnRadio-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetFieldBtnRadio can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldBtnRadio is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -23887,7 +24459,7 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldChoice">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldChoice" testNumber="1"/>
-			<description>AnnotWidgetFieldChoice shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, I, M, MK, NM, OC, Opt, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TI, TM, TU, Type, V</description>
+			<description>AnnotWidgetFieldChoice shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, I, M, MK, NM, OC, Opt, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TI, TM, TU, Type, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'I' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'Opt' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TI' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldChoice contains entry(ies) %1</message>
@@ -23899,12 +24471,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldChoice">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldChoice" testNumber="22"/>
-			<description>AnnotWidgetFieldChoice shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetFieldChoice shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldChoice contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -23940,6 +24512,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldChoice">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldChoice-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetFieldChoice shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldChoice has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldChoice">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldChoice-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetFieldChoice can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldChoice is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -24541,7 +25135,7 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldSig">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldSig" testNumber="1"/>
-			<description>AnnotWidgetFieldSig shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, Lock, M, MK, NM, OC, P, PMD, Parent, Q, RV, Rect, SV, StructParent, Subtype, T, TM, TU, Type, V</description>
+			<description>AnnotWidgetFieldSig shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, Lock, M, MK, NM, OC, P, PMD, Parent, Q, RV, Rect, SV, StructParent, Subtype, T, TM, TU, Type, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Lock' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'SV' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldSig contains entry(ies) %1</message>
@@ -24553,12 +25147,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldSig">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldSig" testNumber="22"/>
-			<description>AnnotWidgetFieldSig shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetFieldSig shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldSig contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -24594,6 +25188,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldSig">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldSig-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetFieldSig shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldSig has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldSig">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldSig-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetFieldSig can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldSig is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -25193,7 +25809,7 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldTx">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldTx" testNumber="1"/>
-			<description>AnnotWidgetFieldTx shall not contain entries except A, AA, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, MaxLen, NM, OC, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
+			<description>AnnotWidgetFieldTx shall not contain entries except A, AA, AF, AP, AS, BS, Border, C, Contents, DA, DS, DV, F, FT, Ff, H, M, MK, MaxLen, NM, OC, P, PMD, Parent, Q, RV, Rect, StructParent, Subtype, T, TM, TU, Type, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'DV' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FT' &amp;&amp; elem != 'Ff' &amp;&amp; elem != 'H' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'MK' &amp;&amp; elem != 'MaxLen' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'PMD' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RV' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'TM' &amp;&amp; elem != 'TU' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldTx contains entry(ies) %1</message>
@@ -25205,12 +25821,12 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldTx">
 			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldTx" testNumber="22"/>
-			<description>AnnotWidgetFieldTx shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotWidgetFieldTx shall not contain entries BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotWidgetFieldTx contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -25246,6 +25862,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldTx">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldTx-AF" testNumber="8"/>
+			<description>Entry AF in AnnotWidgetFieldTx shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldTx has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotWidgetFieldTx">
+			<id specification="ISO_32000_1_7" clause="AnnotWidgetFieldTx-AF" testNumber="23"/>
+			<description>Entry AF in AnnotWidgetFieldTx can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in AnnotWidgetFieldTx is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -27718,6 +28356,65 @@
 				<message>Entry %keyName% in ArrayOfFields has type %1 instead of type Dictionary</message>
 				<arguments>
 					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFileSpecifications">
+			<id specification="ISO_32000_1_7" clause="ArrayOfFileSpecifications" testNumber="4"/>
+			<description>ArrayOfFileSpecifications shall contain at least 1 element</description>
+			<test>size &gt;= 1</test>
+			<error>
+				<message>ArrayOfFileSpecifications contains %1 element(s)</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFileSpecifications">
+			<id specification="ISO_32000_1_7" clause="ArrayOfFileSpecifications-0" testNumber="8"/>
+			<description>Entry 0 in ArrayOfFileSpecifications shall have type Dictionary</description>
+			<test>size &lt;= 0 || entry0HasTypeDictionary == true</test>
+			<error>
+				<message>Entry 0 in ArrayOfFileSpecifications has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFileSpecifications">
+			<id specification="ISO_32000_1_7" clause="ArrayOfFileSpecifications-0" testNumber="23"/>
+			<description>Entry 0 in ArrayOfFileSpecifications can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>contains0 == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry 0 in ArrayOfFileSpecifications is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFileSpecificationsEntry">
+			<id specification="ISO_32000_1_7" clause="ArrayOfFileSpecificationsEntry" testNumber="8"/>
+			<description>Entry in ArrayOfFileSpecifications shall have type Dictionary</description>
+			<test>HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in ArrayOfFileSpecifications has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfFileSpecificationsEntry">
+			<id specification="ISO_32000_1_7" clause="ArrayOfFileSpecificationsEntry" testNumber="23"/>
+			<description>Entry in ArrayOfFileSpecifications can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry %keyName% in ArrayOfFileSpecifications is present</message>
+				<arguments>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -33237,7 +33934,7 @@
 		</rule>
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_7" clause="Catalog" testNumber="1"/>
-			<description>Catalog shall not contain entries except AA, AcroForm, Collection, DPartRoot, Dests, Extensions, Lang, Legal, MarkInfo, Metadata, Names, NeedsRendering, OCProperties, OpenAction, Outlines, OutputIntents, PageLabels, PageLayout, PageMode, Pages, Perms, PieceInfo, Requirements, SpiderInfo, StructTreeRoot, Threads, Type, URI, Version, ViewerPreferences</description>
+			<description>Catalog shall not contain entries except AA, AF, AcroForm, Collection, DPartRoot, Dests, Extensions, Lang, Legal, MarkInfo, Metadata, Names, NeedsRendering, OCProperties, OpenAction, Outlines, OutputIntents, PageLabels, PageLayout, PageMode, Pages, Perms, PieceInfo, Requirements, SpiderInfo, StructTreeRoot, Threads, Type, URI, Version, ViewerPreferences</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AcroForm' &amp;&amp; elem != 'Collection' &amp;&amp; elem != 'DPartRoot' &amp;&amp; elem != 'DSS' &amp;&amp; elem != 'Dests' &amp;&amp; elem != 'Extensions' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Legal' &amp;&amp; elem != 'MarkInfo' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Names' &amp;&amp; elem != 'NeedsRendering' &amp;&amp; elem != 'OCProperties' &amp;&amp; elem != 'OpenAction' &amp;&amp; elem != 'Outlines' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PageLabels' &amp;&amp; elem != 'PageLayout' &amp;&amp; elem != 'PageMode' &amp;&amp; elem != 'Pages' &amp;&amp; elem != 'Perms' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'Requirements' &amp;&amp; elem != 'SpiderInfo' &amp;&amp; elem != 'StructTreeRoot' &amp;&amp; elem != 'Threads' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'URI' &amp;&amp; elem != 'Version' &amp;&amp; elem != 'ViewerPreferences' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Catalog contains entry(ies) %1</message>
@@ -33249,13 +33946,11 @@
 		</rule>
 		<rule object="ACatalog">
 			<id specification="ISO_32000_1_7" clause="Catalog" testNumber="22"/>
-			<description>Catalog shall not contain entries AF, DSS in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'DSS').length == 0</test>
+			<description>Catalog shall not contain entry DSS in PDF 1.7. This entry appears in later pdf versions</description>
+			<test>containsDSS == false</test>
 			<error>
-				<message>Catalog contains entry(ies) %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'DSS').toString()</argument>
-				</arguments>
+				<message>Catalog contains entry DSS</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -33268,6 +33963,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
+			<id specification="ISO_32000_1_7" clause="Catalog-AF" testNumber="8"/>
+			<description>Entry AF in Catalog shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in Catalog has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
+			<id specification="ISO_32000_1_7" clause="Catalog-AF" testNumber="23"/>
+			<description>Entry AF in Catalog can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in Catalog is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -41526,7 +42243,7 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_7" clause="FileSpecification" testNumber="1"/>
-			<description>FileSpecification shall not contain entries except CI, DOS, Desc, EF, F, FS, ID, Mac, RF, Thumb, Type, UF, Unix, V</description>
+			<description>FileSpecification shall not contain entries except AFRelationship, CI, DOS, Desc, EF, F, FS, ID, Mac, RF, Thumb, Type, UF, Unix, V</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AFRelationship' &amp;&amp; elem != 'CI' &amp;&amp; elem != 'DOS' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EF' &amp;&amp; elem != 'EP' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FS' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'Mac' &amp;&amp; elem != 'RF' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UF' &amp;&amp; elem != 'Unix' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FileSpecification contains entry(ies) %1</message>
@@ -41538,12 +42255,44 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_1_7" clause="FileSpecification" testNumber="22"/>
-			<description>FileSpecification shall not contain entries AFRelationship, EP in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AFRelationship' || elem == 'EP').length == 0</test>
+			<description>FileSpecification shall not contain entry EP in PDF 1.7. This entry appears in later pdf versions</description>
+			<test>containsEP == false</test>
 			<error>
-				<message>FileSpecification contains entry(ies) %1</message>
+				<message>FileSpecification contains entry EP</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileSpecification">
+			<id specification="ISO_32000_1_7" clause="FileSpecification-AFRelationship" testNumber="8"/>
+			<description>Entry AFRelationship in FileSpecification shall have type Name</description>
+			<test>containsAFRelationship == false || AFRelationshipHasTypeName == true</test>
+			<error>
+				<message>Entry AFRelationship in FileSpecification has type %1 instead of type Name</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AFRelationship' || elem == 'EP').toString()</argument>
+					<argument>AFRelationshipType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileSpecification">
+			<id specification="ISO_32000_1_7" clause="FileSpecification-AFRelationship" testNumber="23"/>
+			<description>Entry AFRelationship in FileSpecification can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAFRelationship == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AFRelationship in FileSpecification is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFileSpecification">
+			<id specification="ISO_32000_1_7" clause="FileSpecification-AFRelationship-Name" testNumber="6"/>
+			<description>Entry AFRelationship with type Name in FileSpecification shall have one of values: Alternative, Supplement, Data, Unspecified, C2PA_Manifest, Source</description>
+			<test>AFRelationshipHasTypeName != true || AFRelationshipNameValue == "Source" || AFRelationshipNameValue == "Data" || AFRelationshipNameValue == "Alternative" || AFRelationshipNameValue == "Supplement" || AFRelationshipNameValue == "Unspecified" || AFRelationshipNameValue == "C2PA_Manifest"</test>
+			<error>
+				<message>Entry AFRelationship with type Name in FileSpecification has incorrect value %1 instead of Alternative, Supplement, Data, Unspecified, C2PA_Manifest, Source</message>
+				<arguments>
+					<argument>AFRelationshipNameValue</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -61880,7 +62629,7 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_7" clause="PageObject" testNumber="1"/>
-			<description>PageObject shall not contain entries except AA, Annots, ArtBox, B, BleedBox, BoxColorInfo, Contents, CropBox, DPart, Dur, Group, Hid, ID, LastModified, MediaBox, Metadata, PZ, Parent, PieceInfo, PresSteps, Resources, Rotate, SeparationInfo, StructParents, Tabs, TemplateInstantiated, Thumb, Trans, TrimBox, Type, UserUnit, VP</description>
+			<description>PageObject shall not contain entries except AA, AF, Annots, ArtBox, B, BleedBox, BoxColorInfo, Contents, CropBox, DPart, Dur, Group, Hid, ID, LastModified, MediaBox, Metadata, PZ, Parent, PieceInfo, PresSteps, Resources, Rotate, SeparationInfo, StructParents, Tabs, TemplateInstantiated, Thumb, Trans, TrimBox, Type, UserUnit, VP</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AA' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'Annots' &amp;&amp; elem != 'ArtBox' &amp;&amp; elem != 'B' &amp;&amp; elem != 'BleedBox' &amp;&amp; elem != 'BoxColorInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CropBox' &amp;&amp; elem != 'DPart' &amp;&amp; elem != 'Dur' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'Hid' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'MediaBox' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'OutputIntents' &amp;&amp; elem != 'PZ' &amp;&amp; elem != 'Parent' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PresSteps' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'Rotate' &amp;&amp; elem != 'SeparationInfo' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Tabs' &amp;&amp; elem != 'TemplateInstantiated' &amp;&amp; elem != 'Thumb' &amp;&amp; elem != 'Trans' &amp;&amp; elem != 'TrimBox' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UserUnit' &amp;&amp; elem != 'VP' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>PageObject contains entry(ies) %1</message>
@@ -61892,13 +62641,11 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_7" clause="PageObject" testNumber="22"/>
-			<description>PageObject shall not contain entries AF, OutputIntents in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'OutputIntents').length == 0</test>
+			<description>PageObject shall not contain entry OutputIntents in PDF 1.7. This entry appears in later pdf versions</description>
+			<test>containsOutputIntents == false</test>
 			<error>
-				<message>PageObject contains entry(ies) %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'OutputIntents').toString()</argument>
-				</arguments>
+				<message>PageObject contains entry OutputIntents</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -61911,6 +62658,28 @@
 				<arguments>
 					<argument>AAType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageObject">
+			<id specification="ISO_32000_1_7" clause="PageObject-AF" testNumber="8"/>
+			<description>Entry AF in PageObject shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in PageObject has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageObject">
+			<id specification="ISO_32000_1_7" clause="PageObject-AF" testNumber="23"/>
+			<description>Entry AF in PageObject can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in PageObject is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -73341,7 +74110,7 @@
 		</rule>
 		<rule object="AStructElem">
 			<id specification="ISO_32000_1_7" clause="StructElem" testNumber="1"/>
-			<description>StructElem shall not contain entries except A, ActualText, Alt, C, E, ID, K, Lang, P, Pg, R, S, T, Type</description>
+			<description>StructElem shall not contain entries except A, AF, ActualText, Alt, C, E, ID, K, Lang, P, Pg, R, S, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'A' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'ActualText' &amp;&amp; elem != 'Alt' &amp;&amp; elem != 'C' &amp;&amp; elem != 'E' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'K' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Pg' &amp;&amp; elem != 'Phoneme' &amp;&amp; elem != 'PhoneticAlphabet' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'S' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>StructElem contains entry(ies) %1</message>
@@ -73353,12 +74122,12 @@
 		</rule>
 		<rule object="AStructElem">
 			<id specification="ISO_32000_1_7" clause="StructElem" testNumber="22"/>
-			<description>StructElem shall not contain entries AF, NS, Phoneme, PhoneticAlphabet, Ref in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'NS' || elem == 'Phoneme' || elem == 'PhoneticAlphabet' || elem == 'Ref').length == 0</test>
+			<description>StructElem shall not contain entries NS, Phoneme, PhoneticAlphabet, Ref in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'NS' || elem == 'Phoneme' || elem == 'PhoneticAlphabet' || elem == 'Ref').length == 0</test>
 			<error>
 				<message>StructElem contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'NS' || elem == 'Phoneme' || elem == 'PhoneticAlphabet' || elem == 'Ref').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'NS' || elem == 'Phoneme' || elem == 'PhoneticAlphabet' || elem == 'Ref').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -73391,6 +74160,28 @@
 			<test>AHasTypeStream != true || isAIndirect == true</test>
 			<error>
 				<message>Entry A with type Stream in StructElem is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructElem">
+			<id specification="ISO_32000_1_7" clause="StructElem-AF" testNumber="8"/>
+			<description>Entry AF in StructElem shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in StructElem has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructElem">
+			<id specification="ISO_32000_1_7" clause="StructElem-AF" testNumber="23"/>
+			<description>Entry AF in StructElem can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in StructElem is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -73635,7 +74426,7 @@
 		</rule>
 		<rule object="AStructTreeRoot">
 			<id specification="ISO_32000_1_7" clause="StructTreeRoot" testNumber="1"/>
-			<description>StructTreeRoot shall not contain entries except ClassMap, IDTree, K, ParentTree, ParentTreeNextKey, RoleMap, Type</description>
+			<description>StructTreeRoot shall not contain entries except AF, ClassMap, IDTree, K, ParentTree, ParentTreeNextKey, RoleMap, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'ClassMap' &amp;&amp; elem != 'IDTree' &amp;&amp; elem != 'K' &amp;&amp; elem != 'Namespaces' &amp;&amp; elem != 'ParentTree' &amp;&amp; elem != 'ParentTreeNextKey' &amp;&amp; elem != 'PronunciationLexicon' &amp;&amp; elem != 'RoleMap' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>StructTreeRoot contains entry(ies) %1</message>
@@ -73647,13 +74438,35 @@
 		</rule>
 		<rule object="AStructTreeRoot">
 			<id specification="ISO_32000_1_7" clause="StructTreeRoot" testNumber="22"/>
-			<description>StructTreeRoot shall not contain entries AF, Namespaces, PronunciationLexicon in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Namespaces' || elem == 'PronunciationLexicon').length == 0</test>
+			<description>StructTreeRoot shall not contain entries Namespaces, PronunciationLexicon in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Namespaces' || elem == 'PronunciationLexicon').length == 0</test>
 			<error>
 				<message>StructTreeRoot contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'Namespaces' || elem == 'PronunciationLexicon').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Namespaces' || elem == 'PronunciationLexicon').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructTreeRoot">
+			<id specification="ISO_32000_1_7" clause="StructTreeRoot-AF" testNumber="8"/>
+			<description>Entry AF in StructTreeRoot shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
+			<error>
+				<message>Entry AF in StructTreeRoot has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructTreeRoot">
+			<id specification="ISO_32000_1_7" clause="StructTreeRoot-AF" testNumber="23"/>
+			<description>Entry AF in StructTreeRoot can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in StructTreeRoot is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -73814,23 +74627,23 @@
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_7" clause="StructureAttributesDict" testNumber="1"/>
 			<description>StructureAttributesDict shall not contain entries except BBox, BackgroundColor, BaselineShift, BlockAlign, BorderColor, BorderStyle, BorderThickness, Checked, ColSpan, Color, ColumnCount, ColumnGap, ColumnWidths, Contents, Desc, EndIndent, GlyphOrientationVertical, Headers, Height, InlineAlign, LineHeight, ListNumbering, O, P, Padding, Placement, Role, RowSpan, RubyAlign, RubyPosition, Scope, SpaceAfter, SpaceBefore, StartIndent, Summary, TBorderStyle, TPadding, TextAlign, TextDecorationColor, TextDecorationThickness, TextDecorationType, TextIndent, Width, WritingMode, checked</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BBox' &amp;&amp; elem != 'BackgroundColor' &amp;&amp; elem != 'BaselineShift' &amp;&amp; elem != 'BlockAlign' &amp;&amp; elem != 'BorderColor' &amp;&amp; elem != 'BorderStyle' &amp;&amp; elem != 'BorderThickness' &amp;&amp; elem != 'Checked' &amp;&amp; elem != 'ColSpan' &amp;&amp; elem != 'Color' &amp;&amp; elem != 'ColumnCount' &amp;&amp; elem != 'ColumnGap' &amp;&amp; elem != 'ColumnWidths' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'ContinuedForm' &amp;&amp; elem != 'ContinuedList' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EndIndent' &amp;&amp; elem != 'GlyphOrientationVertical' &amp;&amp; elem != 'Headers' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'InlineAlign' &amp;&amp; elem != 'LineHeight' &amp;&amp; elem != 'ListNumbering' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Padding' &amp;&amp; elem != 'Placement' &amp;&amp; elem != 'Role' &amp;&amp; elem != 'RowSpan' &amp;&amp; elem != 'RubyAlign' &amp;&amp; elem != 'RubyPosition' &amp;&amp; elem != 'Scope' &amp;&amp; elem != 'Short' &amp;&amp; elem != 'SpaceAfter' &amp;&amp; elem != 'SpaceBefore' &amp;&amp; elem != 'StartIndent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Summary' &amp;&amp; elem != 'TBorderStyle' &amp;&amp; elem != 'TPadding' &amp;&amp; elem != 'TextAlign' &amp;&amp; elem != 'TextDecorationColor' &amp;&amp; elem != 'TextDecorationThickness' &amp;&amp; elem != 'TextDecorationType' &amp;&amp; elem != 'TextIndent' &amp;&amp; elem != 'TextPosition' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'WritingMode' &amp;&amp; elem != 'checked' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'BBox' &amp;&amp; elem != 'BackgroundColor' &amp;&amp; elem != 'BaselineShift' &amp;&amp; elem != 'BlockAlign' &amp;&amp; elem != 'BorderColor' &amp;&amp; elem != 'BorderStyle' &amp;&amp; elem != 'BorderThickness' &amp;&amp; elem != 'Checked' &amp;&amp; elem != 'ColSpan' &amp;&amp; elem != 'Color' &amp;&amp; elem != 'ColumnCount' &amp;&amp; elem != 'ColumnGap' &amp;&amp; elem != 'ColumnWidths' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'ContinuedForm' &amp;&amp; elem != 'ContinuedList' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EndIndent' &amp;&amp; elem != 'GlyphOrientationVertical' &amp;&amp; elem != 'Headers' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'InlineAlign' &amp;&amp; elem != 'LineHeight' &amp;&amp; elem != 'ListNumbering' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'NoteType' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Padding' &amp;&amp; elem != 'Placement' &amp;&amp; elem != 'Role' &amp;&amp; elem != 'RowSpan' &amp;&amp; elem != 'RubyAlign' &amp;&amp; elem != 'RubyPosition' &amp;&amp; elem != 'Scope' &amp;&amp; elem != 'Short' &amp;&amp; elem != 'SpaceAfter' &amp;&amp; elem != 'SpaceBefore' &amp;&amp; elem != 'StartIndent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Summary' &amp;&amp; elem != 'TBorderStyle' &amp;&amp; elem != 'TPadding' &amp;&amp; elem != 'TextAlign' &amp;&amp; elem != 'TextDecorationColor' &amp;&amp; elem != 'TextDecorationThickness' &amp;&amp; elem != 'TextDecorationType' &amp;&amp; elem != 'TextIndent' &amp;&amp; elem != 'TextPosition' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'WritingMode' &amp;&amp; elem != 'checked' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BBox' &amp;&amp; elem != 'BackgroundColor' &amp;&amp; elem != 'BaselineShift' &amp;&amp; elem != 'BlockAlign' &amp;&amp; elem != 'BorderColor' &amp;&amp; elem != 'BorderStyle' &amp;&amp; elem != 'BorderThickness' &amp;&amp; elem != 'Checked' &amp;&amp; elem != 'ColSpan' &amp;&amp; elem != 'Color' &amp;&amp; elem != 'ColumnCount' &amp;&amp; elem != 'ColumnGap' &amp;&amp; elem != 'ColumnWidths' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'ContinuedForm' &amp;&amp; elem != 'ContinuedList' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EndIndent' &amp;&amp; elem != 'GlyphOrientationVertical' &amp;&amp; elem != 'Headers' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'InlineAlign' &amp;&amp; elem != 'LineHeight' &amp;&amp; elem != 'ListNumbering' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Padding' &amp;&amp; elem != 'Placement' &amp;&amp; elem != 'Role' &amp;&amp; elem != 'RowSpan' &amp;&amp; elem != 'RubyAlign' &amp;&amp; elem != 'RubyPosition' &amp;&amp; elem != 'Scope' &amp;&amp; elem != 'Short' &amp;&amp; elem != 'SpaceAfter' &amp;&amp; elem != 'SpaceBefore' &amp;&amp; elem != 'StartIndent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Summary' &amp;&amp; elem != 'TBorderStyle' &amp;&amp; elem != 'TPadding' &amp;&amp; elem != 'TextAlign' &amp;&amp; elem != 'TextDecorationColor' &amp;&amp; elem != 'TextDecorationThickness' &amp;&amp; elem != 'TextDecorationType' &amp;&amp; elem != 'TextIndent' &amp;&amp; elem != 'TextPosition' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'WritingMode' &amp;&amp; elem != 'checked' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'BBox' &amp;&amp; elem != 'BackgroundColor' &amp;&amp; elem != 'BaselineShift' &amp;&amp; elem != 'BlockAlign' &amp;&amp; elem != 'BorderColor' &amp;&amp; elem != 'BorderStyle' &amp;&amp; elem != 'BorderThickness' &amp;&amp; elem != 'Checked' &amp;&amp; elem != 'ColSpan' &amp;&amp; elem != 'Color' &amp;&amp; elem != 'ColumnCount' &amp;&amp; elem != 'ColumnGap' &amp;&amp; elem != 'ColumnWidths' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'ContinuedForm' &amp;&amp; elem != 'ContinuedList' &amp;&amp; elem != 'Desc' &amp;&amp; elem != 'EndIndent' &amp;&amp; elem != 'GlyphOrientationVertical' &amp;&amp; elem != 'Headers' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'InlineAlign' &amp;&amp; elem != 'LineHeight' &amp;&amp; elem != 'ListNumbering' &amp;&amp; elem != 'NS' &amp;&amp; elem != 'NoteType' &amp;&amp; elem != 'O' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Padding' &amp;&amp; elem != 'Placement' &amp;&amp; elem != 'Role' &amp;&amp; elem != 'RowSpan' &amp;&amp; elem != 'RubyAlign' &amp;&amp; elem != 'RubyPosition' &amp;&amp; elem != 'Scope' &amp;&amp; elem != 'Short' &amp;&amp; elem != 'SpaceAfter' &amp;&amp; elem != 'SpaceBefore' &amp;&amp; elem != 'StartIndent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Summary' &amp;&amp; elem != 'TBorderStyle' &amp;&amp; elem != 'TPadding' &amp;&amp; elem != 'TextAlign' &amp;&amp; elem != 'TextDecorationColor' &amp;&amp; elem != 'TextDecorationThickness' &amp;&amp; elem != 'TextDecorationType' &amp;&amp; elem != 'TextIndent' &amp;&amp; elem != 'TextPosition' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; elem != 'WritingMode' &amp;&amp; elem != 'checked' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="ISO_32000_1_7" clause="StructureAttributesDict" testNumber="22"/>
-			<description>StructureAttributesDict shall not contain entries ContinuedForm, ContinuedList, NS, Short, Subtype, TextPosition, Type in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ContinuedList' || elem == 'NS' || elem == 'Short' || elem == 'Subtype' || elem == 'TextPosition' || elem == 'Type').length == 0</test>
+			<description>StructureAttributesDict shall not contain entries ContinuedForm, ContinuedList, NS, NoteType, Short, Subtype, TextPosition, Type in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ContinuedList' || elem == 'NS' || elem == 'NoteType' || elem == 'Short' || elem == 'Subtype' || elem == 'TextPosition' || elem == 'Type').length == 0</test>
 			<error>
 				<message>StructureAttributesDict contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ContinuedList' || elem == 'NS' || elem == 'Short' || elem == 'Subtype' || elem == 'TextPosition' || elem == 'Type').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'ContinuedForm' || elem == 'ContinuedList' || elem == 'NS' || elem == 'NoteType' || elem == 'Short' || elem == 'Subtype' || elem == 'TextPosition' || elem == 'Type').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -79071,7 +79884,7 @@
 		</rule>
 		<rule object="AXObjectFormPrinterMark">
 			<id specification="ISO_32000_1_7" clause="XObjectFormPrinterMark" testNumber="1"/>
-			<description>XObjectFormPrinterMark shall not contain entries except BBox, Colorants, DL, DecodeParms, F, FDecodeParms, FFilter, Filter, FormType, Group, LastModified, Length, MarkStyle, Matrix, Measure, Metadata, Name, OC, OPI, PieceInfo, PtData, Ref, Resources, StructParent, StructParents, Subtype, Type</description>
+			<description>XObjectFormPrinterMark shall not contain entries except AF, BBox, Colorants, DL, DecodeParms, F, FDecodeParms, FFilter, Filter, FormType, Group, LastModified, Length, MarkStyle, Matrix, Measure, Metadata, Name, OC, OPI, PieceInfo, PtData, Ref, Resources, StructParent, StructParents, Subtype, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'Colorants' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'MarkStyle' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectFormPrinterMark contains entry(ies) %1</message>
@@ -79082,11 +79895,23 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormPrinterMark">
-			<id specification="ISO_32000_1_7" clause="XObjectFormPrinterMark" testNumber="22"/>
-			<description>XObjectFormPrinterMark shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
-			<test>containsAF == false</test>
+			<id specification="ISO_32000_1_7" clause="XObjectFormPrinterMark-AF" testNumber="8"/>
+			<description>Entry AF in XObjectFormPrinterMark shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
 			<error>
-				<message>XObjectFormPrinterMark contains entry AF</message>
+				<message>Entry AF in XObjectFormPrinterMark has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormPrinterMark">
+			<id specification="ISO_32000_1_7" clause="XObjectFormPrinterMark-AF" testNumber="23"/>
+			<description>Entry AF in XObjectFormPrinterMark can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in XObjectFormPrinterMark is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -79647,7 +80472,7 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="ISO_32000_1_7" clause="XObjectFormTrapNet" testNumber="1"/>
-			<description>XObjectFormTrapNet shall not contain entries except BBox, DL, DecodeParms, F, FDecodeParms, FFilter, Filter, FormType, Group, LastModified, Length, Matrix, Measure, Metadata, Name, OC, OPI, PCM, PieceInfo, PtData, Ref, Resources, SeparationColorNames, StructParent, StructParents, Subtype, TrapRegions, TrapStyles, Type</description>
+			<description>XObjectFormTrapNet shall not contain entries except AF, BBox, DL, DecodeParms, F, FDecodeParms, FFilter, Filter, FormType, Group, LastModified, Length, Matrix, Measure, Metadata, Name, OC, OPI, PCM, PieceInfo, PtData, Ref, Resources, SeparationColorNames, StructParent, StructParents, Subtype, TrapRegions, TrapStyles, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PCM' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'SeparationColorNames' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'TrapRegions' &amp;&amp; elem != 'TrapStyles' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectFormTrapNet contains entry(ies) %1</message>
@@ -79658,11 +80483,23 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormTrapNet">
-			<id specification="ISO_32000_1_7" clause="XObjectFormTrapNet" testNumber="22"/>
-			<description>XObjectFormTrapNet shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
-			<test>containsAF == false</test>
+			<id specification="ISO_32000_1_7" clause="XObjectFormTrapNet-AF" testNumber="8"/>
+			<description>Entry AF in XObjectFormTrapNet shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
 			<error>
-				<message>XObjectFormTrapNet contains entry AF</message>
+				<message>Entry AF in XObjectFormTrapNet has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormTrapNet">
+			<id specification="ISO_32000_1_7" clause="XObjectFormTrapNet-AF" testNumber="23"/>
+			<description>Entry AF in XObjectFormTrapNet can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in XObjectFormTrapNet is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -80259,7 +81096,7 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="ISO_32000_1_7" clause="XObjectFormType1" testNumber="1"/>
-			<description>XObjectFormType1 shall not contain entries except BBox, DL, DecodeParms, F, FDecodeParms, FFilter, Filter, FormType, GTS_Encapsulated, GTS_Env, GTS_Scope, GTS_XID, Group, LastModified, Length, Matrix, Measure, Metadata, Name, OC, OPI, PieceInfo, PtData, Ref, Resources, StructParent, StructParents, Subtype, Type, XUID</description>
+			<description>XObjectFormType1 shall not contain entries except AF, BBox, DL, DecodeParms, F, FDecodeParms, FFilter, Filter, FormType, GTS_Encapsulated, GTS_Env, GTS_Scope, GTS_XID, Group, LastModified, Length, Matrix, Measure, Metadata, Name, OC, OPI, PieceInfo, PtData, Ref, Resources, StructParent, StructParents, Subtype, Type, XUID</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'BBox' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'FormType' &amp;&amp; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Group' &amp;&amp; elem != 'LastModified' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Matrix' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PieceInfo' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'Ref' &amp;&amp; elem != 'Resources' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'StructParents' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XUID' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectFormType1 contains entry(ies) %1</message>
@@ -80270,11 +81107,23 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormType1">
-			<id specification="ISO_32000_1_7" clause="XObjectFormType1" testNumber="22"/>
-			<description>XObjectFormType1 shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
-			<test>containsAF == false</test>
+			<id specification="ISO_32000_1_7" clause="XObjectFormType1-AF" testNumber="8"/>
+			<description>Entry AF in XObjectFormType1 shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
 			<error>
-				<message>XObjectFormType1 contains entry AF</message>
+				<message>Entry AF in XObjectFormType1 has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
+			<id specification="ISO_32000_1_7" clause="XObjectFormType1-AF" testNumber="23"/>
+			<description>Entry AF in XObjectFormType1 can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in XObjectFormType1 is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -80973,7 +81822,7 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="ISO_32000_1_7" clause="XObjectImage" testNumber="1"/>
-			<description>XObjectImage shall not contain entries except Alternates, BitsPerComponent, ColorSpace, DL, Decode, DecodeParms, F, FDecodeParms, FFilter, Filter, GTS_Encapsulated, GTS_Env, GTS_Scope, GTS_XID, Height, ID, ImageMask, Intent, Interpolate, Length, Mask, Measure, Metadata, Name, OC, OPI, PtData, SMask, SMaskInData, StructParent, Subtype, Type, Width</description>
+			<description>XObjectImage shall not contain entries except AF, Alternates, BitsPerComponent, ColorSpace, DL, Decode, DecodeParms, F, FDecodeParms, FFilter, Filter, GTS_Encapsulated, GTS_Env, GTS_Scope, GTS_XID, Height, ID, ImageMask, Intent, Interpolate, Length, Mask, Measure, Metadata, Name, OC, OPI, PtData, SMask, SMaskInData, StructParent, Subtype, Type, Width</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'Alternates' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'GTS_Encapsulated' &amp;&amp; elem != 'GTS_Env' &amp;&amp; elem != 'GTS_Scope' &amp;&amp; elem != 'GTS_XID' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Mask' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'SMask' &amp;&amp; elem != 'SMaskInData' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectImage contains entry(ies) %1</message>
@@ -80984,11 +81833,23 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
-			<id specification="ISO_32000_1_7" clause="XObjectImage" testNumber="22"/>
-			<description>XObjectImage shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
-			<test>containsAF == false</test>
+			<id specification="ISO_32000_1_7" clause="XObjectImage-AF" testNumber="8"/>
+			<description>Entry AF in XObjectImage shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
 			<error>
-				<message>XObjectImage contains entry AF</message>
+				<message>Entry AF in XObjectImage has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImage">
+			<id specification="ISO_32000_1_7" clause="XObjectImage-AF" testNumber="23"/>
+			<description>Entry AF in XObjectImage can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in XObjectImage is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -81847,7 +82708,7 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_1_7" clause="XObjectImageMask" testNumber="1"/>
-			<description>XObjectImageMask shall not contain entries except Alternates, BitsPerComponent, DL, Decode, DecodeParms, F, FDecodeParms, FFilter, Filter, Height, ID, ImageMask, Intent, Interpolate, Length, Measure, Metadata, Name, OC, OPI, PtData, SMask, SMaskInData, StructParent, Subtype, Type, Width</description>
+			<description>XObjectImageMask shall not contain entries except AF, Alternates, BitsPerComponent, DL, Decode, DecodeParms, F, FDecodeParms, FFilter, Filter, Height, ID, ImageMask, Intent, Interpolate, Length, Measure, Metadata, Name, OC, OPI, PtData, SMask, SMaskInData, StructParent, Subtype, Type, Width</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'Alternates' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ID' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Measure' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'OPI' &amp;&amp; elem != 'PtData' &amp;&amp; elem != 'SMask' &amp;&amp; elem != 'SMaskInData' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectImageMask contains entry(ies) %1</message>
@@ -81858,11 +82719,23 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImageMask">
-			<id specification="ISO_32000_1_7" clause="XObjectImageMask" testNumber="22"/>
-			<description>XObjectImageMask shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
-			<test>containsAF == false</test>
+			<id specification="ISO_32000_1_7" clause="XObjectImageMask-AF" testNumber="8"/>
+			<description>Entry AF in XObjectImageMask shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
 			<error>
-				<message>XObjectImageMask contains entry AF</message>
+				<message>Entry AF in XObjectImageMask has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImageMask">
+			<id specification="ISO_32000_1_7" clause="XObjectImageMask-AF" testNumber="23"/>
+			<description>Entry AF in XObjectImageMask can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in XObjectImageMask is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -82473,7 +83346,7 @@
 		</rule>
 		<rule object="AXObjectImageSoftMask">
 			<id specification="ISO_32000_1_7" clause="XObjectImageSoftMask" testNumber="1"/>
-			<description>XObjectImageSoftMask shall not contain entries except BitsPerComponent, ColorSpace, DL, Decode, DecodeParms, F, FDecodeParms, FFilter, Filter, Height, ImageMask, Intent, Interpolate, Length, Matte, Metadata, Name, Subtype, Type, Width</description>
+			<description>XObjectImageSoftMask shall not contain entries except AF, BitsPerComponent, ColorSpace, DL, Decode, DecodeParms, F, FDecodeParms, FFilter, Filter, Height, ImageMask, Intent, Interpolate, Length, Matte, Metadata, Name, Subtype, Type, Width</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'BitsPerComponent' &amp;&amp; elem != 'ColorSpace' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'Decode' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Height' &amp;&amp; elem != 'ImageMask' &amp;&amp; elem != 'Intent' &amp;&amp; elem != 'Interpolate' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Matte' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'Width' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>XObjectImageSoftMask contains entry(ies) %1</message>
@@ -82484,11 +83357,23 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImageSoftMask">
-			<id specification="ISO_32000_1_7" clause="XObjectImageSoftMask" testNumber="22"/>
-			<description>XObjectImageSoftMask shall not contain entry AF in PDF 1.7. This entry appears in later pdf versions</description>
-			<test>containsAF == false</test>
+			<id specification="ISO_32000_1_7" clause="XObjectImageSoftMask-AF" testNumber="8"/>
+			<description>Entry AF in XObjectImageSoftMask shall have type Array</description>
+			<test>containsAF == false || AFHasTypeArray == true</test>
 			<error>
-				<message>XObjectImageSoftMask contains entry AF</message>
+				<message>Entry AF in XObjectImageSoftMask has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AFType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImageSoftMask">
+			<id specification="ISO_32000_1_7" clause="XObjectImageSoftMask-AF" testNumber="23"/>
+			<description>Entry AF in XObjectImageSoftMask can only be present, if satisfy predicate fn:Extension(ISO_19005_3, 1.7)</description>
+			<test>containsAF == false || hasExtensionISO_19005_3 == true</test>
+			<error>
+				<message>Entry AF in XObjectImageSoftMask is present</message>
 				<arguments/>
 			</error>
 			<references/>
