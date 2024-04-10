@@ -72,7 +72,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>1.25.0-SNAPSHOT</verapdf.model.version>
+    <verapdf.model.version>[1.25.0,1.26.0-RC)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
