@@ -911,8 +911,8 @@
         </rule>
         <rule object="PDAnnot" tags="annotation">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="1"/>
-            <description>An annotation, excluding annotations of subtype Widget, Popup or Link, shall be nested within an Annot tag</description>
-            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2 || structParentStandardType == 'Annot'</test>
+            <description>An annotation, excluding annotations of subtype Widget, PrinterMark or Link, shall be nested within an Annot tag</description>
+            <test>Subtype == 'Widget' || Subtype == 'PrinterMark' || Subtype == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2 || structParentStandardType == 'Annot'</test>
             <error>
                 <message>%1 annotation is an Artifact or is nested within %2 tag (standard type = %3) instead of Annot</message>
                 <arguments>
@@ -925,8 +925,8 @@
         </rule>
         <rule object="PDAnnot" tags="annotation,alt-text">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="2"/>
-            <description>An annotation (except annotations of type Link, Widget or Popup, or hidden annotations, or those having rectangle outside the crop-box) shall have either Contents key or an Alt entry in the enclosing structure element</description>
-            <test>Subtype == 'Widget' || Subtype == 'Popup' || Subtype == 'Link' || isOutsideCropBox == true || (F &amp; 2) == 2 || (Contents != null &amp;&amp; Contents != '') || (Alt != null &amp;&amp; Alt != '')</test>
+            <description>An annotation (except Widget annotations or hidden annotations, or those having rectangle outside the crop-box) shall have either Contents key or an Alt entry in the enclosing structure element</description>
+            <test>Subtype == 'Widget' || isOutsideCropBox == true || (F &amp; 2) == 2 || (Contents != null &amp;&amp; Contents != '') || (Alt != null &amp;&amp; Alt != '')</test>
             <error>
                 <message>%1 annotation whose hidden flag is not set and whose rectangle is not outside the crop-box has neither Contents key nor an Alt entry in the enclosing structure element</message>
                 <arguments>
@@ -937,10 +937,10 @@
         </rule>
         <rule object="PDWidgetAnnot" tags="annotation,alt-text">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="3"/>
-            <description>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box shall have a TU key present or all its Widget annotations shall have alternative descriptions (in the form of an Alt entry in the enclosing structure elements)</description>
+            <description>A form field shall have a TU key present or all its Widget annotations shall have alternative descriptions (in the form of an Alt entry in the enclosing structure elements)</description>
             <test>isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
             <error>
-                <message>A form field whose hidden flag is not set and whose rectangle is not outside the crop-box neither has TU key nor its Widget annotations have alternative descriptions (in the form of an Alt entry in the enclosing structure element)</message>
+                <message>A form field neither has TU key nor its Widget annotations have alternative descriptions (in the form of an Alt entry in the enclosing structure element)</message>
                 <arguments/>
             </error>
             <references/>
