@@ -10,10 +10,7 @@ import org.verapdf.pdfa.validation.profiles.ErrorArgumentImpl;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JavaScriptEvaluator {
 	private static final int OPTIMIZATION_LEVEL = 9;
@@ -60,48 +57,44 @@ public class JavaScriptEvaluator {
 		return context.get().compileString(source, null, 0, null);
 	}
 
-	private static String getStringScript(Object obj, String arg) {
-		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
-	}
-
-	private static String getScriptPrefix(Object obj, String test) {
+	private static String getStringScript(Object obj, String test) {
+		String resultTest = test;
 		StringBuilder builder = new StringBuilder();
 		String[] vars = test.split("\\W");
-
 		for (String prop : obj.getProperties()) {
-			if (contains(vars, prop)) {
-				builder.append("var ");
-				builder.append(prop);
-				builder.append(" = obj.get");
-				builder.append(prop);
-				builder.append("();\n");
-			}
+			resultTest = updateTest(builder, resultTest, vars, prop, "obj.get" + prop + "()");
 		}
-
 		for (String linkName : obj.getLinks()) {
-			if (contains(vars, linkName + "_size")) {
-				builder.append("var ");
-				builder.append(linkName);
-				builder.append("_size = obj.getLinkedObjects(\"");
-				builder.append(linkName);
-				builder.append("\").size();\n");
-			}
+			resultTest = updateTest(builder, resultTest, vars, linkName + "_size", "obj.getLinkedObjects(\"" + linkName + "\").size()");
 		}
 		builder.append("function test(){return ");
+		builder.append(resultTest);
+		builder.append(";}\ntest();");
 		return builder.toString();
 	}
-
-	private static boolean contains(String[] values, String prop) {
-		for (String value : values) {
-			if (value.equals(prop)) {
-				return true;
-			}
+	
+	private static String updateTest(StringBuilder builder, String test, String[] vars, String varName, String methodCall) {
+		int number = numberOfOccurrences(vars, varName);
+		if (number > 1) {
+			builder.append("var ");
+			builder.append(varName);
+			builder.append(" = ");
+			builder.append(methodCall);
+			builder.append(";\n");
+		} else if (number == 1) {
+			return test.replaceFirst("(?<!\\w)" + varName + "(?!\\w)", methodCall);
 		}
-		return false;
+		return test;
 	}
 
-	private static String getScriptSuffix() {
-		return ";}\ntest();";
+	private static int numberOfOccurrences(String[] values, String prop) {
+		int number = 0;
+		for (String value : values) {
+			if (value.equals(prop)) {
+				number++;
+			}
+		}
+		return number;
 	}
 
 	private static String getScript(Object obj, String test) {
