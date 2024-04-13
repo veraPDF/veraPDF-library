@@ -473,7 +473,7 @@
                             starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1') or 
                             starts-with(@specification, 'ISO 14289-2') or starts-with(@specification, 'PDF Reference')) and 
                             (not(object = 'ADocument')) and not(starts-with(object, 'ANameTreeNode')) and 
-                            not(starts-with(object, 'ANumberTreeNode'))"/>
+                            not(starts-with(object, 'ANumberTreeNode')) and not(starts-with(object, 'AnnotWidgetField'))"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,
