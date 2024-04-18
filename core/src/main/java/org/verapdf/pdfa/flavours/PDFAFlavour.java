@@ -98,10 +98,12 @@ public enum PDFAFlavour {
     PDFUA_1(Specification.ISO_14289_1, Level.NO_LEVEL),
     /** ua2 PDF Version 2 */
     PDFUA_2(Specification.ISO_14289_2, Level.NO_LEVEL),
+    WTPDF_1_0_REUSE(Specification.WTPDF_1_0, Level.REUSE),
+    WTPDF_1_0_ACCESSIBILITY(Specification.WTPDF_1_0, Level.ACCESSIBILITY),
     /** wcag PDF version 2.1 */
-    WCAG2_1(Specification.WCAG_2_1, Level.NO_LEVEL),
+    WCAG_2_1(Specification.WCAG_2_1, Level.NO_LEVEL),
     /** wcag PDF version 2.2 */
-    WCAG2_2(Specification.WCAG_2_2, Level.NO_LEVEL);
+    WCAG_2_2(Specification.WCAG_2_2, Level.NO_LEVEL);
 
     private static final Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -115,7 +117,7 @@ public enum PDFAFlavour {
     private final String id;
 
     private PDFAFlavour(final Specification standard, final Level level) {
-        this(getPrefix(standard) + standard.getPartNumber() + level.getCode(), standard, level);
+        this(getID(standard, level), standard, level);
     }
 
     private PDFAFlavour(final String id, final Specification standard, final Level level) {
@@ -123,12 +125,21 @@ public enum PDFAFlavour {
         this.level = level;
         this.id = id;
     }
+    
+    private static String getID(final Specification standard, final Level level) {
+        String levelString = level.getCode().length() > 1 ? level.getCode().substring(0, 1) : level.getCode(); 
+        return getPrefix(standard) + standard.getPartNumber() + levelString.toLowerCase();
+    }
 
     private static String getPrefix(final Specification standard) {
         if (SpecificationFamily.PDF_UA == standard.family) {
             return PDFAFlavours.PDFUA_PREFIX;
-        } else if (SpecificationFamily.WCAG == standard.family) {
-            return PDFAFlavours.WCAG2_1_PREFIX;
+        }
+        if (SpecificationFamily.WCAG == standard.family) {
+            return PDFAFlavours.WCAG_PREFIX;
+        }
+        if (SpecificationFamily.WTPDF == standard.family) {
+            return PDFAFlavours.WTPDF_PREFIX;
         }
         return "";
     }
@@ -167,53 +178,63 @@ public enum PDFAFlavour {
      */
     public enum Specification {
         /** PDF/A Version 1 */
-        NO_STANDARD(IsoStandardSeries.NO_SERIES, SpecificationFamily.NONE, PDFAFlavours.NONE_ID,
-                PDFAFlavours.NONE, PDFAFlavours.NONE),
+        NO_STANDARD(IsoStandardSeries.NO_SERIES, PDFSpecification.NO_SPECIFICATION, SpecificationFamily.NONE, 
+                PDFAFlavours.NONE_ID, PDFAFlavours.NONE_SUBPART, PDFAFlavours.NONE, PDFAFlavours.NONE),
         /** PDF/UA Version 1 */
-        ISO_14289_1(IsoStandardSeries.ISO_14289, SpecificationFamily.PDF_UA, PDFAFlavours.ISO_14289_1_PART,
-                PDFAFlavours.ISO_14289_1_YEAR,
+        ISO_14289_1(IsoStandardSeries.ISO_14289, PDFSpecification.ISO_32000_1_7, SpecificationFamily.PDF_UA, 
+                PDFAFlavours.ISO_14289_1_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_14289_1_YEAR, 
                 PDFAFlavours.ISO_14289_1_DESCRIPTION),
-        ISO_14289_2(IsoStandardSeries.ISO_14289, SpecificationFamily.PDF_UA, PDFAFlavours.ISO_14289_2_PART,
-                PDFAFlavours.ISO_14289_2_YEAR,
+        /** PDF/UA Version 2 */
+        ISO_14289_2(IsoStandardSeries.ISO_14289, PDFSpecification.ISO_32000_2_0, SpecificationFamily.PDF_UA, 
+                PDFAFlavours.ISO_14289_2_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_14289_2_YEAR, 
                 PDFAFlavours.ISO_14289_2_DESCRIPTION),
+        WTPDF_1_0(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WTPDF, 
+                PDFAFlavours.WTPDF_1_0_PART, PDFAFlavours.WTPDF_1_0_SUBPART, PDFAFlavours.WTPDF_1_0_YEAR, 
+                PDFAFlavours.WTPDF_1_0_DESCRIPTION),
         /** PDF/A Version 1 */
-        ISO_19005_1(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_1_PART,
-                PDFAFlavours.ISO_19005_1_YEAR,
+        ISO_19005_1(IsoStandardSeries.ISO_19005, PDFSpecification.PDF_REFERENCE_1_4, SpecificationFamily.PDF_A, 
+                PDFAFlavours.ISO_19005_1_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_1_YEAR, 
                 PDFAFlavours.ISO_19005_1_DESCRIPTION),
         /** PDF/A Version 2 */
-        ISO_19005_2(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_2_PART,
-                PDFAFlavours.ISO_19005_2_YEAR,
+        ISO_19005_2(IsoStandardSeries.ISO_19005, PDFSpecification.ISO_32000_1_7, SpecificationFamily.PDF_A, 
+                PDFAFlavours.ISO_19005_2_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_2_YEAR, 
                 PDFAFlavours.ISO_19005_2_DESCRIPTION),
         /** PDF/A Version 3 */
-        ISO_19005_3(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_3_PART,
-                PDFAFlavours.ISO_19005_3_YEAR,
+        ISO_19005_3(IsoStandardSeries.ISO_19005, PDFSpecification.ISO_32000_1_7, SpecificationFamily.PDF_A, 
+                PDFAFlavours.ISO_19005_3_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_3_YEAR, 
                 PDFAFlavours.ISO_19005_3_DESCRIPTION),
         /** PDF/A Version 4 */
-        ISO_19005_4(IsoStandardSeries.ISO_19005, SpecificationFamily.PDF_A, PDFAFlavours.ISO_19005_4_PART,
-                    PDFAFlavours.ISO_19005_4_YEAR,
-                    PDFAFlavours.ISO_19005_4_DESCRIPTION),
-        ISO_32005(IsoStandardSeries.ISO_32005, SpecificationFamily.TAGGED_PDF, PDFAFlavours.NONE_ID,
-                PDFAFlavours.ISO_32005_YEAR,
+        ISO_19005_4(IsoStandardSeries.ISO_19005, PDFSpecification.ISO_32000_2_0, SpecificationFamily.PDF_A, 
+                PDFAFlavours.ISO_19005_4_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_4_YEAR, 
+                PDFAFlavours.ISO_19005_4_DESCRIPTION),
+        ISO_32005(IsoStandardSeries.ISO_32005, PDFSpecification.ISO_32000_2_0, SpecificationFamily.TAGGED_PDF, 
+                PDFAFlavours.NONE_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_32005_YEAR, 
                 PDFAFlavours.ISO_32005_DESCRIPTION),
         /** WCAG Version 2.1 */
-        WCAG_2_1(IsoStandardSeries.NO_SERIES, SpecificationFamily.WCAG, PDFAFlavours.WCAG_2_1_PART,
-                PDFAFlavours.WCAG_2_1_YEAR, PDFAFlavours.WCAG_2_1_DESCRIPTION),
+        WCAG_2_1(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WCAG, 
+                PDFAFlavours.WCAG_2_1_PART, PDFAFlavours.WCAG_2_1_SUBPART, PDFAFlavours.WCAG_2_1_YEAR, 
+                PDFAFlavours.WCAG_2_1_DESCRIPTION),
         /** WCAG Version 2.2 */
-        WCAG_2_2(IsoStandardSeries.NO_SERIES, SpecificationFamily.WCAG, PDFAFlavours.WCAG_2_2_PART,
-                 PDFAFlavours.WCAG_2_2_YEAR, PDFAFlavours.WCAG_2_2_DESCRIPTION);
+        WCAG_2_2(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WCAG, 
+                PDFAFlavours.WCAG_2_2_PART, PDFAFlavours.WCAG_2_2_SUBPART, PDFAFlavours.WCAG_2_2_YEAR, 
+                PDFAFlavours.WCAG_2_2_DESCRIPTION);
 
         private final IsoStandardSeries series;
-        private final int partNumber;
+        private final PDFSpecification pdfSpecification;
+        private final Integer partNumber;
+        private final Integer subpartNumber;
         private final String id;
         private final String year;
         private final SpecificationFamily family;
         private final String name;
         private final String description;
 
-        Specification(final IsoStandardSeries series, final SpecificationFamily family, final int partNumber,
-                final String year, final String description) {
+        Specification(final IsoStandardSeries series, final PDFSpecification pdfSpecification, final SpecificationFamily family, 
+                      final Integer partNumber, final Integer subpartNumber, final String year, final String description) {
             this.series = series;
+            this.pdfSpecification = pdfSpecification;
             this.partNumber = partNumber;
+            this.subpartNumber = subpartNumber;
             this.year = year;
             this.description = description;
             this.family = family;
@@ -222,23 +243,33 @@ public enum PDFAFlavour {
         }
 
         private String calculateID() {
-            if (PDFAFlavours.WCAG_2_1_DESCRIPTION.equals(description)) {
-                return PDFAFlavours.WCAG_2_1;
+            StringBuilder id = new StringBuilder();
+            if (SpecificationFamily.WTPDF == this.getFamily() || SpecificationFamily.WCAG == this.getFamily()) {
+                id.append(this.getFamily().getFamily());
+            } else {
+                id.append(this.getSeries().getName());
             }
-            if (PDFAFlavours.WCAG_2_2_DESCRIPTION.equals(description)) {
-                return PDFAFlavours.WCAG_2_2;
+            if (this.getPartNumber() != null) {
+                id.append("-").append(this.getPartNumber());
+                if (this.getSubpartNumber() != null) {
+                    id.append(".").append(this.getSubpartNumber());
+                }
             }
-            if (PDFAFlavours.ISO_32005_DESCRIPTION.equals(description)) {
-                return this.series.getName() + ":" + this.getYear();
+            if (this.getYear() != null) {
+                id.append(":").append(this.getYear());
             }
-            return this.series.getName() + "-" + this.getPartNumber() + ":" + this.getYear();
+            return id.toString();
         }
 
         /**
          * @return the part number as an int
          */
-        public final int getPartNumber() {
+        public final Integer getPartNumber() {
             return this.partNumber;
+        }
+
+        public final Integer getSubpartNumber() {
+            return this.subpartNumber;
         }
 
         /**
@@ -267,6 +298,10 @@ public enum PDFAFlavour {
          */
         public final SpecificationFamily getFamily() {
             return this.family;
+        }
+
+        public PDFSpecification getPdfSpecification() {
+            return pdfSpecification;
         }
 
         /**
@@ -307,7 +342,9 @@ public enum PDFAFlavour {
         /** Level F */
         F(PDFAFlavours.LEVEL_F_CODE, PDFAFlavours.LEVEL_F_NAME),
         /** Level E */
-        E(PDFAFlavours.LEVEL_E_CODE, PDFAFlavours.LEVEL_E_NAME);
+        E(PDFAFlavours.LEVEL_E_CODE, PDFAFlavours.LEVEL_E_NAME),
+        ACCESSIBILITY(PDFAFlavours.LEVEL_ACCESSIBILITY, PDFAFlavours.LEVEL_ACCESSIBILITY),
+        REUSE(PDFAFlavours.LEVEL_REUSE, PDFAFlavours.LEVEL_REUSE);
 
         private final String code;
         private final String name;
@@ -388,6 +425,7 @@ public enum PDFAFlavour {
         NONE(PDFAFlavours.NONE),
         PDF_A(PDFAFlavours.PDFA),
         PDF_UA(PDFAFlavours.PDFUA),
+        WTPDF(PDFAFlavours.WTPDF),
         TAGGED_PDF(PDFAFlavours.TAGGED_PDF),
         WCAG(PDFAFlavours.WCAG);
         
@@ -400,6 +438,13 @@ public enum PDFAFlavour {
         public String getFamily() {
             return family;
         }
+    }
+    
+    public enum PDFSpecification {
+        NO_SPECIFICATION,
+        PDF_REFERENCE_1_4,
+        ISO_32000_1_7,
+        ISO_32000_2_0
     }
     
 
