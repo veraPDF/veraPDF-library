@@ -665,7 +665,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO 14289-2:2014" clause="8.4.5.8"/>
+                <reference specification="ISO 14289-2:2024" clause="8.4.5.8"/>
                 <reference specification="ISO 32000-2:2020" clause="9.10.3"/>
             </references>
         </rule>
