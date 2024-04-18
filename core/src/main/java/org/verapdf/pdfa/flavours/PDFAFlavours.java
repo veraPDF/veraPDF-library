@@ -38,6 +38,7 @@ public final class PDFAFlavours {
     static final String ARLINGTON_2 = "ARLINGTON2"; //$NON-NLS-1$
     static final String PDFA = "PDF/A"; //$NON-NLS-1$
     static final String PDFUA = "PDF/UA"; //$NON-NLS-1$
+    static final String WTPDF = "WTPDF"; //$NON-NLS-1$
     static final String TAGGED_PDF = "Tagged PDF"; //$NON-NLS-1$
     static final String WCAG_2_1 = "WCAG2.1"; //$NON-NLS-1$
     static final String WCAG_2_2 = "WCAG2.2"; //$NON-NLS-1$
@@ -46,10 +47,13 @@ public final class PDFAFlavours {
     public static final float VERSION_1_4 = 1.4f;
     public static final float VERSION_1_7 = 1.7f;
     static final String PDFUA_PREFIX = "ua"; //$NON-NLS-1$
-    static final String WCAG2_1_PREFIX = "wcag"; //$NON-NLS-1$
+    static final String WCAG_PREFIX = "wcag"; //$NON-NLS-1$
+    static final String WTPDF_PREFIX = "wt"; //$NON-NLS-1$
     static final String ISO = "ISO"; //$NON-NLS-1$
     static final String ISO_PREFIX = ISO + " "; //$NON-NLS-1$
     static final int NONE_ID = 0;
+    static final Integer NONE_PART = null;
+    static final Integer NONE_SUBPART = null;
     static final int ISO_14289_ID = 14289;
     static final int ISO_19005_ID = 19005;
     static final int ISO_32000_ID = 32000;
@@ -68,6 +72,7 @@ public final class PDFAFlavours {
     static final String ISO_32005_DESCRIPTION = "Document management -- Portable document format -- PDF 1.7 and 2.0 structure namespace inclusion in ISO 32000-2"; //$NON-NLS-1$// fix
     static final String WCAG_2_1_DESCRIPTION = "Web Content Accessibility Guidelines 2.1"; //$NON-NLS-1$
     static final String WCAG_2_2_DESCRIPTION = "Web Content Accessibility Guidelines 2.2"; //$NON-NLS-1$
+    static final String WTPDF_1_0_DESCRIPTION = "Using Tagged PDF for Accessibility and Reuse in PDF 2.0"; //$NON-NLS-1$
     static final int ISO_19005_1_PART = 1;
     static final int ISO_19005_2_PART = 2;
     static final int ISO_19005_3_PART = 3;
@@ -75,12 +80,19 @@ public final class PDFAFlavours {
     static final int ISO_14289_1_PART = 1;
     static final int ISO_14289_2_PART = 2;
     static final int WCAG_2_1_PART = 2;
+    static final int WCAG_2_1_SUBPART = 1;
     static final int WCAG_2_2_PART = 2;
+    static final int WCAG_2_2_SUBPART = 2;
+    static final int WTPDF_1_0_PART = 1;
+    static final int WTPDF_1_0_SUBPART = 0;
     static final String LEVEL_A_CODE = "a"; //$NON-NLS-1$
     static final String LEVEL_B_CODE = "b"; //$NON-NLS-1$
     static final String LEVEL_U_CODE = "u"; //$NON-NLS-1$
     static final String LEVEL_E_CODE = "e"; //$NON-NLS-1$
     static final String LEVEL_F_CODE = "f"; //$NON-NLS-1$
+
+    static final String LEVEL_REUSE = "Reuse"; //$NON-NLS-1$
+    static final String LEVEL_ACCESSIBILITY = "Accessibility"; //$NON-NLS-1$
     static final String LEVEL_A_NAME = "accessible"; //$NON-NLS-1$
     static final String LEVEL_B_NAME = "basic"; //$NON-NLS-1$
     static final String LEVEL_U_NAME = "unicode"; //$NON-NLS-1$
@@ -88,6 +100,7 @@ public final class PDFAFlavours {
     static final String LEVEL_F_NAME = "embedded files"; //$NON-NLS-1$
     static final String ISO_14289_1_YEAR = "2014"; //$NON-NLS-1$
     static final String ISO_14289_2_YEAR = "2024"; //$NON-NLS-1$
+    static final String WTPDF_1_0_YEAR = "2024"; //$NON-NLS-1$
     static final String ISO_19005_1_YEAR = "2005"; //$NON-NLS-1$
     static final String ISO_19005_2_YEAR = "2011"; //$NON-NLS-1$
     static final String ISO_19005_3_YEAR = "2012"; //$NON-NLS-1$

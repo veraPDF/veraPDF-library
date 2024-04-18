@@ -37,6 +37,7 @@ import javax.xml.bind.JAXBException;
 import org.verapdf.core.Directory;
 import org.verapdf.core.MapBackedDirectory;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFFlavours;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -158,9 +159,24 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
     
     private static String getProfilePath(PDFAFlavour flavour) {
         StringBuilder profilePath = new StringBuilder();
-        profilePath.append(PROFILE_RESOURCE_ROOT).append(flavour.getPart().getFamily().getFamily().replace("/", "") //$NON-NLS-1$
-        ).append("-").append(flavour.getPart().getPartNumber()).append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
-        if (flavour == PDFAFlavour.PDFUA_2) {
+        profilePath.append(PROFILE_RESOURCE_ROOT);
+
+        profilePath.append(flavour.getPart().getFamily().getFamily().replace("/", "")); //$NON-NLS-1$
+        if (flavour.getPart().getFamily() != PDFAFlavour.SpecificationFamily.ARLINGTON) {
+            profilePath.append("-"); //$NON-NLS-1$
+        }
+        profilePath.append(flavour.getPart().getPartNumber());
+        if (flavour.getPart().getSubpartNumber() != null) {
+            profilePath.append("-"); //$NON-NLS-1$
+            profilePath.append(flavour.getPart().getSubpartNumber());
+        }
+        if (PDFFlavours.isWTPDFFlavour(flavour)) {
+            profilePath.append("-"); //$NON-NLS-1$
+            profilePath.append(flavour.getLevel().getCode());
+        } else {
+            profilePath.append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
+        }
+        if (PDFFlavours.isFlavour(flavour, PDFAFlavour.PDFUA_2)) {
             profilePath.append("-").append("ISO32005");
         }
         profilePath.append(XML_SUFFIX);
