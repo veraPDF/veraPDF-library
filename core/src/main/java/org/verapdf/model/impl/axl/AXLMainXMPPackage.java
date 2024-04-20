@@ -107,4 +107,13 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         }
         return null;
     }
+
+    @Override
+    public String getdeclarations() {
+        VeraPDFMeta xmpMetadata = this.getXmpMetadata();
+        if (xmpMetadata != null) {
+            return String.join(",", xmpMetadata.getDeclarations());
+        }
+        return null;
+    }
 }
