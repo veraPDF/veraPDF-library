@@ -25,6 +25,9 @@ public class VeraPDFMeta {
     public static final String REVISION_YEAR = "rev";
     public static final String CORR = "corr";
     public static final String AMD = "amd";
+    public static final String DECLARATIONS = "declarations";
+    public static final String CONFORMS_TO = "conformsTo";
+    public static final String PDFA_DECLARATIONS = "http://pdfa.org/declarations/";
 
     private final XMPMetaImpl meta;
     private VeraPDFXMPNode extensionSchemasNode;
@@ -326,6 +329,37 @@ public class VeraPDFMeta {
         } catch (NumberFormatException e) {
             throw new XMPException("Property part of PDF/UA Identification schema contains not integer value", XMPError.BADVALUE, e);
         }
+    }
+
+    public Set<String> getDeclarations() {
+        Set<String> declarationsSet = new HashSet<>();
+        VeraPDFXMPNode property = getProperty(PDFA_DECLARATIONS, DECLARATIONS);
+        if (property != null) {
+            List<VeraPDFXMPNode> declarations = property.getChildren();
+            for (VeraPDFXMPNode declaration : declarations) {
+                for (VeraPDFXMPNode node : declaration.getChildren()) {
+                    if (CONFORMS_TO.equals(node.getName())) {
+                        declarationsSet.add(node.getValue());
+                    }
+                }
+            }
+        }
+        return declarationsSet;
+    }
+
+    public boolean containsDeclaration(String conformsTo) {
+        VeraPDFXMPNode property = getProperty(PDFA_DECLARATIONS, DECLARATIONS);
+        if (property != null) {
+            List<VeraPDFXMPNode> declarations = property.getChildren();
+            for (VeraPDFXMPNode declaration : declarations) {
+                for (VeraPDFXMPNode node : declaration.getChildren()) {
+                    if (CONFORMS_TO.equals(node.getName()) && conformsTo.equals(node.getValue())) {
+                        return true;
+                    }
+                }
+            } 
+        }
+        return false;
     }
 
     public VeraPDFMeta setPDFAIdentificationPart(Integer identificationPart) throws XMPException {
