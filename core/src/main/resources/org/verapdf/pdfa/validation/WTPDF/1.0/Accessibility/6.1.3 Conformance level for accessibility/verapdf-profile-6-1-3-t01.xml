@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="WTPDF_1_0_ACCESSIBILITY">
+    <details creator="veraPDF Consortium" created="2024-02-15T10:58:04.766+03:00">
+        <name>WTPDF 1.0 - 6.1.3 Conformance level for accessibility - PDF Declaration</name>
+        <description>File conforming to the WTPDF 1.0 conformance level for accessibility shall include a PDF Declaration with the URI
+            identifier "http://pdfa.org/declarations/wtpdf/#accessibility1.0" as its pdfd:conformsTo entry</description>
+    </details>
+    <hash></hash>
+    <rules>
+        <rule object="MainXMPPackage" tags="metadata">
+            <id specification="WTPDF_1_0" clause="6.1.3" testNumber="1"/>
+            <description>File conforming to the WTPDF 1.0 conformance level for accessibility shall include a PDF Declaration with the URI
+                identifier "http://pdfa.org/declarations/wtpdf/#accessibility1.0" as its pdfd:conformsTo entry</description>
+            <test>declarations.split(',').filter(declarations =&gt; declarations == 'http://pdfa.org/declarations/wtpdf#accessibility1.0').length == 1</test>
+            <error>
+                <message>File conforming to the WTPDF 1.0 conformance level for accessibility doesn't include a PDF Declaration with the URI
+                    identifier "http://pdfa.org/declarations/wtpdf/#accessibility1.0" as its pdfd:conformsTo entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+    </rules>
+    <variables/>
+</profile>

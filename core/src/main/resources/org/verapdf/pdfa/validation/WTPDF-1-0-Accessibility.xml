@@ -1,0 +1,1077 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="WTPDF_1_0_ACCESSIBILITY">
+    <details creator="veraPDF Consortium" created="2024-04-07T14:37:52.486+03:00">
+        <name>WTPDF 1.0 Accessibility validation profile</name>
+        <description>Validation rules against WTPDF 1.0 Accessibility</description>
+    </details>
+    <hash></hash>
+    <rules>
+        <rule object="MainXMPPackage" tags="metadata">
+            <id specification="WTPDF_1_0" clause="6.1.3" testNumber="1"/>
+            <description>File conforming to the WTPDF 1.0 conformance level for accessibility shall include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf/#accessibility1.0" as its pdfd:conformsTo entry</description>
+            <test>declarations.split(',').filter(declarations =&gt; declarations == 'http://pdfa.org/declarations/wtpdf#accessibility1.0').length == 1</test>
+            <error>
+                <message>File conforming to the WTPDF 1.0 conformance level for accessibility doesn't include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf/#accessibility1.0" as its pdfd:conformsTo entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDDocument" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.1" testNumber="1"/>
+            <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-2:2020, 14.7</description>
+            <test>StructTreeRoot_size == 1</test>
+            <error>
+                <message>StructTreeRoot entry is not present in the document catalog</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.7"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.1" testNumber="2"/>
+            <description>A structure element dictionary shall contain the P (parent) entry according to ISO 32000-2:2020, 14.7.2, Table 323</description>
+            <test>containsParent == true</test>
+            <error>
+                <message>A structure element dictionary does not contain the P (parent) entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.7.2, Table 323"/>
+            </references>
+        </rule>
+        <rule object="SESimpleContentItem" tags="artifact">
+            <id specification="WTPDF_1_0" clause="8.2.2" testNumber="1"/>
+            <description>Content that is not considered real shall be an artifact</description>
+            <test>isTaggedContent == true || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <error>
+                <message>Content is neither marked as Artifact nor tagged as real content</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SENonStandard" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.4" testNumber="1"/>
+            <description>All structure elements shall belong to, or be role mapped to, at least one of the following namespaces specified in ISO 32000-2:2020, 14.8.6: — the PDF 1.7 namespace; — the PDF 2.0 namespace; — the MathML namespace</description>
+            <test>isNotMappedToStandardType == false</test>
+            <error>
+                <message>Non-standard structure type %1 is not mapped to a standard type</message>
+                <arguments>
+                    <argument>valueS</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.8.6"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.4" testNumber="2"/>
+            <description>A circular mapping shall not exist</description>
+            <test>circularMappingExist != true</test>
+            <error>
+                <message>A circular mapping exists for %1 structure type</message>
+                <arguments>
+                    <argument>valueS</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDStructElem" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.4" testNumber="3"/>
+            <description>Within a given explicitly provided namespace, structure types shall not be role mapped to other structure types in the same namespace</description>
+            <test>roleMapToSameNamespaceTag == null</test>
+            <error>
+                <message>Structure type %1 is role mapped to other structure type in the same namespace</message>
+                <arguments>
+                    <argument>roleMapToSameNamespaceTag</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SENonStandard" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.4" testNumber="4"/>
+            <description>All structure elements shall belong to, or be role mapped to, at least one of the following namespaces specified in ISO 32000-2:2020, 14.8.6: — the PDF 1.7 namespace; — the PDF 2.0 namespace; — the MathML namespace</description>
+            <test>remappedStandardType == null</test>
+            <error>
+                <message>The standard structure type %1 is remapped to a non-standard type</message>
+                <arguments>
+                    <argument>remappedStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.8.6"/>
+            </references>
+        </rule>
+        <rule object="PDStructTreeRoot" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.2" testNumber="1"/>
+            <description>The structure tree root shall contain a single Document structure element as its only child, as specified in ISO 32000-2:2020, Annex L and ISO/TS 32005</description>
+            <test>kidsStandardTypes == 'Document'</test>
+            <error>
+                <message>The structure tree root contains %1 element(s) instead of a single Document structure element</message>
+                <arguments>
+                    <argument>kidsStandardTypes.replaceAll('&amp;', ',')</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.7.2"/>
+                <reference specification="ISO 32000-2:2020" clause="14.8.6"/>
+                <reference specification="ISO 32000-2:2020" clause="Annex L"/>
+                <reference specification="ISO/TS 32005" clause="clause"/>
+            </references>
+        </rule>
+        <rule object="PDStructTreeRoot" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.2" testNumber="2"/>
+            <description>The structure tree root shall contain a single Document structure element as its only child. The namespace for that element shall be specified as the PDF 2.0 namespace</description>
+            <test>kidsStandardTypes != 'Document' || firstChildStandardTypeNamespaceURL == 'http://iso.org/pdf2/ssn'</test>
+            <error>
+                <message>The structure tree root contains a single Document structure element, but this element is not within the PDF 2.0 namespace (namespace URI = %1)</message>
+                <arguments>
+                    <argument>firstChildStandardTypeNamespaceURL</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.7.2"/>
+                <reference specification="ISO 32000-2:2020" clause="14.8.6"/>
+                <reference specification="ISO 32000-2:2020" clause="Annex L"/>
+                <reference specification="ISO/TS 32005" clause="clause"/>
+            </references>
+        </rule>
+        <rule object="SETOCI" tags="structure,toc">
+            <id specification="WTPDF_1_0" clause="8.2.5.8" testNumber="1"/>
+            <description>Each TOCI in the table of contents shall identify the target of the reference using the Ref entry, either directly on the TOCI structure element itself or on one of its child structure elements</description>
+            <test>containsRef == true</test>
+            <error>
+                <message>TOCI in the TOC does not contain the Ref entry, neither directly on the TOCI structure element itself nor on its descendant structure elements</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEH" tags="structure,heading">
+            <id specification="WTPDF_1_0" clause="8.2.5.12" testNumber="1"/>
+            <description>Conforming files shall not use the H structure type</description>
+            <test>false</test>
+            <error>
+                <message>Document uses H structure type</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SENote" tags="structure,note">
+            <id specification="WTPDF_1_0" clause="8.2.5.14" testNumber="1"/>
+            <description>The Note standard structure type shall not be present in conforming documents unless role mapped to a structure element in the PDF 2.0 namespace</description>
+            <test>false</test>
+            <error>
+                <message>Document uses Note structure type</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEFENote" deferred="true" tags="structure,note">
+            <id specification="WTPDF_1_0" clause="8.2.5.14" testNumber="2"/>
+            <description>Real content that refers to footnotes or endnotes (real content enclosed in FENote structure elements) shall use the Ref entry on the referring structure element to reference the FENote. The corresponding FENote shall also use the Ref entry to identify all citations that reference it</description>
+            <test>orphanRefs == null</test>
+            <error>
+                <message>Ref entry in the FENote does not reference structure elements with object numbers %1, while these structure elements reference this FENote</message>
+                <arguments>
+                    <argument>orphanRefs</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEFENote" deferred="true" tags="structure,note">
+            <id specification="WTPDF_1_0" clause="8.2.5.14" testNumber="3"/>
+            <description>Real content that refers to footnotes or endnotes (real content enclosed in FENote structure elements) shall use the Ref entry on the referring structure element to reference the FENote. The corresponding FENote shall also use the Ref entry to identify all citations that reference it</description>
+            <test>ghostRefs == null</test>
+            <error>
+                <message>Ref entry in the FENote reference structure elements with object numbers %1, while these structure elements do not reference this FENote</message>
+                <arguments>
+                    <argument>ghostRefs</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEFENote" tags="structure,note">
+            <id specification="WTPDF_1_0" clause="8.2.5.14" testNumber="4"/>
+            <description>The value of the NoteType attribute of the FENote structure element shall be Footnote, Endnote or None</description>
+            <test>NoteType == 'Footnote' || NoteType == 'Endnote' || NoteType == 'None'</test>
+            <error>
+                <message>NoteType attribute of the FENote structure element has value %1 instead of Footnote, Endnote or None</message>
+                <arguments>
+                    <argument>NoteType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDLinkAnnot" tags="annotation,structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.20" testNumber="1"/>
+            <description>A link annotation and its associated content shall be enclosed in either a Link or Reference structure element</description>
+            <test>structParentStandardType == 'Link' || structParentStandardType == 'Reference'</test>
+            <error>
+                <message>A Link annotation is an Artifact or is nested within %1 tag (standard type = %2) instead of Link or Reference</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDLinkAnnot" tags="annotation">
+            <id specification="WTPDF_1_0" clause="8.2.5.20" testNumber="2"/>
+            <description>Link annotations that target different locations shall be in separate Link or Reference structure elements</description>
+            <test>differentTargetAnnotObjectKey == null</test>
+            <error>
+                <message>Struct element %1 contains Link annotations %1 and %2 that target different locations</message>
+                <arguments>
+                    <argument>structParentObjectKey</argument>
+                    <argument>objectKey</argument>
+                    <argument>differentTargetAnnotObjectKey</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDLinkAnnot" tags="annotation,structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.20" testNumber="3"/>
+            <description>Multiple link annotations shall be included in a single Link or Reference structure element if they target the same location and are semantically perceived to be a single link</description>
+            <test>sameTargetAnnotObjectKey == null</test>
+            <error>
+                <message>Annotations %1 and %2 target the same location, but are included into different structure elements</message>
+                <arguments>
+                    <argument>objectKey</argument>
+                    <argument>sameTargetAnnotObjectKey</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SERuby" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.23" testNumber="1"/>
+            <description>A Ruby structure element shall contain a single RB structure element and a single RT structure element or a Ruby structure element shall consist of a four-element subsequence: RB, RP, RT, RP</description>
+            <test>kidsStandardTypes == 'RB&amp;RT' || kidsStandardTypes == 'RB&amp;RP&amp;RT&amp;RP'</test>
+            <error>
+                <message>The Ruby structure element has invalid sequence of children: %1</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').toString()</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEWarichu" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.24" testNumber="1"/>
+            <description>Content typeset as warichu shall be tagged in a three-element sequence consisting of the structure elements WP, WT and WP, grouped inside a Warichu structure element</description>
+            <test>kidsStandardTypes == 'WP&amp;WT&amp;WP'</test>
+            <error>
+                <message>The Warichu structure element has invalid sequence of children: %1</message>
+                <arguments>
+                    <argument>kidsStandardTypes.split('&amp;').toString()</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEL" tags="structure,list">
+            <id specification="WTPDF_1_0" clause="8.2.5.25" testNumber="1"/>
+            <description>If Lbl structure elements are present, the ListNumbering attribute shall be present on the respective L structure element; in such cases the value None shall not be used</description>
+            <test>containsLabels == false || ListNumbering != 'None'</test>
+            <error>
+                <message>List items contain Lbl structure elements, but the ListNumbering attribute is not present on the respective L structure element or it has value None</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="WTPDF 1.0" clause="Annex B, 2"/>
+            </references>
+        </rule>
+        <rule object="SELI" tags="structure,list">
+            <id specification="WTPDF_1_0" clause="8.2.5.25" testNumber="2"/>
+            <description>Any real content within an LI structure element that is not enclosed in an Lbl structure element shall be enclosed in an LBody structure element</description>
+            <test>hasContentItems == false</test>
+            <error>
+                <message>The LI structure element contains real content as its direct child instead of enclosing it into Lbl or LBody structure elements</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETableCell" tags="structure,table">
+            <id specification="WTPDF_1_0" clause="8.2.5.26" testNumber="1"/>
+            <description>Tables shall be regular. A table cell shall not have intersection with other cells</description>
+            <test>hasIntersection != true</test>
+            <error>
+                <message>Table cell has intersection with other cells</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETable" tags="structure,table">
+            <id specification="WTPDF_1_0" clause="8.2.5.26" testNumber="2"/>
+            <description>Tables shall be regular. Row groupings formed by THead, TBody and TFoot structure elements shall be regular. Table columns shall have the same number of rows (taking into account row spans) in table and each row groupings formed by THead, TBody and TFoot structure elements</description>
+            <test>numberOfColumnWithWrongRowSpan == null</test>
+            <error>
+                <message>Columns 1 and %1 span different number of rows in table, or within one of row groupings formed by THead, TBody and TFoot structure elements</message>
+                <arguments>
+                    <argument>numberOfColumnWithWrongRowSpan + 1</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETable" tags="structure,table">
+            <id specification="WTPDF_1_0" clause="8.2.5.26" testNumber="3"/>
+            <description>Tables shall be regular. Table rows shall have the same number of columns (taking into account column spans)</description>
+            <test>numberOfRowWithWrongColumnSpan == null || wrongColumnSpan != null</test>
+            <error>
+                <message>Table rows 1 and %1 span different number of columns</message>
+                <arguments>
+                    <argument>numberOfRowWithWrongColumnSpan + 1</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETable" tags="structure,table">
+            <id specification="WTPDF_1_0" clause="8.2.5.26" testNumber="4"/>
+            <description>Tables shall be regular. Table rows shall have the same number of columns (taking into account column spans)</description>
+            <test>numberOfRowWithWrongColumnSpan == null || wrongColumnSpan == null</test>
+            <error>
+                <message>Table rows 1 and %1 span different number of columns (%2 and %3 respectively)</message>
+                <arguments>
+                    <argument>numberOfRowWithWrongColumnSpan + 1</argument>
+                    <argument>columnSpan</argument>
+                    <argument>wrongColumnSpan</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SETD" tags="structure,table">
+            <id specification="WTPDF_1_0" clause="8.2.5.26" testNumber="5"/>
+            <description>When a table contains header cells, that table shall provide sufficient semantic information to allow accurate determination of which of its table header cells (structure element TH) pertain to other cells as specified in ISO 32000-2:2020, 14.8.5.7</description>
+            <test>hasConnectedHeader != false || unknownHeaders != ''</test>
+            <error>
+                <message>TD does not contain Headers attribute, and Headers for this table cell cannot be determined algorithmically</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.8.4.8.3"/>
+                <reference specification="ISO 32000-2:2020" clause="14.8.5.7"/>
+            </references>
+        </rule>
+        <rule object="SETD" tags="structure,table">
+            <id specification="WTPDF_1_0" clause="8.2.5.26" testNumber="6"/>
+            <description>When a table contains header cells, that table shall provide sufficient semantic information to allow accurate determination of which of its table header cells (structure element TH) pertain to other cells as specified in ISO 32000-2:2020, 14.8.5.7</description>
+            <test>hasConnectedHeader != false || unknownHeaders == ''</test>
+            <error>
+                <message>TD references undefined Header(s) %1, and Headers for this table cell cannot be determined algorithmically</message>
+                <arguments>
+                    <argument>unknownHeaders</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.8.4.8.3"/>
+                <reference specification="ISO 32000-2:2020" clause="14.8.5.7"/>
+            </references>
+        </rule>
+        <rule object="PDStructElem" tags="structure,caption">
+            <id specification="WTPDF_1_0" clause="8.2.5.27" testNumber="1"/>
+            <description>When present, the Caption element shall be the first or the last child of the structure element</description>
+            <test>kidsStandardTypes.indexOf('&amp;Caption&amp;') &lt; 0</test>
+            <error>
+                <message>Structure element %1 contains Caption as its %2 child instead of first or last one</message>
+                <arguments>
+                    <argument>objectKey</argument>
+                    <argument>kidsStandardTypes.split('&amp;').slice(1).findIndex(elem =&gt; elem == 'Caption') + 2</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEFigure" tags="structure,figure,alt-text">
+            <id specification="WTPDF_1_0" clause="8.2.5.28.2" testNumber="1"/>
+            <description>A Figure structure element shall have at least one of the following properties: a) an alternate description (Alt property), as specified in ISO 32000-2:2020, 14.9.3; b) a replacement text (ActualText property) that represents the content enclosed by the Figure structure element</description>
+            <test>Alt != null || ActualText != null</test>
+            <error>
+                <message>Figure structure element neither has an alternate description nor a replacement text</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.9.3"/>
+            </references>
+        </rule>
+        <rule object="SEMathMLStructureElement" tags="structure">
+            <id specification="WTPDF_1_0" clause="8.2.5.29" testNumber="1"/>
+            <description>The math structure type shall occur only as a child of a Formula structure element</description>
+            <test>parentStandardType == 'Formula' || parentStandardType == 'MathML'</test>
+            <error>
+                <message>The math structure type is nested within %1 tag instead of Formula</message>
+                <arguments>
+                    <argument>parentStandardType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph" tags="text,alt-text">
+            <id specification="WTPDF_1_0" clause="8.4.3" testNumber="1"/>
+            <description>In all cases, where real content maps to Unicode PUA values, an ActualText or Alt entry shall be present</description>
+            <test>isRealContent == false || unicodePUA == false || actualTextPresent == true || altPresent == true</test>
+            <error>
+                <message>Real content maps to Unicode PUA values, but ActualText and Alt entry are not present</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosActualText" tags="alt-text">
+            <id specification="WTPDF_1_0" clause="8.4.3" testNumber="2"/>
+            <description>The ActualText entry shall not contain any PUA values</description>
+            <test>containsPUA == false</test>
+            <error>
+                <message>The ActualText entry contains Unicode PUA (Private Use Area) code points</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosAlt" tags="alt-text">
+            <id specification="WTPDF_1_0" clause="8.4.3" testNumber="3"/>
+            <description>The Alt entry shall not contain any PUA values</description>
+            <test>containsPUA == false</test>
+            <error>
+                <message>The Alt entry contains Unicode PUA (Private Use Area) code points</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDDocument" tags="lang">
+            <id specification="WTPDF_1_0" clause="8.4.4" testNumber="1"/>
+            <description>The default natural language for content and text strings shall be specified using the Lang entry, with a non-empty value, in the catalog dictionary</description>
+            <test>Lang_size &gt; 0</test>
+            <error>
+                <message>Catalog dictionary does not contain Lang entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosLang" tags="lang">
+            <id specification="WTPDF_1_0" clause="8.4.4" testNumber="2"/>
+            <description>If the Lang entry is present in the document's Catalog dictionary or in a structure element dictionary or property list, its value shall be a language identifier as described in ISO 32000-2:2020, 14.9.2. A language identifier shall be a Language-Tag as defined in RFC 3066, Tags for the Identification of Languages</description>
+            <test>/^[a-zA-Z]{1,8}(-[a-zA-Z0-9]{1,8})*$/.test(unicodeValue)</test>
+            <error>
+                <message>Value %1 of the Lang entry is not a Language-Tag</message>
+                <arguments>
+                    <argument>unicodeValue</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.9.2"/>
+                <reference specification="RFC 3066" clause="2.1"/>
+            </references>
+        </rule>
+        <rule object="PDType0Font" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.3.1" testNumber="1"/>
+            <description>For any given composite (Type 0) font within a conforming file, the CIDSystemInfo entry in its CIDFont dictionary and its Encoding dictionary shall have the following relationship: - If the Encoding key in the Type 0 font dictionary has a value of Identity-H or Identity-V, then any values for the Registry, Ordering, and Supplement keys may be used in the CIDSystemInfo dictionary of the CIDFont. - Otherwise the corresponding values of the Registry and Ordering keys in both CIDSystemInfo dictionaries shall be identical, and the value of the Supplement key in the CIDSystemInfo dictionary of the CIDFont shall be less than or equal to the value of the Supplement key in the CIDSystemInfo dictionary of the CMap</description>
+            <test>cmapName == "Identity-H" || cmapName == "Identity-V" || (CIDFontOrdering != null &amp;&amp; CIDFontOrdering == CMapOrdering &amp;&amp; CIDFontRegistry != null &amp;&amp; CIDFontRegistry == CMapRegistry &amp;&amp; CIDFontSupplement != null &amp;&amp; CMapSupplement != null &amp;&amp; CIDFontSupplement &lt;= CMapSupplement)</test>
+            <error>
+                <message>CIDSystemInfo entries the CIDFont and CMap dictionaries of a Type 0 font are not compatible (CIDSystemInfo Ordering = %1, CMap Ordering = %2, CIDSystemInfo Registry = %3, CMap Registry = %4, CIDSystemInfo Supplement = %5, CMap Supplement = %6)</message>
+                <arguments>
+                    <argument>CIDFontOrdering</argument>
+                    <argument>CMapOrdering</argument>
+                    <argument>CIDFontRegistry</argument>
+                    <argument>CMapRegistry</argument>
+                    <argument>CIDFontSupplement</argument>
+                    <argument>CMapSupplement</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDCIDFont" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.3.2" testNumber="1"/>
+            <description>All embedded Type 2 CIDFonts in the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-2:2020, Table 115</description>
+            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || fontFile_size == 0</test>
+            <error>
+                <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.7.4, Table 115"/>
+            </references>
+        </rule>
+        <rule object="PDCMap" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.4" testNumber="1"/>
+            <description>All CMaps used within a file that conforms to WTPDF 1.0, except those listed in ISO 32000-2:2020, Table 116, shall be embedded in that file, as described in ISO 32000-2:2020, 9.7.5</description>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || embeddedFile_size == 1</test>
+            <error>
+                <message>A non-standard CMap %1 is not embedded</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.7.5.2, Table 116"/>
+            </references>
+        </rule>
+        <rule object="CMapFile" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.4" testNumber="2"/>
+            <description>For those CMaps that are embedded, the integer value of the WMode entry in the CMap dictionary shall be identical to the WMode value in the embedded CMap stream</description>
+            <test>WMode == dictWMode</test>
+            <error>
+                <message>WMode entry (value %1) in the embedded CMap and in the CMap dictionary (value %2) are not identical</message>
+                <arguments>
+                    <argument>WMode</argument>
+                    <argument>dictWMode</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDReferencedCMap" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.4" testNumber="3"/>
+            <description>A CMap shall not reference any other CMap except those listed in ISO 32000-2:2020, 9.7.5.2 Table 116</description>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V"</test>
+            <error>
+                <message>A CMap references another non-standard CMap %1</message>
+                <arguments>
+                    <argument>CMapName</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.7.5.2, Table 116"/>
+            </references>
+        </rule>
+        <rule object="PDFont" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.5.1" testNumber="1"/>
+            <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-2:2020, 9.9</description>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <error>
+                <message>The font program is not embedded</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.9"/>
+            </references>
+        </rule>
+        <rule object="Glyph" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.5.1" testNumber="2"/>
+            <description>Embedded fonts shall define all glyphs referenced for rendering within the conforming file. A font referenced solely in text rendering mode 3 is not rendered and is thus exempt from the requirements that impact the visual representation of the glyphs of a font. In all cases for TrueType fonts that are to be rendered, character codes shall be able to be mapped to glyphs in accordance with ISO 32000-2:2020, 9.6.5, without the use of a non-standard mapping chosen by the conforming processor</description>
+            <test>renderingMode == 3 || isGlyphPresent == null || isGlyphPresent == true</test>
+            <error>
+                <message>Not all glyphs referenced for rendering are present in the embedded font program</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.3.6"/>
+                <reference specification="ISO 32000-2:2020" clause="9.6.5"/>
+            </references>
+        </rule>
+        <rule object="Glyph" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.6" testNumber="1"/>
+            <description>For every font embedded in a conforming file and referenced for rendering, the glyph width information in the font dictionary and in the embedded font program shall be consistent for every glyph</description>
+            <test>renderingMode == 3 || widthFromFontProgram == null || widthFromDictionary == null || Math.abs(widthFromFontProgram - widthFromDictionary) &lt;= 1</test>
+            <error>
+                <message>Glyph width %1 in the embedded font program is not consistent with the Widths entry of the font dictionary (value %2)</message>
+                <arguments>
+                    <argument>widthFromFontProgram</argument>
+                    <argument>widthFromDictionary</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="TrueTypeFontProgram" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.7" testNumber="1"/>
+            <description>For all non-symbolic TrueType fonts used for rendering, the embedded TrueType font program shall contain at least Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1), or Macintosh Roman (1,0 – Platform ID=1, Encoding ID=0) 'cmap' subtable</description>
+            <test>isSymbolic == true || cmap31Present == true || cmap10Present == true</test>
+            <error>
+                <message>The embedded font program for a non-symbolic TrueType font does not contain Microsoft Symbol (3,1 – Platform ID=3, Encoding ID=1) or the Mac Roman (1,0 – Platform ID=1, Encoding ID=0) encoding</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDTrueTypeFont" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.7" testNumber="2"/>
+            <description>All non-symbolic TrueType fonts shall have either MacRomanEncoding or WinAnsiEncoding as the value for the Encoding key in the Font dictionary or as the value for the BaseEncoding key in the dictionary which is the value of the Encoding key in the Font dictionary. In addition, no non-symbolic TrueType font shall define a Differences array unless all of the glyph names in the Differences array are listed in the Adobe Glyph List and the embedded font program contains at least the Microsoft Unicode (3,1 – Platform ID=3, Encoding ID=1) encoding in the 'cmap' table</description>
+            <test>isSymbolic == true || ((Encoding == "MacRomanEncoding" || Encoding == "WinAnsiEncoding") &amp;&amp; (containsDifferences == false || differencesAreUnicodeCompliant == true))</test>
+            <error>
+                <message>A non-symbolic TrueType font encoding does not define a correct mapping to the Adobe Glyph List (Encoding = %1, Encoding entry contains a Differences = %2, Differences are Unicode compliant = %3)</message>
+                <arguments>
+                    <argument>Encoding</argument>
+                    <argument>containsDifferences</argument>
+                    <argument>differencesAreUnicodeCompliant</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDTrueTypeFont" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.7" testNumber="3"/>
+            <description>Symbolic TrueType fonts shall not contain an Encoding entry in the font dictionary</description>
+            <test>isSymbolic == false || Encoding == null</test>
+            <error>
+                <message>A symbolic TrueType font specifies an Encoding entry in its dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="TrueTypeFontProgram" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.7" testNumber="4"/>
+            <description>The 'cmap' subtable in the embedded font program shall either contain the Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) or the Mac Roman (1,0 – Platform ID=1, Encoding ID=1) encoding</description>
+            <test>isSymbolic == false || cmap30Present == true || cmap10Present == true</test>
+            <error>
+                <message>The embedded font program for a symbolic TrueType font does not contain Microsoft Symbol (3,0 – Platform ID=3, Encoding ID=0) or the Mac Roman (1,0 – Platform ID=1, Encoding ID=0) encoding</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.8" testNumber="1"/>
+            <description>The Font dictionary of all fonts shall define the map of all used character codes to Unicode values, either via a ToUnicode entry, or other mechanisms as defined in WTPDF 1.0, 8.4.5.8</description>
+            <test>toUnicode != null</test>
+            <error>
+                <message>The glyph can not be mapped to Unicode</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="WTPDF 1.0" clause="8.4.5.8"/>
+                <reference specification="ISO 32000-2:2020" clause="9.10.3"/>
+            </references>
+        </rule>
+        <rule object="Glyph" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.8" testNumber="2"/>
+            <description> If a ToUnicode CMap is present, the Unicode values it specifies shall all be greater than zero (0), but not equal to either U+FEFF or U+FFFE</description>
+            <test>toUnicode == null || (toUnicode.indexOf("\u0000") == -1 &amp;&amp; toUnicode.indexOf("\uFFFE") == -1 &amp;&amp; toUnicode.indexOf("\uFEFF") == -1)</test>
+            <error>
+                <message>The glyph has Unicode value 0, U+FEFF or U+FFFE, which is invalid by Unicode standard</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="Glyph" tags="font">
+            <id specification="WTPDF_1_0" clause="8.4.5.9" testNumber="1"/>
+            <description>A file in conformance with WTPDF 1.0 shall not contain a reference to the .notdef glyph from any of the text showing operators, regardless of text rendering mode, in any content stream</description>
+            <test>name != ".notdef"</test>
+            <error>
+                <message>The document contains a reference to the .notdef glyph</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="9.7.6.3"/>
+            </references>
+        </rule>
+        <rule object="CosTextString" tags="text">
+            <id specification="WTPDF_1_0" clause="8.6" testNumber="1"/>
+            <description>Text strings intended to be human readable shall not use the Unicode PUA</description>
+            <test>containsPUA == false</test>
+            <error>
+                <message>Text string intended to be human readable uses Unicode PUA</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.9.2.2"/>
+            </references>
+        </rule>
+        <rule object="PDOCConfig" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.7" testNumber="1"/>
+            <description>All optional content configuration dictionaries in the document, including the default optional content configuration dictionary, shall contain a Name entry (see ISO 32000-2:2020, Table 96) whose value is a non-empty text string when: a) a document contains a Configs entry in the OCProperties entry of the catalog dictionary (see ISO 32000-2:2020, Table 29), and b) the Configs entry contains at least one optional content configuration dictionary</description>
+            <test>gContainsConfigs == false || (Name != null &amp;&amp; Name.length() &gt; 0)</test>
+            <error>
+                <message>Missing or empty Name entry of the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.7.2, Table 29"/>
+                <reference specification="ISO 32000-2:2020" clause="8.11.2.1, Table 96"/>
+            </references>
+        </rule>
+        <rule object="PDOCConfig" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.7" testNumber="2"/>
+            <description>The AS key shall not appear in any optional content configuration dictionary</description>
+            <test>AS == null</test>
+            <error>
+                <message>AS key is present in the optional content configuration dictionary</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDDestination" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.8" testNumber="1"/>
+            <description>All destinations whose target lies within the current document shall be structure destinations</description>
+            <test>isStructDestination == true</test>
+            <error>
+                <message>Destination in Outline item, OpenAction or Link annotation is not a structure destination</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.3.2"/>
+                <reference specification="ISO 32000-2:2020" clause="12.3.2.3"/>
+            </references>
+        </rule>
+        <rule object="PDGoToAction" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.8" testNumber="2"/>
+            <description>All destinations whose target lies within the current document shall be structure destinations</description>
+            <test>containsStructDestination == true</test>
+            <error>
+                <message>Destination in GoTo action is not a structure destination</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.3.2"/>
+                <reference specification="ISO 32000-2:2020" clause="12.3.2.3"/>
+            </references>
+        </rule>
+        <rule object="PDAnnot" tags="annotation,artifact">
+            <id specification="WTPDF_1_0" clause="8.9.2.2" testNumber="1"/>
+            <description>Annotations shall be artifacts, if the Invisible flag is set in accordance with ISO 32000-2:2020, Table 167</description>
+            <test>structParentType == null || isArtifact == true || (F &amp; 1) == 0</test>
+            <error>
+                <message>An invisible annotation is included in logical structure with tag %1 (standard type = %2, Invisible = %3)</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                    <argument>F != null ? (F &amp; 1) : null</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.5.3, Table 167"/>
+            </references>
+        </rule>
+        <rule object="PDAnnot" tags="annotation,artifact">
+            <id specification="WTPDF_1_0" clause="8.9.2.2" testNumber="2"/>
+            <description>Annotations shall be artifacts if the NoView flag is set and the ToggleNoView flag is not set in accordance with ISO 32000-2:2020, Table 167</description>
+            <test>structParentType == null || isArtifact == true || ((F &amp; 32) == 0 || (F &amp; 256) == 1)</test>
+            <error>
+                <message>A no-view annotation is included in logical structure with tag %1 (standard type = %2, NoView = %3, ToggleNoView = %4)</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                    <argument>F != null ? (F &amp; 32) &gt;&gt; 5 : null</argument>
+                    <argument>F != null ? (F &amp; 256) &gt;&gt; 8 : null</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.5.3, Table 167"/>
+            </references>
+        </rule>
+        <rule object="PDMarkupAnnot" tags="annotation,structure">
+            <id specification="WTPDF_1_0" clause="8.9.2.3" testNumber="1"/>
+            <description>Markup annotations shall be enclosed within Annot structure elements</description>
+            <test>structParentStandardType == 'Annot'</test>
+            <error>
+                <message>A Markup annotation is an Artifact or is nested within %1 tag (standard type = %2) instead of Annot</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDMarkupAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.9.2.3" testNumber="2"/>
+            <description>When both RC and Contents entries are present for markup annotation, they shall be textually equivalent</description>
+            <test>containsRC == false || Contents == null || RC == Contents</test>
+            <error>
+                <message>A Markup annotation contains Contents and RC entries with non-equivalent textual values (RC = %1, Contents = %2)</message>
+                <arguments>
+                    <argument>RC</argument>
+                    <argument>Contents</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDRubberStampAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.7" testNumber="1"/>
+            <description>If the Name entry is insufficient to describe the intent of the stamp annotation, a Contents entry describing the author’s intent shall be provided</description>
+            <test>Name != null || Contents != null</test>
+            <error>
+                <message>Rubber stamp annotation contains neither Name nor Contents entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.5.6.2"/>
+            </references>
+        </rule>
+        <rule object="PDInkAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.8" testNumber="1"/>
+            <description>A Contents entry describing the author’s intent shall be provided for Ink annotation</description>
+            <test>Contents != null</test>
+            <error>
+                <message>Ink annotation does not contain Contents entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDPopupAnnot" tags="annotation,artifact">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.9" testNumber="1"/>
+            <description>Popup annotations shall not be present in the structure tree</description>
+            <test>structParentType == null</test>
+            <error>
+                <message>A Popup annotation is included in logical structure with tag %1 (standard type = %2)</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.11.3"/>
+            </references>
+        </rule>
+        <rule object="PDFileAttachmentAnnot" tags="annotation,syntax">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.10" testNumber="1"/>
+            <description>When a file attachment annotation references a file specification dictionary, the file specification dictionary shall include an AFRelationship entry</description>
+            <test>containsFS == false || AFRelationship != null</test>
+            <error>
+                <message>The file specification dictionary referenced by a file attachment annotation does not include AFRelationship entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.11.3"/>
+                <reference specification="ISO 32000-2:2020" clause="12.5.6.15"/>
+            </references>
+        </rule>
+        <rule object="PDSoundAnnot" tags="annotation">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.11" testNumber="1"/>
+            <description>Sound annotation cannot be used when conforming to WTPDF 1.0</description>
+            <test>false</test>
+            <error>
+                <message>An annotation of subtype Sound exists</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDMovieAnnot" tags="annotation">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.11" testNumber="2"/>
+            <description>Movie annotation cannot be used when conforming to WTPDF 1.0</description>
+            <test>false</test>
+            <error>
+                <message>An annotation of subtype Movie exists</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDScreenAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.12" testNumber="1"/>
+            <description>Screen annotations shall include a Contents entry</description>
+            <test>Contents != null</test>
+            <error>
+                <message>Screen annotation does not contain Contents entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDWidgetAnnot" tags="annotation,artifact">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.13" testNumber="1"/>
+            <description>A widget annotation of zero height and width shall be an artifact</description>
+            <test>width != 0 || height != 0 || structParentType == null || isArtifact == true</test>
+            <error>
+                <message>A Widget annotation of zero height and width is not marked as an Artifact (structure tag = %1, standard type = %2)</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.7.5.5"/>
+            </references>
+        </rule>
+        <rule object="PDPrinterMarkAnnot" tags="annotation,artifact">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.14" testNumber="1"/>
+            <description>A printer's mark annotation shall be an artifact</description>
+            <test>structParentType == null || isArtifact == true</test>
+            <error>
+                <message>A PrinterMark annotation is included in logical structure with tag %1 (standard type = %2)</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.11.3"/>
+            </references>
+        </rule>
+        <rule object="PDTrapNetAnnot" tags="annotation">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.15" testNumber="1"/>
+            <description>Trap network annotations shall not be used in files conforming to WTPDF 1.0</description>
+            <test>false</test>
+            <error>
+                <message>An annotation of subtype TrapNet exists</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDWatermarkAnnot" tags="annotation,structure">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.16" testNumber="1"/>
+            <description>When used as real content, Watermark annotations shall be enclosed within Annot structure elements</description>
+            <test>structParentType == null || isArtifact == true || structParentStandardType == 'Annot'</test>
+            <error>
+                <message>A Watermark annotation is nested within %1 tag (standard type = %2) instead of Annot</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PD3DAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.19" testNumber="1"/>
+            <description>3D annotation shall include alternate description in respective Contents entry</description>
+            <test>Contents != null</test>
+            <error>
+                <message>3D annotation does not contain Contents entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.5.2, Table 166"/>
+            </references>
+        </rule>
+        <rule object="PDRichMediaAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.9.2.4.19" testNumber="2"/>
+            <description>RichMedia annotation shall include alternate description in respective Contents entry</description>
+            <test>Contents != null</test>
+            <error>
+                <message>RichMedia annotation does not contain Contents entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.5.2, Table 166"/>
+            </references>
+        </rule>
+        <rule object="PDPage" tags="page,annotation">
+            <id specification="WTPDF_1_0" clause="8.9.3.3" testNumber="1"/>
+            <description>Every page that includes an annotation shall contain a Tabs entry in its page dictionary in accordance with ISO 32000-2:2020, Table 31, and its value shall be A, W or S</description>
+            <test>annots_size == 0 || Tabs == 'A' || Tabs == 'W' || Tabs == 'S'</test>
+            <error>
+                <message>A page with annotation(s) contains Tabs key with value %1 instead of A, W or S</message>
+                <arguments>
+                    <argument>Tabs</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAnnot" tags="alt-text,annotation">
+            <id specification="WTPDF_1_0" clause="8.9.4.2" testNumber="1"/>
+            <description>Where an annotation has a Contents entry and the directly enclosing structure element has an Alt entry, the values of Alt and Contents shall be identical</description>
+            <test>Contents == null || Alt == null || Contents == Alt</test>
+            <error>
+                <message>Both Contents and Alt entries are present for the annotation, but they are not identical (Contents = %1, Alt = %2)</message>
+                <arguments>
+                    <argument>Contents</argument>
+                    <argument>Alt</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDWidgetAnnot" tags="annotation,structure,artifact">
+            <id specification="WTPDF_1_0" clause="8.10.1" testNumber="1"/>
+            <description>Each widget annotation shall be enclosed by a Form structure element unless the widget annotation is an artifact</description>
+            <test>structParentType == null || structParentStandardType == 'Form' || isArtifact == true</test>
+            <error>
+                <message>A Widget annotation is nested within %1 tag (standard type = %2) instead of Form or Artifact</message>
+                <arguments>
+                    <argument>structParentType</argument>
+                    <argument>structParentStandardType</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="SEForm" tags="annotation,structure">
+            <id specification="WTPDF_1_0" clause="8.10.1" testNumber="2"/>
+            <description>A Form structure element shall contain at most one widget annotation</description>
+            <test>widgetAnnotsCount &lt;= 1</test>
+            <error>
+                <message>A Form structure element contains %1 widget annotations</message>
+                <arguments>
+                    <argument>widgetAnnotsCount</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDAcroForm" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.10.1" testNumber="3"/>
+            <description>XFA forms shall not be present</description>
+            <test>containsXFA == false</test>
+            <error>
+                <message>XFA form is present</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="Annex K"/>
+            </references>
+        </rule>
+        <rule object="PDWidgetAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.10.2.3" testNumber="1"/>
+            <description>If a label for a widget annotation is not present, a Contents entry shall be provided to supply description and context for the widget</description>
+            <test>containsLbl == true || Contents != null</test>
+            <error>
+                <message>Widget annotation contains neither label nor Contents entry</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="PDWidgetAnnot" tags="annotation,alt-text">
+            <id specification="WTPDF_1_0" clause="8.10.2.3" testNumber="2"/>
+            <description>If an additional action (AA) entry is present in a widget annotation dictionary, the respective widget's Contents entry shall be present</description>
+            <test>containsAA == false || Contents != null</test>
+            <error>
+                <message>Widget annotation dictionary contains an AA entry, but does not contain the Contents entry</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="Table 191"/>
+            </references>
+        </rule>
+        <rule object="PDTextField" tags="alt-text,text">
+            <id specification="WTPDF_1_0" clause="8.10.3.3" testNumber="1"/>
+            <description>For text fields, when an RV entry is present a V entry shall also be present, and they shall be textually equivalent</description>
+            <test>containsRV == false || (V != null &amp;&amp; RV == V)</test>
+            <error>
+                <message>Text field contains RV entry, but no V entry or they are not textually equivalent (RV = %1, V = %2)</message>
+                <arguments>
+                    <argument>RV</argument>
+                    <argument>V</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="Table 226"/>
+                <reference specification="ISO 32000-2:2020" clause="Table 228"/>
+            </references>
+        </rule>
+        <rule object="SELineArtItem" tags="alt-text">
+            <id specification="WTPDF_1_0" clause="8.10.3.5" testNumber="1"/>
+            <description>If a portion of the appearance of a signature is represented by a graphic, alternative text shall be provided for that graphic</description>
+            <test>isSignature == false || Alt != null</test>
+            <error>
+                <message>A portion of the appearance of a signature is represented by a graphic, but alternative text is not provided for that graphic</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+        <rule object="MainXMPPackage" tags="metadata">
+            <id specification="WTPDF_1_0" clause="8.11.1" testNumber="1"/>
+            <description>The Metadata stream as specified in ISO 32000-2:2020, 14.3 in the document catalog dictionary shall contain a dc:title entry</description>
+            <test>dc_title != null</test>
+            <error>
+                <message>Metadata stream does not contain dc:title</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.3"/>
+            </references>
+        </rule>
+        <rule object="CosDocument" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.11.2" testNumber="1"/>
+            <description>The ViewerPreferences dictionary of the document catalog dictionary shall be present and shall contain at least the DisplayDocTitle key with a value of true, as described in ISO 32000-2:2020, Table 147</description>
+            <test>DisplayDocTitle == true</test>
+            <error>
+                <message>ViewerPreferences dictionary is not present in the document Catalog, or DisplayDocTitle key is set to false or is not present in the ViewerPreferences dictionary (ViewerPreferences = %1, DisplayDocTitle = %2)</message>
+                <arguments>
+                    <argument>ViewerPreferences</argument>
+                    <argument>DisplayDocTitle</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="12.2, Table 147"/>
+            </references>
+        </rule>
+        <rule object="CosFileSpecification" tags="syntax">
+            <id specification="WTPDF_1_0" clause="8.14.1" testNumber="1"/>
+            <description>The Desc entry shall be present on all file specification dictionaries present in the EmbeddedFiles name tree of a conforming document</description>
+            <test>containsDesc == true || presentInEmbeddedFiles == false</test>
+            <error>
+                <message>The file specification dictionary for an embedded file does not contain Desc key</message>
+                <arguments/>
+            </error>
+            <references/>
+        </rule>
+    </rules>
+    <variables>
+        <variable name="gContainsConfigs" object="PDOCProperties">
+            <defaultValue>false</defaultValue>
+            <value>containsConfigs</value>
+        </variable>
+    </variables>
+</profile>
