@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="WTPDF_1_0_ACCESSIBILITY">
-    <details creator="veraPDF Consortium" created="2024-04-07T14:37:52.486+03:00">
+    <details creator="veraPDF Consortium" created="2024-04-07T11:37:52.486Z">
         <name>WTPDF 1.0 Accessibility validation profile</name>
         <description>Validation rules against WTPDF 1.0 Accessibility</description>
     </details>
