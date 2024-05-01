@@ -26,12 +26,14 @@ package org.verapdf.pdfa;
 import org.verapdf.component.Component;
 import org.verapdf.core.EncryptedPdfException;
 import org.verapdf.core.ModelParsingException;
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.EnumSet;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
@@ -85,7 +87,8 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour, String password)
 			throws ModelParsingException, EncryptedPdfException;
 
-	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour, PDFAFlavour defaultFlavour, String password)
+	public PDFAParser createParser(InputStream pdfStream, PDFAFlavour flavour, PDFAFlavour defaultFlavour, String password, 
+								   EnumSet<ExtensionObjectType> enabledExtensions)
 			throws ModelParsingException, EncryptedPdfException;
 
 	/**
@@ -111,7 +114,8 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, String password)
 			throws ModelParsingException, EncryptedPdfException;
 
-	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, PDFAFlavour defaultFlavour, String password)
+	public PDFAParser createParser(File pdfFile, PDFAFlavour flavour, PDFAFlavour defaultFlavour, String password, 
+								   EnumSet<ExtensionObjectType> enabledExtensions)
 			throws ModelParsingException, EncryptedPdfException;
 
 	/**

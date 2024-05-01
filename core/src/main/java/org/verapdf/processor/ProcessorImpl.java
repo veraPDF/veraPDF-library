@@ -29,6 +29,7 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.core.utils.FileOutputMapper;
 import org.verapdf.core.utils.FileOutputMappers;
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.features.AbstractFeaturesExtractor;
 import org.verapdf.features.FeatureExtractionResult;
 import org.verapdf.features.FeatureExtractorConfig;
@@ -46,10 +47,7 @@ import org.verapdf.processor.reports.ItemDetails;
 
 import java.io.*;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -112,10 +110,11 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		TaskType task = null;
 		String password = this.processorConfig.getValidatorConfig().getPassword();
+		EnumSet<ExtensionObjectType> enabledExtensions = this.processorConfig.getValidatorConfig().getEnabledExtensions();
 		PDFAFlavour flavour = this.hasCustomProfile() ? this.processorConfig.getCustomProfile().getPDFAFlavour() :
 				(this.isAuto() ? (this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR ?
 						PDFAFlavour.NO_ARLINGTON_FLAVOUR : PDFAFlavour.NO_FLAVOUR) : this.valConf().getFlavour());
-		try (PDFAParser parser = foundry.createParser(toProcess, flavour, this.valConf().getDefaultFlavour(), password)) {
+		try (PDFAParser parser = foundry.createParser(toProcess, flavour, this.valConf().getDefaultFlavour(), password, enabledExtensions)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {
@@ -166,11 +165,12 @@ final class ProcessorImpl implements ItemProcessor {
 		checkArguments(pdfFileStream, fileDetails, this.processorConfig);
 		Components.Timer parseTimer = Components.Timer.start();
 		String password = this.processorConfig.getValidatorConfig().getPassword();
+		EnumSet<ExtensionObjectType> enabledExtensions = this.processorConfig.getValidatorConfig().getEnabledExtensions();
 		TaskType task = null;
 		PDFAFlavour flavour = this.hasCustomProfile() ? this.processorConfig.getCustomProfile().getPDFAFlavour() :
 				(this.isAuto() ? (this.valConf().getFlavour() == PDFAFlavour.NO_ARLINGTON_FLAVOUR ?
 						PDFAFlavour.NO_ARLINGTON_FLAVOUR : PDFAFlavour.NO_FLAVOUR) : this.valConf().getFlavour());
-		try (PDFAParser parser = foundry.createParser(pdfFileStream, flavour, this.valConf().getDefaultFlavour(), password)) {
+		try (PDFAParser parser = foundry.createParser(pdfFileStream, flavour, this.valConf().getDefaultFlavour(), password, enabledExtensions)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {

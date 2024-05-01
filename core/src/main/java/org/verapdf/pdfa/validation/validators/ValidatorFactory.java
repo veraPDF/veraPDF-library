@@ -25,11 +25,13 @@ package org.verapdf.pdfa.validation.validators;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.EnumSet;
 import java.util.logging.Level;
 
 import javax.xml.bind.JAXBException;
 
 import org.verapdf.core.XmlSerialiser;
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.PDFAValidator;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
@@ -281,12 +283,14 @@ public final class ValidatorFactory {
 	}
 
 	public static ValidatorConfig createConfig(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour,
-	                                           final boolean recordPasses, final int maxFails, final boolean debug,
+											   final boolean recordPasses, final int maxFails, final boolean debug,
 											   final boolean isLogsEnabled, final Level loggingLevel,
 											   final int maxNumberOfDisplayedFailedChecks, final boolean showErrorMessages,
-	                                           final String password, final boolean showProgress, final boolean nonPDFExtension) {
+											   final String password, final boolean showProgress, final boolean nonPDFExtension,
+											   final EnumSet<ExtensionObjectType> enabledExtensions) {
 		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension,
+				enabledExtensions);
 	}
 
 	/**

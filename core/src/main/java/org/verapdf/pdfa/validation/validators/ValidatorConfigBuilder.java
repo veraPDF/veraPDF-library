@@ -1,8 +1,10 @@
 package org.verapdf.pdfa.validation.validators;
 
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.Foundries;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import java.util.EnumSet;
 import java.util.logging.Level;
 
 public class ValidatorConfigBuilder {
@@ -19,6 +21,7 @@ public class ValidatorConfigBuilder {
 	private String password = "";
 	private boolean showProgress = false;
 	private boolean nonPDFExtension = false;
+	private EnumSet<ExtensionObjectType> enabledExtensions = EnumSet.noneOf(ExtensionObjectType.class);
 
 	public ValidatorConfigBuilder password(String password) {
 		this.password = password;
@@ -80,12 +83,18 @@ public class ValidatorConfigBuilder {
 		return this;
 	}
 
+	public ValidatorConfigBuilder enabledExtensions(EnumSet<ExtensionObjectType> enabledExtensions) {
+		this.enabledExtensions = enabledExtensions;
+		return this;
+	}
+
 	public static ValidatorConfigBuilder defaultBuilder() {
 		return new ValidatorConfigBuilder();
 	}
 
 	public ValidatorConfig build() {
 		return ValidatorConfigImpl.fromValues(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension,
+				enabledExtensions);
 	}
 }

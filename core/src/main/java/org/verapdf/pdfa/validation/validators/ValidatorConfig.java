@@ -25,8 +25,10 @@ package org.verapdf.pdfa.validation.validators;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import java.util.EnumSet;
 import java.util.logging.Level;
 
 /**
@@ -84,4 +86,6 @@ public interface ValidatorConfig {
 	public boolean getShowProgress();
 
 	public boolean getNonPDFExtension();
+
+	public EnumSet<ExtensionObjectType> getEnabledExtensions();
 }
