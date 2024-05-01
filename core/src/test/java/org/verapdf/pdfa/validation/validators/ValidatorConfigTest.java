@@ -27,7 +27,9 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.verapdf.extensions.ExtensionObjectType;
 
+import java.util.EnumSet;
 import java.util.logging.Level;
 
 import static org.junit.Assert.*;
@@ -70,7 +72,7 @@ public class ValidatorConfigTest {
 		ValidatorConfig fromVals = ValidatorFactory.createConfig(defaultInstance.getFlavour(),
 				defaultInstance.getDefaultFlavour(), defaultInstance.isRecordPasses(), defaultInstance.getMaxFails(),
 				defaultInstance.isDebug(), false, Level.WARNING, defaultInstance.getMaxNumberOfDisplayedFailedChecks(),
-				defaultInstance.showErrorMessages(), "", false, false);
+				defaultInstance.showErrorMessages(), "", false, false, EnumSet.noneOf(ExtensionObjectType.class));
 		assertEquals(fromVals, defaultInstance);
 		assertNotSame(fromVals, defaultInstance);
 	}

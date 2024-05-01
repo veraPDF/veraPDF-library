@@ -25,12 +25,16 @@
 package org.verapdf.pdfa.validation.validators;
 
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.Foundries;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
+import java.util.EnumSet;
 import java.util.Objects;
 import java.util.logging.Level;
 
@@ -62,6 +66,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	@XmlAttribute
 	private final boolean showProgress;
 	private final boolean nonPDFExtension;
+	@XmlElementWrapper(name="enabledExtensions")
+	@XmlElement(name="extension")
+	private final EnumSet<ExtensionObjectType> enabledExtensions;
 
 	private ValidatorConfigImpl() {
 		this(PDFAFlavour.NO_FLAVOUR, false, -1, false, false, Level.WARNING,
@@ -72,14 +79,14 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 								boolean isLogsEnabled, Level loggingLevel, String password, final boolean showProgress) {
 		this(flavour, PDFAFlavour.ARLINGTON1_4, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
 		     BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, !Foundries.defaultParserIsPDFBox(), password,
-		     showProgress, false);
+		     showProgress, false, EnumSet.noneOf(ExtensionObjectType.class));
 	}
 
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final PDFAFlavour defaultFlavour, final boolean recordPasses,
 	                            final int maxFails, final boolean debug, final boolean isLogsEnabled,
 								final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks,
 								final boolean showErrorMessages, final String password, final boolean showProgress,
-								final boolean nonPDFExtension) {
+								final boolean nonPDFExtension, final EnumSet<ExtensionObjectType> enabledExtensions) {
 		this.flavour = flavour;
 		this.defaultFlavour = defaultFlavour;
 		this.recordPasses = recordPasses;
@@ -92,6 +99,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		this.password = password;
 		this.showProgress = showProgress;
 		this.nonPDFExtension = nonPDFExtension;
+		this.enabledExtensions = enabledExtensions;
 	}
 
 	/**
@@ -175,6 +183,11 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		return nonPDFExtension;
 	}
 
+	@Override
+	public EnumSet<ExtensionObjectType> getEnabledExtensions() {
+		return this.enabledExtensions;
+	}
+
 	/**
 	 * @see java.lang.Object#hashCode()
 	 */
@@ -191,6 +204,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		result = prime * result + (this.showErrorMessages ? 1231 : 1237);
 		result = prime * result + ((this.loggingLevel == null) ? 0 : this.loggingLevel.hashCode());
 		result = prime * result + ((this.password == null) ? 0 : this.password.hashCode());
+		result = prime * result + ((this.enabledExtensions == null) ? 0 : this.enabledExtensions.hashCode());
 		result = prime * result + this.maxNumberOfDisplayedFailedChecks;
 		result = prime * result + (this.showProgress ? 1231 : 1237);
 		result = prime * result + (this.nonPDFExtension ? 1231 : 1237);
@@ -245,6 +259,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		if (this.nonPDFExtension != other.nonPDFExtension) {
 			return false;
 		}
+		if (!Objects.equals(this.enabledExtensions, other.enabledExtensions)) {
+			return false;
+		}
 		return Objects.equals(this.loggingLevel, other.loggingLevel);
 	}
 
@@ -272,9 +289,9 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	                                  final int maxFails, final boolean debug, final boolean isLogsEnabled,
 									  final Level loggingLevel, final int maxNumberOfDisplayedFailedChecks,
 									  final boolean showErrorMessages, final String password, final boolean showProgress,
-									  final boolean nonPDFExtension) {
+									  final boolean nonPDFExtension, final EnumSet<ExtensionObjectType> enabledExtensions) {
 		return new ValidatorConfigImpl(flavour, defaultFlavour, recordPasses, maxFails, debug, isLogsEnabled,
-				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension);
+				loggingLevel, maxNumberOfDisplayedFailedChecks, showErrorMessages, password, showProgress, nonPDFExtension, enabledExtensions);
 	}
 
 	static class Adapter extends XmlAdapter<ValidatorConfigImpl, ValidatorConfig> {
