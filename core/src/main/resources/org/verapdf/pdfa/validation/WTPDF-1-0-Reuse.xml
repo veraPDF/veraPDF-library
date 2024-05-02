@@ -8,10 +8,10 @@
     <rules>
         <rule object="MainXMPPackage" tags="metadata">
             <id specification="WTPDF_1_0" clause="6.1.2" testNumber="1"/>
-            <description>File conforming to the WTPDF 1.0 conformance level for reuse shall include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf/#reuse1.0" as its pdfd:conformsTo entry</description>
+            <description>File conforming to the WTPDF 1.0 conformance level for reuse shall include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf#reuse1.0" as its pdfd:conformsTo entry</description>
             <test>declarations.split(',').filter(declarations =&gt; declarations == 'http://pdfa.org/declarations/wtpdf#reuse1.0').length == 1</test>
             <error>
-                <message>File conforming to the WTPDF 1.0 conformance level for reuse doesn't include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf/#reuse1.0" as its pdfd:conformsTo entry</message>
+                <message>File conforming to the WTPDF 1.0 conformance level for reuse doesn't include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf#reuse1.0" as its pdfd:conformsTo entry</message>
                 <arguments/>
             </error>
             <references/>
