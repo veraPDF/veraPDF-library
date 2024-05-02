@@ -246,17 +246,23 @@ public enum PDFAFlavour {
             StringBuilder id = new StringBuilder();
             if (SpecificationFamily.WTPDF == this.getFamily() || SpecificationFamily.WCAG == this.getFamily()) {
                 id.append(this.getFamily().getFamily());
+                if (this.getPartNumber() != null) {
+                    id.append(" ").append(this.getPartNumber());
+                    if (this.getSubpartNumber() != null) {
+                        id.append(".").append(this.getSubpartNumber());
+                    }
+                }
             } else {
                 id.append(this.getSeries().getName());
-            }
-            if (this.getPartNumber() != null) {
-                id.append("-").append(this.getPartNumber());
-                if (this.getSubpartNumber() != null) {
-                    id.append(".").append(this.getSubpartNumber());
+                if (this.getPartNumber() != null) {
+                    id.append("-").append(this.getPartNumber());
+                    if (this.getSubpartNumber() != null) {
+                        id.append(".").append(this.getSubpartNumber());
+                    }
                 }
-            }
-            if (this.getYear() != null) {
-                id.append(":").append(this.getYear());
+                if (this.getYear() != null) {
+                    id.append(":").append(this.getYear());
+                }
             }
             return id.toString();
         }
