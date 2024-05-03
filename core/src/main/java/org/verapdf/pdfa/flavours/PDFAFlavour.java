@@ -290,7 +290,7 @@ public enum PDFAFlavour {
             if (SpecificationFamily.WTPDF == this.getFamily() || SpecificationFamily.WCAG == this.getFamily()) {
                 id.append(this.getFamily().getFamily());
                 if (this.getPartNumber() != null) {
-                    id.append(" ").append(this.getPartNumber());
+                    id.append(this.getPartNumber());
                     if (this.getSubpartNumber() != null) {
                         id.append(".").append(this.getSubpartNumber());
                     }
