@@ -1,3 +1,10 @@
+Version 1.26 (May  16, 2024)
+=================================
+
+### Validation
+- (PDF/UA-2) supported named structured destinations in goto actions
+- (PDF/UA-1) fixed rules about annotations
+
 Version 1.26 RC2 (April 2, 2024)
 ==================================
 
