@@ -150,7 +150,6 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
                 if (is != null)
                     profiles.add(Profiles.profileFromXml(is));
             } catch (JAXBException | IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
