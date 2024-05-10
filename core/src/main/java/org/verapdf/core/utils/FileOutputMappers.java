@@ -31,10 +31,6 @@ import java.nio.file.Path;
  * @version 0.1 Created 13 Nov 2016:14:07:32
  */
 public class FileOutputMappers {
-	private FileOutputMappers() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * Get a {@link FileOutputMapper} instance that maps output to the same
 	 * directory as the source with a veraPDF_ prefix
