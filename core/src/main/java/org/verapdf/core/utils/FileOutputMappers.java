@@ -266,7 +266,7 @@ public class FileOutputMappers {
 	/**
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
-	 * @param relativePath
+	 * @param path
 	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix
