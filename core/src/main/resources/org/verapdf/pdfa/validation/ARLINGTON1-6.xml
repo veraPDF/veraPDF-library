@@ -29263,10 +29263,10 @@
 		</rule>
 		<rule object="AEmbeddedFileParameter">
 			<id specification="PDF_1_6" clause="EmbeddedFileParameter-CheckSum" testNumber="8"/>
-			<description>Entry CheckSum in EmbeddedFileParameter shall have type String</description>
-			<test>containsCheckSum == false || CheckSumHasTypeString == true</test>
+			<description>Entry CheckSum in EmbeddedFileParameter shall have type StringByte</description>
+			<test>containsCheckSum == false || CheckSumHasTypeStringByte == true</test>
 			<error>
-				<message>Entry CheckSum in EmbeddedFileParameter has type %1 instead of type String</message>
+				<message>Entry CheckSum in EmbeddedFileParameter has type %1 instead of type StringByte</message>
 				<arguments>
 					<argument>CheckSumType</argument>
 				</arguments>
@@ -29274,11 +29274,11 @@
 			<references/>
 		</rule>
 		<rule object="AEmbeddedFileParameter">
-			<id specification="PDF_1_6" clause="EmbeddedFileParameter-CheckSum-String" testNumber="9"/>
-			<description>Entry CheckSum with type String in EmbeddedFileParameter shall satisfy special case: fn:Eval(fn:StringLength(CheckSum) == 16)</description>
-			<test>CheckSumHasTypeString != true || (CheckSumStringSize == 16)</test>
+			<id specification="PDF_1_6" clause="EmbeddedFileParameter-CheckSum-StringByte" testNumber="9"/>
+			<description>Entry CheckSum with type StringByte in EmbeddedFileParameter shall satisfy special case: fn:Eval(fn:StringLength(CheckSum) == 16)</description>
+			<test>CheckSumHasTypeStringByte != true || (CheckSumStringSize == 16)</test>
 			<error>
-				<message>Entry CheckSum with type String in EmbeddedFileParameter does not satisfy special case: fn:Eval(fn:StringLength(CheckSum) == 16)</message>
+				<message>Entry CheckSum with type StringByte in EmbeddedFileParameter does not satisfy special case: fn:Eval(fn:StringLength(CheckSum) == 16)</message>
 				<arguments/>
 			</error>
 			<references/>
