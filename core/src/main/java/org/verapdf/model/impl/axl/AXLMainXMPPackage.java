@@ -30,6 +30,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Current class is representation of XMPPackage interface from abstract model based on adobe xmp library
@@ -109,10 +110,10 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
     }
 
     @Override
-    public String getdeclarations() {
+    public Set<String> getdeclarations() {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
         if (xmpMetadata != null) {
-            return String.join(",", xmpMetadata.getDeclarations());
+            return xmpMetadata.getDeclarations();
         }
         return null;
     }
