@@ -91,7 +91,7 @@
         <rule object="SESimpleContentItem" tags="artifact">
             <id specification="ISO_14289_2" clause="8.2.2" testNumber="1"/>
             <description>Content that is not considered real shall be an artifact</description>
-            <test>isTaggedContent == true || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <test>isTaggedContent == true || parentsTags.contains('Artifact') == true</test>
             <error>
                 <message>Content is neither marked as Artifact nor tagged as real content</message>
                 <arguments/>

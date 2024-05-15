@@ -79,7 +79,7 @@
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
             <description>Tagged content should not present inside content marked as Artifact</description>
-            <test>isTaggedContent == false || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
+            <test>isTaggedContent == false || parentsTags.contains('Artifact') == false</test>
             <error>
                 <message>Tagged content (parent struct element %1) is present inside content marked as Artifact</message>
                 <arguments>
@@ -91,7 +91,7 @@
         <rule object="SESimpleContentItem" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="3"/>
             <description>Content shall be marked as Artifact or tagged as real content</description>
-            <test>isTaggedContent == true || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <test>isTaggedContent == true || parentsTags.contains('Artifact') == true</test>
             <error>
                 <message>Content is neither marked as Artifact nor tagged as real content</message>
                 <arguments/>

@@ -9,7 +9,7 @@
         <rule object="MainXMPPackage" tags="metadata">
             <id specification="WTPDF_1_0" clause="6.1.2" testNumber="1"/>
             <description>File conforming to the WTPDF 1.0 conformance level for reuse shall include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf#reuse1.0" as its pdfd:conformsTo entry</description>
-            <test>declarations.split(',').filter(declarations =&gt; declarations == 'http://pdfa.org/declarations/wtpdf#reuse1.0').length == 1</test>
+            <test>declarations.contains('http://pdfa.org/declarations/wtpdf#reuse1.0') == true</test>
             <error>
                 <message>File conforming to the WTPDF 1.0 conformance level for reuse doesn't include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf#reuse1.0" as its pdfd:conformsTo entry</message>
                 <arguments/>
@@ -43,7 +43,7 @@
         <rule object="SESimpleContentItem" tags="artifact">
             <id specification="WTPDF_1_0" clause="8.2.2" testNumber="1"/>
             <description>Content that is not considered real shall be an artifact</description>
-            <test>isTaggedContent == true || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <test>isTaggedContent == true || parentsTags.contains('Artifact') == true</test>
             <error>
                 <message>Content is neither marked as Artifact nor tagged as real content</message>
                 <arguments/>
