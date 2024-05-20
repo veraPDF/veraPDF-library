@@ -23,6 +23,7 @@ on:
 
 jobs:
   checkout-and-build:
+    if: github.repository == 'veraPDF/veraPDF-library'
     runs-on: ubuntu-latest
 
     strategy:
@@ -47,7 +48,7 @@ jobs:
         run: |
           git fetch origin arlington:arlington
           git checkout -b test-branch arlington
-      - name: Configure user nameF
+      - name: Configure user name
         run: |
           git config user.name "Git User"
           git config user.email "user@test.com"
@@ -94,6 +95,7 @@ jobs:
     needs: [checkout-and-build, merge]
     if: |
       always() &&
+      github.repository == 'veraPDF/veraPDF-library' &&
       (contains(needs.*.result, 'failure') ||
       contains(needs.*.result, 'skipped') ||
       contains(needs.*.result, 'cancelled'))
