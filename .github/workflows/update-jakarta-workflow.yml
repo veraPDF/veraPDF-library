@@ -7,6 +7,7 @@ on:
 
 jobs:
   checkout-and-build:
+    if: github.repository == 'veraPDF/veraPDF-library' 
     runs-on: ubuntu-latest
 
     strategy:
@@ -78,6 +79,7 @@ jobs:
     needs: [checkout-and-build, merge]
     if: |
       always() &&
+      github.repository == 'veraPDF/veraPDF-library' &&
       (contains(needs.*.result, 'failure') ||
       contains(needs.*.result, 'skipped') ||
       contains(needs.*.result, 'cancelled'))
