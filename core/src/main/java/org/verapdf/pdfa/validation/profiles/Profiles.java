@@ -59,6 +59,8 @@ import java.util.*;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public final class Profiles {
+
+	private static final String ALL_TAGS = "*";
 	/**
 	 * Returns a {@link ValidationProfile} instance initialised with the passed
 	 * values.
@@ -115,7 +117,7 @@ public final class Profiles {
 	 *             description or creator are empty.
 	 */
 	public static ValidationProfile profileFromSortedValues(final PDFAFlavour flavour, final ProfileDetails details,
-			final String hash, final SortedSet<Rule> rules, final Set<Variable> variables) {
+			final String hash, final SortedSet<Rule> rules, final SortedSet<Variable> variables) {
 		if (flavour == null)
 			throw new IllegalArgumentException("Parameter flavour can not be null.");
 		if (details == null)
@@ -305,7 +307,7 @@ public final class Profiles {
 	 */
 	public static Rule ruleFromValues(final RuleId id, final String object, final String description, final String test,
 			final ErrorDetails error, final List<Reference> references) {
-		return ruleFromValues(RuleIdImpl.fromRuleId(id), object, null, description, test, error, references);
+		return ruleFromValues(RuleIdImpl.fromRuleId(id), object, null, null, description, test, error, references);
 	}
 
 	/**
@@ -331,7 +333,8 @@ public final class Profiles {
 	 *             if any of the parameters are null or the test, object, or
 	 *             description is empty
 	 */
-	public static Rule ruleFromValues(final RuleId id, final String object, final Boolean deferred, final String description, final String test,
+	public static Rule ruleFromValues(final RuleId id, final String object, final Boolean deferred, String tags,
+									  final String description, final String test,
 									  final ErrorDetails error, final List<Reference> references) {
 		if (id == null)
 			throw new IllegalArgumentException("Parameter id can not be null.");
@@ -351,7 +354,7 @@ public final class Profiles {
 			throw new IllegalArgumentException("Parameter error can not be null.");
 		if (references == null)
 			throw new IllegalArgumentException("Parameter references can not be null.");
-		return RuleImpl.fromValues(RuleIdImpl.fromRuleId(id), object, deferred, description, test, error, references);
+		return RuleImpl.fromValues(RuleIdImpl.fromRuleId(id), object, deferred, tags, description, test, error, references);
 	}
 
 	/**
@@ -433,7 +436,7 @@ public final class Profiles {
 	 *
 	 * @param toConvert
 	 *            a {@link ValidationProfile} to convert to an XML String
-	 * @param forXmlOutput
+	 * @param dest
 	 *            an OutputStream used to write the generated XML to
 	 * @param prettyXml
 	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
@@ -455,7 +458,7 @@ public final class Profiles {
 	 * Attempt to de-serialise and return a {@link ValidationProfile} instance
 	 * from an XML representation that can be read from <code>toConvert</code>.
 	 *
-	 * @param toConvert
+	 * @param source
 	 *            an InputStream to an XML representation of a profile
 	 * @return a new {@link ValidationProfile} instance
 	 * @throws JAXBException
@@ -476,7 +479,7 @@ public final class Profiles {
 	 *
 	 * @param toConvert
 	 *            a {@link ValidationProfile} to convert to an XML String
-	 * @param forXmlOutput
+	 * @param dest
 	 *            a Writer used to write the generated XML to
 	 * @param prettyXml
 	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
@@ -556,6 +559,9 @@ public final class Profiles {
 	public static class RuleIdComparator implements Comparator<RuleId> {
 		@Override
 		public int compare(RuleId firstId, RuleId secondId) {
+			if (firstId.getSpecification() != secondId.getSpecification()) {
+				return firstId.getSpecification().compareTo(secondId.getSpecification());
+			}
 			if (firstId.getClause().equals(secondId.getClause())) {
 				return firstId.getTestNumber() - secondId.getTestNumber();
 			}
@@ -578,5 +584,21 @@ public final class Profiles {
 		public int compare(Rule firstRule, Rule secondRule) {
 			return new RuleIdComparator().compare(firstRule.getRuleId(), secondRule.getRuleId());
 		}
+	}
+
+	public static ValidationProfile getProfileWithTags(ValidationProfile profile, Set<String> includeTags, Set<String> excludeTags) {
+		Set<Rule> rules = new HashSet<>();
+		boolean includeAllTags = includeTags.contains(ALL_TAGS);
+		if (!excludeTags.contains(ALL_TAGS)) {
+			for (Rule rule : profile.getRules()) {
+				Set<String> ruleTags = rule.getTagsSet();
+				if (ruleTags.isEmpty() || ((includeAllTags || !Collections.disjoint(ruleTags, includeTags)) &&
+						Collections.disjoint(ruleTags, excludeTags))) {
+					rules.add(rule);
+				}
+			}
+		}
+		return ValidationProfileImpl.fromValues(profile.getPDFAFlavour(), profile.getDetails(),
+				profile.getHexSha1Digest(), rules, profile.getVariables());
 	}
 }

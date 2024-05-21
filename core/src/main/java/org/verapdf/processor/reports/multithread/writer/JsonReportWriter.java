@@ -15,6 +15,7 @@ public class JsonReportWriter extends ReportWriter {
 		super(outputStreamWriter, errorStreamWriter);
 	}
 
+	@Override
 	public void write(ResultStructure result) {
 		if (isFirstReport) {
 			isFirstReport = false;
@@ -25,11 +26,13 @@ public class JsonReportWriter extends ReportWriter {
 		deleteTemp(result);
 	}
 
+	@Override
 	public void startDocument() {
 		outputStreamWriter.write("{\"reports\":[");
 		isFirstReport = true;
 	}
 
+	@Override
 	public void endDocument() {
 		outputStreamWriter.write("]}");
 	}

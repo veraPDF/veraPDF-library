@@ -72,6 +72,8 @@ public interface DublinCore extends BasicSchema {
 	 */
 	String getAuthor();
 
+	int getAuthorSize();
+
 	/**
 	 * Set Author entry. For information dictionary
 	 * represented by {@code Author} entry, in metadata -

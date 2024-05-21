@@ -42,13 +42,13 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ValidationProfileImplTest {
-	private final static String DEFAULT_PROFILE_STRING = "ValidationProfile [flavour="
-			+ PDFAFlavour.NO_FLAVOUR.toString() + ", details=" + ProfileDetailsImpl.defaultInstance()
+	private static final String DEFAULT_PROFILE_STRING = "ValidationProfile [flavour="
+			+ PDFAFlavour.NO_FLAVOUR + ", details=" + ProfileDetailsImpl.defaultInstance()
 			+ ", hash=hash, rules=[], variables=[]]";
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#equals(java.lang.Object)}
+	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#equals(java.lang.Object)}
 	 * .
 	 */
 	@Test
@@ -58,7 +58,7 @@ public class ValidationProfileImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toString()}.
+	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#toString()}.
 	 */
 	@Test
 	public final void testToString() {
@@ -67,15 +67,15 @@ public class ValidationProfileImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#fromValues(PDFAFlavour, ProfileDetails, String, Set, Set)}
+	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#fromValues(PDFAFlavour, ProfileDetails, String, Set, Set)}
 	 * .
 	 */
 	@Test
 	public final void testFromValues() {
 		// Get an equivalent to the default instance
 		ValidationProfile rule = Profiles.profileFromValues(PDFAFlavour.NO_FLAVOUR,
-				ProfileDetailsImpl.defaultInstance(), "hash", Collections.<Rule>emptySet(),
-				Collections.<Variable>emptySet());
+				ProfileDetailsImpl.defaultInstance(), "hash", Collections.emptySet(),
+				Collections.emptySet());
 		ValidationProfile defaultInstance = Profiles.defaultProfile();
 		// Equivalent is NOT the same object as default instance
 		assertNotSame(rule, defaultInstance);
@@ -85,7 +85,7 @@ public class ValidationProfileImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#fromValidationProfile(org.verapdf.pdfa.validation.ValidationProfile)}
+	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#fromValues(PDFAFlavour, ProfileDetails, String, Set, Set)}
 	 * .
 	 */
 	@Test
@@ -104,7 +104,7 @@ public class ValidationProfileImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}
+	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}
 	 * .
 	 * 
 	 * @throws JAXBException

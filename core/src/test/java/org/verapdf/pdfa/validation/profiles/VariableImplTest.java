@@ -38,11 +38,11 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class VariableImplTest {
-    private final static String DEFAULT_VARIABLE_STRING = "Variable [name=name, object=object, defaultValue=defaultValue, value=value]";
+    private static final String DEFAULT_VARIABLE_STRING = "Variable [name=name, object=object, defaultValue=defaultValue, value=value]";
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.VariableImpl#equals(java.lang.Object)}
+     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#equals(java.lang.Object)}
      * .
      */
     @Test
@@ -99,8 +99,8 @@ public class VariableImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.VariableImpl#toXml(Variable)} and
-     * {@link org.verapdf.pdfa.validation.VariableImpl#fromXml(String)}.
+     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#toXml(Variable)} and
+     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#fromXml(String)}.
      * 
      * @throws JAXBException
      */

@@ -44,7 +44,7 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V> implements
      * Creates an empty registry instance, initialised with an empty map
      */
     public MapBackedRegistry() {
-        this(new HashMap<K, V>());
+        this(new HashMap<>());
     }
 
     /**
@@ -124,8 +124,8 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V> implements
      */
     @Override
     public void updateItems(final Map<K, V> itemMap) {
-        for (K key : itemMap.keySet()) {
-            updateItem(key, itemMap.get(key));
+        for (Map.Entry<K, V> entry : itemMap.entrySet()) {
+            updateItem(entry.getKey(), entry.getValue());
         }
     }
 

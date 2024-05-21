@@ -42,7 +42,7 @@ public class MapBackedDirectory<K, V> implements Directory<K, V> {
      * Creates an empty directory backed by an empty Map
      */
     public MapBackedDirectory() {
-        this(Collections.<K, V>emptyMap());
+        this(Collections.emptyMap());
     }
     /**
      * @param map
@@ -113,16 +113,9 @@ public class MapBackedDirectory<K, V> implements Directory<K, V> {
             return false;
         @SuppressWarnings("unchecked")
         Directory<K, V> other = (Directory<K, V>) obj;
-        if (this.getItems() == null) {
-            if (other.getItems() != null)
-                return false;
-        } else if (!this.getItems().equals(other.getItems()))
+        if (!Objects.equals(this.getItems(), other.getItems())) {
             return false;
-        if (this.getKeys() == null) {
-            if (other.getKeys() != null)
-                return false;
-        } else if (!this.getKeys().equals(other.getKeys()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getKeys(), other.getKeys());
     }
 }

@@ -31,13 +31,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Objects;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
  * @version 0.1 Created 30 Oct 2016:14:21:22
  */
-@XmlRootElement(name = "taskResult")
+@XmlRootElement(name = "taskException")
 class TaskResultImpl implements TaskResult {
 	private static final VeraPDFException notExecutedExcept = new VeraPDFException("Not Executed");
 	private static final TaskResult defaultInstance = new TaskResultImpl();
@@ -61,13 +62,13 @@ class TaskResultImpl implements TaskResult {
 			return null;
 
 		Throwable e = this.exception;
-		String res = EXCEPTION + e.getMessage();
+		StringBuilder res = new StringBuilder(EXCEPTION + e.getMessage());
 		e = e.getCause();
 		while (e != null) {
-			res += CAUSED_BY + e.getMessage();
+			res.append(CAUSED_BY).append(e.getMessage());
 			e = e.getCause();
 		}
-		return res;
+		return res.toString();
 	}
 
 	private TaskResultImpl() {
@@ -150,18 +151,10 @@ class TaskResultImpl implements TaskResult {
 		if (this.type  != other.type) {
 			return false;
 		}
-		if (this.duration == null) {
-			if (other.duration != null) {
-				return false;
-			}
-		} else if (!this.duration.equals(other.duration)) {
+		if (!Objects.equals(this.duration, other.duration)) {
 			return false;
 		}
-		if (this.exception == null) {
-			if (other.exception != null) {
-				return false;
-			}
-		} else if (!this.exception.equals(other.exception)) {
+		if (!Objects.equals(this.exception, other.exception)) {
 			return false;
 		}
 		if (this.isExecuted != other.isExecuted) {

@@ -42,7 +42,7 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ReleaseDetailsTest {
-	private static String NAME = "verapdf-test";
+	private static final String NAME = "verapdf-test";
 
 	@BeforeClass
 	public static final void Before() {
@@ -106,7 +106,7 @@ public class ReleaseDetailsTest {
 	}
 
 	/**
-     * Test method for {@link org.verapdf.ReleaseDetails#toXml(ReleaseDetails, OutputStream, Boolean)} and {@link org.verapdf.ReleaseDetails#fromXml(InputStream)}.
+     * Test method for {@link org.verapdf.core.XmlSerialiser#toXml(Object, OutputStream, boolean, boolean)}
      * @throws IOException 
      * @throws JAXBException 
      */

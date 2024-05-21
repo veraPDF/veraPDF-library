@@ -24,6 +24,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.util.Set;
+import java.util.SortedSet;
 
 /**
  * veraPDF ValidationProfiles encapsulate the validation rules and tests that
@@ -92,4 +93,6 @@ public interface ValidationProfile {
      *         name.
      */
     public Set<Variable> getVariablesByObject(final String objectName);
+
+    public SortedSet<String> getTags();
 }

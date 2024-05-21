@@ -32,8 +32,8 @@ import java.util.Map;
  */
 public class SchemasDefinition {
 
-    private Map<QName, String> properties = new HashMap<>();
-    private ValidatorsContainer validator;
+    private final Map<QName, String> properties = new HashMap<>();
+    private final ValidatorsContainer validator;
 
     protected SchemasDefinition() {
         this(null);
@@ -64,7 +64,7 @@ public class SchemasDefinition {
             return null;
         }
         String type = getType(node);
-        return type == null ? null : Boolean.valueOf(this.validator.validate(node, type));
+        return type == null ? null : this.validator.validate(node, type);
     }
 
     public String getDefinedType(VeraPDFXMPNode node) {

@@ -36,9 +36,9 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class RuleIdImplTest {
-    private final static String DEFAULT_RULE_ID_STRING = "RuleId [specification=" + Specification.NO_STANDARD.toString() + ", clause=clause, testNumber=0]";
+    private static final String DEFAULT_RULE_ID_STRING = "RuleId [specification=" + Specification.NO_STANDARD + ", clause=clause, testNumber=0]";
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#equals(java.lang.Object)}.
+     * Test method for {@link org.verapdf.pdfa.validation.profiles.RuleIdImpl#equals(java.lang.Object)}.
      */
     @Test
     public final void testEqualsObject() {
@@ -46,7 +46,7 @@ public class RuleIdImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#toString()}.
+     * Test method for {@link org.verapdf.pdfa.validation.profiles.RuleIdImpl#toString()}.
      */
     @Test
     public final void testToString() {
@@ -54,7 +54,7 @@ public class RuleIdImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour.Specification, java.lang.String, int)}.
+     * Test method for {@link org.verapdf.pdfa.validation.profiles.RuleIdImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour.Specification, java.lang.String, int)}.
      */
     @Test
     public final void testFromValues() {
@@ -68,7 +68,7 @@ public class RuleIdImplTest {
     }
 
     /**
-     * Test method for {@link org.verapdf.pdfa.validation.RuleIdImpl#fromRuleId(org.verapdf.pdfa.validation.RuleId)}.
+     * Test method for {@link org.verapdf.pdfa.validation.profiles.RuleIdImpl#fromRuleId(org.verapdf.pdfa.validation.profiles.RuleId)}
      */
     @Test
     public final void testFromRuleId() {

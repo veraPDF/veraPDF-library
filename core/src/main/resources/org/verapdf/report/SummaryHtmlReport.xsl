@@ -11,6 +11,8 @@
     <xsl:param name="isFullHTML" select="'true'" />
     <!-- Parameter to show parser type -->
     <xsl:param name="parserType"/>
+    <!-- Parameter to show release details -->
+    <xsl:param name="appName"/>
     <!-- Parameter to set the base path to the Wiki instance -->
     <xsl:param name="wikiPath" select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
     <xsl:strip-space elements="*"/>
@@ -117,7 +119,7 @@
                   <b>Version:</b>
               </td>
               <td class="lefted">
-                  <xsl:value-of select="releaseDetails[@id='gui']/@version"/>
+                  <xsl:value-of select="releaseDetails[@id=$appName]/@version"/>
               </td>
           </tr>
           <xsl:if test="$parserType">
@@ -135,7 +137,7 @@
                   <b>Build Date:</b>
               </td>
               <td class="lefted">
-                  <xsl:value-of select="releaseDetails[@id='gui']/@buildDate"/>
+                  <xsl:value-of select="releaseDetails[@id=$appName]/@buildDate"/>
               </td>
           </tr>
         </table>
@@ -166,7 +168,7 @@
                   <xsl:value-of select="@totalJobs"/>
               </td>
               <td>
-                  <xsl:value-of select="@failedToParse"/>
+                  <xsl:value-of select="number(@outOfMemory)+number(@veraExceptions)+number(@failedToParse)"/>
               </td>
               <td>
                   <xsl:value-of select="@encrypted"/>
@@ -226,11 +228,25 @@
             <xsl:choose>
               <xsl:when test="validationReport/@isCompliant = 'true'">
                 <xsl:value-of select="'Passed'" />
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="'Failed'" />
-                </xsl:otherwise>
-              </xsl:choose>
+              </xsl:when>
+              <xsl:otherwise>
+                  <xsl:choose>
+                      <xsl:when test="validationReport/@isCompliant = 'false'">
+                          <xsl:value-of select="'Failed'" />
+                      </xsl:when>
+                      <xsl:otherwise>
+                          <xsl:choose>
+                              <xsl:when test="contains(taskException/exceptionMessage, 'encrypted PDF with unknown or wrong password')">
+                                  <xsl:value-of select="'Encrypted'" />
+                              </xsl:when>
+                              <xsl:otherwise>
+                                  <xsl:value-of select="'Failed to Parse'" />
+                              </xsl:otherwise>
+                          </xsl:choose>
+                      </xsl:otherwise>
+                  </xsl:choose>
+              </xsl:otherwise>
+            </xsl:choose>
           </xsl:variable>
           <tr>
             <td class="lefted">

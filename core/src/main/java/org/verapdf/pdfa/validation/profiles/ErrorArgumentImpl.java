@@ -30,22 +30,23 @@ import java.util.Objects;
 
 @XmlRootElement(name = "argument")
 @XmlAccessorType(XmlAccessType.NONE)
-final class ErrorArgumentImpl implements ErrorArgument {
-    private final static ErrorArgumentImpl DEFAULT = new ErrorArgumentImpl();
+public final class ErrorArgumentImpl implements ErrorArgument {
+    private static final ErrorArgumentImpl DEFAULT = new ErrorArgumentImpl();
     @XmlValue
     private final String argument;
     @XmlAttribute(name = "name")
     private final String name;
-    private String argumentValue;
+    private final String argumentValue;
 
     private ErrorArgumentImpl() {
-        this("argument", "");
+        this("argument", null, null);
     }
 
-    private ErrorArgumentImpl(final String argument, final String name) {
+    private ErrorArgumentImpl(final String argument, final String name, final String argumentValue) {
         super();
         this.argument = argument;
         this.name = name;
+        this.argumentValue = argumentValue;
     }
 
     @Override
@@ -103,16 +104,16 @@ final class ErrorArgumentImpl implements ErrorArgument {
     }
 
     static ErrorArgumentImpl fromValues(final String argument, final String name) {
-        return new ErrorArgumentImpl(argument, name);
+        return fromValues(argument, name, null);
+    }
+
+    public static ErrorArgumentImpl fromValues(final String argument, final String name, final String argumentValue) {
+        return new ErrorArgumentImpl(argument, name, argumentValue);
     }
 
     @Override
     public String getArgumentValue() {
         return argumentValue;
-    }
-
-    public void setArgumentValue(String argumentValue) {
-        this.argumentValue = argumentValue;
     }
 
     static class Adapter extends XmlAdapter<ErrorArgumentImpl, ErrorArgument> {

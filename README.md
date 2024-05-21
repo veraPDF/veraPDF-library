@@ -2,7 +2,7 @@ veraPDF-library
 ===============
 *Industry Supported PDF/A and PDF/UA Validation*
 
-[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.24/job/library/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.24/job/library/ "OPF Jenkins")
+[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.26/job/library/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.26/job/library/ "OPF Jenkins")
 [![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](https://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/79a5ff15e77444d79d6e97cc40bb458c)](https://app.codacy.com/gh/veraPDF/veraPDF-library/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade "Codacy grade")
@@ -29,32 +29,33 @@ Quick Start
 
 In order to build the library you'll need:
 
- * Java 8 - 17, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
+ * Java 8 - 21, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
  * [Maven v3+](https://maven.apache.org/)
 
 Life will be easier if you also use [Git](https://git-scm.com/) to obtain and manage the source.
 
 ### Building veraPDF
-First you'll need to obtain a version of the veraPDF-library source code. You can compile either the latest relase version or the latest development source.
+First you'll need to obtain a version of the veraPDF-library source code. You can compile either the latest release version or the latest development source.
 
 #### Downloading the latest release source
 Use Git to clone the repository and ensure that the `master` branch is checked out:
-```
-git clone https://github.com/veraPDF/veraPDF-library
-git checkout master
-```
+
+    git clone https://github.com/veraPDF/veraPDF-library
+    cd veraPDF-library
+    git checkout master
+
 or download the latest [tar archive](https://github.com/veraPDF/veraPDF-library/archive/master.tar.gz "veraPDF-library latest GitHub tar archive") or [zip archive](https://github.com/veraPDF/veraPDF-library/archive/master.zip "veraPDF-library latest GitHub zip archive") from GitHub.
 
 #### Downloading the latest development source
 Use Git to clone the repository and ensure that the `integration` branch is checked out:
 
     git clone https://github.com/veraPDF/veraPDF-library
+    cd veraPDF-library
     git checkout integration
 
 or download the latest [tar archive](https://github.com/veraPDF/veraPDF-library/archive/integration.tar.gz "veraPDF-library latest GitHub tar archive") or [zip archive](https://github.com/veraPDF/veraPDF-library/archive/integration.zip "veraPDF-library latest GitHub zip archive") from GitHub.
 
 #### Use Maven to compile the source
-Move to the downloaded project directory and call Maven install:
+Call Maven install:
 
-    cd veraPDF-library
     mvn clean install

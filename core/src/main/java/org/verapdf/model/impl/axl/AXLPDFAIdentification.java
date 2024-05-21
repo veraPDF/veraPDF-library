@@ -35,8 +35,7 @@ import org.verapdf.xmp.impl.VeraPDFXMPNode;
  */
 public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentification {
 
-    private static final Logger LOGGER = Logger
-            .getLogger(AXLPDFAIdentification.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(AXLPDFAIdentification.class.getName());
 
     public static final String PDFA_IDENTIFICATION = "PDFAIdentification";
 
@@ -50,10 +49,10 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
     @Override
     public Long getpart() {
         try {
-            Integer part = this.metadata.getIdentificationPart();
-            return part == null ? null : Long.valueOf(part.longValue());
+            Integer part = this.metadata.getPDFAIdentificationPart();
+            return part == null ? null : part.longValue();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get identification part", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/A identification part", e);
             return null;
         }
     }
@@ -61,9 +60,9 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
     @Override
     public String getconformance() {
         try {
-            return this.metadata.getIdentificationConformance();
+            return this.metadata.getPDFAIdentificationConformance();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get identification conformance", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/A identification conformance", e);
             return null;
         }
     }
@@ -101,9 +100,9 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
     @Override
     public String getrev() {
         try {
-            return this.metadata.getRevisionYear();
+            return this.metadata.getPDFARevisionYear();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get revision year", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/A identification revision year", e);
             return null;
         }
     }

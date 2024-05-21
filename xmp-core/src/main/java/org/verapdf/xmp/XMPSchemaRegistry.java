@@ -66,9 +66,10 @@ public interface XMPSchemaRegistry
 	 *         otherwise the existing prefix.
 	 * @throws XMPException If the parameters are not accordingly set
 	 */
-	String registerNamespace(String namespaceURI, String suggestedPrefix) throws XMPException;
+	String registerStandardNamespace(String namespaceURI, String suggestedPrefix) throws XMPException;
 
-	
+	String registerNamespace(String namespaceURI, String suggestedPrefix, boolean isStandard) throws XMPException;
+
 	/**
 	 * Obtain the prefix for a registered namespace URI.
 	 * <p>

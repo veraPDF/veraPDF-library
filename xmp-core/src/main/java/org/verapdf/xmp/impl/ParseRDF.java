@@ -997,7 +997,7 @@ public class ParseRDF implements XMPError, XMPConst
 			if (prefix == null)
 			{
 				prefix = xmlNode.getPrefix() != null ? xmlNode.getPrefix() : DEFAULT_PREFIX;
-				prefix = registry.registerNamespace(namespace, prefix);
+				prefix = registry.registerNamespace(namespace, prefix, false);
 			}
 			childName = prefix + xmlNode.getLocalName();
 		}

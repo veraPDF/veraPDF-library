@@ -13,10 +13,10 @@ import java.util.logging.Logger;
 
 public class MrrReportWriter extends AbstractXmlReportWriter {
 	private static final Logger LOGGER = Logger.getLogger(MrrReportWriter.class.getCanonicalName());
-	private final String REPORT_TAG = "report";
-	private final String BUILD_INFORMATION_TAG = "buildInformation";
-	private final String JOBS_TAG = "jobs";
-	private final String JOB_TAG = "job";
+	private static final String REPORT_TAG = "report";
+	private static final String BUILD_INFORMATION_TAG = "buildInformation";
+	private static final String JOBS_TAG = "jobs";
+	private static final String JOB_TAG = "job";
 
 	MrrReportWriter(PrintWriter outputStreamWriter, PrintWriter errorStreamWriter) throws XMLStreamException, ParserConfigurationException, SAXException {
 		super(outputStreamWriter, errorStreamWriter);

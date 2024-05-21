@@ -43,18 +43,18 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
 	public static final String VALIDATION_RESULT = "validationResult"; //$NON-NLS-1$
 	public static final String FEATURES_REPORT = "featuresReport"; //$NON-NLS-1$
-	public final static String FIXER_REPORT = "fixerReport"; //$NON-NLS-1$
+	public static final String FIXER_REPORT = "fixerReport"; //$NON-NLS-1$
 	public static final String FIXER_RESULT = "fixerResult"; //$NON-NLS-1$
-	public final static String REPORT = "report"; //$NON-NLS-1$
-	public final static String JOB = "job"; //$NON-NLS-1$
-	public final static String JOBS = JOB + "s"; //$NON-NLS-1$
-	public final static String PROCESSING_TIME = "processingTime"; //$NON-NLS-1$
-	public final static String BUILD_INFORMATION = "buildInformation"; //$NON-NLS-1$
-	public final static String ITEM_DETAILS = "itemDetails"; //$NON-NLS-1$
-	public final static String RELEASE_DETAILS = "releaseDetails"; //$NON-NLS-1$
-	public final static String TASK_RESULT = "taskResult"; //$NON-NLS-1$
-	public final static String BATCH_SUMMARY = "batchSummary"; //$NON-NLS-1$
-	public final static String LOGS = "logs"; //$NON-NLS-1$
+	public static final String REPORT = "report"; //$NON-NLS-1$
+	public static final String JOB = "job"; //$NON-NLS-1$
+	public static final String JOBS = JOB + "s"; //$NON-NLS-1$
+	public static final String PROCESSING_TIME = "processingTime"; //$NON-NLS-1$
+	public static final String BUILD_INFORMATION = "buildInformation"; //$NON-NLS-1$
+	public static final String ITEM_DETAILS = "itemDetails"; //$NON-NLS-1$
+	public static final String RELEASE_DETAILS = "releaseDetails"; //$NON-NLS-1$
+	public static final String TASK_EXCEPTION = "taskException"; //$NON-NLS-1$
+	public static final String BATCH_SUMMARY = "batchSummary"; //$NON-NLS-1$
+	public static final String LOGS = "logs"; //$NON-NLS-1$
 
 	/**
 	 * 
@@ -142,11 +142,11 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
 	public static Collection<AuditDuration> getDurations(ProcessorResult result) {
 		EnumMap<TaskType, TaskResult> results = result.getResults();
-		if(results != null) {
+		if (results != null) {
 			Collection<AuditDuration> res = new ArrayList<>();
-			for (TaskType type : results.keySet()) {
-				if (results.get(type).getDuration() != null) {
-					res.add(results.get(type).getDuration());
+			for (TaskResult taskResult : results.values()) {
+				if (taskResult.getDuration() != null) {
+					res.add(taskResult.getDuration());
 				}
 			}
 			return res;

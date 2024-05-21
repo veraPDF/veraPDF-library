@@ -34,11 +34,11 @@ import static org.junit.Assert.*;
  */
 @SuppressWarnings("static-method")
 public class ReferenceImplTest {
-	private final static String DEFAULT_REFERENCE_STRING = "Reference [specification=specification, clause=clause]";
+	private static final String DEFAULT_REFERENCE_STRING = "Reference [specification=specification, clause=clause]";
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ReferenceImpl#equals(java.lang.Object)}.
+	 * {@link org.verapdf.pdfa.validation.profiles.ReferenceImpl#equals(java.lang.Object)}.
 	 */
 	@Test
 	public final void testEqualsObject() {
@@ -47,7 +47,7 @@ public class ReferenceImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ReferenceImpl#toString()}.
+	 * {@link org.verapdf.pdfa.validation.profiles.ReferenceImpl#toString()}.
 	 */
 	@Test
 	public final void testToString() {
@@ -56,7 +56,7 @@ public class ReferenceImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ReferenceImpl#fromValues(String, String)}.
+	 * {@link org.verapdf.pdfa.validation.profiles.ReferenceImpl#fromValues(String, String)}.
 	 */
 	@Test
 	public final void testFromValues() {
@@ -71,7 +71,7 @@ public class ReferenceImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.ReferenceImpl#fromReference(org.verapdf.pdfa.validation.Reference)}.
+	 * {@link org.verapdf.pdfa.validation.profiles.ReferenceImpl#fromValues(String, String)}.
 	 */
 	@Test
 	public final void testFromReference() {

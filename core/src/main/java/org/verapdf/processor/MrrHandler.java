@@ -107,12 +107,12 @@ class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT, true, true);
+		this.serializeElement(taskResult, TASK_EXCEPTION, true, true);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT, true, true);
+		this.serializeElement(taskResult, TASK_EXCEPTION, true, true);
 	}
 
 	@Override
@@ -122,7 +122,7 @@ class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT, true, true);
+		this.serializeElement(taskResult, TASK_EXCEPTION, true, true);
 	}
 
 	@Override
@@ -132,7 +132,7 @@ class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT, true, true);
+		this.serializeElement(taskResult, TASK_EXCEPTION, true, true);
 	}
 
 	@Override
@@ -143,7 +143,7 @@ class MrrHandler extends AbstractXmlHandler {
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT, true, true);
+		this.serializeElement(taskResult, TASK_EXCEPTION, true, true);
 	}
 
 	@Override
@@ -174,7 +174,6 @@ class MrrHandler extends AbstractXmlHandler {
 			// closes jobs element
 			this.writer.writeEndElement();
 			this.serializeElement(summary, BATCH_SUMMARY, true, true);
-			newLine(this.writer);
 			// closes report element
 			this.writer.writeEndElement();
 			this.writer.flush();

@@ -28,9 +28,11 @@ import org.verapdf.component.ComponentDetails;
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.processor.ProcessorFactory.BatchSummariser;
 import org.verapdf.processor.reports.BatchSummary;
+import org.verapdf.processor.reports.ItemDetails;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 
 	/**
 	 * @see org.verapdf.processor.BatchProcessor#process(java.io.File, boolean,
-	 *      org.verapdf.processor.ProcessorResultHandler)
+	 *      org.verapdf.processor.BatchProcessingHandler)
 	 */
 	protected AbstractBatchProcessor(final ItemProcessor processor) {
 		this.processor = processor;
@@ -103,9 +105,20 @@ public abstract class AbstractBatchProcessor implements BatchProcessor {
 		return finishBatch();
 	}
 
+	@Override
+	public BatchSummary process(ItemDetails itemDetails, InputStream stream, BatchProcessingHandler resultHandler)
+			throws VeraPDFException {
+		this.initialise(resultHandler);
+		this.handler.handleBatchStart(this.processor.getConfig());
+		this.process(itemDetails, stream);
+		return finishBatch();
+	}
+
 	protected abstract void processContainer(final File container, final boolean recurse) throws VeraPDFException;
 
 	protected abstract void processList(final List<? extends File> toProcess) throws VeraPDFException;
+
+	protected abstract void process(ItemDetails fileDetails, final InputStream item) throws VeraPDFException;
 
 	private void initialise(final BatchProcessingHandler resultHandler) {
 		this.summariser = new ProcessorFactory.BatchSummariser(this.getConfig());

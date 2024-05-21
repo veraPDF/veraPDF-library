@@ -47,7 +47,7 @@ import org.verapdf.report.FeaturesReport;
  */
 @XmlRootElement(name = "processorResult")
 class ProcessorResultImpl implements ProcessorResult {
-	private final static ProcessorResult defaultInstance = new ProcessorResultImpl();
+	private static final ProcessorResult defaultInstance = new ProcessorResultImpl();
 	@XmlAttribute
 	private final boolean isPdf;
 	@XmlAttribute
@@ -99,7 +99,8 @@ class ProcessorResultImpl implements ProcessorResult {
 		this.isEncryptedPdf = isEncrypted;
 		this.isOutOfMemory = isOutOfMemory;
 		this.taskResults = results;
-		this.hasException = this.taskResults.values().stream().anyMatch(res -> res.getException() != null);
+		this.hasException = !isEncryptedPdf && !this.isOutOfMemory && this.isPdf &&
+				this.taskResults.values().stream().anyMatch(res -> res.getException() != null);
 		this.validationResult = validationResult;
 		this.featuresResult = featuresResult;
 		this.fixerResult = fixerResult;
@@ -114,8 +115,8 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	@Override
-	@XmlElementWrapper(name = "taskResult")
-	@XmlElement(name = "taskResult")
+	@XmlElementWrapper(name = "taskException")
+	@XmlElement(name = "taskException")
 	public Collection<TaskResult> getResultSet() {
 		return this.taskResults.values();
 	}
@@ -150,6 +151,10 @@ class ProcessorResultImpl implements ProcessorResult {
 
 	static ProcessorResult outOfMemoryResult(final ItemDetails details, final TaskResult res) {
 		return new ProcessorResultImpl(details, false, true, res);
+	}
+
+	static ProcessorResult veraExceptionResult(final ItemDetails details, final TaskResult res) {
+		return new ProcessorResultImpl(details, false, false, res);
 	}
 
 	@Override

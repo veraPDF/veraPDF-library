@@ -35,9 +35,9 @@ import org.verapdf.core.VeraPDFException;
  */
 
 final class VersioningMapper implements FileOutputMapper {
-	private final static String verPrefixOpen = "_("; //$NON-NLS-1$
-	private final static String verPrefixClose = ")"; //$NON-NLS-1$
-	final static VersioningMapper defaultInstance = new VersioningMapper();
+	private static final String verPrefixOpen = "_("; //$NON-NLS-1$
+	private static final String verPrefixClose = ")"; //$NON-NLS-1$
+	static final VersioningMapper defaultInstance = new VersioningMapper();
 	protected final FileOutputMapper mapper;
 
 	private VersioningMapper() {
@@ -75,9 +75,9 @@ final class VersioningMapper implements FileOutputMapper {
 		int maxVersion = -1;
 		for (File version : getVersions(orig)) {
 			int vers = getVersion(orig, version);
-			maxVersion = (vers > maxVersion) ? vers : maxVersion;
+			maxVersion = Math.max(vers, maxVersion);
 		}
-		Integer version = Integer.valueOf(maxVersion + 1);
+		Integer version = maxVersion + 1;
 		String versionedName = String.format("%s%d%s", verStart(orig), version, verEnd(orig)); //$NON-NLS-1$
 		return new File(orig.getParentFile(), versionedName);
 	}
@@ -101,15 +101,14 @@ final class VersioningMapper implements FileOutputMapper {
 
 	static String verStart(final File orig) {
 		final String origName = orig.getName();
-		final String verStart = (origName.lastIndexOf(".") < 1) ? origName + verPrefixOpen //$NON-NLS-1$
-				: origName.substring(0, origName.lastIndexOf(".")) + verPrefixOpen; //$NON-NLS-1$
+		final String verStart = (origName.lastIndexOf('.') < 1 ? origName : origName.substring(0, origName.lastIndexOf('.'))) + verPrefixOpen; //$NON-NLS-1$
 		return verStart;
 	}
 
 	static String verEnd(final File orig) {
 		final String origName = orig.getName();
-		final String verEnd = (origName.lastIndexOf(".") < 1) ? verPrefixClose //$NON-NLS-1$
-				: verPrefixClose + origName.substring(origName.lastIndexOf(".")); //$NON-NLS-1$
+		final String verEnd = (origName.lastIndexOf('.') < 1) ? verPrefixClose //$NON-NLS-1$
+				: verPrefixClose + origName.substring(origName.lastIndexOf('.')); //$NON-NLS-1$
 		return verEnd;
 	}
 

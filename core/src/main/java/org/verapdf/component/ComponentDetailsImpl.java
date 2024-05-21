@@ -24,6 +24,7 @@
 package org.verapdf.component;
 
 import java.net.URI;
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "componentDetails")
 class ComponentDetailsImpl implements ComponentDetails {
-	private final static URI defaultId = URI.create("http://component.verapdf.org#default");
-	private final static ComponentDetailsImpl defaultInstance = new ComponentDetailsImpl();
+	private static final URI defaultId = URI.create("http://component.verapdf.org#default");
+	private static final ComponentDetailsImpl defaultInstance = new ComponentDetailsImpl();
 	@XmlAttribute
 	private final URI id;
 	@XmlAttribute
@@ -140,42 +141,19 @@ class ComponentDetailsImpl implements ComponentDetails {
 			return false;
 		}
 		ComponentDetailsImpl other = (ComponentDetailsImpl) obj;
-		if (this.description == null) {
-			if (other.description != null) {
-				return false;
-			}
-		} else if (!this.description.equals(other.description)) {
+		if (!Objects.equals(this.description, other.description)) {
 			return false;
 		}
-		if (this.id == null) {
-			if (other.id != null) {
-				return false;
-			}
-		} else if (!this.id.equals(other.id)) {
+		if (!Objects.equals(this.id, other.id)) {
 			return false;
 		}
-		if (this.name == null) {
-			if (other.name != null) {
-				return false;
-			}
-		} else if (!this.name.equals(other.name)) {
+		if (!Objects.equals(this.name, other.name)) {
 			return false;
 		}
-		if (this.provider == null) {
-			if (other.provider != null) {
-				return false;
-			}
-		} else if (!this.provider.equals(other.provider)) {
+		if (!Objects.equals(this.provider, other.provider)) {
 			return false;
 		}
-		if (this.version == null) {
-			if (other.version != null) {
-				return false;
-			}
-		} else if (!this.version.equals(other.version)) {
-			return false;
-		}
-		return true;
+		return Objects.equals(this.version, other.version);
 	}
 
 	static ComponentDetails defaultInstance() {

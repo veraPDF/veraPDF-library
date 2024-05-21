@@ -28,12 +28,12 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-parent</artifactId>
-    <version>1.24.1</version>
+    <version>1.26.2</version>
   </parent>
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
-  <version>1.24.0</version>
+  <version>1.26.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF PDF/A Validation Library</name>
@@ -72,7 +72,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.24.0,1.25.0)</verapdf.model.version>
+    <verapdf.model.version>[1.26.0,1.27.0)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
@@ -82,21 +82,25 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.12.1</version>
       </plugin>
 
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.11</version>
       </plugin>
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
       </plugin>
 
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>versions-maven-plugin</artifactId>
+        <version>2.16.2</version>
       </plugin>
 
     </plugins>
@@ -104,6 +108,20 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.junit</groupId>
+        <artifactId>junit-bom</artifactId>
+        <version>5.10.2</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-api</artifactId>
+        <version>5.10.2</version>
+        <scope>test</scope>
+      </dependency>
 
       <dependency>
         <groupId>junit</groupId>
@@ -113,9 +131,23 @@
       </dependency>
 
       <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>5.10.2</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>5.10.2</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
-        <version>3.7.1</version>
+        <version>3.15.6</version>
         <scope>test</scope>
       </dependency>
 

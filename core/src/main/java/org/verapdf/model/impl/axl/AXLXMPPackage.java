@@ -171,7 +171,7 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     @Override
     public Boolean getisSerializationValid() {
-        return Boolean.valueOf(this.isSerializationValid);
+        return this.isSerializationValid;
     }
 
     //------------------------------------------------------------------------------ veraPDF: getter method for actual encoding

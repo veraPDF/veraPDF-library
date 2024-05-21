@@ -13,6 +13,8 @@
     <xsl:param name="isFullHTML" select="'true'"/>
     <!-- Parameter to show parser type -->
     <xsl:param name="parserType"/>
+    <!-- Parameter to show release details -->
+    <xsl:param name="appName"/>
     <!-- Prameter to set the base path to the Wiki instance -->
     <xsl:param name="wikiPath"
                select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
@@ -134,14 +136,14 @@
                         </td>
                     </tr>
                 </xsl:if>
-                <xsl:if test="/report/jobs/job/taskResult/exceptionMessage">
+                <xsl:if test="/report/jobs/job/taskException/exceptionMessage">
                     <tr>
                         <td width="200" class="invalid">
                             Error:
                         </td>
                         <td class="invalid">
                             <xsl:value-of
-                                    select="/report/jobs/job/taskResult/exceptionMessage"/>
+                                    select="/report/jobs/job/taskException/exceptionMessage"/>
                         </td>
                     </tr>
                 </xsl:if>
@@ -169,8 +171,7 @@
                         <b>Version:</b>
                     </td>
                     <td>
-                        <xsl:value-of
-                                select="/report/buildInformation/releaseDetails[@id='gui']/@version"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[@id=$appName]/@version"/>
                     </td>
                 </tr>
                 <xsl:if test="$parserType">
@@ -189,8 +190,7 @@
                         <b>Build Date:</b>
                     </td>
                     <td>
-                        <xsl:value-of
-                                select="/report/buildInformation/releaseDetails[@id='gui']/@buildDate"/>
+                        <xsl:value-of select="/report/buildInformation/releaseDetails[@id=$appName]/@buildDate"/>
                     </td>
                 </tr>
                 <tr>
@@ -399,82 +399,40 @@
     <!-- Validation Information -->
     <xsl:template match="/report/jobs/job/validationReport/details/rule">
 
-        <xsl:param name="idWithDots" select="concat(@clause,'t',@testNumber)"/>
+        <xsl:param name="idWithDots" select="concat(@clause, 't', @testNumber)"/>
         <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
 
-        <xsl:variable name="part-a1-rules">
-            <xsl:choose>
-                <xsl:when
-                        test="'/' = substring($wikiPath, string-length($wikiPath))">
-                    <xsl:value-of
-                            select="concat($wikiPath, 'PDFA-Part-1-rules')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                            select="concat($wikiPath, '/PDFA-Part-1-rules')"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="part-a2-rules">
-            <xsl:choose>
-                <xsl:when
-                        test="'/' = substring($wikiPath, string-length($wikiPath))">
-                    <xsl:value-of
-                            select="concat($wikiPath, 'PDFA-Parts-2-and-3-rules')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                            select="concat($wikiPath, '/PDFA-Parts-2-and-3-rules')"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="part-a4-rules">
-            <xsl:choose>
-                <xsl:when
-                        test="'/' = substring($wikiPath, string-length($wikiPath))">
-                    <xsl:value-of
-                            select="concat($wikiPath, 'PDFA-Part-4-rules')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                            select="concat($wikiPath, '/PDFA-Part-4-rules')"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="part-ua1-rules">
-            <xsl:choose>
-                <xsl:when
-                        test="'/' = substring($wikiPath, string-length($wikiPath))">
-                    <xsl:value-of
-                            select="concat($wikiPath, 'PDFUA-Part-1-rules')"/>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of
-                            select="concat($wikiPath, '/PDFUA-Part-1-rules')"/>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:variable>
-
-        <xsl:variable name="tempWikiLink">
+        <xsl:variable name="wikiLinkEnd">
             <xsl:choose>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-1')">
-                    <xsl:value-of select="$part-a1-rules"/>
+                    <xsl:value-of select="'PDFA-Part-1-rules'"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-2')">
-                    <xsl:value-of select="$part-a2-rules"/>
+                    <xsl:value-of select="'PDFA-Parts-2-and-3-rules'"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-3')">
-                    <xsl:value-of select="$part-a2-rules"/>
+                    <xsl:value-of select="'PDFA-Parts-2-and-3-rules'"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 19005-4')">
-                    <xsl:value-of select="$part-a4-rules"/>
+                    <xsl:value-of select="'PDFA-Part-4-rules'"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 14289-1')">
-                    <xsl:value-of select="$part-ua1-rules"/>
+                    <xsl:value-of select="'PDFUA-Part-1-rules'"/>
                 </xsl:when>
+                <xsl:when test="starts-with(@specification, 'ISO 14289-2')">
+                    <xsl:value-of select="'PDFUA-Part-2-rules'"/>
+                </xsl:when>                
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="tempWikiLink">
+            <xsl:choose>
+                <xsl:when
+                        test="'/' = substring($wikiPath, string-length($wikiPath))">
+                    <xsl:value-of select="concat($wikiPath, $wikiLinkEnd)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="concat($wikiPath, '/', $wikiLinkEnd)"/>
+                </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="wikiLink">
@@ -490,9 +448,9 @@
         <xsl:variable name="ruleLink"
                       select="concat($wikiLink, '#rule-', translate(@clause, '.', ''), '-', @testNumber)"/>
         <xsl:variable name="hasLink"
-                      select="starts-with(@specification, 'ISO 19005-1') or
-                            starts-with(@specification, 'ISO 19005-2') or starts-with(@specification, 'ISO 19005-3') or
-                            starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1')"/>
+                      select="starts-with(@specification, 'ISO 19005-1') or starts-with(@specification, 'ISO 19005-2') or 
+                      starts-with(@specification, 'ISO 19005-3') or starts-with(@specification, 'ISO 19005-4') or 
+                      starts-with(@specification, 'ISO 14289-1') or starts-with(@specification, 'ISO 14289-2')"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,

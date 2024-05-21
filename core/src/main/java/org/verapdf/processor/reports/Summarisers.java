@@ -88,7 +88,7 @@ public final class Summarisers {
 		}
 	}
 
-	private static abstract class AbstractSummaryBuilder {
+	private abstract static class AbstractSummaryBuilder {
 		protected int total = 0;
 		protected int failed = 0;
 		private final TaskType taskType;

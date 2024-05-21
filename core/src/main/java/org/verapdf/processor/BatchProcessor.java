@@ -24,10 +24,12 @@
 package org.verapdf.processor;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.List;
 
 import org.verapdf.core.VeraPDFException;
 import org.verapdf.processor.reports.BatchSummary;
+import org.verapdf.processor.reports.ItemDetails;
 
 /**
  * The veraPDF batch processor, used to process multiple files.
@@ -42,7 +44,7 @@ public interface BatchProcessor extends Processor {
 	 * 
 	 * @param toProcess
 	 *            a {@link List} of {@link File}s to process
-	 * @param resutlHandler
+	 * @param resultHandler
 	 *            the {@link BatchProcessingHandler} that will be used to
 	 *            process the results
 	 * @return a {@link BatchSummary} that reports the details of the batch
@@ -50,7 +52,10 @@ public interface BatchProcessor extends Processor {
 	 * @throws VeraPDFException
 	 *             when an error occurs during processing.
 	 */
-	public BatchSummary process(List<? extends File> toProcess, BatchProcessingHandler resutlHandler)
+	public BatchSummary process(List<? extends File> toProcess, BatchProcessingHandler resultHandler)
+			throws VeraPDFException;
+
+	public BatchSummary process(ItemDetails itemDetails, InputStream stream, BatchProcessingHandler resultHandler)
 			throws VeraPDFException;
 
 	/**
@@ -61,7 +66,7 @@ public interface BatchProcessor extends Processor {
 	 * @param recurse
 	 *            set {@code true} to recurse into sub-directories, false if
 	 *            recursion not required.
-	 * @param resutlHandler
+	 * @param resultHandler
 	 *            the {@link BatchProcessingHandler} that will be used to
 	 *            process the results
 	 * @return a {@link BatchSummary} that reports the details of the batch
@@ -69,6 +74,6 @@ public interface BatchProcessor extends Processor {
 	 * @throws VeraPDFException
 	 *             when an error occurs during processing.
 	 */
-	public BatchSummary process(File toProcess, boolean recurse, BatchProcessingHandler resutlHandler)
+	public BatchSummary process(File toProcess, boolean recurse, BatchProcessingHandler resultHandler)
 			throws VeraPDFException;
 }

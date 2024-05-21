@@ -64,7 +64,7 @@ final class ProcessorImpl implements ItemProcessor {
 	private static final ComponentDetails defaultDetails = Components
 			.libraryDetails(URI.create("http://pdfa.verapdf.org/processors#default"), "VeraPDF Processor"); //$NON-NLS-1$//$NON-NLS-2$
 	private static final Logger logger = Logger.getLogger(ProcessorImpl.class.getCanonicalName());
-	private static VeraPDFFoundry foundry = Foundries.defaultInstance();
+	private static final VeraPDFFoundry foundry = Foundries.defaultInstance();
 
 	private final ProcessorConfig processorConfig;
 	private final ComponentDetails details;
@@ -112,11 +112,9 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		TaskType task = null;
 		String password = this.processorConfig.getValidatorConfig().getPassword();
-		try (PDFAParser parser = this.hasCustomProfile()
-				? foundry.createParser(toProcess, this.processorConfig.getCustomProfile().getPDFAFlavour(), password)
-				: this.isAuto()
-				  ? foundry.createParser(toProcess, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
-				  : foundry.createParser(toProcess, this.valConf().getFlavour(), this.valConf().getDefaultFlavour(), password)) {
+		PDFAFlavour flavour = this.hasCustomProfile() ? this.processorConfig.getCustomProfile().getPDFAFlavour() :
+				(this.isAuto() ? PDFAFlavour.NO_FLAVOUR : this.valConf().getFlavour());
+		try (PDFAParser parser = foundry.createParser(toProcess, flavour, this.valConf().getDefaultFlavour(), password)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {
@@ -153,7 +151,7 @@ final class ProcessorImpl implements ItemProcessor {
 		} catch (Exception e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
-			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			return ProcessorResultImpl.veraExceptionResult(fileDetails,
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
@@ -168,11 +166,9 @@ final class ProcessorImpl implements ItemProcessor {
 		Components.Timer parseTimer = Components.Timer.start();
 		String password = this.processorConfig.getValidatorConfig().getPassword();
 		TaskType task = null;
-		try (PDFAParser parser = this.hasCustomProfile()
-				? foundry.createParser(pdfFileStream, this.processorConfig.getCustomProfile().getPDFAFlavour(), password)
-				: this.isAuto()
-				? foundry.createParser(pdfFileStream, PDFAFlavour.NO_FLAVOUR, this.valConf().getDefaultFlavour(), password)
-				: foundry.createParser(pdfFileStream, this.valConf().getFlavour(), this.valConf().getDefaultFlavour(), password)) {
+		PDFAFlavour flavour = this.hasCustomProfile() ? this.processorConfig.getCustomProfile().getPDFAFlavour() :
+				(this.isAuto() ? PDFAFlavour.NO_FLAVOUR : this.valConf().getFlavour());
+		try (PDFAParser parser = foundry.createParser(pdfFileStream, flavour, this.valConf().getDefaultFlavour(), password)) {
 			for (TaskType t : this.getConfig().getTasks()) {
 				task = t;
 				switch (task) {
@@ -210,7 +206,7 @@ final class ProcessorImpl implements ItemProcessor {
 		}  catch (Exception e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
 			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
-			return ProcessorResultImpl.invalidPdfResult(fileDetails,
+			return ProcessorResultImpl.veraExceptionResult(fileDetails,
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
@@ -232,7 +228,7 @@ final class ProcessorImpl implements ItemProcessor {
 		}
 		// FIXME FAST
 		if (config.hasTask(TaskType.VALIDATE) && config.getValidatorConfig().getFlavour() == PDFAFlavour.NO_FLAVOUR
-				&& config.getValidatorConfig().toString().equals("")) { //$NON-NLS-1$
+				&& "".equals(config.getValidatorConfig().toString())) { //$NON-NLS-1$
 			throw new IllegalArgumentException("Validation cannot be started with no chosen validation profile"); //$NON-NLS-1$
 		}
 		if (fileDetails == null) {
@@ -356,7 +352,7 @@ final class ProcessorImpl implements ItemProcessor {
 		return ReleaseDetails.getDetails();
 	}
 
-	static private boolean isMdFolder(final String mdFolder) {
+	private static boolean isMdFolder(final String mdFolder) {
 		if (mdFolder == null) return false;
 		if (mdFolder.isEmpty()) return false;
 		return ! mdFolder.equals(ProcessorConfigImpl.defaultInstance().getMetadataFolder());

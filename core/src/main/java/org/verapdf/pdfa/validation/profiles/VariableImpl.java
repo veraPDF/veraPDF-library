@@ -27,6 +27,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
+import java.util.Objects;
 
 /**
  * JAXB serialisable implementation of {@link Variable} with safe methods for
@@ -39,7 +40,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  */
 @XmlRootElement(name = "variable")
 final class VariableImpl implements Variable {
-    private final static VariableImpl DEFAULT = new VariableImpl();
+    private static final VariableImpl DEFAULT = new VariableImpl();
     @XmlAttribute
     private final String name;
     @XmlAttribute
@@ -130,27 +131,16 @@ final class VariableImpl implements Variable {
         if (!(obj instanceof Variable))
             return false;
         Variable other = (Variable) obj;
-        if (this.name == null) {
-            if (other.getName() != null)
-                return false;
-        } else if (!this.name.equals(other.getName()))
+        if (!Objects.equals(this.getName(), other.getName())) {
             return false;
-        if (this.value == null) {
-            if (other.getValue() != null)
-                return false;
-        } else if (!this.value.equals(other.getValue()))
+        }
+        if (!Objects.equals(this.getValue(), other.getValue())) {
             return false;
-        if (this.defaultValue == null) {
-            if (other.getDefaultValue() != null)
-                return false;
-        } else if (!this.defaultValue.equals(other.getDefaultValue()))
+        }
+        if (!Objects.equals(this.getDefaultValue(), other.getDefaultValue())) {
             return false;
-        if (this.object == null) {
-            if (other.getObject() != null)
-                return false;
-        } else if (!this.object.equals(other.getObject()))
-            return false;
-        return true;
+        }
+        return Objects.equals(this.getObject(), other.getObject());
     }
 
     /*

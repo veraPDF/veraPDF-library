@@ -33,9 +33,9 @@ import java.util.regex.Pattern;
  */
 public class PredefinedSchemasDefinition extends SchemasDefinition {
 
-    private Map<QName, Pattern> restrictedSimpleField = new HashMap<>();
-    private Map<QName, Pattern> restrictedSeqText = new HashMap<>();
-    private Map<QName, String[][]> closedSeqChoice = new HashMap<>();
+    private final Map<QName, Pattern> restrictedSimpleField = new HashMap<>();
+    private final Map<QName, Pattern> restrictedSeqText = new HashMap<>();
+    private final Map<QName, String[][]> closedSeqChoice = new HashMap<>();
 
     protected PredefinedSchemasDefinition() {
     }
@@ -71,7 +71,7 @@ public class PredefinedSchemasDefinition extends SchemasDefinition {
     }
 
     private static Boolean isCorrespondsClosedSimpleChoice(VeraPDFXMPNode node, Pattern p) {
-        return Boolean.valueOf(node.getOptions().isSimple() && p.matcher(node.getValue()).matches());
+        return node.getOptions().isSimple() && p.matcher(node.getValue()).matches();
     }
 
     private static Boolean isCorrespondsRestrictedSeqText(VeraPDFXMPNode node, Pattern p) {

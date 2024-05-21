@@ -2,6 +2,8 @@ package org.verapdf.xmp.impl;
 
 import org.verapdf.xmp.*;
 import org.verapdf.xmp.options.ParseOptions;
+import org.verapdf.xmp.impl.xpath.XMPPath;
+import org.verapdf.xmp.impl.xpath.XMPPathParser;
 import org.verapdf.xmp.options.PropertyOptions;
 import org.verapdf.xmp.options.SerializeOptions;
 import org.verapdf.xmp.properties.XMPProperty;
@@ -15,6 +17,9 @@ import java.util.*;
 public class VeraPDFMeta {
 
     public static final String PDFAID_PREFIX = "pdfaid";
+    public static final String PDFUAID_PREFIX = "pdfuaid";
+    public static final String PDFA_EXTENSION_PREFIX = "pdfaExtension";
+    public static final String SCHEMAS = "schemas";
     public static final String CONFORMANCE = "conformance";
     public static final String PART = "part";
     public static final String REVISION_YEAR = "rev";
@@ -56,13 +61,28 @@ public class VeraPDFMeta {
                 int prefixEndIndex = originalName.indexOf(":");
                 String name = originalName.substring(prefixEndIndex + 1, originalName.length());
                 String namespaceURI = registry.getNamespaceURI(originalName.substring(0, Math.max(prefixEndIndex, 0)));
-                if (XMPMetaImpl.NS_PDFA_EXTENSION.equals(namespaceURI) && "schemas".equals(name)) {
+                if (XMPMetaImpl.NS_PDFA_EXTENSION.equals(namespaceURI) && SCHEMAS.equals(name)) {
                     this.extensionSchemasNode = VeraPDFXMPNode.fromXMPNode(xmpChild);
                 } else {
                     this.properties.add(VeraPDFXMPNode.fromXMPNode(xmpChild));
                 }
             }
         }
+    }
+    
+    public VeraPDFExtensionSchemasContainer getExtensionSchema() throws XMPException {
+        final XMPPath expPath = XMPPathParser.expandXPath(XMPMetaImpl.NS_PDFA_EXTENSION, SCHEMAS);
+        final XMPNode propNode = XMPNodeUtils.findNode(meta.getRoot(), expPath, false, null);
+        return propNode != null ? new VeraPDFExtensionSchemasContainer(VeraPDFXMPNode.fromXMPNode(propNode)) : null;
+    }
+    
+    public void createExtensionSchema() throws XMPException {
+        XMPNode extension = new XMPNode(PDFA_EXTENSION_PREFIX + ":" + SCHEMAS, "", 
+                new PropertyOptions(PropertyOptions.ARRAY), PDFA_EXTENSION_PREFIX);
+        XMPNode node = new XMPNode(XMPConst.NS_PDFA_EXTENSION, PDFA_EXTENSION_PREFIX + ":", 
+                new PropertyOptions(PropertyOptions.SCHEMA_NODE), null);
+        node.addChild(extension);
+        meta.getRoot().addChild(node);
     }
 
     public static VeraPDFMeta create() {
@@ -115,11 +135,11 @@ public class VeraPDFMeta {
         return null;
     }
 
-    public boolean deleteIdentificationSchema() {
+    public boolean deletePDFAIdentificationSchema() {
         return deleteSchema(XMPSchemaRegistryImpl.NS_PDFA_ID);
     }
 
-    public boolean deleteUAIdentificationSchema() {
+    public boolean deletePDFUAIdentificationSchema() {
         return deleteSchema(XMPSchemaRegistryImpl.NS_PDFUA_ID);
     }
 
@@ -142,6 +162,15 @@ public class VeraPDFMeta {
             update();
         }
         return isDeleted;
+    }
+
+    public boolean containsPropertiesFromNamespace(String nameSpaceURI) {
+        for (VeraPDFXMPNode node : getProperties()) {
+            if (nameSpaceURI.equals(node.getNamespaceURI())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private VeraPDFMeta setSimpleTextProperty(String namespaceURI, String propertyName, String value) throws XMPException {
@@ -281,48 +310,52 @@ public class VeraPDFMeta {
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_XMP, "ModifyDate", date.getISO8601String());
     }
 
-    public Integer getIdentificationPart() throws XMPException {
+    public Integer getPDFAIdentificationPart() throws XMPException {
         String stringValue = getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, PART);
         try {
             return stringValue == null ? null : Integer.parseInt(stringValue);
         } catch (NumberFormatException e) {
-            throw new XMPException("Property part of PDFA Identification schema contains not integer value", XMPError.BADVALUE, e);
+            throw new XMPException("Property part of PDF/A Identification schema contains not integer value", XMPError.BADVALUE, e);
         }
     }
 
-    public Integer getUAIdentificationPart() throws XMPException {
+    public Integer getPDFUAIdentificationPart() throws XMPException {
         String stringValue = getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, PART);
         try {
             return stringValue == null ? null : Integer.parseInt(stringValue);
         } catch (NumberFormatException e) {
-            throw new XMPException("Property part of PDFUA Identification schema contains not integer value", XMPError.BADVALUE, e);
+            throw new XMPException("Property part of PDF/UA Identification schema contains not integer value", XMPError.BADVALUE, e);
         }
     }
 
-    public VeraPDFMeta setIdentificationPart(Integer identificationPart) throws XMPException {
+    public VeraPDFMeta setPDFAIdentificationPart(Integer identificationPart) throws XMPException {
         String value = identificationPart == null ? null : identificationPart.toString();
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, PART, value);
     }
 
-    public VeraPDFMeta setUAIdentificationPart(Integer identificationPart) throws XMPException {
+    public VeraPDFMeta setPDFUAIdentificationPart(Integer identificationPart) throws XMPException {
         String value = identificationPart == null ? null : identificationPart.toString();
         return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, PART, value);
     }
 
-    public String getIdentificationConformance() throws XMPException {
+    public String getPDFAIdentificationConformance() throws XMPException {
         return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, CONFORMANCE);
     }
 
-    public  String getRevisionYear() throws XMPException {
+    public String getPDFARevisionYear() throws XMPException {
         return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, REVISION_YEAR);
     }
 
-    public VeraPDFMeta setIdentificationConformance(String identificationConformance) throws XMPException {
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  CONFORMANCE, identificationConformance);
+    public String getPDFUARevisionYear() throws XMPException {
+        return getSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFUA_ID, REVISION_YEAR);
     }
 
-    public VeraPDFMeta setIdentificationRevisionYear(String identificationConformance) throws XMPException {
-        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID,  REVISION_YEAR, identificationConformance);
+    public VeraPDFMeta setPDFAIdentificationConformance(String identificationConformance) throws XMPException {
+        return setSimpleTextProperty(XMPSchemaRegistryImpl.NS_PDFA_ID, CONFORMANCE, identificationConformance);
+    }
+
+    public VeraPDFMeta setIdentificationRevisionYear(String namespaceURI, String identificationConformance) throws XMPException {
+        return setSimpleTextProperty(namespaceURI, REVISION_YEAR, identificationConformance);
     }
 
     public XMPMeta getCloneOfInitialMeta() {

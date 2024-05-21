@@ -63,7 +63,7 @@ final class ValidationResultImpl implements ValidationResult {
 	private final ValidationProfile validationProfile;
 
 	private ValidationResultImpl() {
-		this(Profiles.defaultProfile(), Collections.<TestAssertion>emptyList(),
+		this(Profiles.defaultProfile(), Collections.emptyList(),
 		     false, JobEndStatus.NORMAL);
 	}
 
@@ -145,6 +145,7 @@ final class ValidationResultImpl implements ValidationResult {
 		return this.jobEndStatus;
 	}
 
+	@Override
 	public HashMap<RuleId, Integer> getFailedChecks() {
 		return this.failedChecks;
 	}
@@ -175,16 +176,10 @@ final class ValidationResultImpl implements ValidationResult {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		if (!(obj instanceof ValidationResult))
-			return false;
 		ValidationResult other = (ValidationResult) obj;
-		if (this.assertions == null) {
-			if (other.getTestAssertions() != null)
-				return false;
-		} else if (other.getTestAssertions() == null)
+		if (!Objects.equals(this.assertions, other.getTestAssertions())) {
 			return false;
-		else if (!this.assertions.equals(other.getTestAssertions()))
-			return false;
+		}
 		if (this.flavour != other.getPDFAFlavour())
 			return false;
 		if (this.isCompliant != other.isCompliant())

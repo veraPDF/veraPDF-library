@@ -20,6 +20,7 @@ package org.verapdf.processor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.verapdf.ReleaseDetails;
 import org.verapdf.component.AuditDuration;
@@ -49,11 +50,12 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	protected JsonHandler(Writer writer, boolean logPassed) {
 		this.writer = writer;
-		this.objectMapper = new ObjectMapper();
+		this.objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 		this.logPassed = logPassed;
 		SimpleModule module = new SimpleModule("FeaturesNodeSerializer", new Version(2, 1,
 				3, null, null, null));
 		module.addSerializer(FeaturesNode.class, new FeaturesNodeSerializer(FeaturesNode.class));
+		module.addSerializer(VeraPDFException.class, new VeraPDFExceptionSerializer(VeraPDFException.class));
 		objectMapper.registerModule(module);
 		objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 	}
@@ -116,12 +118,12 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void parsingFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
 	void pdfEncrypted(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
@@ -131,7 +133,7 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void validationFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
@@ -141,7 +143,7 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void featureFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override
@@ -152,7 +154,7 @@ public class JsonHandler extends AbstractBatchHandler {
 
 	@Override
 	void fixerFailure(TaskResult taskResult) throws VeraPDFException {
-		this.serializeElement(taskResult, TASK_RESULT);
+		this.serializeElement(taskResult, TASK_EXCEPTION);
 	}
 
 	@Override

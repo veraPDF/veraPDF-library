@@ -130,7 +130,14 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 
 	private void debugAndLog(String fileName) {
 		if (this.processor.getConfig().getValidatorConfig().isDebug()) {
-			logger.log(Level.WARNING, fileName);
+			Level level = this.processor.getConfig().getValidatorConfig().getLoggingLevel();
+			if (level.intValue() > Level.INFO.intValue()) {
+				LogsFileHandler.setLoggingLevel(Level.INFO);
+			}
+			logger.log(Level.INFO, fileName);
+			if (level.intValue() > Level.INFO.intValue()) {
+				LogsFileHandler.setLoggingLevel(level);
+			}
 		}
 		if (this.processor.getConfig().getValidatorConfig().isLogsEnabled()) {
 			try {
@@ -139,6 +146,14 @@ public final class BatchFileProcessor extends AbstractBatchProcessor {
 				logger.log(Level.WARNING, "Error while creating log file");
 			}
 		}
+	}
+
+	@Override
+	protected void process(ItemDetails fileDetails, final InputStream item) throws VeraPDFException {
+		configLogs();
+		debugAndLog(fileDetails.getName());
+		ProcessorResult result = this.processor.process(fileDetails, item);
+		this.processResult(result, this.processor.getConfig().getValidatorConfig().isLogsEnabled());
 	}
 
 	private void processItem(ItemDetails fileDetails, final InputStream item) throws VeraPDFException {

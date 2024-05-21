@@ -1,3 +1,70 @@
+Version 1.26 (May  16, 2024)
+=================================
+
+### Validation
+- (PDF/UA-2) supported named structured destinations in goto actions
+- (PDF/UA-1) fixed rules about annotations
+
+Version 1.26 RC2 (April 2, 2024)
+==================================
+
+### Applications
+- set secure parameter for xslt transformation ([CVE-2024-28109])
+- improved multithreading performance of JavaScript evaluation
+
+### Core library
+- added support for Java 21
+
+### PDF Parser
+- fixed MathML parsing exception
+- added warning for duplicated MCID in content stream
+- fixed CIDFontType2 font program parsing for OpenType fonts
+- fixed ROS operator finding for CFF fonts
+
+### Validation
+- (PDF/UA-2) include ISO 32005 rules to PDF/UA-2 profile
+- (PDF/UA-2) added rule about Ref entry of Note structure element
+- (PDF/UA-2) supported validation of Open Action destination
+- (PDF/UA-2) disabled ActualText and Alt validation for non-real content
+- (PDF/UA-2) fixed checking of role mapping structure types to the same namespace
+
+[CVE-2024-28109]: https://github.com/veraPDF/veraPDF-library/security/advisories/GHSA-qxqf-2mfx-x8jw
+
+Version 1.26 RC (February 9, 2024)
+==================================
+
+### Applications
+- Improved REST API: more logical endpoints, documentation, web demo page, automatic deployment of the docker image to DockerHub.com
+- Redesigned main GUI window
+- Improved CLI output (help, debug logs, text report, JSON report formatting)
+- Improved XML report schema in case of exceptions
+- Fixed GUI check for the availability of a newer version
+
+### PDF Model
+- Cleanup of the unused properties and links
+
+### PDF Parser
+- Updated predefined CMaps
+- Added support for structure attributes defined via ClassMap 
+- Fixed parsing of inline images of undefined length
+- Detect and generate a warning when dictionary contains duplicated keys
+- Detect and generate a warning when the embedded font has duplicated glyph names
+- Detect and generate a warning in case of loops in document structure tree
+- Fixed decryption of string objects
+- Fix default whitepoint for CIELab in JPEG2000
+- Optimized use of temporary files
+
+### Validation
+- (PDF/UA-2) added support for PDF/UA-2 (draft)
+- (PDF/UA-1) detect and report structure elements with missing parent
+- (PDF/UA-1) fixed checks related to role maps between standard and non-standard tags
+- (PDF/UA-1) fixed rules related to annotations in structure tree
+- (PDF/UA-1) added checks for XMP prefixes in the identification metadata
+- (PDF/A-1,2,3,4) added check for valid values of BitsPerComponent
+- (PDF/A-2,3,4) apply the rule on identical tint transform also to /All and /None
+- (PDF/A-1) added check that the document does not use xref stream
+- (PDF/A-1) Fix syncing XMP with Info dictionary in case of multiple creators
+
 Version 1.24 RC2 (June 2, 2023)
 ==================================
 
@@ -16,6 +83,7 @@ Version 1.24 RC2 (June 2, 2023)
 -  (PDF/A-2,3,4) fixed handling of Default color spaces for DeviceN colorants
 -  (PDF/UA-1) reverted Table Scope determination algorithm from PDF 2.0 to PDF 1.7
 
+
 Version 1.24 RC (April 27, 2023)
 ==================================
 
@@ -26,7 +94,7 @@ Version 1.24 RC (April 27, 2023)
 - added new `--progress` parameter in CLI to report progress info
 - added new `--config` parameter in CLI to support config file as a new CLI argument
 - renamed `xml` report format option to `raw` in CLI (`xml` is now reserved for the default report format)
-- enchanced validation error messages and their variable data
+- enhanced validation error messages and their variable data
 - support feature report in json format
 - added warnings on incompatible CLI arguments
 - fixed saving GUI application settings

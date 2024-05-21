@@ -6,46 +6,49 @@ import org.mozilla.javascript.Script;
 import org.mozilla.javascript.ScriptableObject;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.validation.profiles.ErrorArgument;
+import org.verapdf.pdfa.validation.profiles.ErrorArgumentImpl;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public class JavaScriptEvaluator {
 	private static final int OPTIMIZATION_LEVEL = 9;
 
-	private static Context context;
+	private static final ThreadLocal<Context> context = new ThreadLocal<>();
 
-	private static Map<String, Script> ruleScripts = new HashMap<>();
-	private static Map<String, Script> variableScripts = new HashMap<>();
-	private static Map<String, Script> argumentScripts = new HashMap<>();
+	private static final ThreadLocal<Map<String, Script>> ruleScripts = ThreadLocal.withInitial(HashMap::new);
+	private static final ThreadLocal<Map<String, Script>> variableScripts = ThreadLocal.withInitial(HashMap::new);
+	private static final ThreadLocal<Map<String, Script>> argumentScripts = ThreadLocal.withInitial(HashMap::new);
 
-	public static synchronized ScriptableObject initialise() {
-		context = Context.enter();
-		context.setOptimizationLevel(OPTIMIZATION_LEVEL);
-		return context.initStandardObjects();
+	public static ScriptableObject initialise() {
+		final Context newContext = Context.enter();
+		context.set(newContext);
+		newContext.setOptimizationLevel(OPTIMIZATION_LEVEL);
+		return newContext.initStandardObjects();
 	}
 
-	public static synchronized java.lang.Object evaluateString(String source, ScriptableObject scope) {
-		return context.evaluateString(scope, source, null, 0, null);
+	public static java.lang.Object evaluateString(String source, ScriptableObject scope) {
+		return context.get().evaluateString(scope, source, null, 0, null);
 	}
 
-	public static synchronized java.lang.Object evalVariableResult(Variable variable, Object object, ScriptableObject scope) {
+	public static java.lang.Object evalVariableResult(Variable variable, Object object, ScriptableObject scope) {
 		Script script;
-		if (!variableScripts.containsKey(variable.getName())) {
+		if (!variableScripts.get().containsKey(variable.getName())) {
 			String source = getStringScript(object, variable.getValue());
 			script = JavaScriptEvaluator.compileString(source);
 
-			variableScripts.put(variable.getName(), script);
+			variableScripts.get().put(variable.getName(), script);
 		} else {
-			script = variableScripts.get(variable.getName());
+			script = variableScripts.get().get(variable.getName());
 		}
 
 		scope.put("obj", scope, object);
 
-		java.lang.Object res = script.exec(context, scope);
+		java.lang.Object res = script.exec(context.get(), scope);
 
 		if (res instanceof NativeJavaObject) {
 			res = ((NativeJavaObject) res).unwrap();
@@ -54,7 +57,7 @@ public class JavaScriptEvaluator {
 	}
 
 	private static Script compileString(String source) {
-		return context.compileString(source, null, 0, null);
+		return context.get().compileString(source, null, 0, null);
 	}
 
 	private static String getStringScript(Object obj, String arg) {
@@ -105,33 +108,33 @@ public class JavaScriptEvaluator {
 		return getStringScript(obj, "(" + test + ")==true");
 	}
 
-	public static synchronized boolean getTestEvalResult(Object obj, Rule rule, ScriptableObject scope) {
+	public static boolean getTestEvalResult(Object obj, Rule rule, ScriptableObject scope) {
 		scope.put("obj", scope, obj);
 
 		Script scr;
 		String test = rule.getTest();
-		if (!ruleScripts.containsKey(test)) {
+		if (!ruleScripts.get().containsKey(test)) {
 			scr = compileString(getScript(obj, test));
-			ruleScripts.put(test, scr);
+			ruleScripts.get().put(test, scr);
 		} else {
-			scr = ruleScripts.get(test);
+			scr = ruleScripts.get().get(test);
 		}
 
-		boolean testEvalResult = ((Boolean) scr.exec(context, scope)).booleanValue();
+		boolean testEvalResult = (Boolean) scr.exec(context.get(), scope);
 
 		return testEvalResult;
 	}
 
-	private static synchronized String getErrorArgumentResult(String argument, Object obj, ScriptableObject scope) {
+	private static String getErrorArgumentResult(String argument, Object obj, ScriptableObject scope) {
 		Script scr;
 
-		if (!argumentScripts.containsKey(argument)) {
+		if (!argumentScripts.get().containsKey(argument)) {
 			scr = JavaScriptEvaluator.compileString(getStringScript(obj, argument));
-			argumentScripts.put(argument, scr);
+			argumentScripts.get().put(argument, scr);
 		} else {
-			scr = argumentScripts.get(argument);
+			scr = argumentScripts.get().get(argument);
 		}
-		java.lang.Object res = scr.exec(context, scope);
+		java.lang.Object res = scr.exec(context.get(), scope);
 		if (res instanceof NativeJavaObject) {
 			res = ((NativeJavaObject) res).unwrap();
 		}
@@ -148,10 +151,14 @@ public class JavaScriptEvaluator {
 
 	}
 
-	public static synchronized void setErrorArgumentsResult(Object obj, List<ErrorArgument> arguments, ScriptableObject scope) {
+	public static List<ErrorArgument> getErrorArgumentsResult(Object obj, List<ErrorArgument> arguments,
+																		   ScriptableObject scope) {
+		List<ErrorArgument> result = new LinkedList<>();
 		for (ErrorArgument argument : arguments) {
-			argument.setArgumentValue(getErrorArgumentResult(argument.getArgument(), obj, scope));
+			result.add(ErrorArgumentImpl.fromValues(argument.getArgument(), argument.getName(),
+					getErrorArgumentResult(argument.getArgument(), obj, scope)));
 		}
+		return result;
 	}
 
 	public static void exitContext() {
