@@ -37,7 +37,7 @@ jobs:
           git config user.name "Git User"
           git config user.email "user@test.com"
       - name: Add commit to the test branch
-        run: git cherry-pick -m 1 ${{ github.event.before }}..${{ github.event.after }}
+        run: git cherry-pick -m 1 ${{ github.event.before }}..${{ github.event.after }} --empty=drop
       - name: Build project with Maven
         if: success()
         run: mvn --batch-mode --update-snapshots verify
@@ -63,7 +63,7 @@ jobs:
           git config user.name "Git User"
           git config user.email "user@temp.com"
       - name: Add commit to new branch
-        run: git cherry-pick -m 1 ${{ github.event.before }}..${{ github.event.after }}
+        run: git cherry-pick -m 1 ${{ github.event.before }}..${{ github.event.after }} --empty=drop
       - name: Merge branch into jakarta
         if: success()
         run: |
