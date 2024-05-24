@@ -450,7 +450,8 @@
         <xsl:variable name="hasLink"
                       select="starts-with(@specification, 'ISO 19005-1') or starts-with(@specification, 'ISO 19005-2') or 
                       starts-with(@specification, 'ISO 19005-3') or starts-with(@specification, 'ISO 19005-4') or 
-                      starts-with(@specification, 'ISO 14289-1') or starts-with(@specification, 'ISO 14289-2')"/>
+                      starts-with(@specification, 'ISO 14289-1') or starts-with(@specification, 'ISO 14289-2') or 
+                      starts-with(@specification, 'WTPDF1.0')"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,
