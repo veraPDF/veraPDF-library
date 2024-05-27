@@ -423,7 +423,7 @@
                     <xsl:value-of select="'PDFUA-Part-2-rules'"/>
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'WTPDF1.0')">
-                    <xsl:value-of select="'WTPDF-1-0-rules'"/>
+                    <xsl:value-of select="'WTPDF-1.0-rules'"/>
                 </xsl:when>
             </xsl:choose>
         </xsl:variable>
