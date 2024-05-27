@@ -34730,10 +34730,10 @@
 		</rule>
 		<rule object="ANumberTreeNode">
 			<id specification="PDF_1_4" clause="NumberTreeNode-Nums-Array" testNumber="9"/>
-			<description>Entry Nums with type Array in NumberTreeNode shall satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids)))</description>
-			<test>NumsHasTypeArray != true || ((containsKids != true) || containsNums != true)</test>
+			<description>Entry Nums with type Array in NumberTreeNode shall satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids))) &amp;&amp; fn:ArraySortAscending(Nums, 2)</description>
+			<test>NumsHasTypeArray != true || (((containsKids != true) || containsNums != true) &amp;&amp; isNumsArraySortAscending2 == true)</test>
 			<error>
-				<message>Entry Nums with type Array in NumberTreeNode does not satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids)))</message>
+				<message>Entry Nums with type Array in NumberTreeNode does not satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids))) &amp;&amp; fn:ArraySortAscending(Nums, 2)</message>
 				<arguments/>
 			</error>
 			<references/>
