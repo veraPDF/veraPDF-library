@@ -20731,6 +20731,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ANameNameTreeDestsEntry">
+			<id specification="PDF_1_2" clause="NameNameTreeDestsEntry" testNumber="8"/>
+			<description>Entry in NameNameTreeDests shall have one of types: Array, Dictionary</description>
+			<test>HasTypeArray == true || HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in NameNameTreeDests has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ANameTreeNode">
 			<id specification="PDF_1_2" clause="NameTreeNode" testNumber="1"/>
 			<description>NameTreeNode shall not contain entries except Kids, Limits, Names</description>

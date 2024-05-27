@@ -47987,6 +47987,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ANameNameTreeAPEntry">
+			<id specification="PDF_1_6" clause="NameNameTreeAPEntry" testNumber="8"/>
+			<description>Entry in NameNameTreeAP shall have type Stream</description>
+			<test>HasTypeStream == true</test>
+			<error>
+				<message>Entry %keyName% in NameNameTreeAP has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ANameNameTreeAlternatePresentationsEntry">
 			<id specification="PDF_1_6" clause="NameNameTreeAlternatePresentationsEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeAlternatePresentations shall have type Dictionary</description>
@@ -48024,6 +48037,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ANameNameTreeDestsEntry">
+			<id specification="PDF_1_6" clause="NameNameTreeDestsEntry" testNumber="8"/>
+			<description>Entry in NameNameTreeDests shall have one of types: Array, Dictionary</description>
+			<test>HasTypeArray == true || HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in NameNameTreeDests has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ANameNameTreeEmbeddedFilesEntry">
 			<id specification="PDF_1_6" clause="NameNameTreeEmbeddedFilesEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeEmbeddedFiles shall have type Dictionary</description>
@@ -48044,6 +48070,19 @@
 			<error>
 				<message>Entry %keyName% with type Dictionary in NameNameTreeIDS is not one of objects WebCaptureImageSet, WebCapturePageSet</message>
 				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ANameNameTreeIDSEntry">
+			<id specification="PDF_1_6" clause="NameNameTreeIDSEntry" testNumber="8"/>
+			<description>Entry in NameNameTreeIDS shall have type Dictionary</description>
+			<test>HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in NameNameTreeIDS has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -48087,6 +48126,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ANameNameTreeRenditionsEntry">
+			<id specification="PDF_1_6" clause="NameNameTreeRenditionsEntry" testNumber="8"/>
+			<description>Entry in NameNameTreeRenditions shall have type Dictionary</description>
+			<test>HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in NameNameTreeRenditions has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ANameNameTreeTemplatesEntry">
 			<id specification="PDF_1_6" clause="NameNameTreeTemplatesEntry" testNumber="8"/>
 			<description>Entry in NameNameTreeTemplates shall have type Dictionary</description>
@@ -48107,6 +48159,19 @@
 			<error>
 				<message>Entry %keyName% with type Dictionary in NameNameTreeURLS is not one of objects WebCaptureImageSet, WebCapturePageSet</message>
 				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ANameNameTreeURLSEntry">
+			<id specification="PDF_1_6" clause="NameNameTreeURLSEntry" testNumber="8"/>
+			<description>Entry in NameNameTreeURLS shall have type Dictionary</description>
+			<test>HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in NameNameTreeURLS has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
@@ -58640,6 +58705,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ASlideShowNameTreeResourcesEntry">
+			<id specification="PDF_1_6" clause="SlideShowNameTreeResourcesEntry" testNumber="8"/>
+			<description>Entry in SlideShowNameTreeResources shall have type Stream</description>
+			<test>HasTypeStream == true</test>
+			<error>
+				<message>Entry %keyName% in SlideShowNameTreeResources has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ASoftMaskAlpha">
 			<id specification="PDF_1_6" clause="SoftMaskAlpha" testNumber="1"/>
 			<description>SoftMaskAlpha shall not contain entries except BC, G, S, TR, Type</description>
@@ -60281,6 +60359,19 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AStructTreeRootNameTreeIDTreeEntry">
+			<id specification="PDF_1_6" clause="StructTreeRootNameTreeIDTreeEntry" testNumber="8"/>
+			<description>Entry in StructTreeRootNameTreeIDTree shall have type Dictionary</description>
+			<test>HasTypeDictionary == true</test>
+			<error>
+				<message>Entry %keyName% in StructTreeRootNameTreeIDTree has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AStructTreeRootNumberTreeParentTreeEntry">
 			<id specification="PDF_1_6" clause="StructTreeRootNumberTreeParentTreeEntry-Dictionary" testNumber="17"/>
 			<description>Entry with type Dictionary in StructTreeRootNumberTreeParentTree shall be one of objects StructElem, MarkedContentReference, ObjectReference</description>
@@ -60288,6 +60379,19 @@
 			<error>
 				<message>Entry %keyName% with type Dictionary in StructTreeRootNumberTreeParentTree is not one of objects StructElem, MarkedContentReference, ObjectReference</message>
 				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructTreeRootNumberTreeParentTreeEntry">
+			<id specification="PDF_1_6" clause="StructTreeRootNumberTreeParentTreeEntry" testNumber="8"/>
+			<description>Entry in StructTreeRootNumberTreeParentTree shall have one of types: Array, Dictionary, Null</description>
+			<test>HasTypeArray == true || HasTypeDictionary == true || HasTypeNull == true</test>
+			<error>
+				<message>Entry %keyName% in StructTreeRootNumberTreeParentTree has type %1 instead of one of types: Array, Dictionary, Null</message>
+				<arguments>
+					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
 				</arguments>
 			</error>
