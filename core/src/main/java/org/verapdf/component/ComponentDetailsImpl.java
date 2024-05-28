@@ -64,48 +64,30 @@ class ComponentDetailsImpl implements ComponentDetails {
 		this.description = description;
 	}
 
-	/**
-	 * @return the defaultid
-	 */
 	public static URI getDefaultid() {
 		return defaultId;
 	}
 
-	/**
-	 * @return the id
-	 */
 	@Override
 	public URI getId() {
 		return this.id;
 	}
 
-	/**
-	 * @return the name
-	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
 
-	/**
-	 * @return the version
-	 */
 	@Override
 	public String getVersion() {
 		return this.version;
 	}
 
-	/**
-	 * @return the provider
-	 */
 	@Override
 	public String getProvider() {
 		return this.provider;
 	}
 
-	/**
-	 * @return the description
-	 */
 	@Override
 	public String getDescription() {
 		return this.description;

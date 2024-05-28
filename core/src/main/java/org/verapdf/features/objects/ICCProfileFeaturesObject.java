@@ -116,9 +116,6 @@ public class ICCProfileFeaturesObject extends FeaturesObject {
 		CreateNodeHelper.addNotEmptyNode(DEVICE_MANUFACTURER, ipAdapter.getDeviceManufacturer(), root);
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		ICCProfileFeaturesObjectAdapter ipAdapter = (ICCProfileFeaturesObjectAdapter) this.adapter;

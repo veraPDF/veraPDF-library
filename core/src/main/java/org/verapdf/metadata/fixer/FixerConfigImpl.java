@@ -44,9 +44,6 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 		this.fixesPrefix = fixesPrefix;
 	}
 
-	/**
-	 * @return the fixesPrefix
-	 */
 	@Override
 	public String getFixesPrefix() {
 		return this.fixesPrefix;

@@ -88,9 +88,6 @@ public class SignatureFeaturesObject extends FeaturesObject {
 		return root;
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		SignatureFeaturesObjectAdapter signAdapter = (SignatureFeaturesObjectAdapter) this.adapter;

@@ -106,9 +106,6 @@ class ProcessorResultImpl implements ProcessorResult {
 		this.fixerResult = fixerResult;
 	}
 
-	/**
-	 * @return the results
-	 */
 	@Override
 	public EnumMap<TaskType, TaskResult> getResults() {
 		return this.taskResults;

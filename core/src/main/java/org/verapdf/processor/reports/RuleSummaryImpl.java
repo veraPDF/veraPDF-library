@@ -90,58 +90,36 @@ final class RuleSummaryImpl implements RuleSummary {
 		this(Profiles.defaultRuleId(), Status.UNKNOWN, "", "", "", null);
 	}
 
-	/**
-	 * @return the status
-	 */
 	@Override
 	public String getStatus() {
 		return this.status;
 	}
 
-
-	/**
-	 * @return the status
-	 */
 	@Override
 	public Status getRuleStatus() {
 		return this.ruleStatus;
 	}
 
-	/**
-	 * @return the specification
-	 */
 	@Override
 	public String getSpecification() {
 		return this.specification;
 	}
 
-	/**
-	 * @return the clause
-	 */
 	@Override
 	public String getClause() {
 		return this.clause;
 	}
 
-	/**
-	 * @return the testNumber
-	 */
 	@Override
 	public int getTestNumber() {
 		return this.testNumber;
 	}
 
-	/**
-	 * @return the passedChecks
-	 */
 	@Override
 	public Integer getPassedChecks() {
 		return this.passedChecks;
 	}
 
-	/**
-	 * @return the failedChecks
-	 */
 	@Override
 	public int getFailedChecks() {
 		return this.failedChecks;
@@ -152,33 +130,21 @@ final class RuleSummaryImpl implements RuleSummary {
 		return tags != null ? new HashSet<>(Arrays.asList(tags.split(","))) : null;
 	}
 
-	/**
-	 * @return the description
-	 */
 	@Override
 	public String getDescription() {
 		return this.description;
 	}
 
-	/**
-	 * @return the object
-	 */
 	@Override
 	public String getObject() {
 		return this.object;
 	}
 
-	/**
-	 * @return the test
-	 */
 	@Override
 	public String getTest() {
 		return this.test;
 	}
 
-	/**
-	 * @return the checks
-	 */
 	@Override
 	public List<Check> getChecks() {
 		return this.checks;

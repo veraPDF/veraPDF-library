@@ -67,42 +67,27 @@ final class CheckImpl implements Check {
 	private CheckImpl() {
 		this(TestAssertion.Status.PASSED, "", null, null, null);
 	}
-	
-	/**
-	 * @return the status
-	 */
+
 	@Override
 	public String getStatus() {
 		return this.status;
 	}
 
-	/**
-	 * @return the location
-	 */
 	@Override
 	public String getLocation() {
 		return this.location;
 	}
 
-	/**
-	 * @return the context
-	 */
 	@Override
 	public String getContext() {
 		return this.context;
 	}
 
-	/**
-	 * @return the error message
-	 */
 	@Override
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}
 
-	/**
-	 * @return the error arguments
-	 */
 	@Override
 	public List<String> getErrorArguments() {
 		return this.errorArguments;
