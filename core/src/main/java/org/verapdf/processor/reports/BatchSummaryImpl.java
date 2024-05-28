@@ -72,9 +72,6 @@ final class BatchSummaryImpl implements BatchSummary {
 		this.veraExceptions = veraExceptions;
 	}
 
-	/**
-	 * @return the duration
-	 */
 	@Override
 	public AuditDuration getDuration() {
 		return this.duration;

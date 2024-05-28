@@ -65,9 +65,6 @@ public class InteractiveFormFieldFeaturesObject extends FeaturesObject {
 		}
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;

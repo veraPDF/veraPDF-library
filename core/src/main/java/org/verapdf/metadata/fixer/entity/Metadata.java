@@ -88,9 +88,6 @@ public interface Metadata {
 	 */
 	XMPBasic getXMPBasicSchema(InfoDictionary info);
 
-	/**
-	 * @return
-	 */
 	boolean isNeedToBeUpdated();
 
 	/**

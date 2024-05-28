@@ -88,9 +88,6 @@ public class ShadingPatternFeaturesObject extends FeaturesObject {
 		return root;
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;

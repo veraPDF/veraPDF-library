@@ -54,9 +54,6 @@ public interface PDFDocument {
 	 */
 	InfoDictionary getInfoDictionary();
 
-	/**
-	 * @return
-	 */
 	boolean isNeedToBeUpdated();
 
 	/**
