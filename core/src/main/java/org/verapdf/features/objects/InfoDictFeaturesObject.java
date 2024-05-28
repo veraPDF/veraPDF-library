@@ -126,9 +126,6 @@ public class InfoDictFeaturesObject extends FeaturesObject {
 		return INFORMATION_DICT + "/" + ENTRY + "[@key='" + key + "']";
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;
