@@ -265,8 +265,5 @@ public interface VeraPDFFoundry extends Component {
 	 */
 	public PDFAFlavour defaultFlavour();
 
-	/**
-	 * @return parser id
-	 */
 	public String getParserId();
 }

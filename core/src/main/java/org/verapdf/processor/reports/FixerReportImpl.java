@@ -66,36 +66,21 @@ final class FixerReportImpl implements MetadataFixerReport {
 		this("", 0, Collections.emptyList(), Collections.emptyList());
 	}
 
-	/**
-	 * @return the status
-	 */
 	@Override
 	public String getStatus() {
 		return this.status;
 	}
 
-
-	/**
-	 * @return the fixCount
-	 */
 	@Override
 	public int getFixCount() {
 		return this.fixCount;
 	}
 
-
-	/**
-	 * @return the fixes
-	 */
 	@Override
 	public List<String> getFixes() {
 		return this.fixes;
 	}
 
-
-	/**
-	 * @return the errors
-	 */
 	@Override
 	public List<String> getErrors() {
 		return this.errors;

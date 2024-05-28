@@ -64,33 +64,21 @@ final class ValidationReportImpl implements ValidationReport {
 		this.jobEndStatus = jobEndStatus;
 	}
 
-	/**
-	 * @return the details
-	 */
 	@Override
 	public ValidationDetails getDetails() {
 		return this.details;
 	}
 
-	/**
-	 * @return the profileName
-	 */
 	@Override
 	public String getProfileName() {
 		return this.profileName;
 	}
 
-	/**
-	 * @return the statement
-	 */
 	@Override
 	public String getStatement() {
 		return this.statement;
 	}
 
-	/**
-	 * @return the isCompliant
-	 */
 	@Override
 	public boolean isCompliant() {
 		return this.isCompliant;
