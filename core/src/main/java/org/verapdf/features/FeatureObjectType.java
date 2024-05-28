@@ -82,9 +82,6 @@ public enum FeatureObjectType {
 		return this.fullName;
 	}
 
-	/**
-	 * @return the idPrefix
-	 */
 	public String getIdPrefix() {
 		return idPrefix;
 	}

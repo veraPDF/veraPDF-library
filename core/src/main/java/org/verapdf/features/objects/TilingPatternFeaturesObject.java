@@ -118,9 +118,6 @@ public class TilingPatternFeaturesObject extends FeaturesObject {
 		}
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;

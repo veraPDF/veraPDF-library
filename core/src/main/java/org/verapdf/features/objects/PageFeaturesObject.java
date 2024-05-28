@@ -133,9 +133,6 @@ public class PageFeaturesObject extends FeaturesObject {
 		}
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;

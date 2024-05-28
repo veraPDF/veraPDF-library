@@ -87,9 +87,6 @@ public class OutputIntentFeaturesObject extends FeaturesObject {
 		return root;
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;

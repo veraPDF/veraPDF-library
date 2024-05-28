@@ -131,9 +131,6 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 		return CreateNodeHelper.formatDouble(res, 1);
 	}
 
-	/**
-	 * @return null
-	 */
 	@Override
 	public FeaturesData getData() {
 		return null;
