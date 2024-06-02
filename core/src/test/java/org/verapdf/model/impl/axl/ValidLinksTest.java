@@ -39,16 +39,16 @@ public class ValidLinksTest {
     @Parameterized.Parameters
     public static Collection<org.verapdf.model.baselayer.Object> data() {
         return Arrays.asList(new org.verapdf.model.baselayer.Object[]{
-                new AXLXMPPackage(null, true, null, null),
-                new AXLMainXMPPackage(null, true, null),
-                new AXLXMPProperty(null, true, false, null, null, null, null),
+                new AXLXMPPackage(null, true, null),
+                new AXLMainXMPPackage(null, true),
+                new AXLXMPProperty(null, true, false, null, null, null),
                 new AXLPDFAIdentification(null),
-                new AXLExtensionSchemasContainer(null, null, null, null),
-                new AXLExtensionSchemaDefinition(null, null, null, null),
-                new AXLExtensionSchemaProperty(null, null, null, null),
-                new AXLExtensionSchemaValueType(null, null, null, null),
-                new AXLExtensionSchemaField(null, null, null, null),
-                new AXLXMPMMHistoryProperty(null, true, false, null, null, null, null),
+                new AXLExtensionSchemasContainer(null, null, null),
+                new AXLExtensionSchemaDefinition(null, null, null),
+                new AXLExtensionSchemaProperty(null, null, null),
+                new AXLExtensionSchemaValueType(null, null, null),
+                new AXLExtensionSchemaField(null, null, null),
+                new AXLXMPMMHistoryProperty(null, true, false, null, null, null),
                 new AXLXMPMMHistoryResourceEvent(null)
         });
     }

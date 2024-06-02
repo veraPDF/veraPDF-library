@@ -25,7 +25,6 @@ import org.verapdf.xmp.impl.VeraPDFMeta;
 import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.xmplayer.MainXMPPackage;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,12 +49,12 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
      * @param xmpMetadata          object that represents this package
      * @param isSerializationValid true if metadata is valid
      */
-    public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, PDFAFlavour flavour) {
-        super(xmpMetadata, isSerializationValid, true, false, null, MAIN_XMP_PACKAGE_TYPE, flavour);
+    public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid) {
+        super(xmpMetadata, isSerializationValid, true, false, null, MAIN_XMP_PACKAGE_TYPE);
     }
 
-    public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck, PDFAFlavour flavour) {
-        super(xmpMetadata, isSerializationValid, true, isClosedChoiceCheck, null, MAIN_XMP_PACKAGE_TYPE, flavour);
+    public AXLMainXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid, boolean isClosedChoiceCheck) {
+        super(xmpMetadata, isSerializationValid, true, isClosedChoiceCheck, null, MAIN_XMP_PACKAGE_TYPE);
     }
 
     /**
