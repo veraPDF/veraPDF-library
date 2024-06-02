@@ -25,7 +25,6 @@ import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.xmp.impl.XMPNode;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.xmplayer.XMPLangAlt;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.List;
 
@@ -36,8 +35,8 @@ public class AXLXMPLangAlt extends AXLXMPProperty implements XMPLangAlt {
 
 	public static final String XMPMM_LANGUAGE_ALTERNATIVE_PROPERTY_TYPE = "XMPLangAlt";
 
-	public AXLXMPLangAlt(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
-		super(xmpNode, XMPMM_LANGUAGE_ALTERNATIVE_PROPERTY_TYPE, isMainMetadata, isClosedChoiceCheck, mainPackageSchemasDefinition, currentSchemasDefinitionPDFA_1, currentSchemasDefinitionPDFA_2_3, flavour);
+	public AXLXMPLangAlt(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3) {
+		super(xmpNode, XMPMM_LANGUAGE_ALTERNATIVE_PROPERTY_TYPE, isMainMetadata, isClosedChoiceCheck, mainPackageSchemasDefinition, currentSchemasDefinitionPDFA_1, currentSchemasDefinitionPDFA_2_3);
 	}
 
 	@Override
