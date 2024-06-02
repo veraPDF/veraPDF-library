@@ -31,6 +31,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 import org.junit.Test;
+import org.verapdf.containers.StaticCoreContainers;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
@@ -44,10 +45,10 @@ public class XMPMMHistoryTest {
 
 	@Test
 	public void test() throws URISyntaxException, XMPException, IOException {
+		StaticCoreContainers.setFlavour(PDFAFlavour.PDFA_1_B);
 		try (InputStream in = getClass().getClassLoader().getResourceAsStream(("org/verapdf/model/impl/axl/xmpMM-History.xml"))) {
 			VeraPDFMeta meta = VeraPDFMeta.parse(in);
-			AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true,
-					PDFAFlavour.PDFA_1_B);
+			AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
 			List<? extends Object> list = pack
 					.getLinkedObjects(AXLMainXMPPackage.PROPERTIES);
 			assertEquals(1, list.size());

@@ -32,6 +32,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.containers.StaticCoreContainers;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import org.verapdf.xmp.XMPException;
@@ -90,10 +91,10 @@ public class XMPIdentificationTest {
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
+        StaticCoreContainers.setFlavour(PDFAFlavour.PDFA_1_B);
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
-            AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true,
-                    PDFAFlavour.PDFA_1_B);
+            AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
             List<? extends org.verapdf.model.baselayer.Object> list = pack
                     .getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
             assertEquals(this.identificationSchemaNumber, list.size());
