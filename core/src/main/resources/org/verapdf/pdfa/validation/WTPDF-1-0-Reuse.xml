@@ -57,7 +57,7 @@
             <error>
                 <message>Non-standard structure type %1 is not mapped to a standard type</message>
                 <arguments>
-                    <argument>valueS</argument>
+                    <argument>namespaceAndTag</argument>
                 </arguments>
             </error>
             <references>
@@ -71,7 +71,7 @@
             <error>
                 <message>A circular mapping exists for %1 structure type</message>
                 <arguments>
-                    <argument>valueS</argument>
+                    <argument>namespaceAndTag</argument>
                 </arguments>
             </error>
             <references/>
