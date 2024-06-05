@@ -57259,6 +57259,16 @@
 			<references/>
 		</rule>
 		<rule object="ATrailerIDArray">
+			<id specification="PDF_1_5" clause="TrailerIDArray-0-StringByte" testNumber="9"/>
+			<description>Entry 0 with type StringByte in TrailerIDArray shall satisfy special case: fn:Eval((fn:StringLength(0) &gt;= 16) &amp;&amp; fn:AlwaysUnencrypted())</description>
+			<test>entry0HasTypeStringByte != true || (entry0StringSize &gt;= 16)</test>
+			<error>
+				<message>Entry 0 with type StringByte in TrailerIDArray does not satisfy special case: fn:Eval((fn:StringLength(0) &gt;= 16) &amp;&amp; fn:AlwaysUnencrypted())</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATrailerIDArray">
 			<id specification="PDF_1_5" clause="TrailerIDArray-1" testNumber="8"/>
 			<description>Entry 1 in TrailerIDArray shall have type StringByte</description>
 			<test>size &lt;= 1 || entry1HasTypeStringByte == true</test>
@@ -57276,6 +57286,16 @@
 			<test>entry1HasTypeStringByte != true || (isentry1Indirect == false || (containstrailerEncrypt != true))</test>
 			<error>
 				<message>Entry 1 with type StringByte in TrailerIDArray is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATrailerIDArray">
+			<id specification="PDF_1_5" clause="TrailerIDArray-1-StringByte" testNumber="9"/>
+			<description>Entry 1 with type StringByte in TrailerIDArray shall satisfy special case: fn:Eval((fn:StringLength(1) &gt;= 16) &amp;&amp; fn:AlwaysUnencrypted())</description>
+			<test>entry1HasTypeStringByte != true || (entry1StringSize &gt;= 16)</test>
+			<error>
+				<message>Entry 1 with type StringByte in TrailerIDArray does not satisfy special case: fn:Eval((fn:StringLength(1) &gt;= 16) &amp;&amp; fn:AlwaysUnencrypted())</message>
 				<arguments/>
 			</error>
 			<references/>
