@@ -906,6 +906,18 @@
                 <reference specification="ISO 32000-2:2020" clause="14.3"/>
             </references>
         </rule>
+        <rule object="PDDocument" tags="metadata">
+            <id specification="WTPDF_1_0" clause="8.11.1" testNumber="2"/>
+            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-2:2020, 14.3</description>
+            <test>metadata_size == 1</test>
+            <error>
+                <message>The document catalog dictionary doesn't contain metadata key</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.3.2"/>
+            </references>
+        </rule>
         <rule object="CosFileSpecification" tags="syntax">
             <id specification="WTPDF_1_0" clause="8.14.1" testNumber="1"/>
             <description>The Desc entry shall be present on all file specification dictionaries present in the EmbeddedFiles name tree of a conforming document</description>
