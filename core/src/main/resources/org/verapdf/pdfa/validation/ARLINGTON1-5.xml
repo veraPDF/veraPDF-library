@@ -23140,6 +23140,16 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
+			<id specification="PDF_1_5" clause="Catalog-PageLabels-NumberTree" testNumber="9"/>
+			<description>Entry PageLabels with type NumberTree in Catalog shall satisfy special case: fn:Eval(fn:IsNumberTreeIndex(PageLabels, 0))</description>
+			<test>PageLabelsHasTypeNumberTree != true || (number0IsNumberTreePageLabelsIndex == true)</test>
+			<error>
+				<message>Entry PageLabels with type NumberTree in Catalog does not satisfy special case: fn:Eval(fn:IsNumberTreeIndex(PageLabels, 0))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
 			<id specification="PDF_1_5" clause="Catalog-PageLabelsTreeNode" testNumber="8"/>
 			<description>Entry PageLabelsTreeNode in Catalog shall have type NumberTree</description>
 			<test>containsPageLabelsTreeNode == false || PageLabelsTreeNodeHasTypeNumberTree == true</test>
@@ -47675,8 +47685,8 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="PDF_1_5" clause="PageObject-TemplateInstantiated" testNumber="11"/>
-			<description>Entry TemplateInstantiated in PageObject is required, when fn:InNameTree(trailer::Catalog::Names::Pages) || fn:InNameTree(trailer::Catalog::Names::Templates)</description>
-			<test>containsTemplateInstantiated == true || ((TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesPages != true) &amp;&amp; (TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesTemplates != true))</test>
+			<description>Entry TemplateInstantiated in PageObject is required, when fn:IsNameTreeValue(trailer::Catalog::Names::Pages, TemplateInstantiated) || fn:IsNameTreeValue(trailer::Catalog::Names::Templates, TemplateInstantiated)</description>
+			<test>containsTemplateInstantiated == true || (TemplateInstantiatedIsNameTreetrailerCatalogNamesPagesValue != true &amp;&amp; TemplateInstantiatedIsNameTreetrailerCatalogNamesTemplatesValue != true)</test>
 			<error>
 				<message>Entry TemplateInstantiated in PageObject is missing</message>
 				<arguments/>
@@ -53829,10 +53839,10 @@
 		</rule>
 		<rule object="ASlideShow">
 			<id specification="PDF_1_5" clause="SlideShow-StartResource-StringByte" testNumber="9"/>
-			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:InNameTree(Resources)</description>
-			<test>StartResourceHasTypeStringByte != true || (StartResourceEntryIsIndexInNameTreeResources == true)</test>
+			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:IsNameTreeIndex(Resources, @StartResource)</description>
+			<test>StartResourceHasTypeStringByte != true || (StartResourceIsNameTreeResourcesIndex == true)</test>
 			<error>
-				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:InNameTree(Resources)</message>
+				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:IsNameTreeIndex(Resources, @StartResource)</message>
 				<arguments/>
 			</error>
 			<references/>

@@ -16076,6 +16076,16 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
+			<id specification="PDF_1_3" clause="Catalog-PageLabels-NumberTree" testNumber="9"/>
+			<description>Entry PageLabels with type NumberTree in Catalog shall satisfy special case: fn:Eval(fn:IsNumberTreeIndex(PageLabels, 0))</description>
+			<test>PageLabelsHasTypeNumberTree != true || (number0IsNumberTreePageLabelsIndex == true)</test>
+			<error>
+				<message>Entry PageLabels with type NumberTree in Catalog does not satisfy special case: fn:Eval(fn:IsNumberTreeIndex(PageLabels, 0))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
 			<id specification="PDF_1_3" clause="Catalog-PageLabelsTreeNode" testNumber="8"/>
 			<description>Entry PageLabelsTreeNode in Catalog shall have type NumberTree</description>
 			<test>containsPageLabelsTreeNode == false || PageLabelsTreeNodeHasTypeNumberTree == true</test>
