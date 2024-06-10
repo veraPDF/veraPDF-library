@@ -28664,10 +28664,10 @@
 		</rule>
 		<rule object="AArrayOfIndirectFileSpecificationsEntry">
 			<id specification="ISO_32000_1_7" clause="ArrayOfIndirectFileSpecificationsEntry-Dictionary" testNumber="9"/>
-			<description>Entry with type Dictionary in ArrayOfIndirectFileSpecifications shall satisfy special case: fn:InNameTree(parent::RichMediaContent::Assets)</description>
-			<test>HasTypeDictionary != true || (EntryIsIndexInNameTreeparentRichMediaContentAssets == true)</test>
+			<description>Entry with type Dictionary in ArrayOfIndirectFileSpecifications shall satisfy special case: fn:IsNameTreeValue(parent::RichMediaContent::Assets, @*)</description>
+			<test>HasTypeDictionary != true || (IsNameTreeparentRichMediaContentAssetsValue == true)</test>
 			<error>
-				<message>Entry %keyName% with type Dictionary in ArrayOfIndirectFileSpecifications does not satisfy special case: fn:InNameTree(parent::RichMediaContent::Assets)</message>
+				<message>Entry %keyName% with type Dictionary in ArrayOfIndirectFileSpecifications does not satisfy special case: fn:IsNameTreeValue(parent::RichMediaContent::Assets, @*)</message>
 				<arguments>
 					<argument name="keyName">keyName</argument>
 				</arguments>
@@ -34247,6 +34247,16 @@
 				<arguments>
 					<argument>PageLabelsType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
+			<id specification="ISO_32000_1_7" clause="Catalog-PageLabels-NumberTree" testNumber="9"/>
+			<description>Entry PageLabels with type NumberTree in Catalog shall satisfy special case: fn:Eval(fn:IsNumberTreeIndex(PageLabels, 0))</description>
+			<test>PageLabelsHasTypeNumberTree != true || (number0IsNumberTreePageLabelsIndex == true)</test>
+			<error>
+				<message>Entry PageLabels with type NumberTree in Catalog does not satisfy special case: fn:Eval(fn:IsNumberTreeIndex(PageLabels, 0))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -63202,8 +63212,8 @@
 		</rule>
 		<rule object="APageObject">
 			<id specification="ISO_32000_1_7" clause="PageObject-TemplateInstantiated" testNumber="11"/>
-			<description>Entry TemplateInstantiated in PageObject is required, when fn:InNameTree(trailer::Catalog::Names::Pages) || fn:InNameTree(trailer::Catalog::Names::Templates)</description>
-			<test>containsTemplateInstantiated == true || ((TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesPages != true) &amp;&amp; (TemplateInstantiatedEntryIsIndexInNameTreetrailerCatalogNamesTemplates != true))</test>
+			<description>Entry TemplateInstantiated in PageObject is required, when fn:IsNameTreeValue(trailer::Catalog::Names::Pages, TemplateInstantiated) || fn:IsNameTreeValue(trailer::Catalog::Names::Templates, TemplateInstantiated)</description>
+			<test>containsTemplateInstantiated == true || (TemplateInstantiatedIsNameTreetrailerCatalogNamesPagesValue != true &amp;&amp; TemplateInstantiatedIsNameTreetrailerCatalogNamesTemplatesValue != true)</test>
 			<error>
 				<message>Entry TemplateInstantiated in PageObject is missing</message>
 				<arguments/>
@@ -72904,10 +72914,10 @@
 		</rule>
 		<rule object="ASlideShow">
 			<id specification="ISO_32000_1_7" clause="SlideShow-StartResource-StringByte" testNumber="9"/>
-			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:InNameTree(Resources)</description>
-			<test>StartResourceHasTypeStringByte != true || (StartResourceEntryIsIndexInNameTreeResources == true)</test>
+			<description>Entry StartResource with type StringByte in SlideShow shall satisfy special case: fn:IsNameTreeIndex(Resources, @StartResource)</description>
+			<test>StartResourceHasTypeStringByte != true || (StartResourceIsNameTreeResourcesIndex == true)</test>
 			<error>
-				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:InNameTree(Resources)</message>
+				<message>Entry StartResource with type StringByte in SlideShow does not satisfy special case: fn:IsNameTreeIndex(Resources, @StartResource)</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -76203,8 +76213,8 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_7" clause="Target-N" testNumber="11"/>
-			<description>Entry N in Target is required, when (@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)</description>
-			<test>containsN == true || ((RNameValue != "C") || (NEntryIsIndexInNameTreetrailerCatalogNamesEmbeddedFiles != true))</test>
+			<description>Entry N in Target is required, when (@R == C) &amp;&amp; fn:IsNameTreeValue(trailer::Catalog::Names::@EmbeddedFiles, parent::@T)</description>
+			<test>containsN == true || ((RNameValue != "C") || parentTIsNameTreetrailerCatalogNamesEmbeddedFilesValue != true)</test>
 			<error>
 				<message>Entry N in Target is missing</message>
 				<arguments/>
@@ -76213,10 +76223,10 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_7" clause="Target-N-StringByte" testNumber="9"/>
-			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)))))</description>
-			<test>NHasTypeStringByte != true || ((((RNameValue != "C") || (NEntryIsIndexInNameTreetrailerCatalogNamesEmbeddedFiles != true)) &amp;&amp; containsN == true) != true)</test>
+			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:IsNameTreeValue(trailer::Catalog::Names::@EmbeddedFiles, parent::@T)))))</description>
+			<test>NHasTypeStringByte != true || ((((RNameValue != "C") || parentTIsNameTreetrailerCatalogNamesEmbeddedFilesValue != true) &amp;&amp; containsN == true) != true)</test>
 			<error>
-				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:InNameTree(trailer::Catalog::Names::EmbeddedFiles)))))</message>
+				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:IsNameTreeValue(trailer::Catalog::Names::@EmbeddedFiles, parent::@T)))))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -76255,10 +76265,10 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_1_7" clause="Target-P-StringByte" testNumber="14"/>
-			<description>Entry P with type StringByte in Target shall satisfy possible value predicate: fn:Eval(fn:InNameTree(trailer::Catalog::Names::Dests))</description>
-			<test>PHasTypeStringByte != true || (PEntryIsIndexInNameTreetrailerCatalogNamesDests == true)</test>
+			<description>Entry P with type StringByte in Target shall satisfy possible value predicate: fn:Eval(fn:IsNameTreeIndex(trailer::Catalog::Names::Dests, @P))</description>
+			<test>PHasTypeStringByte != true || PIsNameTreetrailerCatalogNamesDestsIndex == true</test>
 			<error>
-				<message>Entry P with type StringByte in Target does not satisfy possible value predicate: fn:Eval(fn:InNameTree(trailer::Catalog::Names::Dests))</message>
+				<message>Entry P with type StringByte in Target does not satisfy possible value predicate: fn:Eval(fn:IsNameTreeIndex(trailer::Catalog::Names::Dests, @P))</message>
 				<arguments/>
 			</error>
 			<references/>
