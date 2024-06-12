@@ -61,10 +61,6 @@ public class VersioningMapperTest {
 		emptyDir(tmpRoot.toFile());
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSib() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.sibFiles("", ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -79,10 +75,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSibPrf() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.sibFiles(custPrfx, ""); //$NON-NLS-1$
@@ -98,10 +90,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSibSfx() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.sibFiles("", custSfx); //$NON-NLS-1$
@@ -117,10 +105,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSibExt() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.sibFiles("", custExt); //$NON-NLS-1$
@@ -136,10 +120,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSibPrfxExt() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.sibFiles(custPrfx, custExt);
@@ -155,10 +135,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSub() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.subFold(custSubFld, "", ""); //$NON-NLS-1$ //$NON-NLS-2$
@@ -174,10 +150,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSubPrfx() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.subFold(custSubFld, custPrfx, ""); //$NON-NLS-1$
@@ -193,10 +165,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionSubSfx() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.subFold(custSubFld, "", custSfx); //$NON-NLS-1$
@@ -212,10 +180,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionExt() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.subFold(custSubFld, "", custExt); //$NON-NLS-1$
@@ -231,10 +195,6 @@ public class VersioningMapperTest {
 		}
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.verapdf.core.utils.VersioningMapper#getVersion(java.io.File)}.
-	 */
 	@Test
 	public void testGetVersionPfxExt() throws IOException, VeraPDFException {
 		FileOutputMapper toCompare = FileOutputMappers.subFold(custSubFld, custPrfx, custExt);

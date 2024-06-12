@@ -41,11 +41,13 @@ package org.verapdf.metadata.fixer.utils;
  * as other than metadata rules
  * </li>
  * </ul>
- * According to this status {@link MetadataFixerImpl}
+ * According to this status {@link org.verapdf.pdfa.MetadataFixer}
  * run different handling of document.
  *
  * @author Evgeniy Muravitskiy
- * @see MetadataFixerImpl#fixAndSaveDocument(OutputStream, FixerConfig)
+ * @see org.verapdf.metadata.fixer.gf.MetadataFixerImpl#fixAndSaveDocument(java.io.OutputStream, 
+ * org.verapdf.metadata.fixer.entity.PDFDocument, org.verapdf.pdfa.results.ValidationResult, boolean, 
+ * org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser)
  * @see org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector
  */
 public enum ValidationStatus {

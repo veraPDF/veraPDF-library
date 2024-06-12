@@ -63,7 +63,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 	}
 
 	/**
-	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchStart()
+	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchStart(ProcessorConfig) ()
 	 */
 	@Override
 	public void handleBatchStart(ProcessorConfig procConfig) throws VeraPDFException {
@@ -133,7 +133,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 	}
 
 	/**
-	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchEnd(org.verapdf.processor.BatchSummary)
+	 * @see org.verapdf.processor.BatchProcessingHandler#handleBatchEnd(BatchSummary)
 	 */
 	@Override
 	public void handleBatchEnd(BatchSummary summary) throws VeraPDFException {
