@@ -35,7 +35,7 @@ public enum FormatOption {
      */
     RAW("raw"),
     /**
-     * Output in {@link MachineReadableReport} XML format
+     * Output in machine readable report XML format
      */
     MRR("mrr"),
     XML("xml"),

@@ -410,7 +410,7 @@ public final class Profiles {
 	 * 
 	 * @param toConvert
 	 *            a {@link ValidationProfile} to convert to an XML String
-	 * @param prettyXml
+	 * @param format
 	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
 	 *            for no space formatting
 	 * @return a String xml representation of toConvert
@@ -438,7 +438,7 @@ public final class Profiles {
 	 *            a {@link ValidationProfile} to convert to an XML String
 	 * @param dest
 	 *            an OutputStream used to write the generated XML to
-	 * @param prettyXml
+	 * @param format
 	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
 	 *            for no space formatting
 	 * @throws JAXBException
@@ -481,7 +481,7 @@ public final class Profiles {
 	 *            a {@link ValidationProfile} to convert to an XML String
 	 * @param dest
 	 *            a Writer used to write the generated XML to
-	 * @param prettyXml
+	 * @param format
 	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
 	 *            for no space formatting
 	 * @throws JAXBException

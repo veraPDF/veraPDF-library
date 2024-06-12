@@ -34,8 +34,7 @@ import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlJavaTypeAdapter(ReferenceImpl.Adapter.class)
 public interface Reference {
     /**
-     * @return a {@link Specification} that identifies the PDF/A Specification
-     *         referred to.
+     * @return a {@link String} that identifies the Specification referred to.
      */
     public String getSpecification();
 

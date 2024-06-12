@@ -44,7 +44,7 @@ import java.io.InputStream;
 public interface VeraPDFFoundry extends Component {
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
-	 * {@link pdfStream} parameter. The parser or parser provider will detect
+	 * {@param pdfStream} parameter. The parser or parser provider will detect
 	 * the flavour of the PDF document stream and provide an appropriate parser.
 	 *
 	 * @param pdfStream
@@ -60,7 +60,7 @@ public interface VeraPDFFoundry extends Component {
 
 	/**
 	 * Method that returns a PDFParser instance, parsing the passed
-	 * {@link pdfStream} parameter. The caller must explicitly state the flavour
+	 * {@param pdfStream} parameter. The caller must explicitly state the flavour
 	 * of the PDF document stream.
 	 *
 	 * @param pdfStream
@@ -90,7 +90,7 @@ public interface VeraPDFFoundry extends Component {
 
 	/**
 	 * Method that returns a PDFParser instance, parsing file passed as
-	 * {@link pdfFile} parameter. The caller must explicitly state the flavour
+	 * {@param pdfFile} parameter. The caller must explicitly state the flavour
 	 * of the PDF document stream.
 	 *
 	 * @param pdfFile {@link File} with PDF document to be parsed.
@@ -116,7 +116,7 @@ public interface VeraPDFFoundry extends Component {
 
 	/**
 	 * Method that returns a PDFParser instance, parsing file passed as
-	 * {@link pdfFile} parameter. The parser or parser provider will detect
+	 * {@param pdfFile} parameter. The parser or parser provider will detect
 	 * the flavour of the PDF document stream and provide an appropriate parser.
 	 *
 	 * @param pdfFile
@@ -171,9 +171,9 @@ public interface VeraPDFFoundry extends Component {
 	 * Creates a new {@link PDFAValidator} instance that uses one of the
 	 * {@link ValidationProfile}s packaged as a core library resource. While
 	 * these profiles are not guaranteed to be up to date, they are available
-	 * when offline. A {@link ProfileDirectory} populated with the pre-loaded
+	 * when offline. A {@link org.verapdf.pdfa.validation.profiles.ProfileDirectory} populated with the pre-loaded
 	 * profiles can be obtained by calling
-	 * {@link Profiles#getVeraProfileDirectory()}.
+	 * {@link org.verapdf.pdfa.validation.profiles.Profiles#getVeraProfileDirectory()}.
 	 *
 	 * @param flavour
 	 *            the {@link PDFAFlavour} that's associated with the

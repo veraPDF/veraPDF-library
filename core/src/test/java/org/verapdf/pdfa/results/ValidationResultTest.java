@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.verapdf.core.XmlSerialiser;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.validation.profiles.Profiles;
+import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import jakarta.xml.bind.JAXBException;
@@ -78,7 +79,7 @@ public class ValidationResultTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromValues(org.verapdf.pdfa.validation.profiles.ValidationProfile, java.util.Set, boolean, int)}.
+	 * {@link org.verapdf.pdfa.results.ValidationResults#resultFromValues(ValidationProfile, List, boolean, JobEndStatus)}.
 	 */
 	@Test
 	public final void testFromValues() {
@@ -101,7 +102,7 @@ public class ValidationResultTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#toXml(org.verapdf.pdfa.results.ValidationResult, java.lang.Boolean)}.
+	 * {@link XmlSerialiser#toXml(Object, boolean, boolean)}.
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -122,7 +123,7 @@ public class ValidationResultTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromXml(java.io.InputStream)}.
+	 * {@link XmlSerialiser#typeFromXml(Class, InputStream)}.
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException
@@ -146,7 +147,7 @@ public class ValidationResultTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.results.ValidationResultImpl#fromXml(java.io.InputStream)}.
+	 * {@link ValidationResults#resultFromXmlString(String)}.
 	 * 
 	 * @throws IOException
 	 * @throws JAXBException

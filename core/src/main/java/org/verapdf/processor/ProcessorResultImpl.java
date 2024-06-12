@@ -40,7 +40,8 @@ import org.verapdf.report.FeaturesReport;
 
 /**
  * Instance of this class contains result of
- * {@link org.verapdf.processor.ProcessorImpl#validate(InputStream, ItemDetails, Config, OutputStream)}
+ * {@link org.verapdf.processor.ItemProcessor#process(ItemDetails, java.io.InputStream)} and 
+ * {@link org.verapdf.processor.ItemProcessor#process(java.io.File)}
  * work.
  *
  * @author Sergey Shemyakov

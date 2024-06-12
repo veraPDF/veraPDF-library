@@ -173,7 +173,7 @@ public class SemanticVersionTest {
 	}
 
 	/**
-	 * Test method for {@link VersionNumberImpl#compareTo(VersionNumberImpl)}.
+	 * Test method for {@link VersionNumberImpl#compareTo(SemanticVersionNumber)}.
 	 */
 	@Test
 	public final void testCompareTo() {

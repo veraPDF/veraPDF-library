@@ -27,6 +27,7 @@ import nl.jqno.equalsverifier.Warning;
 import org.junit.Test;
 
 import nl.jqno.equalsverifier.EqualsVerifier;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.logging.Level;
 
@@ -62,7 +63,7 @@ public class ValidatorConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.validators.ValidatorConfigImpl#fromValues(org.verapdf.pdfa.flavours.PDFAFlavour, boolean, int, boolean, boolean, Level, int)}.
+	 * {@link ValidatorFactory#createConfig(PDFAFlavour, PDFAFlavour, boolean, int, boolean, boolean, Level, int, boolean, String, boolean, boolean)}.
 	 */
 	@Test
 	public final void testFromValues() {
