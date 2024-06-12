@@ -63,7 +63,7 @@ public class FixerConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.metadata.fixer.FixerConfigImpl#fromValues(java.lang.String, boolean)}.
+	 * {@link org.verapdf.metadata.fixer.FixerFactory#configFromValues(String)}
 	 */
 	@Test
 	public void testFromValues() {
@@ -75,7 +75,7 @@ public class FixerConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.metadata.fixer.FixerConfigImpl#toXml(org.verapdf.metadata.fixer.MetadataFixerConfig, java.lang.Boolean)}.
+	 * {@link XmlSerialiser#toXml(Object, OutputStream, boolean, boolean)}
 	 */
 	@Test
 	public void testToXmlMetadataFixerConfigBoolean() throws JAXBException {
@@ -87,7 +87,7 @@ public class FixerConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.metadata.fixer.FixerConfigImpl#toXml(org.verapdf.metadata.fixer.MetadataFixerConfig, java.io.OutputStream, java.lang.Boolean)}.
+	 * {@link XmlSerialiser#toXml(Object, OutputStream, boolean, boolean)}.
 	 */
 	@Test
 	public void testToXmlMetadataFixerConfigOutputStreamBoolean() throws IOException, JAXBException {

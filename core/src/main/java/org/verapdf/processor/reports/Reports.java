@@ -50,18 +50,8 @@ public final class Reports {
 	 * @param timer
 	 *            a {@link org.verapdf.component.Components.Timer} instance
 	 *            which is stopped to measure the duration of the batch process
-	 * @param jobs
+	 * @param totalJobs
 	 *            the number of jobs in the batch
-	 * @param failedJobs
-	 *            the number o failed jobs in the batch
-	 * @param valid
-	 *            the number of valid PDF/A documents in the batch
-	 * @param inValid
-	 *            the number of invalid PDF/A documents in the batch
-	 * @param validExcep
-	 *            the number of validation jobs that threw exceptions
-	 * @param features
-	 *            the number of feature extraction jobs run
 	 * @return a new {@link BatchSummary} instance created using the passed
 	 *         values
 	 */

@@ -104,7 +104,7 @@ public class ValidationProfileImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}
+	 * {@link Profiles#profileToXml(ValidationProfile, OutputStream, boolean, boolean)}
 	 * .
 	 * 
 	 * @throws JAXBException

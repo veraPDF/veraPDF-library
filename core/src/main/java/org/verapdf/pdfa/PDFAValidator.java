@@ -32,7 +32,7 @@ import org.verapdf.processor.reports.enums.JobEndStatus;
  *
  * Note that the interface makes no provision for configuration of a validator
  * instance. This is left to the implementer although the veraPDF library API
- * provides a {@link Validators} class. This is designed to allow
+ * provides a {@link org.verapdf.pdfa.validation.validators.ValidatorFactory} class. This is designed to allow
  * immutable validator instances, meaning there is no methods provided to change
  * the ValidationProfile, or the pre-configured settings.
  *
@@ -58,7 +58,7 @@ public interface PDFAValidator extends Component {
      *         and details of failed checks and possibly passed checks,
      *         dependent upon configuration.
      * @throws ValidationException 
-     * @throws ModelParsingException 
+     * @throws org.verapdf.core.ModelParsingException 
      * @throws IllegalArgumentException
      *             if the toValidate parameter is null PDFAValidationException
      *             if the validation process fails
