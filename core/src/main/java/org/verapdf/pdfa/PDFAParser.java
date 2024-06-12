@@ -43,7 +43,7 @@ import org.verapdf.pdfa.flavours.PDFAFlavour;
  */
 public interface PDFAParser extends Component {
 	/**
-	 * @return the {@link CosDocument} element that is the root object of the
+	 * @return the {@link org.verapdf.model.coslayer.CosDocument} element that is the root object of the
 	 *         validation model instance.
 	 * @throws ModelParsingException
 	 *             when there's a problem establishing the model root.

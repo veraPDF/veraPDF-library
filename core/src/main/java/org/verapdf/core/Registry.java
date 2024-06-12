@@ -101,14 +101,14 @@ public interface Registry<K, V> extends Directory<K, V> {
      * @param value
      *            the value used in the update
      * @return the old value of the item
-     * @throws NoSuchElementException
+     * @throws java.util.NoSuchElementException
      *             if no value is associated with the key
      */
     V updateItem(final K key, final V value);
 
     /**
      * @param itemMap
-     * @throws NoSuchElementException
+     * @throws java.util.NoSuchElementException
      *             if no value is associated with one of the keys
      */
     void updateItems(final Map<K, V> itemMap);

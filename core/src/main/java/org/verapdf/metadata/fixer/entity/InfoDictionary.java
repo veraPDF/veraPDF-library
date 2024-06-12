@@ -26,7 +26,7 @@ import org.verapdf.metadata.fixer.schemas.XMPBasic;
 
 /**
  * Current interface provide necessary behavior of pdf document
- * information dictionary. {@link MetadataFixerImpl}
+ * information dictionary. {@link org.verapdf.pdfa.MetadataFixer}
  * check next entries:
  * <ul>
  *     <li>Title</li>

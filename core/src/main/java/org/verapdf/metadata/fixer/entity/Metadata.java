@@ -28,7 +28,7 @@ import org.verapdf.pdfa.results.MetadataFixerResultImpl;
 
 /**
  * Current interface provide necessary behavior of pdf metadata
- * for {@link MetadataFixerImpl}
+ * for {@link org.verapdf.pdfa.MetadataFixer}
  *
  * @author Evgeniy Muravitskiy
  */

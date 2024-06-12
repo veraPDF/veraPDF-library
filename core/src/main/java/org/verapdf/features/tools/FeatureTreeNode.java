@@ -70,7 +70,7 @@ public final class FeatureTreeNode {
 	/**
 	 * Add a child to the node
 	 *
-	 * @param child
+	 * @param nodeName
 	 *            new child node for the current node
 	 * @throws FeatureParsingException
 	 *             occurs when child adds to node with value or if the node is a
@@ -84,7 +84,7 @@ public final class FeatureTreeNode {
 	/**
 	 * Add a child to the node
 	 *
-	 * @param child
+	 * @param nodeName
 	 *            new child node for the current node
 	 * @throws FeatureParsingException
 	 *             occurs when child adds to node with value or if the node is a

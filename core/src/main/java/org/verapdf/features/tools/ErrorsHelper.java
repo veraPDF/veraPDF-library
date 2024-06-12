@@ -44,10 +44,10 @@ public final class ErrorsHelper {
 	}
 
 	/**
-	 * Adds an error to a {@link FeaturesCollection}
+	 * Adds an error to a {@link FeatureExtractionResult}
 	 *
 	 * @param collection
-	 *            the {@link FeaturesCollection} to add the error to
+	 *            the {@link FeatureExtractionResult} to add the error to
 	 * @param element
 	 *            element which contains error
 	 * @param errorMessageArg
