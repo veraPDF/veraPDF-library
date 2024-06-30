@@ -32,6 +32,7 @@ import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 
 import java.io.File;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * The veraPDFFoundry interface provides methods for creating implementations of
@@ -168,6 +169,20 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAValidator createValidator(ValidatorConfig config, PDFAFlavour flavour);
 
 	/**
+	 * Obtain a new {@link PDFAValidator} instance that uses the list of a custom
+	 * {@link org.verapdf.pdfa.flavours.PDFAFlavour}s.
+	 *
+	 * @param config
+	 *            a {@link ValidatorConfig} instance used to configure the
+	 *            {@link PDFAValidator}
+	 * @param flavours
+	 *            the list of particular {@link org.verapdf.pdfa.flavours.PDFAFlavour}s
+	 *            to validated against.
+	 * @return an appropriately configured {@link PDFAValidator} instance.
+	 */
+	public PDFAValidator createValidator(ValidatorConfig config, List<PDFAFlavour> flavours);
+
+	/**
 	 * Creates a new {@link PDFAValidator} instance that uses one of the
 	 * {@link ValidationProfile}s packaged as a core library resource. While
 	 * these profiles are not guaranteed to be up to date, they are available
@@ -189,6 +204,23 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAValidator createValidator(PDFAFlavour flavour, boolean logSuccess);
 
 	/**
+	 * Creates a new {@link PDFAValidator} instance that uses
+	 * {@link ValidationProfile}s packaged as a core library resource. While
+	 * these profiles are not guaranteed to be up to date, they are available
+	 * when offline. A {@link org.verapdf.pdfa.validation.profiles.ProfileDirectory} populated with the pre-loaded
+	 * profiles can be obtained by calling
+	 * {@link org.verapdf.pdfa.validation.profiles.Profiles#getVeraProfileDirectory()}.
+	 *
+	 * @param flavours
+	 *            list of the {@link PDFAFlavour} that are  associated with the
+	 *            {@code ValidationProfile} to used to initialise the
+	 *            {@code PDFAValidator}.
+	 * @return a {@link PDFAValidator} instance initialised from the passed
+	 *         parameters
+	 */
+	public PDFAValidator createValidator(List<PDFAFlavour> flavours);
+
+	/**
 	 * Creates a new {@link PDFAValidator} initialised with the passed profile
 	 * and chosen passed test logging.
 	 *
@@ -205,6 +237,9 @@ public interface VeraPDFFoundry extends Component {
 	public PDFAValidator createValidator(ValidationProfile profile, boolean logSuccess);
 
 	public PDFAValidator createValidator(PDFAFlavour flavour, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
+
+	public PDFAValidator createValidator(List<PDFAFlavour> flavour, int maxNumberOfDisplayedFailedChecks,
 										 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
 
 	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks,
@@ -228,6 +263,9 @@ public interface VeraPDFFoundry extends Component {
 	 *         parameters
 	 */
 	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
+
+	public PDFAValidator createFailFastValidator(List<PDFAFlavour> flavours, int maxFailures, int maxNumberOfDisplayedFailedChecks,
 												 boolean logSuccess, boolean showErrorMessages, boolean showProgress);
 
 	/**

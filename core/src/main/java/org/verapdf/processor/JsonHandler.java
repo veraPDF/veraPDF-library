@@ -34,11 +34,14 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.processor.reports.BatchSummary;
 import org.verapdf.processor.reports.MetadataFixerReport;
 import org.verapdf.processor.reports.Reports;
+import org.verapdf.processor.reports.ValidationReport;
 import org.verapdf.report.FeaturesNode;
 import org.verapdf.report.FeaturesReport;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Stack;
 
 public class JsonHandler extends AbstractBatchHandler {
@@ -127,8 +130,12 @@ public class JsonHandler extends AbstractBatchHandler {
 	}
 
 	@Override
-	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
-		this.serializeElement(Reports.createValidationReport(validationResult, this.logPassed), VALIDATION_RESULT);
+	void validationSuccess(TaskResult taskResult, List<ValidationResult> validationResults) throws VeraPDFException {
+		List<ValidationReport> validationReports = new LinkedList<>();
+		for (ValidationResult result : validationResults) {
+			validationReports.add(Reports.createValidationReport(result, this.logPassed));
+		}
+		this.serializeElement(validationReports, VALIDATION_RESULT);
 	}
 
 	@Override

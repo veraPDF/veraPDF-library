@@ -18,6 +18,7 @@
 package org.verapdf.processor;
 
 import java.io.Writer;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -98,8 +99,10 @@ final class RawResultHandler extends AbstractXmlHandler {
 	}
 
 	@Override
-	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
-		this.serializeElement(validationResult, VALIDATION_RESULT, this.format, this.fragment);
+	void validationSuccess(TaskResult taskResult, List<ValidationResult> validationResults) throws VeraPDFException {
+		for (ValidationResult result : validationResults) {
+			this.serializeElement(result, VALIDATION_RESULT, this.format, this.fragment);
+		}
 	}
 
 	@Override
