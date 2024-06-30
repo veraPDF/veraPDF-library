@@ -3,6 +3,7 @@
  */
 package org.verapdf.processor.reports;
 
+import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.processor.ProcessorResult;
 import org.verapdf.processor.TaskResult;
 import org.verapdf.processor.TaskType;
@@ -45,7 +46,14 @@ public final class Summarisers {
 			super.processResult(result);
 			TaskResult taskResult = result.getResultForTask(TaskType.VALIDATE);
 			if (taskResult != null && taskResult.isExecuted() && taskResult.isSuccess()) {
-				if (result.getValidationResult().isCompliant())
+				boolean isCompliant = true;
+				for (ValidationResult res : result.getValidationResults()) {
+					if (!res.isCompliant()) {
+						isCompliant = false;
+						break;
+					}
+				}
+				if (isCompliant)
 					this.compliant++;
 				else
 					this.nonCompliant++;

@@ -107,7 +107,8 @@
           <!-- Display the summary information -->
           <xsl:apply-templates select="/report/batchSummary"/>
           <!-- Call the job iteration template -->
-          <xsl:apply-templates select="/report/jobs"/>
+          <xsl:apply-templates select="/report/jobs" mode="job_summary"/>
+          <xsl:apply-templates select="/report/jobs" mode="validation_summary"/>
     </xsl:template>
 
     <!-- Display the build information -->
@@ -191,11 +192,50 @@
       </table>
     </xsl:template>
 
+    <xsl:template match="/report/jobs" mode="job_summary">
+        <xsl:variable name="isPolicy" select="/report/jobs/job/policyReport" />
+        <xsl:variable name="hasLogs" select="/report/jobs/job/logs" />
+        <h2>Job Summary</h2>
+        <table>
+            <tr>
+                <th>File Name</th>
+                <xsl:if test="$isPolicy">
+                    <th>Policy Check</th>
+                </xsl:if>
+                <xsl:if test="$hasLogs">
+                    <th>Logs</th>
+                </xsl:if>
+                <th>Duration</th>
+            </tr>
+            <xsl:for-each select="job">
+                <tr>
+                    <td class="lefted">
+                        <xsl:value-of select="item/name" />
+                    </td>
+                    <xsl:apply-templates select="policyReport" />
+                    <xsl:if test="$hasLogs">
+                        <td>
+                            <xsl:choose>
+                                <xsl:when test="logs">
+                                    <xsl:value-of select="logs/@logsCount"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="0"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </td>
+                    </xsl:if>
+                    <td>
+                        <xsl:value-of select="duration/text()" />
+                    </td>
+                </tr>
+            </xsl:for-each>
+        </table>
+    </xsl:template>
+
     <!-- Iterate the job reports and output the details -->
-    <xsl:template match="/report/jobs">
-      <xsl:variable name="isPolicy" select="/report/jobs/job/policyReport" />
-      <xsl:variable name="hasLogs" select="/report/jobs/job/logs" />
-      <h2>Job Summary</h2>
+    <xsl:template match="/report/jobs" mode="validation_summary">
+      <h2>Validation Summary</h2>
       <table>
         <tr>
           <th>File Name</th>
@@ -205,116 +245,100 @@
           <th>Failed Rules</th>
           <th>Passed Checks</th>
           <th>Failed Checks</th>
-          <xsl:if test="$isPolicy">
-            <th>Policy Check</th>
-          </xsl:if>
-          <xsl:if test="$hasLogs">
-              <th>Logs</th>
-          </xsl:if>
-          <th>Duration</th>
         </tr>
         <xsl:for-each select="job">
-          <xsl:variable name="validClass">
-            <xsl:choose>
-              <xsl:when test="validationReport/@isCompliant = 'true'">
-                <xsl:value-of select="'valid'" />
-                </xsl:when>
-                <xsl:otherwise>
-                  <xsl:value-of select="'invalid'" />
-                </xsl:otherwise>
-              </xsl:choose>
-          </xsl:variable>
-          <xsl:variable name="validResult">
-            <xsl:choose>
-              <xsl:when test="validationReport/@isCompliant = 'true'">
-                <xsl:value-of select="'Passed'" />
-              </xsl:when>
-              <xsl:otherwise>
-                  <xsl:choose>
-                      <xsl:when test="validationReport/@isCompliant = 'false'">
-                          <xsl:value-of select="'Failed'" />
-                      </xsl:when>
-                      <xsl:otherwise>
-                          <xsl:choose>
-                              <xsl:when test="contains(taskException/exceptionMessage, 'encrypted PDF with unknown or wrong password')">
-                                  <xsl:value-of select="'Encrypted'" />
-                              </xsl:when>
-                              <xsl:otherwise>
-                                  <xsl:value-of select="'Failed to Parse'" />
-                              </xsl:otherwise>
-                          </xsl:choose>
-                      </xsl:otherwise>
-                  </xsl:choose>
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          <tr>
-            <td class="lefted">
-              <xsl:value-of select="item/name" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/@profileName" />
-            </td>
-            <td class="{$validClass}">
-                <xsl:value-of select="$validResult"/>
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@passedRules" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@failedRules" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@passedChecks" />
-            </td>
-            <td>
-              <xsl:value-of select="validationReport/details/@failedChecks" />
-            </td>
-            <xsl:apply-templates select="policyReport" />
-            <xsl:if test="$hasLogs">
-                <td>
-                    <xsl:choose>
-                        <xsl:when test="logs">
-                            <xsl:value-of select="logs/@logsCount"/>
-                        </xsl:when>
-                        <xsl:otherwise>
-                            <xsl:value-of select="0"/>
-                        </xsl:otherwise>
-                    </xsl:choose>
+          <xsl:for-each select="validationReport">
+            <tr>
+                <td class="lefted">
+                    <xsl:value-of select="../item/name" />
                 </td>
-            </xsl:if>
-            <td>
-              <xsl:value-of select="duration/text()" />
-            </td>
-          </tr>
+                <xsl:apply-templates select="." mode="validation_summary"/>
+            </tr>
+          </xsl:for-each>
         </xsl:for-each>
       </table>
     </xsl:template>
 
+    <xsl:template match="validationReport" mode="validation_summary">
+        <xsl:variable name="hasLogs" select="/report/jobs/job/logs" />
+        <xsl:variable name="validResult">
+            <xsl:choose>
+                <xsl:when test="@isCompliant = 'true'">
+                    <xsl:value-of select="'Passed'" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:choose>
+                        <xsl:when test="@isCompliant = 'false'">
+                            <xsl:value-of select="'Failed'" />
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:choose>
+                                <xsl:when test="contains(taskException/exceptionMessage, 'encrypted PDF with unknown or wrong password')">
+                                    <xsl:value-of select="'Encrypted'" />
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="'Failed to Parse'" />
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="validClass">
+            <xsl:choose>
+                <xsl:when test="@isCompliant = 'true'">
+                    <xsl:value-of select="'valid'" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'invalid'" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <td>
+            <xsl:value-of select="@profileName" />
+        </td>
+        <td class="{$validClass}">
+            <xsl:value-of select="$validResult"/>
+        </td>
+        <td>
+            <xsl:value-of select="details/@passedRules" />
+        </td>
+        <td>
+            <xsl:value-of select="details/@failedRules" />
+        </td>
+        <td>
+            <xsl:value-of select="details/@passedChecks" />
+        </td>
+        <td>
+            <xsl:value-of select="details/@failedChecks" />
+        </td>
+    </xsl:template>
+
     <xsl:template match="/report/jobs/job/policyReport">
-      <xsl:variable name="policyClass">
-        <xsl:choose>
-          <xsl:when test="@failedChecks > 0">
-            <xsl:value-of select="'invalid'" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="'valid'" />
-            </xsl:otherwise>
-          </xsl:choose>
-      </xsl:variable>
-      <xsl:variable name="policyResult">
-        <xsl:choose>
-          <xsl:when test="@failedChecks > 0">
-            <xsl:value-of select="'Failed'" />
-            </xsl:when>
-            <xsl:otherwise>
-              <xsl:value-of select="'Passed'" />
-            </xsl:otherwise>
-          </xsl:choose>
-      </xsl:variable>
-      <td class="{$policyClass}">
-          <xsl:value-of select="$policyResult"/>
-      </td>
+        <xsl:variable name="policyClass">
+            <xsl:choose>
+                <xsl:when test="@failedChecks > 0">
+                    <xsl:value-of select="'invalid'" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'valid'" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <xsl:variable name="policyResult">
+            <xsl:choose>
+                <xsl:when test="@failedChecks > 0">
+                    <xsl:value-of select="'Failed'" />
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'Passed'" />
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <td class="{$policyClass}">
+            <xsl:value-of select="$policyResult"/>
+        </td>
     </xsl:template>
 
 </xsl:stylesheet>

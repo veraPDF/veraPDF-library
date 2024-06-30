@@ -26,6 +26,8 @@ import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.processor.reports.enums.JobEndStatus;
 
+import java.util.List;
+
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
  * the document conforms to a specific PDF/A flavour.
@@ -64,6 +66,8 @@ public interface PDFAValidator extends Component {
      *             if the validation process fails
      */
     public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
+
+    public List<ValidationResult> validateAll(PDFAParser toValidate) throws ValidationException;
 
     public String getValidationProgressString();
 

@@ -17,6 +17,7 @@ package org.verapdf.processor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.verapdf.core.VeraPDFException;
@@ -89,17 +90,19 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	}
 
 	@Override
-	void validationSuccess(final TaskResult taskResult, final ValidationResult validationResult)
+	void validationSuccess(final TaskResult taskResult, final List<ValidationResult> validationResult)
 			throws VeraPDFException {
-		String reportSummary = (validationResult.isCompliant() ? pass : fail) + this.item.getName() + "\n"; //$NON-NLS-1$
-		try {
-			this.outputStreamWriter.write(reportSummary);
-			if (this.isVerbose || this.logSuccess) {
-				processRules(validationResult);
+		for (ValidationResult result : validationResult) {
+			String reportSummary = (result.isCompliant() ? pass : fail) + this.item.getName() + " " + result.getPDFAFlavour() + "\n"; //$NON-NLS-1$
+			try {
+				this.outputStreamWriter.write(reportSummary);
+				if (this.isVerbose || this.logSuccess) {
+					processRules(result);
+				}
+				this.outputStreamWriter.flush();
+			} catch (IOException excep) {
+				throw new VeraPDFException(ioExcepMess, excep);
 			}
-			this.outputStreamWriter.flush();
-		} catch (IOException excep) {
-			throw new VeraPDFException(ioExcepMess, excep);
 		}
 	}
 
