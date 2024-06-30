@@ -20,9 +20,7 @@
  */
 package org.verapdf.processor;
 
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.EnumSet;
+import java.util.*;
 
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -68,7 +66,7 @@ public interface ProcessorResult {
 	 *         {@link org.verapdf.pdfa.results.ValidationResults#defaultResult()}
 	 *         if validation not performed.
 	 */
-	public ValidationResult getValidationResult();
+	public List<ValidationResult> getValidationResults();
 
 	/**
 	 * @return the {@link FeaturesReport}.
