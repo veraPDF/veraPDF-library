@@ -20,6 +20,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -72,6 +73,8 @@ public interface ProfileDirectory {
      *             if flavour is null
      */
     public ValidationProfile getValidationProfileByFlavour(PDFAFlavour flavour);
+    
+    public List<ValidationProfile> getValidationProfilesByFlavours(List<PDFAFlavour> flavours);
 
     /**
      * @return the full set of {@link ValidationProfile}s held in the directory.

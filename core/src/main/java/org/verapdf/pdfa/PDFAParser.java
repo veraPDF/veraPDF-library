@@ -55,6 +55,10 @@ public interface PDFAParser extends Component {
 	 */
 	public PDFAFlavour getFlavour();
 
+	public List<PDFAFlavour> getFlavours();
+
+	public void setFlavours(List<PDFAFlavour> flavours);
+
 	/**
 	 * @return the {@link org.verapdf.metadata.fixer.entity.PDFDocument} parsed.
 	 */

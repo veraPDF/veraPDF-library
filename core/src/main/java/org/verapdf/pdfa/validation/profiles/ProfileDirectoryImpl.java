@@ -31,7 +31,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
+import java.util.List;
+import java.util.LinkedList;
 import jakarta.xml.bind.JAXBException;
 
 import org.verapdf.core.Directory;
@@ -105,6 +106,15 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
             throw new NoSuchElementException("PDFAFlavour " + flavour
                     + " is not supported by this directory.");
         return profile;
+    }
+
+    @Override
+    public List<ValidationProfile> getValidationProfilesByFlavours(List<PDFAFlavour> flavours) {
+        List<ValidationProfile> profiles = new LinkedList<>();
+        for (PDFAFlavour flavour : flavours) {
+            profiles.add(getValidationProfileByFlavour(flavour));
+        }
+        return profiles;
     }
 
     /**

@@ -37,6 +37,7 @@ import org.verapdf.report.FeaturesReport;
 import jakarta.xml.bind.JAXBException;
 import javax.xml.stream.XMLStreamException;
 import java.io.Writer;
+import java.util.List;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -116,8 +117,10 @@ class MrrHandler extends AbstractXmlHandler {
 	}
 
 	@Override
-	void validationSuccess(TaskResult taskResult, ValidationResult validationResult) throws VeraPDFException {
-		this.serializeElement(Reports.createValidationReport(validationResult, this.logPassed), VALIDATION_RESULT, true, true);
+	void validationSuccess(TaskResult taskResult, List<ValidationResult> validationResults) throws VeraPDFException {
+		for (ValidationResult result : validationResults) {
+			this.serializeElement(Reports.createValidationReport(result, this.logPassed), VALIDATION_RESULT, true, true);
+		}
 	}
 
 	@Override
