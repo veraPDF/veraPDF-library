@@ -1276,10 +1276,10 @@
         </rule>
         <rule object="PDDocument">
             <id specification="ISO_19005_3" clause="6.6.2.1" testNumber="1"/>
-            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2</description>
+            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
             <test>metadata_size == 1</test>
             <error>
-                <message>The document catalog dictionary doesn't contain metadata key</message>
+                <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
             </error>
             <references>

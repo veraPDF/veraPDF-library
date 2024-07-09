@@ -1083,10 +1083,10 @@
         </rule>
         <rule object="PDDocument">
             <id specification="ISO_19005_1" clause="6.7.2" testNumber="1"/>
-            <description>The document catalog dictionary of a conforming file shall contain the Metadata key</description>
+            <description>The document catalog dictionary of a conforming file shall contain the Metadata key. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
             <test>metadata_size == 1</test>
             <error>
-                <message>The document catalog dictionary doesn't contain metadata key</message>
+                <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
             </error>
             <references/>
