@@ -486,7 +486,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_2" clause="6.2.5" testNumber="1"/>
             <description>An ExtGState dictionary shall not contain the TR key</description>
-            <test>TR == null</test>
+            <test>containsTR == false</test>
             <error>
                 <message>An ExtGState dictionary contains the TR key</message>
                 <arguments/>
@@ -496,12 +496,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_2" clause="6.2.5" testNumber="2"/>
             <description>An ExtGState dictionary shall not contain the TR2 key with a value other than Default</description>
-            <test>TR2 == null || TR2 == "Default"</test>
+            <test>containsTR2 == false || TR2NameValue == "Default"</test>
             <error>
-                <message>An ExtGState dictionary contains the TR2 key with value %1 other than Default</message>
-                <arguments>
-                    <argument>TR2</argument>
-                </arguments>
+                <message>An ExtGState dictionary contains the TR2 key with a value other than Default</message>
+                <arguments/>
             </error>
             <references/>
         </rule>

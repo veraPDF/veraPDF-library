@@ -402,7 +402,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_4" clause="6.2.5" testNumber="1"/>
             <description>A graphics state parameter dictionary (ISO 32000-2:2020, 8.4.5) shall not contain the TR key</description>
-            <test>TR == null</test>
+            <test>containsTR == false</test>
             <error>
                 <message>A graphics state parameter dictionary contains the TR key</message>
                 <arguments/>
@@ -414,12 +414,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_4" clause="6.2.5" testNumber="2"/>
             <description>A graphics state parameter dictionary shall not contain the TR2 key with a value other than Default</description>
-            <test>TR2 == null || TR2 == "Default"</test>
+            <test>containsTR2 == false || TR2NameValue == "Default"</test>
             <error>
-                <message>A graphics state parameter dictionary contains the TR2 key with value %1 other than Default</message>
-                <arguments>
-                    <argument>TR2</argument>
-                </arguments>
+                <message>A graphics state parameter dictionary contains the TR2 key with a value other than Default</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
