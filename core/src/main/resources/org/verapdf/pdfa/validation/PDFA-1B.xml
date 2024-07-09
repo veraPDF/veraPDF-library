@@ -540,7 +540,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.2.8" testNumber="1"/>
             <description>An ExtGState dictionary shall not contain the TR key</description>
-            <test>TR == null</test>
+            <test>containsTR == false</test>
             <error>
                 <message>An ExtGState dictionary contains the TR key</message>
                 <arguments/>
@@ -550,12 +550,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.2.8" testNumber="2"/>
             <description>An ExtGState dictionary shall not contain the TR2 key with a value other than Default</description>
-            <test>TR2 == null || TR2 == "Default"</test>
+            <test>containsTR2 == false || TR2NameValue == "Default"</test>
             <error>
-                <message>An ExtGState dictionary contains the TR2 key with value %1 other than Default</message>
-                <arguments>
-                    <argument>TR2</argument>
-                </arguments>
+                <message>An ExtGState dictionary contains the TR2 key with a value other than Default</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -850,12 +848,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="1"/>
             <description>If an SMask key appears in an ExtGState dictionary, its value shall be None</description>
-            <test>SMask == null || SMask == "None"</test>
+            <test>containsSMask == false || SMaskNameValue == "None"</test>
             <error>
-                <message>An ExtGState contains SMask key with value %1 instead of None</message>
-                <arguments>
-                    <argument>SMask</argument>
-                </arguments>
+                <message>An ExtGState contains SMask key with a value other than None</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -885,8 +881,8 @@
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="4"/>
-            <description>The following keys, if present in an ExtGState object, shall have the values shown: BM - Normal or Compatible</description>
-            <test>BM == null || BM == "Normal" || BM == "Compatible"</test>
+            <description>If a BM key is present in an ExtGState object, its value shall be Normal or Compatible</description>
+            <test>containsBM == false || BMNameValue == "Normal" || BMNameValue == "Compatible"</test>
             <error>
                 <message>An ExtGState dictionary contains the BM key (blend mode) with value %1 that is neither Normal or Compatible</message>
                 <arguments>
@@ -897,7 +893,7 @@
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="5"/>
-            <description>The following keys, if present in an ExtGState object, shall have the values shown: CA - 1.0</description>
+            <description>If a CA key is present in an ExtGState object, its value shall be 1.0</description>
             <test>CA == null || CA - 1.0 &lt; 0.000001 &amp;&amp; CA - 1.0 &gt; -0.000001</test>
             <error>
                 <message>An ExtGState dictionary contains the CA key (stroke alpha) with value %1 other than 1.0</message>
@@ -909,7 +905,7 @@
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="6"/>
-            <description>The following keys, if present in an ExtGState object, shall have the values shown: ca - 1.0</description>
+            <description>If a ca key is present in an ExtGState object, its value shall be 1.0</description>
             <test>ca == null || ca - 1.0 &lt; 0.000001 &amp;&amp; ca - 1.0 &gt; -0.000001</test>
             <error>
                 <message>An ExtGState dictionary contains the ca key (fill alpha) with value %1 other than 1.0</message>
