@@ -389,7 +389,7 @@
                 <reference specification="ISO 32000-2:2020" clause="14.9.3"/>
             </references>
         </rule>
-        <rule object="SEMathMLStructureElement" tags="structure">
+        <rule object="SEMathMLStructElem" tags="structure">
             <id specification="WTPDF_1_0" clause="8.2.5.29" testNumber="1"/>
             <description>The math structure type shall occur only as a child of a Formula structure element</description>
             <test>parentStandardType == 'Formula' || parentStandardType == 'MathML'</test>
