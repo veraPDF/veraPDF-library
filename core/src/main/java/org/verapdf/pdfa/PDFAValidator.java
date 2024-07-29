@@ -56,14 +56,10 @@ public interface PDFAValidator extends Component {
      *
      * @param toValidate
      *            a {@link java.io.InputStream} to be validated
-     * @return a {@link ValidationResult} containing the result of valdiation
+     * @return a {@link ValidationResult} containing the result of validation
      *         and details of failed checks and possibly passed checks,
      *         dependent upon configuration.
-     * @throws ValidationException 
-     * @throws org.verapdf.core.ModelParsingException 
-     * @throws IllegalArgumentException
-     *             if the toValidate parameter is null PDFAValidationException
-     *             if the validation process fails
+     * @throws ValidationException
      */
     public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
 

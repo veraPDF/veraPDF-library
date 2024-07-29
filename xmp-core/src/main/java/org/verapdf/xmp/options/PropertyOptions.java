@@ -72,7 +72,7 @@ public final class PropertyOptions extends Options
 	
 	/**
 	 * @return Return whether the property value is a URI. It is serialized to RDF using the
-	 *         <tt>rdf:resource</tt> attribute. Not mandatory for URIs, but considered RDF-savvy.
+	 *         <code>rdf:resource</code> attribute. Not mandatory for URIs, but considered RDF-savvy.
 	 */
 	public boolean isURI()
 	{
@@ -92,8 +92,8 @@ public final class PropertyOptions extends Options
 	
 
 	/**
-	 * @return Return whether the property has qualifiers. These could be an <tt>xml:lang</tt>
-	 *         attribute, an <tt>rdf:type</tt> property, or a general qualifier. See the
+	 * @return Return whether the property has qualifiers. These could be an <code>xml:lang</code>
+	 *         attribute, an <code>rdf:type</code> property, or a general qualifier. See the
 	 *         introductory discussion of qualified properties for more information.
 	 */
 	public boolean getHasQualifiers()
@@ -136,7 +136,7 @@ public final class PropertyOptions extends Options
 	}
 	
 
-	/** @return Return whether this property has an <tt>xml:lang</tt> qualifier. */
+	/** @return Return whether this property has an <code>xml:lang</code> qualifier. */
 	public boolean getHasLanguage()
 	{
 		return getOption(HAS_LANGUAGE);
@@ -154,7 +154,7 @@ public final class PropertyOptions extends Options
 	}
 	
 
-	/** @return Return whether this property has an <tt>rdf:type</tt> qualifier. */
+	/** @return Return whether this property has an <code>rdf:type</code> qualifier. */
 	public boolean getHasType()
 	{
 		return getOption(HAS_TYPE);
@@ -192,7 +192,7 @@ public final class PropertyOptions extends Options
 
 	/**
 	 * @return Return whether this property is an array. By itself this indicates a general
-	 *         unordered array. It is serialized using an <tt>rdf:Bag</tt> container.
+	 *         unordered array. It is serialized using an <code>rdf:Bag</code> container.
 	 */
 	public boolean isArray()
 	{
@@ -213,7 +213,7 @@ public final class PropertyOptions extends Options
 
 	/**
 	 * @return Return whether this property is an ordered array. Appears in conjunction with
-	 *         getPropValueIsArray(). It is serialized using an <tt>rdf:Seq</tt> container.
+	 *         getPropValueIsArray(). It is serialized using an <code>rdf:Seq</code> container.
 	 */
 	public boolean isArrayOrdered()
 	{
@@ -234,7 +234,7 @@ public final class PropertyOptions extends Options
 	
 	/**
 	 * @return Return whether this property is an alternative array. Appears in conjunction with
-	 *         getPropValueIsArray(). It is serialized using an <tt>rdf:Alt</tt> container.
+	 *         getPropValueIsArray(). It is serialized using an <code>rdf:Alt</code> container.
 	 */
 	public boolean isArrayAlternate()
 	{
@@ -255,8 +255,8 @@ public final class PropertyOptions extends Options
 
 	/**
 	 * @return Return whether this property is an alt-text array. Appears in conjunction with
-	 *         getPropArrayIsAlternate(). It is serialized using an <tt>rdf:Alt</tt> container.
-	 *         Each array element is a simple property with an <tt>xml:lang</tt> attribute.
+	 *         getPropArrayIsAlternate(). It is serialized using an <code>rdf:Alt</code> container.
+	 *         Each array element is a simple property with an <code>xml:lang</code> attribute.
 	 */
 	public boolean isArrayAltText()
 	{

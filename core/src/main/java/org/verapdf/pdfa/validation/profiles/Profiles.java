@@ -47,15 +47,13 @@ import java.util.*;
  * <li>XML helper methods, <code>typeNameToXml(...)</code>, to facilitate XML
  * serialisation to Strings, OutputStreams and Writers.</li>
  * <li>XML helper methods, <code>typeNameFromXml(...)</code>, to facilitate XML
- * deserialisation.</li>
+ * deserialization.</li>
  * </ul>
  * Note that XML serialisation and de-serialisation is achieved through JAXB
  * bindings.
- * </p>
  * <p>
  * TODO: Defensive Checks for all parameters.
- * </p>
- * 
+ *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public final class Profiles {
@@ -407,21 +405,16 @@ public final class Profiles {
 
 	/**
 	 * Convert a {@link ValidationProfile} instance into an XML String.
-	 * 
-	 * @param toConvert
-	 *            a {@link ValidationProfile} to convert to an XML String
-	 * @param format
-	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
-	 *            for no space formatting
+	 *
+	 * @param toConvert a {@link ValidationProfile} to convert to an XML String
+	 * @param format    set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
+	 *                  for no space formatting
+	 *
 	 * @return a String xml representation of toConvert
-	 * @throws JAXBException
-	 *             thrown by JAXB marshaller if there's an error converting the
-	 *             object
-	 * @throws IOException
-	 *             thrown when's there's a problem closing the underlying
-	 *             StringWriter
-	 * @throws IllegalArgumentException
-	 *             if toConvert is null
+	 *
+	 * @throws JAXBException            thrown by JAXB marshaller if there's an error converting the
+	 *                                  object
+	 * @throws IllegalArgumentException if toConvert is null
 	 */
 	public static String profileToXml(final ValidationProfile toConvert, boolean format, boolean fragment)
 			throws JAXBException {

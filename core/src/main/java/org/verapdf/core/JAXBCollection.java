@@ -51,9 +51,9 @@ import jakarta.xml.bind.annotation.XmlAnyElement;
 /**
  * Generic collection wrapper class.
  *
- * Makes it easier to (un)marshall a collectiono of a single type.
+ * Makes it easier to (un)marshall a collection of a single type.
  *
- * @author Arno Moonen <info@arnom.nl>
+ * @author <a href="mailto:info@arnom.nl">Arno Moonen</a>
  */
 public class JAXBCollection<T>
 {

@@ -48,7 +48,7 @@ public interface Registry<K, V> extends Directory<K, V> {
     V registerItem(final K key, final V value);
 
     /**
-     * Add a Map<K, V> of items to the Registry
+     * Add a Map&lt;K, V&gt; of items to the Registry
      * 
      * @param itemMap
      */
@@ -86,9 +86,8 @@ public interface Registry<K, V> extends Directory<K, V> {
     /**
      * Registers or updates all item in Registry caring not if the items already
      * exist or not.
-     * 
-     * @param itemMap
-     *            a Map of keys & values to add.
+     *
+     * @param itemMap a Map of keys &amp; values to add.
      */
     void putdateItems(final Map<K, V> itemMap);
 

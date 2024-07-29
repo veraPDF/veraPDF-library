@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Encapsulates the details of an error message, a String message and a
- * <code>List<String></code> of arguments to substitute into the error message
+ * <code>List&lt;String&gt;</code> of arguments to substitute into the error message
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
