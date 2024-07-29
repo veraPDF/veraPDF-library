@@ -45,9 +45,6 @@ package org.verapdf.metadata.fixer.utils;
  * run different handling of document.
  *
  * @author Evgeniy Muravitskiy
- * @see org.verapdf.metadata.fixer.gf.MetadataFixerImpl#fixAndSaveDocument(java.io.OutputStream, 
- * org.verapdf.metadata.fixer.entity.PDFDocument, org.verapdf.pdfa.results.ValidationResult, boolean, 
- * org.verapdf.metadata.fixer.utils.parser.ProcessedObjectsParser)
  * @see org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector
  */
 public enum ValidationStatus {
@@ -89,17 +86,16 @@ public enum ValidationStatus {
 
 	/**
 	 * Return combination of current status and given status according to next table:
+	 * <p>
+	 *
 	 * <table border="1" style="border: 1px solid">
-	 *     <col border="1" style="border: 1px solid"/>
-	 *     <col border="1" style="border: 1px solid"/>
-	 *     <col border="1" style="border: 1px solid"/>
-	 *     <body>
+	 *     <caption>Table: Validation status</caption>
 	 *         <tr>
 	 *             <th>Current value</th>
 	 *             <th>Passed value</th>
 	 *             <th>Result value</th>
 	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">INVALID_DOCUMENT</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -117,8 +113,7 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>INVALID_DOCUMENT</td>
 	 *             </tr>
-	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">INVALID_STRUCTURE</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -136,8 +131,7 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>INVALID_STRUCTURE</td>
 	 *             </tr>
-	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">INVALID_METADATA</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -155,8 +149,7 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>INVALID_METADATA</td>
 	 *             </tr>
-	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">VALID</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -174,11 +167,10 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>VALID</td>
 	 *             </tr>
-	 *         </tr>
-	 *     </body>
 	 * </table>
 	 *
 	 * @param status passed status argument
+	 *
 	 * @return result status
 	 */
 	public ValidationStatus getStatus(ValidationStatus status) {

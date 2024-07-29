@@ -49,9 +49,8 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V> implements
 
     /**
      * Creates a registry instance initialise using the passed map
-     * 
-     * @param map
-     *            a <code>Map<K, V> instance used to initialise the registry.
+     *
+     * @param map a <code>Map&lt;K, V&gt;</code> instance used to initialise the registry.
      */
     public MapBackedRegistry(final Map<K, V> map) {
         super(map);

@@ -29,7 +29,6 @@ import org.verapdf.xmp.impl.xpath.XMPPathParser;
  * You can use these functions is to compose a complete path expression, or all but the last
  * component. Suppose you have a property that is an array of integers within a struct. You can
  * access one of the array items like this:
- * <p>
  * <blockquote>
  * 
  * <pre>
@@ -76,7 +75,7 @@ public final class XMPPathFactory
 	 * 		  0 and below means last array item and renders as <code>[last()]</code>.	
 	 * 					
 	 * @return Returns the composed path basing on fullPath. This will be of the form
-	 *         <tt>ns:arrayName[i]</tt>, where &quot;ns&quot; is the prefix for schemaNS and
+	 *         <code>ns:arrayName[i]</code>, where &quot;ns&quot; is the prefix for schemaNS and
 	 *         &quot;i&quot; is the decimal representation of itemIndex.
 	 * @throws XMPException Throws exeption if index zero is used.
 	 */
@@ -107,7 +106,7 @@ public final class XMPPathFactory
 	 * @param fieldName The name of the field. Must be a simple XML name, must not be
 	 *        <code>null</code> or the empty string.
 	 * @return Returns the composed path. This will be of the form
-	 *         <tt>ns:structName/fNS:fieldName</tt>, where &quot;ns&quot; is the prefix for
+	 *         <code>ns:structName/fNS:fieldName</code>, where &quot;ns&quot; is the prefix for
 	 *         schemaNS and &quot;fNS&quot; is the prefix for fieldNS.
 	 * @throws XMPException Thrown if the path to create is not valid.
 	 */
@@ -135,7 +134,7 @@ public final class XMPPathFactory
 	 * @param qualName The name of the qualifier. Must be a simple XML name, must not be
 	 *        <code>null</code> or the empty string.
 	 * @return Returns the composed path. This will be of the form
-	 *         <tt>ns:propName/?qNS:qualName</tt>, where &quot;ns&quot; is the prefix for
+	 *         <code>ns:propName/?qNS:qualName</code>, where &quot;ns&quot; is the prefix for
 	 *         schemaNS and &quot;qNS&quot; is the prefix for qualNS.
 	 * @throws XMPException Thrown if the path to create is not valid.
 	 */
@@ -161,7 +160,7 @@ public final class XMPPathFactory
 	 * path syntax allows two forms of &quot;content addressing&quot; that may
 	 * be used to select an item in an array of alternatives. The form used in
 	 * ComposeLangSelector lets you select an item in an alt-text array based on
-	 * the value of its <tt>xml:lang</tt> qualifier. The other form of content
+	 * the value of its <code>xml:lang</code> qualifier. The other form of content
 	 * addressing is shown in ComposeFieldSelector. \note ComposeLangSelector
 	 * does not supplant SetLocalizedText or GetLocalizedText. They should
 	 * generally be used, as they provide extra logic to choose the appropriate
@@ -175,7 +174,7 @@ public final class XMPPathFactory
 	 * @param langName
 	 *            The RFC 3066 code for the desired language.
 	 * @return Returns the composed path. This will be of the form
-	 *         <tt>ns:arrayName[@xml:lang='langName']</tt>, where
+	 *         <code>ns:arrayName[@xml:lang='langName']</code>, where
 	 *         &quot;ns&quot; is the prefix for schemaNS.
 	 */
 	public static String composeLangSelector(String arrayName,
@@ -214,7 +213,7 @@ public final class XMPPathFactory
 	 *        itself simple.
 	 * @param fieldValue The desired value of the field.
 	 * @return Returns the composed path. This will be of the form
-	 *         <tt>ns:arrayName[fNS:fieldName='fieldValue']</tt>, where &quot;ns&quot; is the
+	 *         <code>ns:arrayName[fNS:fieldName='fieldValue']</code>, where &quot;ns&quot; is the
 	 *         prefix for schemaNS and &quot;fNS&quot; is the prefix for fieldNS.
 	 * @throws XMPException Thrown if the path to create is not valid.
 	 */

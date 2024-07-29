@@ -92,7 +92,7 @@ public abstract class Options
 	
 	/**
 	 * @param optionBit the binary bit or bits that are requested
-	 * @return Returns if <emp>all</emp> of the requested bits are set or not.
+	 * @return Returns if all the requested bits are set or not.
 	 */
 	protected boolean getOption(int optionBit)
 	{
@@ -122,7 +122,7 @@ public abstract class Options
 
 	/**
 	 * @param options The options to set.
-	 * @throws XMPException 
+	 * @throws XMPException Wraps all errors and exceptions that may occur.
 	 */
 	public void setOptions(int options) throws XMPException
 	{
