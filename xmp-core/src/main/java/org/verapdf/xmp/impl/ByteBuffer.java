@@ -184,7 +184,7 @@ public class ByteBuffer
 	 * 
 	 * @param bytes a byte array
 	 * @param offset an offset with
-	 * @param len
+	 * @param len a buffer length
 	 */
 	public void append(byte[] bytes, int offset, int len)
 	{

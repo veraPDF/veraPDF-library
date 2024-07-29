@@ -35,7 +35,7 @@ public final class SerializeOptions extends Options
 	/** Use the canonical form of RDF if set. By default the compact form is used */
 	public static final int USE_CANONICAL_FORMAT = 0x0080;
 	/**
-	 * Include a padding allowance for a thumbnail image. If no <tt>xmp:Thumbnails</tt> property
+	 * Include a padding allowance for a thumbnail image. If no <code>xmp:Thumbnails</code> property
 	 * is present, the typical space for a JPEG thumbnail is used.
 	 */
 	public static final int INCLUDE_THUMBNAIL_PAD = 0x0100;
@@ -44,7 +44,7 @@ public final class SerializeOptions extends Options
 	 * computed. An exception is thrown if the packet exceeds this length with no padding.
 	 */
 	public static final int EXACT_PACKET_LENGTH = 0x0200;
-	/** Omit the &lt;x:xmpmeta&bt;-tag */
+	/** Omit the &lt;x:xmpmeta&gt;-tag */
 	public static final int OMIT_XMPMETA_ELEMENT = 0x1000;
 	/** Sort the struct properties and qualifier before serializing */
 	public static final int SORT = 0x2000;
