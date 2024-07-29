@@ -47,7 +47,6 @@ import java.util.Arrays;
  * </ul>
  * Regarding the FeatureReporting mechanism, it's crying out for a generics
  * based approach but that can come over the re-design.
- * </p>
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */

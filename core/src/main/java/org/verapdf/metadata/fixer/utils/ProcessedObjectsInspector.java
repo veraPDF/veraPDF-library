@@ -110,10 +110,6 @@ public class ProcessedObjectsInspector {
      * @param objects
      *            metadata failed rules type
      * @return validation status
-     * @throws IOException 
-     * @throws URISyntaxException 
-     * @throws ParserConfigurationException 
-     * @throws SAXException 
      */
     public static ValidationStatus validationStatus(
             List<TestAssertion> assertions, ValidationProfile profile,
