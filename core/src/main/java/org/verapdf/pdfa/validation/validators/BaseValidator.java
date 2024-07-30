@@ -206,6 +206,13 @@ public class BaseValidator implements PDFAValidator {
 		this.objectsStack.clear();
 		this.objectsContext.clear();
 		this.idSet.clear();
+		for (FlavourValidator validator : validators) {
+			validator.getFailedChecks().clear();
+			validator.getDeferredRules().clear();
+			validator.results.clear();
+			validator.testCounter = 0;
+			validator.isCompliant = true;
+		}
 		initializeAllVariables();
 	}
 
