@@ -385,6 +385,18 @@
 			<references/>
 		</rule>
 		<rule object="AActionGoTo">
+			<id specification="PDF_1_4" clause="ActionGoTo-D-StringByte" testNumber="6"/>
+			<description>Entry D with type StringByte in ActionGoTo shall have value DIsNameTreetrailerCatalogNamesDestsIndex == true</description>
+			<test>DHasTypeStringByte != true || DStringByteValue == "DIsNameTreetrailerCatalogNamesDestsIndex == true"</test>
+			<error>
+				<message>Entry D with type StringByte in ActionGoTo has incorrect value %1 instead of DIsNameTreetrailerCatalogNamesDestsIndex == true</message>
+				<arguments>
+					<argument>DStringByteValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionGoTo">
 			<id specification="PDF_1_4" clause="ActionGoTo-Next-Dictionary" testNumber="17"/>
 			<description>Entry Next with type Dictionary in ActionGoTo shall be one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData, ActionECMAScript</description>
 			<test>NextHasTypeDictionary != true || Next_size == 1</test>
@@ -38033,12 +38045,12 @@
 		</rule>
 		<rule object="AResource">
 			<id specification="PDF_1_4" clause="Resource" testNumber="1"/>
-			<description>Resource shall not contain entries except ColorSpace, ExtGState, Font, Pattern, ProcSet, Properties, Shading, XObject</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'Pattern' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Resource shall not contain entries except ColorSpace, Encoding, ExtGState, Font, Pattern, ProcSet, Properties, Shading, XObject</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'Pattern' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Resource contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'Pattern' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ColorSpace' &amp;&amp; elem != 'Encoding' &amp;&amp; elem != 'ExtGState' &amp;&amp; elem != 'Font' &amp;&amp; elem != 'Pattern' &amp;&amp; elem != 'ProcSet' &amp;&amp; elem != 'Properties' &amp;&amp; elem != 'Shading' &amp;&amp; elem != 'XObject' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -38052,6 +38064,28 @@
 				<arguments>
 					<argument>ColorSpaceType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AResource">
+			<id specification="PDF_1_4" clause="Resource-Encoding" testNumber="8"/>
+			<description>Entry Encoding in Resource shall have type Dictionary</description>
+			<test>containsEncoding == false || EncodingHasTypeDictionary == true</test>
+			<error>
+				<message>Entry Encoding in Resource has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>EncodingType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AResource">
+			<id specification="PDF_1_4" clause="Resource-Encoding" testNumber="5"/>
+			<description>Entry Encoding in Resource is deprecated since PDF 1.2</description>
+			<test>containsEncoding == false</test>
+			<error>
+				<message>Entry Encoding in Resource is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
