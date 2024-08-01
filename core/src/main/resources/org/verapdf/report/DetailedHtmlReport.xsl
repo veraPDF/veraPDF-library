@@ -98,9 +98,11 @@
                         <xsl:value-of select="/report/jobs/job/item/name"/>
                     </td>
                 </tr>
-                <xsl:if test="/report/jobs/job/validationReport">
-                    <xsl:apply-templates select="/report/jobs/job/validationReport" mode="validation_report_info"/>
-                </xsl:if>
+            </table>
+            <xsl:if test="/report/jobs/job/validationReport">
+                <xsl:apply-templates select="/report/jobs/job/validationReport" mode="validation_report_info"/>
+            </xsl:if>
+            <table border="0">
                 <xsl:if test="/report/jobs/job/taskException/exceptionMessage">
                     <tr>
                         <td width="200" class="invalid">
@@ -117,11 +119,11 @@
                         <xsl:choose>
                             <xsl:when
                                     test="/report/jobs/job/policyReport/@failedChecks > 0">
-                                <td class="invalid">Policy compliance:</td>
+                                <td width="200" class="invalid">Policy compliance:</td>
                                 <td class="invalid">Failed</td>
                             </xsl:when>
                             <xsl:otherwise>
-                                <td class="valid">Policy compliance:</td>
+                                <td width="200" class="valid">Policy compliance:</td>
                                 <td class="valid">Passed</td>
                             </xsl:otherwise>
                         </xsl:choose>
