@@ -101,6 +101,9 @@ public class BaseValidator implements PDFAValidator {
 	}
 
 	private void createCompatibleValidators(List<ValidationProfile> profiles) {
+		if (profiles.isEmpty()) {
+			return;
+		}
 		PDFAFlavour flavour = profiles.get(0).getPDFAFlavour();
 		PDFAFlavour.PDFSpecification pdfSpecification = flavour.getPart().getPdfSpecification();
 		for (ValidationProfile profile : profiles) {
@@ -118,7 +121,7 @@ public class BaseValidator implements PDFAValidator {
 
 	@Override
 	public ValidationProfile getProfile() {
-		return this.validators.get(0).getProfile();
+		return this.validators.isEmpty() ? null : this.validators.get(0).getProfile();
 	}
 	
 	private List<PDFAFlavour> getFlavours() {
@@ -131,6 +134,9 @@ public class BaseValidator implements PDFAValidator {
 
 	@Override
 	public ValidationResult validate(PDFAParser toValidate) throws ValidationException {
+		if (validators.isEmpty()) {
+			return null;
+		}
 		validators = Collections.singletonList(validators.get(0));
 		List<ValidationResult> validationResults = validateAll(toValidate);
 		return validationResults.get(0);
