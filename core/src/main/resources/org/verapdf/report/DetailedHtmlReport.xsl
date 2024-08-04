@@ -460,8 +460,8 @@
     <!-- Validation Information -->
     <xsl:template match="details/rule">
 
-        <xsl:param name="idWithDots" select="concat(@clause, 't', @testNumber)"/>
-        <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
+        <xsl:param name="idWithDots" select="concat(../../@profileName, @clause, 't', @testNumber)"/>
+        <xsl:param name="id" select="translate($idWithDots, '.+ -/', '_____')"/>
 
         <xsl:variable name="wikiLinkEnd">
             <xsl:choose>
