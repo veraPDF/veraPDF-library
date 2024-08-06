@@ -28,6 +28,7 @@ public enum ExtensionObjectType {
 	ADBE_Extn3,
 	ISO_19005_3,
 	ISO_19593,
+	ISO_21812,
 	ISO_TS_24064,
 	ISO_TS_24654,
 	ISO_TS_32001,
