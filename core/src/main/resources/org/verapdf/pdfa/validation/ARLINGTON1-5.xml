@@ -30491,12 +30491,22 @@
 		<rule object="AFontDescriptorCIDType2">
 			<id specification="PDF_1_5" clause="FontDescriptorCIDType2" testNumber="1"/>
 			<description>FontDescriptorCIDType2 shall not contain entries except Ascent, AvgWidth, CIDSet, CapHeight, Descent, FD, Flags, FontBBox, FontFamily, FontFile, FontFile2, FontName, FontStretch, FontWeight, ItalicAngle, Lang, Leading, MaxWidth, MissingWidth, StemH, StemV, Style, Type, XHeight</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CIDSet' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'FD' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Style' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CIDSet' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'FD' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Style' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontDescriptorCIDType2 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CIDSet' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'FD' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Style' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CIDSet' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'FD' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Style' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorCIDType2">
+			<id specification="PDF_1_5" clause="FontDescriptorCIDType2" testNumber="22"/>
+			<description>FontDescriptorCIDType2 shall not contain entry FontFile3 in PDF 1.5. This entry appears in later pdf versions</description>
+			<test>containsFontFile3 == false</test>
+			<error>
+				<message>FontDescriptorCIDType2 contains entry FontFile3</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -30701,16 +30711,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorCIDType2">
-			<id specification="PDF_1_5" clause="FontDescriptorCIDType2-FontFile-Stream" testNumber="9"/>
-			<description>Entry FontFile with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
-			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
-			<error>
-				<message>Entry FontFile with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontDescriptorCIDType2">
 			<id specification="PDF_1_5" clause="FontDescriptorCIDType2-FontFile2" testNumber="8"/>
 			<description>Entry FontFile2 in FontDescriptorCIDType2 shall have type Stream</description>
 			<test>containsFontFile2 == false || FontFile2HasTypeStream == true</test>
@@ -30728,16 +30728,6 @@
 			<test>FontFile2HasTypeStream != true || isFontFile2Indirect == true</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorCIDType2 is direct</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontDescriptorCIDType2">
-			<id specification="PDF_1_5" clause="FontDescriptorCIDType2-FontFile2-Stream" testNumber="9"/>
-			<description>Entry FontFile2 with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
-			<error>
-				<message>Entry FontFile2 with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -30987,12 +30977,22 @@
 		<rule object="AFontDescriptorTrueType">
 			<id specification="PDF_1_5" clause="FontDescriptorTrueType" testNumber="1"/>
 			<description>FontDescriptorTrueType shall not contain entries except Ascent, AvgWidth, CapHeight, Descent, Flags, FontBBox, FontFamily, FontFile, FontFile2, FontName, FontStretch, FontWeight, ItalicAngle, Leading, MaxWidth, MissingWidth, StemH, StemV, Type, XHeight</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontDescriptorTrueType contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Ascent' &amp;&amp; elem != 'AvgWidth' &amp;&amp; elem != 'CapHeight' &amp;&amp; elem != 'Descent' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'FontBBox' &amp;&amp; elem != 'FontFamily' &amp;&amp; elem != 'FontFile' &amp;&amp; elem != 'FontFile2' &amp;&amp; elem != 'FontFile3' &amp;&amp; elem != 'FontName' &amp;&amp; elem != 'FontStretch' &amp;&amp; elem != 'FontWeight' &amp;&amp; elem != 'ItalicAngle' &amp;&amp; elem != 'Leading' &amp;&amp; elem != 'MaxWidth' &amp;&amp; elem != 'MissingWidth' &amp;&amp; elem != 'StemH' &amp;&amp; elem != 'StemV' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'XHeight' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="PDF_1_5" clause="FontDescriptorTrueType" testNumber="22"/>
+			<description>FontDescriptorTrueType shall not contain entry FontFile3 in PDF 1.5. This entry appears in later pdf versions</description>
+			<test>containsFontFile3 == false</test>
+			<error>
+				<message>FontDescriptorTrueType contains entry FontFile3</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -31163,16 +31163,6 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorTrueType">
-			<id specification="PDF_1_5" clause="FontDescriptorTrueType-FontFile-Stream" testNumber="9"/>
-			<description>Entry FontFile with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
-			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
-			<error>
-				<message>Entry FontFile with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontDescriptorTrueType">
 			<id specification="PDF_1_5" clause="FontDescriptorTrueType-FontFile2" testNumber="8"/>
 			<description>Entry FontFile2 in FontDescriptorTrueType shall have type Stream</description>
 			<test>containsFontFile2 == false || FontFile2HasTypeStream == true</test>
@@ -31190,16 +31180,6 @@
 			<test>FontFile2HasTypeStream != true || isFontFile2Indirect == true</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType is direct</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AFontDescriptorTrueType">
-			<id specification="PDF_1_5" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="9"/>
-			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
-			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
-			<error>
-				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -31613,6 +31593,16 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorType1">
+			<id specification="PDF_1_5" clause="FontDescriptorType1-FontFile-Stream" testNumber="9"/>
+			<description>Entry FontFile with type Stream in FontDescriptorType1 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile3)))</description>
+			<test>FontFileHasTypeStream != true || (containsFontFile3 != true)</test>
+			<error>
+				<message>Entry FontFile with type Stream in FontDescriptorType1 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile3)))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorType1">
 			<id specification="PDF_1_5" clause="FontDescriptorType1-FontFile3" testNumber="8"/>
 			<description>Entry FontFile3 in FontDescriptorType1 shall have type Stream</description>
 			<test>containsFontFile3 == false || FontFile3HasTypeStream == true</test>
@@ -31630,6 +31620,16 @@
 			<test>FontFile3HasTypeStream != true || isFontFile3Indirect == true</test>
 			<error>
 				<message>Entry FontFile3 with type Stream in FontDescriptorType1 is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorType1">
+			<id specification="PDF_1_5" clause="FontDescriptorType1-FontFile3-Stream" testNumber="9"/>
+			<description>Entry FontFile3 with type Stream in FontDescriptorType1 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
+			<test>FontFile3HasTypeStream != true || (containsFontFile != true)</test>
+			<error>
+				<message>Entry FontFile3 with type Stream in FontDescriptorType1 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -32178,12 +32178,12 @@
 		</rule>
 		<rule object="AFontFile">
 			<id specification="PDF_1_5" clause="FontFile" testNumber="1"/>
-			<description>FontFile shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFile shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Metadata, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFile contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -32443,6 +32443,28 @@
 			<references/>
 		</rule>
 		<rule object="AFontFile">
+			<id specification="PDF_1_5" clause="FontFile-Metadata" testNumber="8"/>
+			<description>Entry Metadata in FontFile shall have type Stream</description>
+			<test>containsMetadata == false || MetadataHasTypeStream == true</test>
+			<error>
+				<message>Entry Metadata in FontFile has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>MetadataType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile">
+			<id specification="PDF_1_5" clause="FontFile-Metadata-Stream" testNumber="10"/>
+			<description>Entry Metadata with type Stream in FontFile shall be indirect</description>
+			<test>MetadataHasTypeStream != true || isMetadataIndirect == true</test>
+			<error>
+				<message>Entry Metadata with type Stream in FontFile is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile">
 			<id specification="PDF_1_5" clause="FontFile-Subtype" testNumber="8"/>
 			<description>Entry Subtype in FontFile shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -32456,10 +32478,10 @@
 		</rule>
 		<rule object="AFontFile">
 			<id specification="PDF_1_5" clause="FontFile-Subtype-Name" testNumber="6"/>
-			<description>Entry Subtype with type Name in FontFile shall have one of values: OpenType, CIDFontType0C, Type1C</description>
-			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Type1C" || SubtypeNameValue == "CIDFontType0C" || SubtypeNameValue == "OpenType"</test>
+			<description>Entry Subtype with type Name in FontFile shall have one of values: CIDFontType0C, Type1C</description>
+			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Type1C" || SubtypeNameValue == "CIDFontType0C"</test>
 			<error>
-				<message>Entry Subtype with type Name in FontFile has incorrect value %1 instead of OpenType, CIDFontType0C, Type1C</message>
+				<message>Entry Subtype with type Name in FontFile has incorrect value %1 instead of CIDFontType0C, Type1C</message>
 				<arguments>
 					<argument>SubtypeNameValue</argument>
 				</arguments>
@@ -32468,12 +32490,12 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="PDF_1_5" clause="FontFile2" testNumber="1"/>
-			<description>FontFile2 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFile2 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Metadata, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFile2 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -32743,6 +32765,28 @@
 			<references/>
 		</rule>
 		<rule object="AFontFile2">
+			<id specification="PDF_1_5" clause="FontFile2-Metadata" testNumber="8"/>
+			<description>Entry Metadata in FontFile2 shall have type Stream</description>
+			<test>containsMetadata == false || MetadataHasTypeStream == true</test>
+			<error>
+				<message>Entry Metadata in FontFile2 has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>MetadataType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
+			<id specification="PDF_1_5" clause="FontFile2-Metadata-Stream" testNumber="10"/>
+			<description>Entry Metadata with type Stream in FontFile2 shall be indirect</description>
+			<test>MetadataHasTypeStream != true || isMetadataIndirect == true</test>
+			<error>
+				<message>Entry Metadata with type Stream in FontFile2 is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile2">
 			<id specification="PDF_1_5" clause="FontFile2-Subtype" testNumber="8"/>
 			<description>Entry Subtype in FontFile2 shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -32756,12 +32800,12 @@
 		</rule>
 		<rule object="AFontFile3CIDType0">
 			<id specification="PDF_1_5" clause="FontFile3CIDType0" testNumber="1"/>
-			<description>FontFile3CIDType0 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFile3CIDType0 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Metadata, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFile3CIDType0 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -33021,6 +33065,28 @@
 			<references/>
 		</rule>
 		<rule object="AFontFile3CIDType0">
+			<id specification="PDF_1_5" clause="FontFile3CIDType0-Metadata" testNumber="8"/>
+			<description>Entry Metadata in FontFile3CIDType0 shall have type Stream</description>
+			<test>containsMetadata == false || MetadataHasTypeStream == true</test>
+			<error>
+				<message>Entry Metadata in FontFile3CIDType0 has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>MetadataType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile3CIDType0">
+			<id specification="PDF_1_5" clause="FontFile3CIDType0-Metadata-Stream" testNumber="10"/>
+			<description>Entry Metadata with type Stream in FontFile3CIDType0 shall be indirect</description>
+			<test>MetadataHasTypeStream != true || isMetadataIndirect == true</test>
+			<error>
+				<message>Entry Metadata with type Stream in FontFile3CIDType0 is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile3CIDType0">
 			<id specification="PDF_1_5" clause="FontFile3CIDType0-Subtype" testNumber="8"/>
 			<description>Entry Subtype in FontFile3CIDType0 shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -33029,6 +33095,16 @@
 				<arguments>
 					<argument>SubtypeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile3CIDType0">
+			<id specification="PDF_1_5" clause="FontFile3CIDType0-Subtype" testNumber="7"/>
+			<description>Entry Subtype in FontFile3CIDType0 is required</description>
+			<test>containsSubtype == true</test>
+			<error>
+				<message>Entry Subtype in FontFile3CIDType0 is missing</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -33046,12 +33122,12 @@
 		</rule>
 		<rule object="AFontFile3Type1">
 			<id specification="PDF_1_5" clause="FontFile3Type1" testNumber="1"/>
-			<description>FontFile3Type1 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFile3Type1 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Metadata, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFile3Type1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -33311,6 +33387,28 @@
 			<references/>
 		</rule>
 		<rule object="AFontFile3Type1">
+			<id specification="PDF_1_5" clause="FontFile3Type1-Metadata" testNumber="8"/>
+			<description>Entry Metadata in FontFile3Type1 shall have type Stream</description>
+			<test>containsMetadata == false || MetadataHasTypeStream == true</test>
+			<error>
+				<message>Entry Metadata in FontFile3Type1 has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>MetadataType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile3Type1">
+			<id specification="PDF_1_5" clause="FontFile3Type1-Metadata-Stream" testNumber="10"/>
+			<description>Entry Metadata with type Stream in FontFile3Type1 shall be indirect</description>
+			<test>MetadataHasTypeStream != true || isMetadataIndirect == true</test>
+			<error>
+				<message>Entry Metadata with type Stream in FontFile3Type1 is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFile3Type1">
 			<id specification="PDF_1_5" clause="FontFile3Type1-Subtype" testNumber="8"/>
 			<description>Entry Subtype in FontFile3Type1 shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -33334,10 +33432,10 @@
 		</rule>
 		<rule object="AFontFile3Type1">
 			<id specification="PDF_1_5" clause="FontFile3Type1-Subtype-Name" testNumber="6"/>
-			<description>Entry Subtype with type Name in FontFile3Type1 shall have one of values: OpenType, CIDFontType0C, Type1C</description>
-			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Type1C" || SubtypeNameValue == "CIDFontType0C" || SubtypeNameValue == "OpenType"</test>
+			<description>Entry Subtype with type Name in FontFile3Type1 shall have value Type1C</description>
+			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Type1C"</test>
 			<error>
-				<message>Entry Subtype with type Name in FontFile3Type1 has incorrect value %1 instead of OpenType, CIDFontType0C, Type1C</message>
+				<message>Entry Subtype with type Name in FontFile3Type1 has incorrect value %1 instead of Type1C</message>
 				<arguments>
 					<argument>SubtypeNameValue</argument>
 				</arguments>
@@ -33346,12 +33444,12 @@
 		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_5" clause="FontFileType1" testNumber="1"/>
-			<description>FontFileType1 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Subtype</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>FontFileType1 shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Length1, Length2, Length3, Metadata, Subtype</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>FontFileType1 contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Length1' &amp;&amp; elem != 'Length2' &amp;&amp; elem != 'Length3' &amp;&amp; elem != 'Metadata' &amp;&amp; elem != 'Subtype' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -33641,6 +33739,28 @@
 			<references/>
 		</rule>
 		<rule object="AFontFileType1">
+			<id specification="PDF_1_5" clause="FontFileType1-Metadata" testNumber="8"/>
+			<description>Entry Metadata in FontFileType1 shall have type Stream</description>
+			<test>containsMetadata == false || MetadataHasTypeStream == true</test>
+			<error>
+				<message>Entry Metadata in FontFileType1 has type %1 instead of type Stream</message>
+				<arguments>
+					<argument>MetadataType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFileType1">
+			<id specification="PDF_1_5" clause="FontFileType1-Metadata-Stream" testNumber="10"/>
+			<description>Entry Metadata with type Stream in FontFileType1 shall be indirect</description>
+			<test>MetadataHasTypeStream != true || isMetadataIndirect == true</test>
+			<error>
+				<message>Entry Metadata with type Stream in FontFileType1 is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFileType1">
 			<id specification="PDF_1_5" clause="FontFileType1-Subtype" testNumber="8"/>
 			<description>Entry Subtype in FontFileType1 shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -33648,6 +33768,18 @@
 				<message>Entry Subtype in FontFileType1 has type %1 instead of type Name</message>
 				<arguments>
 					<argument>SubtypeType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontFileType1">
+			<id specification="PDF_1_5" clause="FontFileType1-Subtype-Name" testNumber="6"/>
+			<description>Entry Subtype with type Name in FontFileType1 shall have value Type1C</description>
+			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Type1C"</test>
+			<error>
+				<message>Entry Subtype with type Name in FontFileType1 has incorrect value %1 instead of Type1C</message>
+				<arguments>
+					<argument>SubtypeNameValue</argument>
 				</arguments>
 			</error>
 			<references/>
