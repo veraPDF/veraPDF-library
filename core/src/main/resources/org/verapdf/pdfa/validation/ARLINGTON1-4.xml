@@ -15289,80 +15289,80 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers" testNumber="2"/>
-			<description>ArrayOf_3Integers shall contain exactly 3 elements</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers" testNumber="2"/>
+			<description>ArrayOf_3NonNegativeIntegers shall contain exactly 3 elements</description>
 			<test>size == 3</test>
 			<error>
-				<message>ArrayOf_3Integers contains %1 element(s) instead of 3</message>
+				<message>ArrayOf_3NonNegativeIntegers contains %1 element(s) instead of 3</message>
 				<arguments>
 					<argument>size</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers-0" testNumber="8"/>
-			<description>Entry 0 in ArrayOf_3Integers shall have type Integer</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers-0" testNumber="8"/>
+			<description>Entry 0 in ArrayOf_3NonNegativeIntegers shall have type Integer</description>
 			<test>size &lt;= 0 || entry0HasTypeInteger == true</test>
 			<error>
-				<message>Entry 0 in ArrayOf_3Integers has type %1 instead of type Integer</message>
+				<message>Entry 0 in ArrayOf_3NonNegativeIntegers has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>entry0Type</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers-0-Integer" testNumber="14"/>
-			<description>Entry 0 with type Integer in ArrayOf_3Integers shall satisfy possible value predicate: fn:Eval(@0 &gt;= 0)</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers-0-Integer" testNumber="14"/>
+			<description>Entry 0 with type Integer in ArrayOf_3NonNegativeIntegers shall satisfy possible value predicate: fn:Eval(@0 &gt;= 0)</description>
 			<test>entry0HasTypeInteger != true || entry0IntegerValue &gt;= 0</test>
 			<error>
-				<message>Entry 0 with type Integer in ArrayOf_3Integers does not satisfy possible value predicate: fn:Eval(@0 &gt;= 0)</message>
+				<message>Entry 0 with type Integer in ArrayOf_3NonNegativeIntegers does not satisfy possible value predicate: fn:Eval(@0 &gt;= 0)</message>
 				<arguments/>
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers-1" testNumber="8"/>
-			<description>Entry 1 in ArrayOf_3Integers shall have type Integer</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers-1" testNumber="8"/>
+			<description>Entry 1 in ArrayOf_3NonNegativeIntegers shall have type Integer</description>
 			<test>size &lt;= 1 || entry1HasTypeInteger == true</test>
 			<error>
-				<message>Entry 1 in ArrayOf_3Integers has type %1 instead of type Integer</message>
+				<message>Entry 1 in ArrayOf_3NonNegativeIntegers has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>entry1Type</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers-1-Integer" testNumber="14"/>
-			<description>Entry 1 with type Integer in ArrayOf_3Integers shall satisfy possible value predicate: fn:Eval(@1 &gt;= 0)</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers-1-Integer" testNumber="14"/>
+			<description>Entry 1 with type Integer in ArrayOf_3NonNegativeIntegers shall satisfy possible value predicate: fn:Eval(@1 &gt;= 0)</description>
 			<test>entry1HasTypeInteger != true || entry1IntegerValue &gt;= 0</test>
 			<error>
-				<message>Entry 1 with type Integer in ArrayOf_3Integers does not satisfy possible value predicate: fn:Eval(@1 &gt;= 0)</message>
+				<message>Entry 1 with type Integer in ArrayOf_3NonNegativeIntegers does not satisfy possible value predicate: fn:Eval(@1 &gt;= 0)</message>
 				<arguments/>
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers-2" testNumber="8"/>
-			<description>Entry 2 in ArrayOf_3Integers shall have type Integer</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers-2" testNumber="8"/>
+			<description>Entry 2 in ArrayOf_3NonNegativeIntegers shall have type Integer</description>
 			<test>size &lt;= 2 || entry2HasTypeInteger == true</test>
 			<error>
-				<message>Entry 2 in ArrayOf_3Integers has type %1 instead of type Integer</message>
+				<message>Entry 2 in ArrayOf_3NonNegativeIntegers has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>entry2Type</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOf_3Integers">
-			<id specification="PDF_1_4" clause="ArrayOf_3Integers-2-Integer" testNumber="14"/>
-			<description>Entry 2 with type Integer in ArrayOf_3Integers shall satisfy possible value predicate: fn:Eval(@2 &gt;= 0)</description>
+		<rule object="AArrayOf_3NonNegativeIntegers">
+			<id specification="PDF_1_4" clause="ArrayOf_3NonNegativeIntegers-2-Integer" testNumber="14"/>
+			<description>Entry 2 with type Integer in ArrayOf_3NonNegativeIntegers shall satisfy possible value predicate: fn:Eval(@2 &gt;= 0)</description>
 			<test>entry2HasTypeInteger != true || entry2IntegerValue &gt;= 0</test>
 			<error>
-				<message>Entry 2 with type Integer in ArrayOf_3Integers does not satisfy possible value predicate: fn:Eval(@2 &gt;= 0)</message>
+				<message>Entry 2 with type Integer in ArrayOf_3NonNegativeIntegers does not satisfy possible value predicate: fn:Eval(@2 &gt;= 0)</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -19198,252 +19198,6 @@
 				<arguments>
 					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp" testNumber="1"/>
-			<description>DocTimeStamp shall not contain entries except ADBE_Build, ByteRange, Cert, Changes, ContactInfo, Contents, Filter, Location, M, Name, R, Reason, SubFilter, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ADBE_Build' &amp;&amp; elem != 'ByteRange' &amp;&amp; elem != 'Cert' &amp;&amp; elem != 'Changes' &amp;&amp; elem != 'ContactInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Location' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Prop_AuthTime' &amp;&amp; elem != 'Prop_AuthType' &amp;&amp; elem != 'Prop_Build' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Reason' &amp;&amp; elem != 'Reference' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
-			<error>
-				<message>DocTimeStamp contains entry(ies) %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ADBE_Build' &amp;&amp; elem != 'ByteRange' &amp;&amp; elem != 'Cert' &amp;&amp; elem != 'Changes' &amp;&amp; elem != 'ContactInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Location' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Prop_AuthTime' &amp;&amp; elem != 'Prop_AuthType' &amp;&amp; elem != 'Prop_Build' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Reason' &amp;&amp; elem != 'Reference' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp" testNumber="22"/>
-			<description>DocTimeStamp shall not contain entries Prop_AuthTime, Prop_AuthType, Prop_Build, Reference, V in PDF 1.4. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'Prop_AuthTime' || elem == 'Prop_AuthType' || elem == 'Prop_Build' || elem == 'Reference' || elem == 'V').length == 0</test>
-			<error>
-				<message>DocTimeStamp contains entry(ies) %1</message>
-				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'Prop_AuthTime' || elem == 'Prop_AuthType' || elem == 'Prop_Build' || elem == 'Reference' || elem == 'V').toString()</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-ADBE_Build" testNumber="8"/>
-			<description>Entry ADBE_Build in DocTimeStamp shall have type String</description>
-			<test>containsADBE_Build == false || ADBE_BuildHasTypeString == true</test>
-			<error>
-				<message>Entry ADBE_Build in DocTimeStamp has type %1 instead of type String</message>
-				<arguments>
-					<argument>ADBE_BuildType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-ByteRange" testNumber="8"/>
-			<description>Entry ByteRange in DocTimeStamp shall have type Array</description>
-			<test>containsByteRange == false || ByteRangeHasTypeArray == true</test>
-			<error>
-				<message>Entry ByteRange in DocTimeStamp has type %1 instead of type Array</message>
-				<arguments>
-					<argument>ByteRangeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Cert" testNumber="8"/>
-			<description>Entry Cert in DocTimeStamp shall have one of types: Array, StringByte</description>
-			<test>containsCert == false || CertHasTypeArray == true || CertHasTypeStringByte == true</test>
-			<error>
-				<message>Entry Cert in DocTimeStamp has type %1 instead of one of types: Array, StringByte</message>
-				<arguments>
-					<argument>CertType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Changes" testNumber="8"/>
-			<description>Entry Changes in DocTimeStamp shall have type Array</description>
-			<test>containsChanges == false || ChangesHasTypeArray == true</test>
-			<error>
-				<message>Entry Changes in DocTimeStamp has type %1 instead of type Array</message>
-				<arguments>
-					<argument>ChangesType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-ContactInfo" testNumber="8"/>
-			<description>Entry ContactInfo in DocTimeStamp shall have type String</description>
-			<test>containsContactInfo == false || ContactInfoHasTypeString == true</test>
-			<error>
-				<message>Entry ContactInfo in DocTimeStamp has type %1 instead of type String</message>
-				<arguments>
-					<argument>ContactInfoType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Contents" testNumber="8"/>
-			<description>Entry Contents in DocTimeStamp shall have type StringByte</description>
-			<test>containsContents == false || ContentsHasTypeStringByte == true</test>
-			<error>
-				<message>Entry Contents in DocTimeStamp has type %1 instead of type StringByte</message>
-				<arguments>
-					<argument>ContentsType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Contents" testNumber="7"/>
-			<description>Entry Contents in DocTimeStamp is required</description>
-			<test>containsContents == true</test>
-			<error>
-				<message>Entry Contents in DocTimeStamp is missing</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Filter" testNumber="8"/>
-			<description>Entry Filter in DocTimeStamp shall have type Name</description>
-			<test>containsFilter == false || FilterHasTypeName == true</test>
-			<error>
-				<message>Entry Filter in DocTimeStamp has type %1 instead of type Name</message>
-				<arguments>
-					<argument>FilterType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Filter" testNumber="7"/>
-			<description>Entry Filter in DocTimeStamp is required</description>
-			<test>containsFilter == true</test>
-			<error>
-				<message>Entry Filter in DocTimeStamp is missing</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Location" testNumber="8"/>
-			<description>Entry Location in DocTimeStamp shall have type String</description>
-			<test>containsLocation == false || LocationHasTypeString == true</test>
-			<error>
-				<message>Entry Location in DocTimeStamp has type %1 instead of type String</message>
-				<arguments>
-					<argument>LocationType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-M" testNumber="8"/>
-			<description>Entry M in DocTimeStamp shall have type Date</description>
-			<test>containsM == false || MHasTypeDate == true</test>
-			<error>
-				<message>Entry M in DocTimeStamp has type %1 instead of type Date</message>
-				<arguments>
-					<argument>MType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Name" testNumber="8"/>
-			<description>Entry Name in DocTimeStamp shall have type String</description>
-			<test>containsName == false || NameHasTypeString == true</test>
-			<error>
-				<message>Entry Name in DocTimeStamp has type %1 instead of type String</message>
-				<arguments>
-					<argument>NameType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-R" testNumber="8"/>
-			<description>Entry R in DocTimeStamp shall have type Integer</description>
-			<test>containsR == false || RHasTypeInteger == true</test>
-			<error>
-				<message>Entry R in DocTimeStamp has type %1 instead of type Integer</message>
-				<arguments>
-					<argument>RType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Reason" testNumber="8"/>
-			<description>Entry Reason in DocTimeStamp shall have type String</description>
-			<test>containsReason == false || ReasonHasTypeString == true</test>
-			<error>
-				<message>Entry Reason in DocTimeStamp has type %1 instead of type String</message>
-				<arguments>
-					<argument>ReasonType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-SubFilter" testNumber="8"/>
-			<description>Entry SubFilter in DocTimeStamp shall have type Name</description>
-			<test>containsSubFilter == false || SubFilterHasTypeName == true</test>
-			<error>
-				<message>Entry SubFilter in DocTimeStamp has type %1 instead of type Name</message>
-				<arguments>
-					<argument>SubFilterType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-SubFilter-Name" testNumber="6"/>
-			<description>Entry SubFilter with type Name in DocTimeStamp shall have value ETSI.RFC3161</description>
-			<test>SubFilterHasTypeName != true || SubFilterNameValue == "ETSI.RFC3161"</test>
-			<error>
-				<message>Entry SubFilter with type Name in DocTimeStamp has incorrect value %1 instead of ETSI.RFC3161</message>
-				<arguments>
-					<argument>SubFilterNameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Type" testNumber="8"/>
-			<description>Entry Type in DocTimeStamp shall have type Name</description>
-			<test>containsType == false || TypeHasTypeName == true</test>
-			<error>
-				<message>Entry Type in DocTimeStamp has type %1 instead of type Name</message>
-				<arguments>
-					<argument>TypeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Type" testNumber="7"/>
-			<description>Entry Type in DocTimeStamp is required</description>
-			<test>containsType == true</test>
-			<error>
-				<message>Entry Type in DocTimeStamp is missing</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ADocTimeStamp">
-			<id specification="PDF_1_4" clause="DocTimeStamp-Type-Name" testNumber="6"/>
-			<description>Entry Type with type Name in DocTimeStamp shall have value DocTimeStamp</description>
-			<test>TypeHasTypeName != true || TypeNameValue == "DocTimeStamp"</test>
-			<error>
-				<message>Entry Type with type Name in DocTimeStamp has incorrect value %1 instead of DocTimeStamp</message>
-				<arguments>
-					<argument>TypeNameValue</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -40895,12 +40649,12 @@
 		</rule>
 		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature" testNumber="1"/>
-			<description>Signature shall not contain entries except ByteRange, Cert, Changes, ContactInfo, Contents, Filter, Location, M, Name, R, Reason, SubFilter, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ByteRange' &amp;&amp; elem != 'Cert' &amp;&amp; elem != 'Changes' &amp;&amp; elem != 'ContactInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Location' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Prop_AuthTime' &amp;&amp; elem != 'Prop_AuthType' &amp;&amp; elem != 'Prop_Build' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Reason' &amp;&amp; elem != 'Reference' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>Signature shall not contain entries except ADBE_Build, ByteRange, Cert, Changes, ContactInfo, Contents, Filter, Location, M, Name, R, Reason, SubFilter, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'ADBE_Build' &amp;&amp; elem != 'ByteRange' &amp;&amp; elem != 'Cert' &amp;&amp; elem != 'Changes' &amp;&amp; elem != 'ContactInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Location' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Prop_AuthTime' &amp;&amp; elem != 'Prop_AuthType' &amp;&amp; elem != 'Prop_Build' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Reason' &amp;&amp; elem != 'Reference' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>Signature contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ByteRange' &amp;&amp; elem != 'Cert' &amp;&amp; elem != 'Changes' &amp;&amp; elem != 'ContactInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Location' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Prop_AuthTime' &amp;&amp; elem != 'Prop_AuthType' &amp;&amp; elem != 'Prop_Build' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Reason' &amp;&amp; elem != 'Reference' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'ADBE_Build' &amp;&amp; elem != 'ByteRange' &amp;&amp; elem != 'Cert' &amp;&amp; elem != 'Changes' &amp;&amp; elem != 'ContactInfo' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Location' &amp;&amp; elem != 'M' &amp;&amp; elem != 'Name' &amp;&amp; elem != 'Prop_AuthTime' &amp;&amp; elem != 'Prop_AuthType' &amp;&amp; elem != 'Prop_Build' &amp;&amp; elem != 'R' &amp;&amp; elem != 'Reason' &amp;&amp; elem != 'Reference' &amp;&amp; elem != 'SubFilter' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'V' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -40918,6 +40672,28 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-ADBE_Build" testNumber="8"/>
+			<description>Entry ADBE_Build in Signature shall have type String</description>
+			<test>containsADBE_Build == false || ADBE_BuildHasTypeString == true</test>
+			<error>
+				<message>Entry ADBE_Build in Signature has type %1 instead of type String</message>
+				<arguments>
+					<argument>ADBE_BuildType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-ADBE_Build-String" testNumber="16"/>
+			<description>If entry ADBE_Build with type String in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>ADBE_BuildHasTypeString != true || (isADBE_BuildIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry ADBE_Build with type String in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature-ByteRange" testNumber="8"/>
 			<description>Entry ByteRange in Signature shall have type Array</description>
 			<test>containsByteRange == false || ByteRangeHasTypeArray == true</test>
@@ -40926,6 +40702,26 @@
 				<arguments>
 					<argument>ByteRangeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-ByteRange-Array" testNumber="16"/>
+			<description>If entry ByteRange with type Array in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>ByteRangeHasTypeArray != true || (isByteRangeIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry ByteRange with type Array in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-ByteRange-Array" testNumber="9"/>
+			<description>Entry ByteRange with type Array in Signature shall satisfy special case: fn:Eval((fn:ArrayLength(ByteRange) mod 2) == 0)</description>
+			<test>ByteRangeHasTypeArray != true || ((ByteRangeArraySize % 2) == 0)</test>
+			<error>
+				<message>Entry ByteRange with type Array in Signature does not satisfy special case: fn:Eval((fn:ArrayLength(ByteRange) mod 2) == 0)</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -40952,6 +40748,26 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Cert-Array" testNumber="16"/>
+			<description>If entry Cert with type Array in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>CertHasTypeArray != true || (isCertIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Cert with type Array in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Cert-StringByte" testNumber="16"/>
+			<description>If entry Cert with type StringByte in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>CertHasTypeStringByte != true || (isCertIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Cert with type StringByte in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature-Changes" testNumber="8"/>
 			<description>Entry Changes in Signature shall have type Array</description>
 			<test>containsChanges == false || ChangesHasTypeArray == true</test>
@@ -40964,6 +40780,16 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Changes-Array" testNumber="16"/>
+			<description>If entry Changes with type Array in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>ChangesHasTypeArray != true || (isChangesIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Changes with type Array in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature-ContactInfo" testNumber="8"/>
 			<description>Entry ContactInfo in Signature shall have type StringText</description>
 			<test>containsContactInfo == false || ContactInfoHasTypeStringText == true</test>
@@ -40972,6 +40798,16 @@
 				<arguments>
 					<argument>ContactInfoType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-ContactInfo-StringText" testNumber="16"/>
+			<description>If entry ContactInfo with type StringText in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>ContactInfoHasTypeStringText != true || (isContactInfoIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry ContactInfo with type StringText in Signature is indirect</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -40998,11 +40834,21 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
-			<id specification="PDF_1_4" clause="Signature-Contents-StringByte" testNumber="9"/>
-			<description>Entry Contents with type StringByte in Signature shall satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; fn:IsHexString())</description>
-			<test>ContentsHasTypeStringByte != true || (isContentsHexString == true)</test>
+			<id specification="PDF_1_4" clause="Signature-Contents-StringByte" testNumber="16"/>
+			<description>If entry Contents with type StringByte in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>ContentsHasTypeStringByte != true || (isContentsIndirect == false || (containsByteRange != true))</test>
 			<error>
-				<message>Entry Contents with type StringByte in Signature does not satisfy special case: fn:Eval(fn:AlwaysUnencrypted() &amp;&amp; fn:IsHexString())</message>
+				<message>Entry Contents with type StringByte in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Contents-StringByte" testNumber="9"/>
+			<description>Entry Contents with type StringByte in Signature shall satisfy special case: fn:Eval((fn:IsPresent(ByteRange) &amp;&amp; fn:IsHexString()) &amp;&amp; fn:AlwaysUnencrypted())</description>
+			<test>ContentsHasTypeStringByte != true || ((containsByteRange == true) &amp;&amp; isContentsHexString == true)</test>
+			<error>
+				<message>Entry Contents with type StringByte in Signature does not satisfy special case: fn:Eval((fn:IsPresent(ByteRange) &amp;&amp; fn:IsHexString()) &amp;&amp; fn:AlwaysUnencrypted())</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -41030,14 +40876,12 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
-			<id specification="PDF_1_4" clause="Signature-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in Signature shall have one of values: VeriSign.PPKVS, CICI.SignIt, Entrust.PPKEF, Adobe.PPKLite</description>
-			<test>FilterHasTypeName != true || FilterNameValue == "Adobe.PPKLite" || FilterNameValue == "Entrust.PPKEF" || FilterNameValue == "CICI.SignIt" || FilterNameValue == "VeriSign.PPKVS"</test>
+			<id specification="PDF_1_4" clause="Signature-Filter-Name" testNumber="16"/>
+			<description>If entry Filter with type Name in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>FilterHasTypeName != true || (isFilterIndirect == false || (containsByteRange != true))</test>
 			<error>
-				<message>Entry Filter with type Name in Signature has incorrect value %1 instead of VeriSign.PPKVS, CICI.SignIt, Entrust.PPKEF, Adobe.PPKLite</message>
-				<arguments>
-					<argument>FilterNameValue</argument>
-				</arguments>
+				<message>Entry Filter with type Name in Signature is indirect</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -41054,6 +40898,16 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Location-StringText" testNumber="16"/>
+			<description>If entry Location with type StringText in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>LocationHasTypeStringText != true || (isLocationIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Location with type StringText in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature-M" testNumber="8"/>
 			<description>Entry M in Signature shall have type Date</description>
 			<test>containsM == false || MHasTypeDate == true</test>
@@ -41062,6 +40916,16 @@
 				<arguments>
 					<argument>MType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-M-Date" testNumber="16"/>
+			<description>If entry M with type Date in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>MHasTypeDate != true || (isMIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry M with type Date in Signature is indirect</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -41078,6 +40942,16 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Name-StringText" testNumber="16"/>
+			<description>If entry Name with type StringText in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>NameHasTypeStringText != true || (isNameIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Name with type StringText in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature-R" testNumber="8"/>
 			<description>Entry R in Signature shall have type Integer</description>
 			<test>containsR == false || RHasTypeInteger == true</test>
@@ -41086,6 +40960,16 @@
 				<arguments>
 					<argument>RType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-R-Integer" testNumber="16"/>
+			<description>If entry R with type Integer in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>RHasTypeInteger != true || (isRIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry R with type Integer in Signature is indirect</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -41102,6 +40986,16 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Reason-StringText" testNumber="16"/>
+			<description>If entry Reason with type StringText in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>ReasonHasTypeStringText != true || (isReasonIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Reason with type StringText in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_4" clause="Signature-SubFilter" testNumber="8"/>
 			<description>Entry SubFilter in Signature shall have type Name</description>
 			<test>containsSubFilter == false || SubFilterHasTypeName == true</test>
@@ -41114,11 +41008,21 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
-			<id specification="PDF_1_4" clause="Signature-SubFilter-Name" testNumber="6"/>
-			<description>Entry SubFilter with type Name in Signature shall have one of values: adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1</description>
-			<test>SubFilterHasTypeName != true || SubFilterNameValue == "adbe.pkcs7.detached" || SubFilterNameValue == "adbe.pkcs7.sha1" || SubFilterNameValue == "adbe.x509.rsa_sha1"</test>
+			<id specification="PDF_1_4" clause="Signature-SubFilter-Name" testNumber="16"/>
+			<description>If entry SubFilter with type Name in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>SubFilterHasTypeName != true || (isSubFilterIndirect == false || (containsByteRange != true))</test>
 			<error>
-				<message>Entry SubFilter with type Name in Signature has incorrect value %1 instead of adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1</message>
+				<message>Entry SubFilter with type Name in Signature is indirect</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-SubFilter-Name" testNumber="6"/>
+			<description>Entry SubFilter with type Name in Signature shall have one of values: adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1, ETSI.CAdES.detached</description>
+			<test>SubFilterHasTypeName != true || SubFilterNameValue == "adbe.pkcs7.detached" || SubFilterNameValue == "adbe.pkcs7.sha1" || SubFilterNameValue == "adbe.x509.rsa_sha1" || SubFilterNameValue == "ETSI.CAdES.detached"</test>
+			<error>
+				<message>Entry SubFilter with type Name in Signature has incorrect value %1 instead of adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1, ETSI.CAdES.detached</message>
 				<arguments>
 					<argument>SubFilterNameValue</argument>
 				</arguments>
@@ -41134,6 +41038,16 @@
 				<arguments>
 					<argument>TypeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
+			<id specification="PDF_1_4" clause="Signature-Type-Name" testNumber="16"/>
+			<description>If entry Type with type Name in Signature satisfies condition fn:IsPresent(ByteRange), it shall be direct</description>
+			<test>TypeHasTypeName != true || (isTypeIndirect == false || (containsByteRange != true))</test>
+			<error>
+				<message>Entry Type with type Name in Signature is indirect</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
