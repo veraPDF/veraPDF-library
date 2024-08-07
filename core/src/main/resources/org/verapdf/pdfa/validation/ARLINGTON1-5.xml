@@ -385,14 +385,12 @@
 			<references/>
 		</rule>
 		<rule object="AActionGoTo">
-			<id specification="PDF_1_5" clause="ActionGoTo-D-StringByte" testNumber="6"/>
-			<description>Entry D with type StringByte in ActionGoTo shall have value DIsNameTreetrailerCatalogNamesDestsIndex == true</description>
-			<test>DHasTypeStringByte != true || DStringByteValue == "DIsNameTreetrailerCatalogNamesDestsIndex == true"</test>
+			<id specification="PDF_1_5" clause="ActionGoTo-D-StringByte" testNumber="14"/>
+			<description>Entry D with type StringByte in ActionGoTo shall satisfy possible value predicate: fn:Eval(fn:IsNameTreeIndex(trailer::Catalog::Names::Dests, @D))</description>
+			<test>DHasTypeStringByte != true || DIsNameTreetrailerCatalogNamesDestsIndex == true</test>
 			<error>
-				<message>Entry D with type StringByte in ActionGoTo has incorrect value %1 instead of DIsNameTreetrailerCatalogNamesDestsIndex == true</message>
-				<arguments>
-					<argument>DStringByteValue</argument>
-				</arguments>
+				<message>Entry D with type StringByte in ActionGoTo does not satisfy possible value predicate: fn:Eval(fn:IsNameTreeIndex(trailer::Catalog::Names::Dests, @D))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
