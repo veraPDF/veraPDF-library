@@ -21987,6 +21987,16 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorCIDType2">
+			<id specification="PDF_1_3" clause="FontDescriptorCIDType2-FontFile-Stream" testNumber="9"/>
+			<description>Entry FontFile with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
+			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
+			<error>
+				<message>Entry FontFile with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorCIDType2">
 			<id specification="PDF_1_3" clause="FontDescriptorCIDType2-FontFile2" testNumber="8"/>
 			<description>Entry FontFile2 in FontDescriptorCIDType2 shall have type Stream</description>
 			<test>containsFontFile2 == false || FontFile2HasTypeStream == true</test>
@@ -22004,6 +22014,16 @@
 			<test>FontFile2HasTypeStream != true || isFontFile2Indirect == true</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorCIDType2 is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorCIDType2">
+			<id specification="PDF_1_3" clause="FontDescriptorCIDType2-FontFile2-Stream" testNumber="9"/>
+			<description>Entry FontFile2 with type Stream in FontDescriptorCIDType2 shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
+			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
+			<error>
+				<message>Entry FontFile2 with type Stream in FontDescriptorCIDType2 does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -22369,6 +22389,16 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorTrueType">
+			<id specification="PDF_1_3" clause="FontDescriptorTrueType-FontFile-Stream" testNumber="9"/>
+			<description>Entry FontFile with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</description>
+			<test>FontFileHasTypeStream != true || (containsFontFile2 != true)</test>
+			<error>
+				<message>Entry FontFile with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile2)))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
 			<id specification="PDF_1_3" clause="FontDescriptorTrueType-FontFile2" testNumber="8"/>
 			<description>Entry FontFile2 in FontDescriptorTrueType shall have type Stream</description>
 			<test>containsFontFile2 == false || FontFile2HasTypeStream == true</test>
@@ -22386,6 +22416,16 @@
 			<test>FontFile2HasTypeStream != true || isFontFile2Indirect == true</test>
 			<error>
 				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AFontDescriptorTrueType">
+			<id specification="PDF_1_3" clause="FontDescriptorTrueType-FontFile2-Stream" testNumber="9"/>
+			<description>Entry FontFile2 with type Stream in FontDescriptorTrueType shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</description>
+			<test>FontFile2HasTypeStream != true || (containsFontFile != true)</test>
+			<error>
+				<message>Entry FontFile2 with type Stream in FontDescriptorTrueType does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(FontFile)))</message>
 				<arguments/>
 			</error>
 			<references/>
