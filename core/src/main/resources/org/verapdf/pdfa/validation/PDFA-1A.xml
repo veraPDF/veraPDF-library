@@ -1103,10 +1103,10 @@
         </rule>
         <rule object="PDMetadata">
             <id specification="ISO_19005_1" clause="6.7.2" testNumber="2"/>
-            <description>Metadata object stream dictionaries shall not contain the Filter key</description>
-            <test>Filter == null</test>
+            <description>The Metadata object stream dictionary in the document’s catalog shall not contain the Filter key</description>
+            <test>isCatalogMetadata == false || Filter == null</test>
             <error>
-                <message>The metadata object stream dictionary contains the Filter key</message>
+                <message>The catalog metadata object stream dictionary contains the Filter key</message>
                 <arguments/>
             </error>
             <references/>
