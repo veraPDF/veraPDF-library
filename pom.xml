@@ -31,10 +31,14 @@
     <version>1.27.2</version>
   </parent>
 
-  <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library</artifactId>
   <version>1.27.0-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <modules>
+    <module>xmp-core</module>
+    <module>core</module>
+  </modules>
 
   <name>veraPDF PDF/A Validation Library</name>
   <description>veraPDF PDF/A Validation API and core types.</description>
@@ -60,11 +64,6 @@
     </pluginRepository>
   </pluginRepositories>
 
-  <modules>
-    <module>xmp-core</module>
-    <module>core</module>
-  </modules>
-
   <scm>
     <url>https://github.com/veraPDF/veraPDF-library/</url>
     <connection>scm:git:https://github.com/veraPDF/veraPDF-library.git</connection>
@@ -73,89 +72,41 @@
 
   <properties>
     <verapdf.model.version>[1.27.0,1.28.0-RC)</verapdf.model.version>
+    <junit.version>4.13.2</junit.version>
+    <equalsverifier.version>3.15.6</equalsverifier.version>
+    <rhino.version>1.7.13</rhino.version>
+    <jaxb.api.version>2.4.0-b180830.0359</jaxb.api.version>
+    <jaxb.impl.version>2.3.2</jaxb.impl.version>
+    <jaxb.core.version>2.3.0.1</jaxb.core.version>
+    <maven.compiler.plugin.version>3.12.1</maven.compiler.plugin.version>
+    <jacoco.maven.plugin.version>0.8.11</jacoco.maven.plugin.version>
+    <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+    <versions.maven.plugin.version>2.16.2</versions.maven.plugin.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.12.1</version>
-      </plugin>
-
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.11</version>
-      </plugin>
-
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.2.5</version>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-        <version>2.16.2</version>
-      </plugin>
-
-    </plugins>
-  </build>
-
   <dependencyManagement>
     <dependencies>
-      <dependency>
-        <groupId>org.junit</groupId>
-        <artifactId>junit-bom</artifactId>
-        <version>5.10.2</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-api</artifactId>
-        <version>5.10.2</version>
-        <scope>test</scope>
-      </dependency>
 
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.13.2</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.junit.jupiter</groupId>
-        <artifactId>junit-jupiter-engine</artifactId>
-        <version>5.10.2</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>org.junit.vintage</groupId>
-        <artifactId>junit-vintage-engine</artifactId>
-        <version>5.10.2</version>
+        <version>${junit.version}</version>
         <scope>test</scope>
       </dependency>
 
       <dependency>
         <groupId>nl.jqno.equalsverifier</groupId>
         <artifactId>equalsverifier</artifactId>
-        <version>3.15.6</version>
+        <version>${equalsverifier.version}</version>
         <scope>test</scope>
       </dependency>
 
-      <!-- Mozilla Rhino JavaScript engine -->
       <dependency>
         <groupId>org.mozilla</groupId>
         <artifactId>rhino</artifactId>
-        <version>1.7.13</version>
+        <version>${rhino.version}</version>
       </dependency>
 
       <dependency>
@@ -165,32 +116,54 @@
       </dependency>
 
       <dependency>
-        <groupId>commons-io</groupId>
-        <artifactId>commons-io</artifactId>
-        <version>2.11.0</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
         <groupId>javax.xml.bind</groupId>
         <artifactId>jaxb-api</artifactId>
-        <version>2.4.0-b180830.0359</version>
+        <version>${jaxb.api.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-impl</artifactId>
-        <version>2.3.2</version>
+        <version>${jaxb.impl.version}</version>
       </dependency>
 
       <dependency>
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-core</artifactId>
-        <version>2.3.0.1</version>
+        <version>${jaxb.core.version}</version>
       </dependency>
 
     </dependencies>
   </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven.compiler.plugin.version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>${jacoco.maven.plugin.version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${maven.surefire.plugin.version}</version>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${versions.maven.plugin.version}</version>
+      </plugin>
+
+    </plugins>
+  </build>
 
   <reporting>
     <plugins>
