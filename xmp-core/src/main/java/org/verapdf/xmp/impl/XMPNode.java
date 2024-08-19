@@ -16,7 +16,6 @@ import org.verapdf.xmp.options.PropertyOptions;
 
 import java.util.*;
 
-
 /**
  * A node in the internally XMP tree, which can be a schema node, a property node, an array node,
  * an array item, a struct node or a qualifier node (without '?').
@@ -30,8 +29,7 @@ import java.util.*;
  * 
  * @since 21.02.2006
  */
-public class XMPNode implements Comparable
-{
+public class XMPNode implements Comparable {
 	//------------------------------------------------------------------------------ veraPDF: additional field for original prefix
 	/** original prefix of the node*/
 	private String originalPrefix;
@@ -60,14 +58,15 @@ public class XMPNode implements Comparable
 	/** flag if the node has an "rdf:value" child node. */
 	private boolean hasValueChild;
 
-
 	//------------------------------------------------------------------------------ veraPDF: added original prefix into constructor
+
 	/**
 	 * Creates an <code>XMPNode</code> with initial values.
 	 *
-	 * @param name the name of the node
-	 * @param value the value of the node
-	 * @param options the options of the node
+	 * @param name           the name of the node
+	 * @param value          the value of the node
+	 * @param options        the options of the node
+	 * @param originalPrefix the original prefix of the node
 	 */
 	public XMPNode(String name, String value, PropertyOptions options, String originalPrefix)
 	{
@@ -77,13 +76,14 @@ public class XMPNode implements Comparable
 		this.originalPrefix = originalPrefix;
 	}
 
-
 	//------------------------------------------------------------------------------ veraPDF: added original prefix into constructor
+
 	/**
 	 * Constructor for the node without value.
 	 *
-	 * @param name the name of the node
-	 * @param options the options of the node
+	 * @param name           the name of the node
+	 * @param options        the options of the node
+	 * @param originalPrefix the original prefix of the node
 	 */
 	public XMPNode(String name, PropertyOptions options, String originalPrefix)
 	{
@@ -91,10 +91,15 @@ public class XMPNode implements Comparable
 	}
 
 	//------------------------------------------------------------------------------ veraPDF: getter method for original prefix
+
+	/**
+	 * Gets original prefix of xmp node.
+	 *
+	 * @return an original prefix of xmp node
+	 */
 	public String getOriginalPrefix() {
 		return this.originalPrefix;
 	}
-
 
 	/**
 	 * Resets the node.
@@ -107,7 +112,6 @@ public class XMPNode implements Comparable
 		children = null;
 		qualifier = null;
 	}
-
 	
 	/**
 	 * @return Returns the parent node.
@@ -116,7 +120,6 @@ public class XMPNode implements Comparable
 	{
 		return parent;
 	}
-
 	
 	/**
 	 * @param index an index [1..size]
@@ -127,11 +130,12 @@ public class XMPNode implements Comparable
 		return (XMPNode) getChildren().get(index - 1);
 	}
 	
-	
 	/**
 	 * Adds a node as child to this node.
+	 *
 	 * @param node an XMPNode
-	 * @throws XMPException 
+	 *
+	 * @throws XMPException occurs if the parsing fails for any reason.
 	 */
 	public void addChild(XMPNode node) throws XMPException
 	{
@@ -141,14 +145,15 @@ public class XMPNode implements Comparable
 		getChildren().add(node);
 	}
 
-	
 	/**
 	 * Adds a node as child to this node.
+	 *
 	 * @param index the index of the node <em>before</em> which the new one is inserted.
-	 * <em>Note:</em> The node children are indexed from [1..size]! 
-	 * An index of size + 1 appends a node.   
-	 * @param node an XMPNode
-	 * @throws XMPException 
+	 *              <em>Note:</em> The node children are indexed from [1..size]!
+	 *              An index of size + 1 appends a node.
+	 * @param node  an XMPNode
+	 *
+	 * @throws XMPException occurs if the parsing fails for any reason.
 	 */
 	public void addChild(int index, XMPNode node) throws XMPException
 	{
@@ -156,7 +161,6 @@ public class XMPNode implements Comparable
 		node.setParent(this);
 		getChildren().add(index - 1, node);
 	}
-
 	
 	/**
 	 * Replaces a node with another one.
@@ -170,7 +174,6 @@ public class XMPNode implements Comparable
 		getChildren().set(index - 1, node);
 	}
 	
-	
 	/**
 	 * Removes a child at the requested index.
 	 * @param itemIndex the index to remove [1..size] 
@@ -180,7 +183,6 @@ public class XMPNode implements Comparable
 		getChildren().remove(itemIndex - 1);
 		cleanupChildren();
 	}
-	
 	
 	/**
 	 * Removes a child node.
@@ -194,7 +196,6 @@ public class XMPNode implements Comparable
 		cleanupChildren();
 	}
 
-
 	/**
 	 * Removes the children list if this node has no children anymore;
 	 * checks if the provided node is a schema node and doesn't have any children anymore, 
@@ -207,7 +208,6 @@ public class XMPNode implements Comparable
 			children = null;
 		}
 	}
-
 	
 	/**
 	 * Removes all children from the node. 
@@ -216,7 +216,6 @@ public class XMPNode implements Comparable
 	{
 		children = null;
 	}
-
 	
 	/**
 	 * @return Returns the number of children without neccessarily creating a list.
@@ -227,7 +226,6 @@ public class XMPNode implements Comparable
 			children.size() :	
 			0;
 	}
-
 	
 	/**
 	 * @param expr child node name to look for
@@ -237,7 +235,6 @@ public class XMPNode implements Comparable
 	{
 		return find(getChildren(), expr);
 	}
-
 	
 	/**
 	 * @param index an index [1..size]
@@ -247,7 +244,6 @@ public class XMPNode implements Comparable
 	{
 		return (XMPNode) getQualifier().get(index - 1);
 	}
-	
 	
 	/**
 	 * @return Returns the number of qualifier without neccessarily creating a list.
@@ -259,11 +255,12 @@ public class XMPNode implements Comparable
 			0;
 	}
 	
-	
 	/**
 	 * Appends a qualifier to the qualifier list and sets respective options.
+	 *
 	 * @param qualNode a qualifier node.
-	 * @throws XMPException 
+	 *
+	 * @throws XMPException occurs if the parsing fails for any reason.
 	 */
 	public void addQualifier(XMPNode qualNode) throws XMPException
 	{
@@ -293,7 +290,6 @@ public class XMPNode implements Comparable
 			getQualifier().add(qualNode);
 		}	
 	}
-
 	
 	/**
 	 * Removes one qualifier node and fixes the options.
@@ -321,7 +317,6 @@ public class XMPNode implements Comparable
 		}
 		
 	}
-
 	
 	/**
 	 * Removes all qualifiers from the node and sets the options appropriate. 
@@ -336,7 +331,6 @@ public class XMPNode implements Comparable
 		qualifier = null;
 	}
 
-
 	/**
 	 * @param expr qualifier node name to look for
 	 * @return Returns a qualifier <code>XMPNode</code> if node has been found, 
@@ -346,7 +340,6 @@ public class XMPNode implements Comparable
 	{
 		return find(qualifier, expr);
 	}
-	
 
 	/**
 	 * @return Returns whether the node has children.
@@ -354,8 +347,7 @@ public class XMPNode implements Comparable
 	public boolean hasChildren()
 	{
 		return children != null  &&  children.size() > 0;
-	}	
-	
+	}
 
 	/**
 	 * @return Returns an iterator for the children.
@@ -373,7 +365,6 @@ public class XMPNode implements Comparable
 		}
 	}
 	
-	
 	/**
 	 * @return Returns whether the node has qualifier attached.
 	 */
@@ -381,7 +372,6 @@ public class XMPNode implements Comparable
 	{
 		return qualifier != null  &&  qualifier.size() > 0;
 	}
-	
 	
 	/**
 	 * @return Returns an iterator for the qualifier.
@@ -419,7 +409,6 @@ public class XMPNode implements Comparable
 		}
 	}
 	
-	
 	/**
 	 * Performs a <b>deep clone</b> of the node and the complete subtree.
 	 * 
@@ -443,7 +432,6 @@ public class XMPNode implements Comparable
 		
 		return newNode;
 	}
-	
 	
 	/**
 	 * Performs a <b>deep clone</b> of the complete subtree (children and
@@ -473,8 +461,7 @@ public class XMPNode implements Comparable
 			assert false;
 		}
 		
-	}	
-	
+	}
 	
 	/** 
 	 * Renders this node and the tree unter this node in a human readable form.
@@ -487,7 +474,6 @@ public class XMPNode implements Comparable
 		this.dumpNode(result, recursive, 0, 0);
 		return result.toString();
 	}
-	
 	
 	/**
 	 * @see Comparable#compareTo(Object) 
@@ -504,7 +490,6 @@ public class XMPNode implements Comparable
 		}	
 	}
 	
-	
 	/**
 	 * @return Returns the name.
 	 */
@@ -512,7 +497,6 @@ public class XMPNode implements Comparable
 	{
 		return name;
 	}
-
 
 	/**
 	 * @param name The name to set.
@@ -522,7 +506,6 @@ public class XMPNode implements Comparable
 		this.name = name;
 	}
 
-
 	/**
 	 * @return Returns the value.
 	 */
@@ -531,15 +514,13 @@ public class XMPNode implements Comparable
 		return value;
 	}
 
-
 	/**
 	 * @param value The value to set.
 	 */
 	public void setValue(String value)
 	{
 		this.value = value;
-	}	
-
+	}
 	
 	/**
 	 * @return Returns the options.
@@ -552,7 +533,6 @@ public class XMPNode implements Comparable
 		}
 		return options;
 	}
-
 	
 	/**
 	 * Updates the options of the node.
@@ -562,7 +542,6 @@ public class XMPNode implements Comparable
 	{
 		this.options = options;
 	}
-
 	
 	/**
 	 * @return Returns the implicit flag
@@ -572,7 +551,6 @@ public class XMPNode implements Comparable
 		return implicit;
 	}
 
-
 	/**
 	 * @param implicit Sets the implicit node flag
 	 */
@@ -580,7 +558,6 @@ public class XMPNode implements Comparable
 	{
 		this.implicit = implicit;
 	}
-	
 	
 	/**
 	 * @return Returns if the node contains aliases (applies only to schema nodes)
@@ -590,15 +567,13 @@ public class XMPNode implements Comparable
 		return hasAliases;
 	}
 
-
 	/**
 	 * @param hasAliases sets the flag that the node contains aliases
 	 */
 	public void setHasAliases(boolean hasAliases)
 	{
 		this.hasAliases = hasAliases;
-	}	
-	
+	}
 	
 	/**
 	 * @return Returns if the node contains aliases (applies only to schema nodes)
@@ -608,15 +583,13 @@ public class XMPNode implements Comparable
 		return alias;
 	}
 
-
 	/**
 	 * @param alias sets the flag that the node is an alias
 	 */
 	public void setAlias(boolean alias)
 	{
 		this.alias = alias;
-	}	
-	
+	}
 	
 	/**
 	 * @return the hasValueChild
@@ -626,7 +599,6 @@ public class XMPNode implements Comparable
 		return hasValueChild;
 	}
 
-
 	/**
 	 * @param hasValueChild the hasValueChild to set
 	 */
@@ -634,8 +606,6 @@ public class XMPNode implements Comparable
 	{
 		this.hasValueChild = hasValueChild;
 	}
-	
-	
 	
 	/**
 	 * Sorts the complete datamodel according to the following rules:
@@ -689,12 +659,9 @@ public class XMPNode implements Comparable
 				
 			}
 		}
-	}	
-	
-	
+	}
 	
 	//------------------------------------------------------------------------------ private methods
-
 	
 	/**
 	 * Dumps this node and its qualifier and children recursively.
@@ -802,7 +769,6 @@ public class XMPNode implements Comparable
 		}
 	}
 	
-	
 	/**
 	 * @return Returns whether this node is a language qualifier. 
 	 */
@@ -810,7 +776,6 @@ public class XMPNode implements Comparable
 	{
 		return XMPConst.XML_LANG.equals(name);
 	}
-
 	
 	/**
 	 * @return Returns whether this node is a type qualifier. 
@@ -819,7 +784,6 @@ public class XMPNode implements Comparable
 	{
 		return "rdf:type".equals(name);
 	}
-	
 
 	/**
 	 * <em>Note:</em> This method should always be called when accessing 'children' to be sure
@@ -834,7 +798,6 @@ public class XMPNode implements Comparable
 		}
 		return children;
 	}
-
 	
 	/**
 	 * @return Returns a read-only copy of child nodes list.
@@ -843,7 +806,6 @@ public class XMPNode implements Comparable
 	{
 		return Collections.unmodifiableList(new ArrayList(getChildren()));
 	}
-	
 	
 	/**
 	 * @return Returns list of qualifier that is lazy initialized.
@@ -857,7 +819,6 @@ public class XMPNode implements Comparable
 		return qualifier;
 	}
 	
-	
 	/**
 	 * Sets the parent node, this is solely done by <code>addChild(...)</code>
 	 * and <code>addQualifier()</code>.
@@ -869,7 +830,6 @@ public class XMPNode implements Comparable
 	{
 		this.parent = parent;
 	}
-
 	
 	/**
 	 * Internal find.
@@ -894,7 +854,6 @@ public class XMPNode implements Comparable
 		return null;
 	}
 	
-	
 	/**
 	 * Checks that a node name is not existing on the same level, except for array items.
 	 * @param childName the node name to check
@@ -909,7 +868,6 @@ public class XMPNode implements Comparable
 					XMPError.BADXMP);
 		}
 	}
-	
 	
 	/**
 	 * Checks that a qualifier name is not existing on the same level.

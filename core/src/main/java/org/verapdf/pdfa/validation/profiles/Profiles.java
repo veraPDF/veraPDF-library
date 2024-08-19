@@ -311,25 +311,20 @@ public final class Profiles {
 	/**
 	 * Returns a {@link Rule} instance initialised with the passed values.
 	 *
-	 * @param id
-	 *            the {@link RuleId} id for the {@link Rule}
-	 * @param object
-	 *            a String that identifies the Object that the rule applies to
-	 * @param deferred
-	 *            a Boolean that identifies the deferred property of the rule
-	 * @param description
-	 *            a textual description of the {@link Rule}.
-	 * @param test
-	 *            a JavaScript expression that is the test carried out on a
-	 *            model instance
-	 * @param error
-	 *            the {@link ErrorDetails} associated with the{@link Rule}.
-	 * @param references
-	 *            a list of further {@link Reference}s for this rule
+	 * @param id          the {@link RuleId} id for the {@link Rule}
+	 * @param object      a String that identifies the Object that the rule applies to
+	 * @param deferred    a Boolean that identifies the deferred property of the rule
+	 * @param tags		  a String that identifies the tag that the rule applies to
+	 * @param description a textual description of the {@link Rule}.
+	 * @param test        a JavaScript expression that is the test carried out on a
+	 *                    model instance
+	 * @param error       the {@link ErrorDetails} associated with the{@link Rule}.
+	 * @param references  a list of further {@link Reference}s for this rule
+	 *
 	 * @return a {@link Rule} instance.
-	 * @throws IllegalArgumentException
-	 *             if any of the parameters are null or the test, object, or
-	 *             description is empty
+	 *
+	 * @throws IllegalArgumentException if any of the parameters are null or the test, object, or
+	 *                                  description is empty
 	 */
 	public static Rule ruleFromValues(final RuleId id, final String object, final Boolean deferred, String tags,
 									  final String description, final String test,
@@ -409,6 +404,7 @@ public final class Profiles {
 	 * @param toConvert a {@link ValidationProfile} to convert to an XML String
 	 * @param format    set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
 	 *                  for no space formatting
+	 * @param fragment  a flag to generate document level events
 	 *
 	 * @return a String xml representation of toConvert
 	 *
@@ -427,18 +423,15 @@ public final class Profiles {
 	 * Convert a {@link ValidationProfile} instance to XML and serialise to the
 	 * {@link OutputStream} <code>forXMLOutput</code>.
 	 *
-	 * @param toConvert
-	 *            a {@link ValidationProfile} to convert to an XML String
-	 * @param dest
-	 *            an OutputStream used to write the generated XML to
-	 * @param format
-	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
-	 *            for no space formatting
-	 * @throws JAXBException
-	 *             thrown by JAXB marshaller if there's an error converting the
-	 *             object
-	 * @throws IllegalArgumentException
-	 *             if toConvert is null
+	 * @param toConvert a {@link ValidationProfile} to convert to an XML String
+	 * @param dest      an OutputStream used to write the generated XML to
+	 * @param format    set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
+	 *                  for no space formatting
+	 * @param fragment  a flag to generate document level events
+	 *
+	 * @throws JAXBException            thrown by JAXB marshaller if there's an error converting the
+	 *                                  object
+	 * @throws IllegalArgumentException if toConvert is null
 	 */
 	public static void profileToXml(final ValidationProfile toConvert, final OutputStream dest, boolean format,
 			boolean fragment) throws JAXBException {
@@ -470,18 +463,15 @@ public final class Profiles {
 	 * Convert a {@link ValidationProfile} instance to XML and serialise to the
 	 * {@link Writer} <code>forXMLOutput</code>.
 	 *
-	 * @param toConvert
-	 *            a {@link ValidationProfile} to convert to an XML String
-	 * @param dest
-	 *            a Writer used to write the generated XML to
-	 * @param format
-	 *            set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
-	 *            for no space formatting
-	 * @throws JAXBException
-	 *             thrown by JAXB marshaller if there's an error converting the
-	 *             object
-	 * @throws IllegalArgumentException
-	 *             if toConvert is null
+	 * @param toConvert a {@link ValidationProfile} to convert to an XML String
+	 * @param dest      a Writer used to write the generated XML to
+	 * @param format    set to Boolean.TRUE for pretty formatted XML, Boolean.FALSE
+	 *                  for no space formatting
+	 * @param fragment  a flag to generate document level events
+	 *
+	 * @throws JAXBException            thrown by JAXB marshaller if there's an error converting the
+	 *                                  object
+	 * @throws IllegalArgumentException if toConvert is null
 	 */
 	public static void profileToXml(final ValidationProfile toConvert, Writer dest, boolean format, boolean fragment)
 			throws JAXBException {
