@@ -34,7 +34,7 @@
     </ruleDescription>
     <ruleDescription>
         <objectType>PDMetadata</objectType>
-        <test>Filter == null</test>
+        <test>isCatalogMetadata == false || Filter == null</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>PDDocument</objectType>
