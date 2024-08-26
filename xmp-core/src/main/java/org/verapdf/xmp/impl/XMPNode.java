@@ -65,9 +65,10 @@ public class XMPNode implements Comparable
 	/**
 	 * Creates an <code>XMPNode</code> with initial values.
 	 *
-	 * @param name the name of the node
-	 * @param value the value of the node
-	 * @param options the options of the node
+	 * @param name           the name of the node
+	 * @param value          the value of the node
+	 * @param options        the options of the node
+	 * @param originalPrefix the original prefix of the node
 	 */
 	public XMPNode(String name, String value, PropertyOptions options, String originalPrefix)
 	{
@@ -82,8 +83,9 @@ public class XMPNode implements Comparable
 	/**
 	 * Constructor for the node without value.
 	 *
-	 * @param name the name of the node
-	 * @param options the options of the node
+	 * @param name           the name of the node
+	 * @param options        the options of the node
+	 * @param originalPrefix the original prefix of the node
 	 */
 	public XMPNode(String name, PropertyOptions options, String originalPrefix)
 	{
@@ -91,6 +93,12 @@ public class XMPNode implements Comparable
 	}
 
 	//------------------------------------------------------------------------------ veraPDF: getter method for original prefix
+
+	/**
+	 * Gets original prefix of xmp node.
+	 *
+	 * @return an original prefix of xmp node
+	 */
 	public String getOriginalPrefix() {
 		return this.originalPrefix;
 	}
