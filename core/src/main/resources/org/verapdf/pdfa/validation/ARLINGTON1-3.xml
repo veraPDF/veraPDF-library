@@ -20910,10 +20910,10 @@
 		</rule>
 		<rule object="AFontCIDType0">
 			<id specification="PDF_1_3" clause="FontCIDType0-DW" testNumber="8"/>
-			<description>Entry DW in FontCIDType0 shall have type Number</description>
-			<test>containsDW == false || DWHasTypeNumber == true</test>
+			<description>Entry DW in FontCIDType0 shall have type Integer</description>
+			<test>containsDW == false || DWHasTypeInteger == true</test>
 			<error>
-				<message>Entry DW in FontCIDType0 has type %1 instead of type Number</message>
+				<message>Entry DW in FontCIDType0 has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>DWType</argument>
 				</arguments>
@@ -21170,10 +21170,10 @@
 		</rule>
 		<rule object="AFontCIDType2">
 			<id specification="PDF_1_3" clause="FontCIDType2-DW" testNumber="8"/>
-			<description>Entry DW in FontCIDType2 shall have type Number</description>
-			<test>containsDW == false || DWHasTypeNumber == true</test>
+			<description>Entry DW in FontCIDType2 shall have type Integer</description>
+			<test>containsDW == false || DWHasTypeInteger == true</test>
 			<error>
-				<message>Entry DW in FontCIDType2 has type %1 instead of type Number</message>
+				<message>Entry DW in FontCIDType2 has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>DWType</argument>
 				</arguments>
