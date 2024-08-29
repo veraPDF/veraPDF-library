@@ -40,7 +40,7 @@ public final class HTMLReport {
 	private static final String detailedReport = resourceRoot + "DetailedHtmlReport" + xslExt; //$NON-NLS-1$
 	private static final String summaryReport = resourceRoot + "SummaryHtmlReport" + xslExt; //$NON-NLS-1$
 	private static final String GUI = "gui-arlington"; //$NON-NLS-1$
-	private static final String VERAPDF_REST = "verapdf-rest"; //$NON-NLS-1$
+	private static final String VERAPDF_REST = "verapdf-rest-arlington"; //$NON-NLS-1$
 
 	private HTMLReport() {
 	}
