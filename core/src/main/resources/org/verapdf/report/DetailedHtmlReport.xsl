@@ -98,11 +98,9 @@
                         <xsl:value-of select="/report/jobs/job/item/name"/>
                     </td>
                 </tr>
-            </table>
-            <xsl:if test="/report/jobs/job/validationReport">
-                <xsl:apply-templates select="/report/jobs/job/validationReport" mode="validation_report_info"/>
-            </xsl:if>
-            <table border="0">
+                <xsl:if test="/report/jobs/job/validationReport">
+                    <xsl:apply-templates select="/report/jobs/job/validationReport" mode="validation_report_info"/>
+                </xsl:if>
                 <xsl:if test="/report/jobs/job/taskException/exceptionMessage">
                     <tr>
                         <td width="200" class="invalid">
@@ -247,7 +245,7 @@
         <xsl:if test="/report/jobs/job/logs">
             <h2>Logs information</h2>
 
-            <table border="0" id="table5">
+            <table border="0" id="table6">
                 <tr style="BACKGROUND: #bcbad6">
                     <td width="100">
                         <b>Type</b>
@@ -268,7 +266,7 @@
         <xsl:if test="/report/jobs/job/featuresReport">
             <h2>Features information</h2>
 
-            <table border="0" id="table4">
+            <table border="0" id="table7">
                 <tr style="BACKGROUND: #bcbad6">
                     <td width="800">
                         <b>Feature</b>
@@ -424,7 +422,6 @@
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:variable>
-        <table border="0">
             <xsl:if test="@profileName">
                 <tr>
                     <td width="200">
@@ -453,7 +450,6 @@
                     </td>
                 </tr>
             </xsl:if>
-        </table>
     </xsl:template>
 
 
