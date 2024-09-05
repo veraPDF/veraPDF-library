@@ -114,7 +114,7 @@
     <!-- Display the build information -->
     <xsl:template match="/report/buildInformation">
       <h2>Build Information</h2>
-      <table border="0" id="table2">
+      <table border="0" id="table1">
           <tr>
               <td class="lefted" width="250">
                   <b>Version:</b>
