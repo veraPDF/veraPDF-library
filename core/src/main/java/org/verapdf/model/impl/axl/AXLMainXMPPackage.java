@@ -40,9 +40,9 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
 
     public static final String MAIN_XMP_PACKAGE_TYPE = "MainXMPPackage";
 
-    public static final String IDENTIFICATION = "Identification";
+    public static final String PDFA_IDENTIFICATION = "PDFAIdentification";
 
-    public static final String UAIDENTIFICATION = "UAIdentification";
+    public static final String PDFUA_IDENTIFICATION = "PDFUAIdentification";
 
     /**
      * Constructs new object
@@ -65,16 +65,16 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
     @Override
     public List<? extends Object> getLinkedObjects(String link) {
         switch (link) {
-            case IDENTIFICATION:
-                return this.getIdentification();
-            case UAIDENTIFICATION:
-                return this.getUAIdentification();
+            case PDFA_IDENTIFICATION:
+                return this.getPDFAIdentification();
+            case PDFUA_IDENTIFICATION:
+                return this.getPDFUAIdentification();
             default:
                 return super.getLinkedObjects(link);
         }
     }
 
-    private List<AXLPDFUAIdentification> getUAIdentification() {
+    private List<AXLPDFUAIdentification> getPDFUAIdentification() {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
         if (xmpMetadata != null && xmpMetadata.containsPropertiesFromNamespace(XMPConst.NS_PDFUA_ID)) {
             List<AXLPDFUAIdentification> res = new ArrayList<>(1);
@@ -84,7 +84,7 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         return Collections.emptyList();
     }
 
-    private List<AXLPDFAIdentification> getIdentification() {
+    private List<AXLPDFAIdentification> getPDFAIdentification() {
         VeraPDFMeta xmpMetadata = this.getXmpMetadata();
         if (xmpMetadata != null && xmpMetadata.containsPropertiesFromNamespace(XMPConst.NS_PDFA_ID)) {
             List<AXLPDFAIdentification> res = new ArrayList<>(1);
@@ -92,6 +92,18 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
             return Collections.unmodifiableList(res);
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public Boolean getcontainsPDFUAIdentification() {
+        VeraPDFMeta xmpMetadata = this.getXmpMetadata();
+        return xmpMetadata != null && xmpMetadata.containsPropertiesFromNamespace(XMPConst.NS_PDFUA_ID);
+    }
+
+    @Override
+    public Boolean getcontainsPDFAIdentification() {
+        VeraPDFMeta xmpMetadata = this.getXmpMetadata();
+        return xmpMetadata != null && xmpMetadata.containsPropertiesFromNamespace(XMPConst.NS_PDFA_ID);
     }
 
     @Override
