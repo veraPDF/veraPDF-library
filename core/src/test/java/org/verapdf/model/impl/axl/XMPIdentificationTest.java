@@ -96,7 +96,7 @@ public class XMPIdentificationTest {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
             AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
             List<? extends org.verapdf.model.baselayer.Object> list = pack
-                    .getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
+                    .getLinkedObjects(AXLMainXMPPackage.PDFA_IDENTIFICATION);
             assertEquals(this.identificationSchemaNumber, list.size());
             if (!list.isEmpty()) {
                 AXLPDFAIdentification identification = (AXLPDFAIdentification) list
