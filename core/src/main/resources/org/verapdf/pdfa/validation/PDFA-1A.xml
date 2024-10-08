@@ -721,7 +721,7 @@
         <rule object="PDCMap">
             <id specification="ISO_19005_1" clause="6.3.3.3" testNumber="1"/>
             <description>All CMaps used within a conforming file, except Identity-H and Identity-V, shall be embedded in that file as described in PDF Reference 5.6.4</description>
-            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || embeddedFile_size == 1</test>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || containsEmbeddedFile == true</test>
             <error>
                 <message>A CMap is different from "Identity-H" or "Identity-V" and is not embedded</message>
                 <arguments/>
@@ -746,7 +746,7 @@
         <rule object="PDFont">
             <id specification="ISO_19005_1" clause="6.3.4" testNumber="1"/>
             <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3</description>
-            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || containsFontFile == true</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -997,7 +997,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.5.3" testNumber="5"/>
             <description>If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance subdictionary</description>
-            <test>AP != "N" || Subtype != "Widget" || FT != "Btn" || (N_type == "Dict" &amp;&amp; appearance_size &gt; 0)</test>
+            <test>AP != "N" || Subtype != "Widget" || FT != "Btn" || (N_type == "Dict" &amp;&amp; containsAppearances == true)</test>
             <error>
                 <message>An annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, but the value of the N key is %1 instead of appearance subdictionary</message>
                 <arguments>
@@ -1094,7 +1094,7 @@
         <rule object="PDDocument">
             <id specification="ISO_19005_1" clause="6.7.2" testNumber="1"/>
             <description>The document catalog dictionary of a conforming file shall contain the Metadata key. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
-            <test>metadata_size == 1</test>
+            <test>containsMetadata == true</test>
             <error>
                 <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
@@ -1551,7 +1551,7 @@
         <rule object="MainXMPPackage">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="1"/>
             <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema</description>
-            <test>Identification_size == 1</test>
+            <test>containsPDFAIdentification == true</test>
             <error>
                 <message>The document metadata stream doesn't contains PDF/A Identification Schema</message>
                 <arguments/>
@@ -1636,7 +1636,7 @@
         <rule object="PDDocument">
             <id specification="ISO_19005_1" clause="6.8.3.3" testNumber="1"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in PDF Reference 9.6</description>
-            <test>StructTreeRoot_size == 1</test>
+            <test>containsStructTreeRoot == true</test>
             <error>
                 <message>StructTreeRoot entry is not present in the document catalog</message>
                 <arguments/>
