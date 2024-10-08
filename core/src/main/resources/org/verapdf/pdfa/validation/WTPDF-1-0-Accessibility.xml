@@ -19,7 +19,7 @@
         <rule object="PDDocument" tags="structure">
             <id specification="WTPDF_1_0" clause="8.2.1" testNumber="1"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-2:2020, 14.7</description>
-            <test>StructTreeRoot_size == 1</test>
+            <test>containsStructTreeRoot == true</test>
             <error>
                 <message>StructTreeRoot entry is not present in the document catalog</message>
                 <arguments/>
@@ -434,7 +434,7 @@
         <rule object="PDDocument" tags="lang">
             <id specification="WTPDF_1_0" clause="8.4.4" testNumber="1"/>
             <description>The default natural language for content and text strings shall be specified using the Lang entry, with a non-empty value, in the catalog dictionary</description>
-            <test>Lang_size &gt; 0</test>
+            <test>containsLang == true</test>
             <error>
                 <message>Catalog dictionary does not contain Lang entry</message>
                 <arguments/>
@@ -476,7 +476,7 @@
         <rule object="PDCIDFont" tags="font">
             <id specification="WTPDF_1_0" clause="8.4.5.3.2" testNumber="1"/>
             <description>All embedded Type 2 CIDFonts in the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-2:2020, Table 115</description>
-            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || fontFile_size == 0</test>
+            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || containsFontFile == false</test>
             <error>
                 <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
                 <arguments/>
@@ -488,7 +488,7 @@
         <rule object="PDCMap" tags="font">
             <id specification="WTPDF_1_0" clause="8.4.5.4" testNumber="1"/>
             <description>All CMaps used within a file that conforms to WTPDF 1.0, except those listed in ISO 32000-2:2020, Table 116, shall be embedded in that file, as described in ISO 32000-2:2020, 9.7.5</description>
-            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || embeddedFile_size == 1</test>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || containsEmbeddedFile == true</test>
             <error>
                 <message>A non-standard CMap %1 is not embedded</message>
                 <arguments>
@@ -529,7 +529,7 @@
         <rule object="PDFont" tags="font">
             <id specification="WTPDF_1_0" clause="8.4.5.5.1" testNumber="1"/>
             <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-2:2020, 9.9</description>
-            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || containsFontFile == true</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -923,7 +923,7 @@
         <rule object="PDPage" tags="page,annotation">
             <id specification="WTPDF_1_0" clause="8.9.3.3" testNumber="1"/>
             <description>Every page that includes an annotation shall contain a Tabs entry in its page dictionary in accordance with ISO 32000-2:2020, Table 31, and its value shall be A, W or S</description>
-            <test>annots_size == 0 || Tabs == 'A' || Tabs == 'W' || Tabs == 'S'</test>
+            <test>containsAnnotations == false || Tabs == 'A' || Tabs == 'W' || Tabs == 'S'</test>
             <error>
                 <message>A page with annotation(s) contains Tabs key with value %1 instead of A, W or S</message>
                 <arguments>
@@ -1045,7 +1045,7 @@
         <rule object="PDDocument" tags="metadata">
             <id specification="WTPDF_1_0" clause="8.11.1" testNumber="2"/>
             <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-2:2020, 14.3. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
-            <test>metadata_size == 1</test>
+            <test>containsMetadata == true</test>
             <error>
                 <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
@@ -20972,7 +20972,7 @@
         <rule object="PDDocument" tags="structure">
             <id specification="ISO_32005" clause="6.2" testNumber="1658"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-2:2020, 14.7</description>
-            <test>StructTreeRoot_size == 1</test>
+            <test>containsStructTreeRoot == true</test>
             <error>
                 <message>StructTreeRoot entry is not present in the document catalog</message>
                 <arguments/>
