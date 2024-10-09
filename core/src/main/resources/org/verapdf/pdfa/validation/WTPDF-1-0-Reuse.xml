@@ -6258,18 +6258,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SESub" tags="structure">
-            <id specification="ISO_32005" clause="6.2" testNumber="445"/>
-            <description>&lt;Code&gt; shall not contain &lt;Sub&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Sub&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SELbl" tags="structure">
             <id specification="ISO_32005" clause="6.2" testNumber="446"/>
             <description>&lt;Code&gt; shall not contain &lt;Lbl&gt;</description>
