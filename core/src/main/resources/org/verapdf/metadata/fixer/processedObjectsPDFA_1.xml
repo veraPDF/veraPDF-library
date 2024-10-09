@@ -38,11 +38,11 @@
     </ruleDescription>
     <ruleDescription>
         <objectType>PDDocument</objectType>
-        <test>metadata_size == 1</test>
+        <test>containsMetadata == true</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>MainXMPPackage</objectType>
-        <test>Identification_size == 1</test>
+        <test>containsPDFAIdentification == true</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>PDFAIdentification</objectType>
