@@ -1751,7 +1751,7 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEStructTreeRoot" tags="structure">
+        <rule object="PDStructTreeRoot" tags="structure">
             <id specification="ISO_32005" clause="6.2" testNumber="54"/>
             <description>StructTreeRoot shall not contain content items</description>
             <test>hasContentItems == false</test>
