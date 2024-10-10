@@ -249,7 +249,7 @@
             <error>
                 <message>The Ruby structure element has invalid sequence of children: %1</message>
                 <arguments>
-                    <argument>kidsStandardTypes.split('&amp;').toString()</argument>
+                    <argument>kidsStandardTypes.replaceAll('&amp;', ',')</argument>
                 </arguments>
             </error>
             <references/>
@@ -261,7 +261,7 @@
             <error>
                 <message>The Warichu structure element has invalid sequence of children: %1</message>
                 <arguments>
-                    <argument>kidsStandardTypes.split('&amp;').toString()</argument>
+                    <argument>kidsStandardTypes.replaceAll('&amp;', ',')</argument>
                 </arguments>
             </error>
             <references/>
