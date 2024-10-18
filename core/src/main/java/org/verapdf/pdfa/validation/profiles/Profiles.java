@@ -551,14 +551,16 @@ public final class Profiles {
 			String[] o1StrArr = firstId.getClause().split("\\."); //$NON-NLS-1$
 			String[] o2StrArr = secondId.getClause().split("\\."); //$NON-NLS-1$
 			int min = Math.min(o1StrArr.length, o2StrArr.length);
-
-			for (int i = 0; i < min; ++i) {
-				if (!o1StrArr[i].equals(o2StrArr[i])) {
-					return Integer.parseInt(o1StrArr[i]) - Integer.parseInt(o2StrArr[i]);
+			try {
+				for (int i = 0; i < min; ++i) {
+					if (!o1StrArr[i].equals(o2StrArr[i])) {
+						return Integer.parseInt(o1StrArr[i]) - Integer.parseInt(o2StrArr[i]);
+					}
 				}
+				return o1StrArr.length - o2StrArr.length;
+			} catch (NumberFormatException e) {
+				return firstId.getClause().compareTo(secondId.getClause());
 			}
-
-			return o1StrArr.length - o2StrArr.length;
 		}
 	}
 
