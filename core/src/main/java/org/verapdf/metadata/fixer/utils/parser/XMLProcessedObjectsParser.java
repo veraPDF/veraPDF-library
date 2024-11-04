@@ -28,6 +28,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -36,6 +37,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
 
@@ -44,6 +47,7 @@ import static org.verapdf.metadata.fixer.utils.MetadataFixerConstants.*;
  */
 public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
 
+    private static final Logger LOGGER = Logger.getLogger(XMLProcessedObjectsParser.class.getCanonicalName());
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1 = "processed.objects.path.pdfa_1";
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_2_3 = "processed.objects.path.pdfa_2_3";
     private static final String XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_4 = "processed.objects.path.pdfa_4";
@@ -83,7 +87,11 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
     public ProcessedObjects getProcessedObjects(InputStream xml)
             throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-
+        try {
+            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Unable to secure xml processing");
+        }
         DocumentBuilder builder = factory.newDocumentBuilder();
 
         factory.setIgnoringElementContentWhitespace(true);
