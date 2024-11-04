@@ -30,12 +30,16 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import jakarta.xml.bind.DatatypeConverter;
+import jakarta.xml.XMLConstants;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Class that's initially a placeholder for XMP specific functionality.
@@ -51,6 +55,7 @@ import java.util.Arrays;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public class XmpHandler {
+	private static final Logger LOGGER = Logger.getLogger(XmpHandler.class.getCanonicalName());
 	private static final byte[] UTF8_METADATA_PREFIX_SQ = {0x3C, 0x3F, 0x78,
 			0x70, 0x61, 0x63, 0x6B, 0x65, 0x74, 0x20, 0x62, 0x65, 0x67, 0x69,
 			0x6E, 0x3D, 0x27, -0x11, -0x45, -0x41, 0x27};
@@ -134,6 +139,11 @@ public class XmpHandler {
 			return null;
 		}
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		try {
+			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+		} catch (Exception e) {
+			LOGGER.log(Level.WARNING, "Unable to secure metadata processing");
+		}
 		factory.setNamespaceAware(true);
 		DocumentBuilder builder = factory.newDocumentBuilder();
 		Document metadataDocument = builder.parse(is);
