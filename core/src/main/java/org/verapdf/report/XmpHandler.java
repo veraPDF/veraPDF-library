@@ -30,8 +30,7 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 import jakarta.xml.bind.DatatypeConverter;
-import jakarta.xml.XMLConstants;
-import javax.xml.bind.DatatypeConverter;
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
