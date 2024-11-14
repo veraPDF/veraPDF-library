@@ -30313,14 +30313,12 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorCIDType0">
-			<id specification="PDF_1_5" clause="FontDescriptorCIDType0-FontWeight-Integer" testNumber="6"/>
-			<description>Entry FontWeight with type Integer in FontDescriptorCIDType0 shall have one of values: 100, 200, 300, 400, 500, 600, 700, 800, 900</description>
-			<test>FontWeightHasTypeInteger != true || FontWeightIntegerValue == 100 || FontWeightIntegerValue == 200 || FontWeightIntegerValue == 300 || FontWeightIntegerValue == 400 || FontWeightIntegerValue == 500 || FontWeightIntegerValue == 600 || FontWeightIntegerValue == 700 || FontWeightIntegerValue == 800 || FontWeightIntegerValue == 900</test>
+			<id specification="PDF_1_5" clause="FontDescriptorCIDType0-FontWeight-Integer" testNumber="14"/>
+			<description>Entry FontWeight with type Integer in FontDescriptorCIDType0 shall satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</description>
+			<test>FontWeightHasTypeInteger != true || (FontWeightIntegerValue &gt;= 1) &amp;&amp; (FontWeightIntegerValue &lt;= 1000)</test>
 			<error>
-				<message>Entry FontWeight with type Integer in FontDescriptorCIDType0 has incorrect value %1 instead of 100, 200, 300, 400, 500, 600, 700, 800, 900</message>
-				<arguments>
-					<argument>FontWeightIntegerValue</argument>
-				</arguments>
+				<message>Entry FontWeight with type Integer in FontDescriptorCIDType0 does not satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -30819,14 +30817,12 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorCIDType2">
-			<id specification="PDF_1_5" clause="FontDescriptorCIDType2-FontWeight-Integer" testNumber="6"/>
-			<description>Entry FontWeight with type Integer in FontDescriptorCIDType2 shall have one of values: 100, 200, 300, 400, 500, 600, 700, 800, 900</description>
-			<test>FontWeightHasTypeInteger != true || FontWeightIntegerValue == 100 || FontWeightIntegerValue == 200 || FontWeightIntegerValue == 300 || FontWeightIntegerValue == 400 || FontWeightIntegerValue == 500 || FontWeightIntegerValue == 600 || FontWeightIntegerValue == 700 || FontWeightIntegerValue == 800 || FontWeightIntegerValue == 900</test>
+			<id specification="PDF_1_5" clause="FontDescriptorCIDType2-FontWeight-Integer" testNumber="14"/>
+			<description>Entry FontWeight with type Integer in FontDescriptorCIDType2 shall satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</description>
+			<test>FontWeightHasTypeInteger != true || (FontWeightIntegerValue &gt;= 1) &amp;&amp; (FontWeightIntegerValue &lt;= 1000)</test>
 			<error>
-				<message>Entry FontWeight with type Integer in FontDescriptorCIDType2 has incorrect value %1 instead of 100, 200, 300, 400, 500, 600, 700, 800, 900</message>
-				<arguments>
-					<argument>FontWeightIntegerValue</argument>
-				</arguments>
+				<message>Entry FontWeight with type Integer in FontDescriptorCIDType2 does not satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -31291,14 +31287,12 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorTrueType">
-			<id specification="PDF_1_5" clause="FontDescriptorTrueType-FontWeight-Integer" testNumber="6"/>
-			<description>Entry FontWeight with type Integer in FontDescriptorTrueType shall have one of values: 100, 200, 300, 400, 500, 600, 700, 800, 900</description>
-			<test>FontWeightHasTypeInteger != true || FontWeightIntegerValue == 100 || FontWeightIntegerValue == 200 || FontWeightIntegerValue == 300 || FontWeightIntegerValue == 400 || FontWeightIntegerValue == 500 || FontWeightIntegerValue == 600 || FontWeightIntegerValue == 700 || FontWeightIntegerValue == 800 || FontWeightIntegerValue == 900</test>
+			<id specification="PDF_1_5" clause="FontDescriptorTrueType-FontWeight-Integer" testNumber="14"/>
+			<description>Entry FontWeight with type Integer in FontDescriptorTrueType shall satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</description>
+			<test>FontWeightHasTypeInteger != true || (FontWeightIntegerValue &gt;= 1) &amp;&amp; (FontWeightIntegerValue &lt;= 1000)</test>
 			<error>
-				<message>Entry FontWeight with type Integer in FontDescriptorTrueType has incorrect value %1 instead of 100, 200, 300, 400, 500, 600, 700, 800, 900</message>
-				<arguments>
-					<argument>FontWeightIntegerValue</argument>
-				</arguments>
+				<message>Entry FontWeight with type Integer in FontDescriptorTrueType does not satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -31741,14 +31735,12 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorType1">
-			<id specification="PDF_1_5" clause="FontDescriptorType1-FontWeight-Integer" testNumber="6"/>
-			<description>Entry FontWeight with type Integer in FontDescriptorType1 shall have one of values: 100, 200, 300, 400, 500, 600, 700, 800, 900</description>
-			<test>FontWeightHasTypeInteger != true || FontWeightIntegerValue == 100 || FontWeightIntegerValue == 200 || FontWeightIntegerValue == 300 || FontWeightIntegerValue == 400 || FontWeightIntegerValue == 500 || FontWeightIntegerValue == 600 || FontWeightIntegerValue == 700 || FontWeightIntegerValue == 800 || FontWeightIntegerValue == 900</test>
+			<id specification="PDF_1_5" clause="FontDescriptorType1-FontWeight-Integer" testNumber="14"/>
+			<description>Entry FontWeight with type Integer in FontDescriptorType1 shall satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</description>
+			<test>FontWeightHasTypeInteger != true || (FontWeightIntegerValue &gt;= 1) &amp;&amp; (FontWeightIntegerValue &lt;= 1000)</test>
 			<error>
-				<message>Entry FontWeight with type Integer in FontDescriptorType1 has incorrect value %1 instead of 100, 200, 300, 400, 500, 600, 700, 800, 900</message>
-				<arguments>
-					<argument>FontWeightIntegerValue</argument>
-				</arguments>
+				<message>Entry FontWeight with type Integer in FontDescriptorType1 does not satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -32075,14 +32067,12 @@
 			<references/>
 		</rule>
 		<rule object="AFontDescriptorType3">
-			<id specification="PDF_1_5" clause="FontDescriptorType3-FontWeight-Integer" testNumber="6"/>
-			<description>Entry FontWeight with type Integer in FontDescriptorType3 shall have one of values: 100, 200, 300, 400, 500, 600, 700, 800, 900</description>
-			<test>FontWeightHasTypeInteger != true || FontWeightIntegerValue == 100 || FontWeightIntegerValue == 200 || FontWeightIntegerValue == 300 || FontWeightIntegerValue == 400 || FontWeightIntegerValue == 500 || FontWeightIntegerValue == 600 || FontWeightIntegerValue == 700 || FontWeightIntegerValue == 800 || FontWeightIntegerValue == 900</test>
+			<id specification="PDF_1_5" clause="FontDescriptorType3-FontWeight-Integer" testNumber="14"/>
+			<description>Entry FontWeight with type Integer in FontDescriptorType3 shall satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</description>
+			<test>FontWeightHasTypeInteger != true || (FontWeightIntegerValue &gt;= 1) &amp;&amp; (FontWeightIntegerValue &lt;= 1000)</test>
 			<error>
-				<message>Entry FontWeight with type Integer in FontDescriptorType3 has incorrect value %1 instead of 100, 200, 300, 400, 500, 600, 700, 800, 900</message>
-				<arguments>
-					<argument>FontWeightIntegerValue</argument>
-				</arguments>
+				<message>Entry FontWeight with type Integer in FontDescriptorType3 does not satisfy possible value predicate: fn:Eval((@FontWeight &gt;= 1) &amp;&amp; (@FontWeight &lt;= 1000))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
