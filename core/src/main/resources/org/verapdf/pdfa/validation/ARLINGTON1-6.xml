@@ -22302,6 +22302,31 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfStringsTextOrNamesEntry">
+			<id specification="PDF_1_6" clause="ArrayOfStringsTextOrNamesEntry" testNumber="8"/>
+			<description>Entry in ArrayOfStringsTextOrNames shall have one of types: Name, StringText</description>
+			<test>HasTypeName == true || HasTypeStringText == true</test>
+			<error>
+				<message>Entry %keyName% in ArrayOfStringsTextOrNames has type %1 instead of one of types: Name, StringText</message>
+				<arguments>
+					<argument>Type</argument>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AArrayOfStringsTextOrNamesEntry">
+			<id specification="PDF_1_6" clause="ArrayOfStringsTextOrNamesEntry-Name" testNumber="26"/>
+			<description>Entry in ArrayOfStringsTextOrNames should not have type Name, if extension Malforms does not chosen</description>
+			<test>HasTypeName != true || hasExtensionMalforms == true</test>
+			<error>
+				<message>Entry %keyName% with type Name in ArrayOfStringsTextOrNames is present</message>
+				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfStructElemEntry">
 			<id specification="PDF_1_6" clause="ArrayOfStructElemEntry" testNumber="8"/>
 			<description>Entry in ArrayOfStructElem shall have type Dictionary</description>
