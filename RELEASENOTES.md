@@ -1,3 +1,11 @@
+Version 1.26.2 (December 4, 2024)
+=================================
+
+### Applications
+- fixed [CVE-2024-52800]
+
+[CVE-2024-52800]: https://github.com/veraPDF/veraPDF-library/security/advisories/GHSA-4cx5-89vm-833x
+
 Version 1.26 (May  16, 2024)
 =================================
 
