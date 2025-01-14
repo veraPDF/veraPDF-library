@@ -345,6 +345,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfAnnotsEntry">
+			<id specification="PDF_1_0" clause="ArrayOfAnnotsEntry-Dictionary" testNumber="10"/>
+			<description>Entry with type Dictionary in ArrayOfAnnots shall be indirect</description>
+			<test>HasTypeDictionary != true || isIndirect == true</test>
+			<error>
+				<message>Entry %keyName% with type Dictionary in ArrayOfAnnots is direct</message>
+				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfCompressionFilterNamesEntry">
 			<id specification="PDF_1_0" clause="ArrayOfCompressionFilterNamesEntry" testNumber="8"/>
 			<description>Entry in ArrayOfCompressionFilterNames shall have type Name</description>
