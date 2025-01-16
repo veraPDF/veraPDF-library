@@ -1151,18 +1151,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOfAnnotsEntry">
-			<id specification="PDF_1_1" clause="ArrayOfAnnotsEntry-Dictionary" testNumber="10"/>
-			<description>Entry with type Dictionary in ArrayOfAnnots shall be indirect</description>
-			<test>HasTypeDictionary != true || isIndirect == true</test>
-			<error>
-				<message>Entry %keyName% with type Dictionary in ArrayOfAnnots is direct</message>
-				<arguments>
-					<argument name="keyName">keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="AArrayOfBeadsEntry">
 			<id specification="PDF_1_1" clause="ArrayOfBeadsEntry-Dictionary" testNumber="17"/>
 			<description>Entry with type Dictionary in ArrayOfBeads shall be one of objects BeadFirst, Bead</description>
