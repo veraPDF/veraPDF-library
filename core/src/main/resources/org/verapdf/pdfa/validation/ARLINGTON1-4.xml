@@ -44162,6 +44162,300 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream" testNumber="1"/>
+			<description>ToUnicodeCMapStream shall not contain entries except CIDSystemInfo, CMapName, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Type, UseCMap, WMode</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CIDSystemInfo' &amp;&amp; elem != 'CMapName' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UseCMap' &amp;&amp; elem != 'WMode' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<error>
+				<message>ToUnicodeCMapStream contains entry(ies) %1</message>
+				<arguments>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CIDSystemInfo' &amp;&amp; elem != 'CMapName' &amp;&amp; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'UseCMap' &amp;&amp; elem != 'WMode' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream" testNumber="22"/>
+			<description>ToUnicodeCMapStream shall not contain entry DL in PDF 1.4. This entry appears in later pdf versions</description>
+			<test>containsDL == false</test>
+			<error>
+				<message>ToUnicodeCMapStream contains entry DL</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-CIDSystemInfo" testNumber="8"/>
+			<description>Entry CIDSystemInfo in ToUnicodeCMapStream shall have type Dictionary</description>
+			<test>containsCIDSystemInfo == false || CIDSystemInfoHasTypeDictionary == true</test>
+			<error>
+				<message>Entry CIDSystemInfo in ToUnicodeCMapStream has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>CIDSystemInfoType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-CMapName" testNumber="8"/>
+			<description>Entry CMapName in ToUnicodeCMapStream shall have type Name</description>
+			<test>containsCMapName == false || CMapNameHasTypeName == true</test>
+			<error>
+				<message>Entry CMapName in ToUnicodeCMapStream has type %1 instead of type Name</message>
+				<arguments>
+					<argument>CMapNameType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-DecodeParms-Dictionary" testNumber="17"/>
+			<description>Entry DecodeParms with type Dictionary in ToUnicodeCMapStream shall be one of objects FilterLZWDecode, FilterFlateDecode</description>
+			<test>DecodeParmsHasTypeDictionary != true || DecodeParms_size == 1</test>
+			<error>
+				<message>Entry DecodeParms with type Dictionary in ToUnicodeCMapStream is not one of objects FilterLZWDecode, FilterFlateDecode</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-DecodeParms" testNumber="8"/>
+			<description>Entry DecodeParms in ToUnicodeCMapStream shall have one of types: Array, Dictionary</description>
+			<test>containsDecodeParms == false || DecodeParmsHasTypeArray == true || DecodeParmsHasTypeDictionary == true</test>
+			<error>
+				<message>Entry DecodeParms in ToUnicodeCMapStream has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>DecodeParmsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-DecodeParms-Array" testNumber="9"/>
+			<description>Entry DecodeParms with type Array in ToUnicodeCMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
+			<test>DecodeParmsHasTypeArray != true || (FilterHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<error>
+				<message>Entry DecodeParms with type Array in ToUnicodeCMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-F" testNumber="8"/>
+			<description>Entry F in ToUnicodeCMapStream shall have one of types: Dictionary, String</description>
+			<test>containsF == false || FHasTypeDictionary == true || FHasTypeString == true</test>
+			<error>
+				<message>Entry F in ToUnicodeCMapStream has type %1 instead of one of types: Dictionary, String</message>
+				<arguments>
+					<argument>FType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-FDecodeParms-Dictionary" testNumber="17"/>
+			<description>Entry FDecodeParms with type Dictionary in ToUnicodeCMapStream shall be one of objects FilterLZWDecode, FilterFlateDecode</description>
+			<test>FDecodeParmsHasTypeDictionary != true || FDecodeParms_size == 1</test>
+			<error>
+				<message>Entry FDecodeParms with type Dictionary in ToUnicodeCMapStream is not one of objects FilterLZWDecode, FilterFlateDecode</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-FDecodeParms" testNumber="8"/>
+			<description>Entry FDecodeParms in ToUnicodeCMapStream shall have one of types: Array, Dictionary</description>
+			<test>containsFDecodeParms == false || FDecodeParmsHasTypeArray == true || FDecodeParmsHasTypeDictionary == true</test>
+			<error>
+				<message>Entry FDecodeParms in ToUnicodeCMapStream has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>FDecodeParmsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-FDecodeParms-Array" testNumber="9"/>
+			<description>Entry FDecodeParms with type Array in ToUnicodeCMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
+			<test>FDecodeParmsHasTypeArray != true || (FFilterHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<error>
+				<message>Entry FDecodeParms with type Array in ToUnicodeCMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-FFilter" testNumber="8"/>
+			<description>Entry FFilter in ToUnicodeCMapStream shall have one of types: Array, Name</description>
+			<test>containsFFilter == false || FFilterHasTypeArray == true || FFilterHasTypeName == true</test>
+			<error>
+				<message>Entry FFilter in ToUnicodeCMapStream has type %1 instead of one of types: Array, Name</message>
+				<arguments>
+					<argument>FFilterType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-FFilter-Array" testNumber="9"/>
+			<description>Entry FFilter with type Array in ToUnicodeCMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</description>
+			<test>FFilterHasTypeArray != true || (FDecodeParmsHasTypeArray == false || FDecodeParmsArraySize == FFilterArraySize)</test>
+			<error>
+				<message>Entry FFilter with type Array in ToUnicodeCMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(FDecodeParms) == fn:ArrayLength(FFilter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-FFilter-Name" testNumber="6"/>
+			<description>Entry FFilter with type Name in ToUnicodeCMapStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
+			<error>
+				<message>Entry FFilter with type Name in ToUnicodeCMapStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<arguments>
+					<argument>FFilterNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Filter" testNumber="8"/>
+			<description>Entry Filter in ToUnicodeCMapStream shall have one of types: Array, Name</description>
+			<test>containsFilter == false || FilterHasTypeArray == true || FilterHasTypeName == true</test>
+			<error>
+				<message>Entry Filter in ToUnicodeCMapStream has type %1 instead of one of types: Array, Name</message>
+				<arguments>
+					<argument>FilterType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Filter-Array" testNumber="9"/>
+			<description>Entry Filter with type Array in ToUnicodeCMapStream shall satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</description>
+			<test>FilterHasTypeArray != true || (DecodeParmsHasTypeArray == false || DecodeParmsArraySize == FilterArraySize)</test>
+			<error>
+				<message>Entry Filter with type Array in ToUnicodeCMapStream does not satisfy special case: fn:Eval(fn:ArrayLength(DecodeParms) == fn:ArrayLength(Filter))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Filter-Name" testNumber="6"/>
+			<description>Entry Filter with type Name in ToUnicodeCMapStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
+			<error>
+				<message>Entry Filter with type Name in ToUnicodeCMapStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<arguments>
+					<argument>FilterNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Length" testNumber="8"/>
+			<description>Entry Length in ToUnicodeCMapStream shall have type Integer</description>
+			<test>containsLength == false || LengthHasTypeInteger == true</test>
+			<error>
+				<message>Entry Length in ToUnicodeCMapStream has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>LengthType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Length" testNumber="7"/>
+			<description>Entry Length in ToUnicodeCMapStream is required</description>
+			<test>containsLength == true</test>
+			<error>
+				<message>Entry Length in ToUnicodeCMapStream is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Type" testNumber="8"/>
+			<description>Entry Type in ToUnicodeCMapStream shall have type Name</description>
+			<test>containsType == false || TypeHasTypeName == true</test>
+			<error>
+				<message>Entry Type in ToUnicodeCMapStream has type %1 instead of type Name</message>
+				<arguments>
+					<argument>TypeType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-Type-Name" testNumber="6"/>
+			<description>Entry Type with type Name in ToUnicodeCMapStream shall have value CMap</description>
+			<test>TypeHasTypeName != true || TypeNameValue == "CMap"</test>
+			<error>
+				<message>Entry Type with type Name in ToUnicodeCMapStream has incorrect value %1 instead of CMap</message>
+				<arguments>
+					<argument>TypeNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-UseCMap" testNumber="8"/>
+			<description>Entry UseCMap in ToUnicodeCMapStream shall have one of types: Name, Stream</description>
+			<test>containsUseCMap == false || UseCMapHasTypeName == true || UseCMapHasTypeStream == true</test>
+			<error>
+				<message>Entry UseCMap in ToUnicodeCMapStream has type %1 instead of one of types: Name, Stream</message>
+				<arguments>
+					<argument>UseCMapType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-UseCMap-Name" testNumber="6"/>
+			<description>Entry UseCMap with type Name in ToUnicodeCMapStream shall have one of values: GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</description>
+			<test>UseCMapHasTypeName != true || UseCMapNameValue == "GB-EUC-H" || UseCMapNameValue == "GB-EUC-V" || UseCMapNameValue == "GBpc-EUC-H" || UseCMapNameValue == "GBpc-EUC-V" || UseCMapNameValue == "GBK-EUC-H" || UseCMapNameValue == "GBK-EUC-V" || UseCMapNameValue == "GBKp-EUC-H" || UseCMapNameValue == "GBKp-EUC-V" || UseCMapNameValue == "GBK2K-H" || UseCMapNameValue == "GBK2K-V" || UseCMapNameValue == "UniGB-UCS2-H" || UseCMapNameValue == "UniGB-UCS2-V" || UseCMapNameValue == "UniGB-UTF16-H" || UseCMapNameValue == "UniGB-UTF16-V" || UseCMapNameValue == "B5pc-H" || UseCMapNameValue == "B5pc-V" || UseCMapNameValue == "HKscs-B5-H" || UseCMapNameValue == "HKscs-B5-V" || UseCMapNameValue == "ETen-B5-H" || UseCMapNameValue == "ETen-B5-V" || UseCMapNameValue == "ETenms-B5-H" || UseCMapNameValue == "ETenms-B5-V" || UseCMapNameValue == "CNS-EUC-H" || UseCMapNameValue == "CNS-EUC-V" || UseCMapNameValue == "UniCNS-UCS2-H" || UseCMapNameValue == "UniCNS-UCS2-V" || UseCMapNameValue == "UniCNS-UTF16-H" || UseCMapNameValue == "UniCNS-UTF16-V" || UseCMapNameValue == "83pv-RKSJ-H" || UseCMapNameValue == "90ms-RKSJ-H" || UseCMapNameValue == "90ms-RKSJ-V" || UseCMapNameValue == "90msp-RKSJ-H" || UseCMapNameValue == "90msp-RKSJ-V" || UseCMapNameValue == "90pv-RKSJ-H" || UseCMapNameValue == "Add-RKSJ-H" || UseCMapNameValue == "Add-RKSJ-V" || UseCMapNameValue == "EUC-H" || UseCMapNameValue == "EUC-V" || UseCMapNameValue == "Ext-RKSJ-H" || UseCMapNameValue == "Ext-RKSJ-V" || UseCMapNameValue == "H" || UseCMapNameValue == "V" || UseCMapNameValue == "UniJIS-UCS2-H" || UseCMapNameValue == "UniJIS-UCS2-V" || UseCMapNameValue == "UniJIS-UCS2-HW-H" || UseCMapNameValue == "UniJIS-UCS2-HW-V" || UseCMapNameValue == "UniJIS-UTF16-H" || UseCMapNameValue == "UniJIS-UTF16-V" || UseCMapNameValue == "KSC-EUC-H" || UseCMapNameValue == "KSC-EUC-V" || UseCMapNameValue == "KSCms-UHC-H" || UseCMapNameValue == "KSCms-UHC-V" || UseCMapNameValue == "KSCms-UHC-HW-H" || UseCMapNameValue == "KSCms-UHC-HW-V" || UseCMapNameValue == "KSCpc-EUC-H" || UseCMapNameValue == "UniKS-UCS2-H" || UseCMapNameValue == "UniKS-UCS2-V" || UseCMapNameValue == "UniKS-UTF16-H" || UseCMapNameValue == "UniKS-UTF16-V" || UseCMapNameValue == "Identity-H" || UseCMapNameValue == "Identity-V"</test>
+			<error>
+				<message>Entry UseCMap with type Name in ToUnicodeCMapStream has incorrect value %1 instead of GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</message>
+				<arguments>
+					<argument>UseCMapNameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-UseCMap-Stream" testNumber="10"/>
+			<description>Entry UseCMap with type Stream in ToUnicodeCMapStream shall be indirect</description>
+			<test>UseCMapHasTypeStream != true || isUseCMapIndirect == true</test>
+			<error>
+				<message>Entry UseCMap with type Stream in ToUnicodeCMapStream is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-WMode" testNumber="8"/>
+			<description>Entry WMode in ToUnicodeCMapStream shall have type Integer</description>
+			<test>containsWMode == false || WModeHasTypeInteger == true</test>
+			<error>
+				<message>Entry WMode in ToUnicodeCMapStream has type %1 instead of type Integer</message>
+				<arguments>
+					<argument>WModeType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AToUnicodeCMapStream">
+			<id specification="PDF_1_4" clause="ToUnicodeCMapStream-WMode-Integer" testNumber="6"/>
+			<description>Entry WMode with type Integer in ToUnicodeCMapStream shall have one of values: 0, 1</description>
+			<test>WModeHasTypeInteger != true || WModeIntegerValue == 1 || WModeIntegerValue == 0</test>
+			<error>
+				<message>Entry WMode with type Integer in ToUnicodeCMapStream has incorrect value %1 instead of 0, 1</message>
+				<arguments>
+					<argument>WModeIntegerValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ATrailerIDArray">
 			<id specification="PDF_1_4" clause="TrailerIDArray" testNumber="2"/>
 			<description>TrailerIDArray shall contain exactly 2 elements</description>
