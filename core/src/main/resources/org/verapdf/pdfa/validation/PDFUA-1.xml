@@ -64,6 +64,18 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosDocument" tags="syntax">
+            <id specification="ISO_14289_1" clause="6.1" testNumber="1"/>
+            <description>The file header shall consist of "%PDF-1.n" followed by a single EOL marker, where 'n' is a single digit number between 0 (30h) and 7 (37h)</description>
+            <test>/^%PDF-1\.[0-7]$/.test(header)</test>
+            <error>
+                <message>File header %1 does not match the pattern %PDF-1.n, where 'n' is a single digit number between 0 and 7</message>
+                <arguments>
+                    <argument>header</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="1"/>
             <description>Content marked as Artifact should not present inside tagged content</description>
@@ -1284,18 +1296,6 @@
             <error>
                 <message>The document contains a reference to the .notdef glyph</message>
                 <arguments/>
-            </error>
-            <references/>
-        </rule>
-        <rule object="CosDocument" tags="syntax">
-            <id specification="ISO_19005_2" clause="6.1" testNumber="1"/>
-            <description>The file header shall consist of "%PDF-1.n" followed by a single EOL marker, where 'n' is a single digit number between 0 (30h) and 7 (37h)</description>
-            <test>/^%PDF-1\.[0-7]$/.test(header)</test>
-            <error>
-                <message>File header %1 does not match the pattern %PDF-1.n, where 'n' is a single digit number between 0 and 7</message>
-                <arguments>
-                    <argument>header</argument>
-                </arguments>
             </error>
             <references/>
         </rule>
