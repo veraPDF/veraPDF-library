@@ -41574,23 +41574,11 @@
 			<references/>
 		</rule>
 		<rule object="ASlideShowNameTreeResourcesEntry">
-			<id specification="PDF_1_4" clause="SlideShowNameTreeResourcesEntry-Stream" testNumber="17"/>
-			<description>Entry with type Stream in SlideShowNameTreeResources shall be one of objects XObjectImage, EmbeddedFileStream</description>
-			<test>HasTypeStream != true || Entry_size == 1</test>
-			<error>
-				<message>Entry %keyName% with type Stream in SlideShowNameTreeResources is not one of objects XObjectImage, EmbeddedFileStream</message>
-				<arguments>
-					<argument name="keyName">keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ASlideShowNameTreeResourcesEntry">
 			<id specification="PDF_1_4" clause="SlideShowNameTreeResourcesEntry" testNumber="8"/>
-			<description>Entry in SlideShowNameTreeResources shall have type Stream</description>
-			<test>HasTypeStream == true</test>
+			<description>Entry in SlideShowNameTreeResources shall have one of types: Dictionary, Stream</description>
+			<test>HasTypeDictionary == true || HasTypeStream == true</test>
 			<error>
-				<message>Entry %keyName% in SlideShowNameTreeResources has type %1 instead of type Stream</message>
+				<message>Entry %keyName% in SlideShowNameTreeResources has type %1 instead of one of types: Dictionary, Stream</message>
 				<arguments>
 					<argument>Type</argument>
 					<argument name="keyName">keyName</argument>
