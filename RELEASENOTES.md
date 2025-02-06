@@ -1,3 +1,48 @@
+Version 1.28 RC (February 9, 2025)
+=================================
+
+###  Applications
+- added validation for several flavours
+- created docker image for veraPDF CLI
+- added showing location of config
+
+###  Validation
+- (WTPDF-1) added support for WTPDF Reuse and Accessibility conformance levels
+- (PDF/A, PDF/UA) fixes the issue of accepting sometimes string value type if the PDF specification requires name object type
+- (PDF/A) fixed validation of Interpolate entry in image mask dictionaries
+- (PDF/A-1) updated the rule on compressed XMP Metadata
+- (PDF/UA-1) added rule about PDF version
+- (PDF/UA-1) fixed recursive propagation of Artifact to untagged Form XObjects 
+- (PDF/UA-1,2) fixed handing of circular role mappings and namespaces
+- (PDF/UA-1,2) permit untagged tilling patterns
+- (PDF/UA-2) permit math structure type only within Formula
+- (PDF/UA-2) added rule to require Metadata entry in Catalog
+- (ISO 32005) updated Div, Part, NonStruct processing to inherit containment rules from the parent
+- (ISO 32005) added containment rules for Ruby and Warichu
+- (ISO 32005) permitted Sub as a child of Code
+- (ISO 32005) fixed rule on content items in StructTreeRoot
+
+### PDF Parser
+- fixed parsing of empty UTF-16 string
+- fixed parsing of CFF fonts with empty Name Index
+- updated width calculation for CFFType1 font program with duplicated glyph names
+- fixed name calculation for glyph with code 0
+- fixed signature EOF logic in incremental updates
+- fixed parsing of compressed CIDToGIDMap stream
+
+### Core library
+- improved performance
+- improved logs
+- more robust exception handling
+
+### Corpus
+- updated PDF/A-4 and PDF/UA-2 test corpus
+- added WTPDF declarations to PDF/UA-2 test files
+
+### Documentation
+- improved java docs
+- improved policy documentation
+
 Version 1.26.2 (December 4, 2024)
 =================================
 
