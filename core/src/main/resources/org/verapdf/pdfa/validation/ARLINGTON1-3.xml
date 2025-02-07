@@ -13149,7 +13149,7 @@
 		<rule object="AArrayOfPagesEntry">
 			<id specification="PDF_1_3" clause="ArrayOfPagesEntry-Dictionary" testNumber="9"/>
 			<description>Entry with type Dictionary in ArrayOfPages shall satisfy special case: fn:Eval(fn:IsPresent(*::SeparationInfo))</description>
-			<test>HasTypeDictionary != true || (containsAnySeparationInfo == true)</test>
+			<test>HasTypeDictionary != true || (containsEntrySeparationInfo == true)</test>
 			<error>
 				<message>Entry %keyName% with type Dictionary in ArrayOfPages does not satisfy special case: fn:Eval(fn:IsPresent(*::SeparationInfo))</message>
 				<arguments>
