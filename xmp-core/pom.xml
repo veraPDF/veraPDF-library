@@ -11,8 +11,8 @@
 
   <artifactId>verapdf-xmp-core</artifactId>
 
-  <name>veraPDF PDF/A XMP Library Core</name>
-  <description>Core components for the veraPDF PDF/A XMP Parsing and Validation library.</description>
+  <name>veraPDF XMP Library Core</name>
+  <description>Core components for the veraPDF XMP Parsing and Validation library.</description>
 
   <licenses>
     <license>
