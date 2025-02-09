@@ -32,8 +32,8 @@
   </parent>
 
   <artifactId>core-arlington</artifactId>
-  <name>veraPDF Library core</name>
-  <description>Core classes for the veraPDF Library.</description>
+  <name>veraPDF Library core for Arlington PDF Model</name>
+  <description>Core classes for the veraPDF Library of Arlington PDF Model.</description>
 
   <dependencies>
     <dependency>
