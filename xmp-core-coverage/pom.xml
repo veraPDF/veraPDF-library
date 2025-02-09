@@ -12,7 +12,7 @@
   <artifactId>verapdf-xmp-core-coverage</artifactId>
 
   <name>veraPDF XMP Library Core Coverage</name>
-  <description>Coverage and tests for core components for the veraPDF PDF/A XMP Parsing and Validation library.</description>
+  <description>Coverage and tests for core components for the veraPDF XMP Parsing and Validation library.</description>
 
   <url>https://github.com/veraPDF/veraPDF-xmp/</url>
   <licenses>
