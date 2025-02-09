@@ -11,8 +11,8 @@
 
   <artifactId>verapdf-xmp-core-jakarta</artifactId>
 
-  <name>veraPDF XMP Library Core</name>
-  <description>Core components for the veraPDF XMP Parsing and Validation library.</description>
+  <name>veraPDF XMP Library Core for Jakarta EE</name>
+  <description>Core components for the veraPDF XMP Parsing and Validation library with Jakarta EE support.</description>
 
   <licenses>
     <license>

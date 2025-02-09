@@ -36,8 +36,8 @@
   <version>1.27.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <name>veraPDF Validation Library</name>
-  <description>veraPDF Validation API and core types.</description>
+  <name>veraPDF Validation Library for Jakarta EE</name>
+  <description>veraPDF Validation API and core types with Jakarta EE support.</description>
 
   <repositories>
     <repository>

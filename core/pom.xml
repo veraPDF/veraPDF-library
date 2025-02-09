@@ -32,8 +32,8 @@
   </parent>
 
   <artifactId>core-jakarta</artifactId>
-  <name>veraPDF Library core</name>
-  <description>Core classes for the veraPDF Library.</description>
+  <name>veraPDF Library core for Jakarta EE</name>
+  <description>Core classes for the veraPDF Library with Jakarta EE support.</description>
 
   <dependencies>
     <dependency>
