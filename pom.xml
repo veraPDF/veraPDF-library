@@ -36,8 +36,8 @@
   <version>1.28.0-RC1</version>
   <packaging>pom</packaging>
 
-  <name>veraPDF PDF/A Validation Library</name>
-  <description>veraPDF PDF/A Validation API and core types.</description>
+  <name>veraPDF Validation Library</name>
+  <description>veraPDF Validation API and core types.</description>
 
   <repositories>
     <repository>
