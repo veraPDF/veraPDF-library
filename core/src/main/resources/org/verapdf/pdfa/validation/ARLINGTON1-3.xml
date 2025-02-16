@@ -38255,6 +38255,16 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_3" clause="Signature-SubFilter-Name-ETSI.CAdES.detached" testNumber="27"/>
+			<description>Entry SubFilter with type Name in Signature should not have value ETSI.CAdES.detached, if extension ETSI_PAdES does not chosen</description>
+			<test>(hasExtensionETSI_PAdES == true) || SubFilterNameValue != "ETSI.CAdES.detached"</test>
+			<error>
+				<message>Entry SubFilter with type Name in Signature has value ETSI.CAdES.detached</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_3" clause="Signature-SubFilter-Name" testNumber="6"/>
 			<description>Entry SubFilter with type Name in Signature shall have one of values: adbe.pkcs7.detached, adbe.x509.rsa_sha1, ETSI.CAdES.detached</description>
 			<test>SubFilterHasTypeName != true || SubFilterNameValue == "adbe.pkcs7.detached" || SubFilterNameValue == "adbe.x509.rsa_sha1" || SubFilterNameValue == "ETSI.CAdES.detached"</test>
@@ -39440,6 +39450,16 @@
 			<test>containsO == true</test>
 			<error>
 				<message>Entry O in StructureAttributesDict is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructureAttributesDict">
+			<id specification="PDF_1_3" clause="StructureAttributesDict-O-Name-FENote" testNumber="27"/>
+			<description>Entry O with type Name in StructureAttributesDict should not have value FENote, if extension WTPDF does not chosen</description>
+			<test>(hasExtensionWTPDF == true) || ONameValue != "FENote"</test>
+			<error>
+				<message>Entry O with type Name in StructureAttributesDict has value FENote</message>
 				<arguments/>
 			</error>
 			<references/>
