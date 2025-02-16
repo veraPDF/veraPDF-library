@@ -53211,6 +53211,16 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
+			<id specification="PDF_1_5" clause="Signature-SubFilter-Name-ETSI.CAdES.detached" testNumber="27"/>
+			<description>Entry SubFilter with type Name in Signature should not have value ETSI.CAdES.detached, if extension ETSI_PAdES does not chosen</description>
+			<test>(hasExtensionETSI_PAdES == true) || SubFilterNameValue != "ETSI.CAdES.detached"</test>
+			<error>
+				<message>Entry SubFilter with type Name in Signature has value ETSI.CAdES.detached</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignature">
 			<id specification="PDF_1_5" clause="Signature-SubFilter-Name" testNumber="6"/>
 			<description>Entry SubFilter with type Name in Signature shall have one of values: adbe.pkcs7.detached, adbe.x509.rsa_sha1, adbe.pkcs7.sha1, ETSI.CAdES.detached</description>
 			<test>SubFilterHasTypeName != true || SubFilterNameValue == "adbe.pkcs7.detached" || SubFilterNameValue == "adbe.pkcs7.sha1" || SubFilterNameValue == "adbe.x509.rsa_sha1" || SubFilterNameValue == "ETSI.CAdES.detached"</test>
@@ -53791,6 +53801,46 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceDocMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceDocMDP-DigestMethod-Name-SHA3-256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceDocMDP should not have value SHA3-256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceDocMDP has value SHA3-256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceDocMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceDocMDP-DigestMethod-Name-SHA3-384" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceDocMDP should not have value SHA3-384, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-384"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceDocMDP has value SHA3-384</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceDocMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceDocMDP-DigestMethod-Name-SHA3-512" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceDocMDP should not have value SHA3-512, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-512"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceDocMDP has value SHA3-512</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceDocMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceDocMDP-DigestMethod-Name-SHAKE256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceDocMDP should not have value SHAKE256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHAKE256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceDocMDP has value SHAKE256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceDocMDP">
 			<id specification="PDF_1_5" clause="SignatureReferenceDocMDP-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceDocMDP shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
@@ -53973,6 +54023,46 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceFieldMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceFieldMDP-DigestMethod-Name-SHA3-256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceFieldMDP should not have value SHA3-256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceFieldMDP has value SHA3-256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceFieldMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceFieldMDP-DigestMethod-Name-SHA3-384" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceFieldMDP should not have value SHA3-384, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-384"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceFieldMDP has value SHA3-384</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceFieldMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceFieldMDP-DigestMethod-Name-SHA3-512" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceFieldMDP should not have value SHA3-512, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-512"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceFieldMDP has value SHA3-512</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceFieldMDP">
+			<id specification="PDF_1_5" clause="SignatureReferenceFieldMDP-DigestMethod-Name-SHAKE256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceFieldMDP should not have value SHAKE256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHAKE256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceFieldMDP has value SHAKE256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceFieldMDP">
 			<id specification="PDF_1_5" clause="SignatureReferenceFieldMDP-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceFieldMDP shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
@@ -54145,6 +54235,46 @@
 			<references/>
 		</rule>
 		<rule object="ASignatureReferenceIdentity">
+			<id specification="PDF_1_5" clause="SignatureReferenceIdentity-DigestMethod-Name-SHA3-256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceIdentity should not have value SHA3-256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceIdentity has value SHA3-256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
+			<id specification="PDF_1_5" clause="SignatureReferenceIdentity-DigestMethod-Name-SHA3-384" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceIdentity should not have value SHA3-384, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-384"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceIdentity has value SHA3-384</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
+			<id specification="PDF_1_5" clause="SignatureReferenceIdentity-DigestMethod-Name-SHA3-512" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceIdentity should not have value SHA3-512, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-512"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceIdentity has value SHA3-512</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
+			<id specification="PDF_1_5" clause="SignatureReferenceIdentity-DigestMethod-Name-SHAKE256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceIdentity should not have value SHAKE256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHAKE256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceIdentity has value SHAKE256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceIdentity">
 			<id specification="PDF_1_5" clause="SignatureReferenceIdentity-DigestMethod-Name" testNumber="6"/>
 			<description>Entry DigestMethod with type Name in SignatureReferenceIdentity shall have one of values: SHA3-512, SHA1, SHAKE256, SHA3-384, SHA3-256, MD5</description>
 			<test>DigestMethodHasTypeName != true || DigestMethodNameValue == "MD5" || DigestMethodNameValue == "SHA1" || DigestMethodNameValue == "SHA3-256" || DigestMethodNameValue == "SHA3-384" || DigestMethodNameValue == "SHA3-512" || DigestMethodNameValue == "SHAKE256"</test>
@@ -54281,6 +54411,46 @@
 				<arguments>
 					<argument>DigestMethodType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceUR">
+			<id specification="PDF_1_5" clause="SignatureReferenceUR-DigestMethod-Name-SHA3-256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceUR should not have value SHA3-256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceUR has value SHA3-256</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceUR">
+			<id specification="PDF_1_5" clause="SignatureReferenceUR-DigestMethod-Name-SHA3-384" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceUR should not have value SHA3-384, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-384"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceUR has value SHA3-384</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceUR">
+			<id specification="PDF_1_5" clause="SignatureReferenceUR-DigestMethod-Name-SHA3-512" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceUR should not have value SHA3-512, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHA3-512"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceUR has value SHA3-512</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASignatureReferenceUR">
+			<id specification="PDF_1_5" clause="SignatureReferenceUR-DigestMethod-Name-SHAKE256" testNumber="27"/>
+			<description>Entry DigestMethod with type Name in SignatureReferenceUR should not have value SHAKE256, if extension ISO_TS_32001 does not chosen</description>
+			<test>(hasExtensionISO_TS_32001 == true) || DigestMethodNameValue != "SHAKE256"</test>
+			<error>
+				<message>Entry DigestMethod with type Name in SignatureReferenceUR has value SHAKE256</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -56717,6 +56887,16 @@
 			<test>containsO == true</test>
 			<error>
 				<message>Entry O in StructureAttributesDict is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructureAttributesDict">
+			<id specification="PDF_1_5" clause="StructureAttributesDict-O-Name-FENote" testNumber="27"/>
+			<description>Entry O with type Name in StructureAttributesDict should not have value FENote, if extension WTPDF does not chosen</description>
+			<test>(hasExtensionWTPDF == true) || ONameValue != "FENote"</test>
+			<error>
+				<message>Entry O with type Name in StructureAttributesDict has value FENote</message>
 				<arguments/>
 			</error>
 			<references/>
