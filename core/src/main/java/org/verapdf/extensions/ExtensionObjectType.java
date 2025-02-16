@@ -26,6 +26,7 @@ package org.verapdf.extensions;
 public enum ExtensionObjectType {
 	AAPL,
 	ADBE_Extn3,
+	C2PA,
 	ETSI_PAdES,
 	ISO_19005_3,
 	ISO_19593,
@@ -33,6 +34,7 @@ public enum ExtensionObjectType {
 	ISO_TS_24064,
 	ISO_TS_24654,
 	ISO_TS_32001,
+	ISO_TS_32003,
 	ISO_TS_32004,
 	ISO_TS_32007,
 	Malforms,
