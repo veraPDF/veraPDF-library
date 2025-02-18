@@ -20,7 +20,6 @@
  */
 package org.verapdf.pdfa.validation.validators;
 
-import org.verapdf.pdfa.Foundries;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.logging.Level;
@@ -32,7 +31,7 @@ public class ValidatorConfigBuilder {
 	private boolean recordPasses = false;
 	private int maxFails = -1;
 	private boolean debug = false;
-	private boolean showErrorMessages = !Foundries.defaultParserIsPDFBox();
+	private boolean showErrorMessages = true;
 	private boolean isLogsEnabled = false;
 	private Level loggingLevel = Level.WARNING;
 	private int maxNumberOfDisplayedFailedChecks = BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS;
