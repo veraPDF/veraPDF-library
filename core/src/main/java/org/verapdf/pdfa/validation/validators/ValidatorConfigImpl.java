@@ -77,7 +77,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	private ValidatorConfigImpl(final PDFAFlavour flavour, final boolean recordPasses, final int maxFails, boolean debug,
 								boolean isLogsEnabled, Level loggingLevel, String password, final boolean showProgress) {
 		this(flavour, PDFAFlavour.ARLINGTON1_4, recordPasses, maxFails, debug, isLogsEnabled, loggingLevel,
-		     BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, !Foundries.defaultParserIsPDFBox(), password,
+		     BaseValidator.DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, true, password,
 		     showProgress, false, EnumSet.noneOf(ExtensionObjectType.class));
 	}
 
@@ -94,7 +94,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 		this.isLogsEnabled = isLogsEnabled;
 		this.loggingLevel = loggingLevel.toString();
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
-		this.showErrorMessages = showErrorMessages && !Foundries.defaultParserIsPDFBox();
+		this.showErrorMessages = showErrorMessages;
 		this.password = password;
 		this.showProgress = showProgress;
 		this.nonPDFExtension = nonPDFExtension;
@@ -154,7 +154,7 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 
 	@Override
 	public boolean showErrorMessages() {
-		return this.showErrorMessages && !Foundries.defaultParserIsPDFBox();
+		return this.showErrorMessages;
 	}
 
 	@Override
