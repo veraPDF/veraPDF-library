@@ -47,7 +47,6 @@ public class SemanticVersionTest {
 	private static final int[] v1_0_0_ints = { 1, 0, 0 };
 	private static final int[] v1_0_0_shortints = { 1, 0 };
 	private static final int[] v1_0_0_longints = { 1, 0, 1, 1 };
-	private static final String v1_0_0pdf = "1.0.0-PDFBOX"; //$NON-NLS-1$
 	private static final String v1_0_0snap = "1.0.0-SNAPSHOT"; //$NON-NLS-1$
 	/**
 	 * Test method for {@link VersionNumberImpl#hashCode()}.
@@ -63,8 +62,8 @@ public class SemanticVersionTest {
 	@Test
 	public final void testVersionNumberFromString() {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
-		SemanticVersionNumber pdfNum = VersionNumberImpl.fromString(v1_0_0pdf);
-		assertEquals(vNum, pdfNum);
+		SemanticVersionNumber snapNum = VersionNumberImpl.fromString(v1_0_0snap);
+		assertEquals(vNum, snapNum);
 	}
 
 	/**
@@ -186,8 +185,6 @@ public class SemanticVersionTest {
 	public final void testGetVersionString() {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
 		assertEquals(v1_0_0, vNum.getVersionString());
-		SemanticVersionNumber pdfNum = VersionNumberImpl.fromString(v1_0_0pdf);
-		assertEquals(v1_0_0, pdfNum.getVersionString());
 		SemanticVersionNumber snapNum = VersionNumberImpl.fromString(v1_0_0snap);
 		assertEquals(v1_0_0, snapNum.getVersionString());
 	}
@@ -198,7 +195,7 @@ public class SemanticVersionTest {
 	@Test
 	public final void testCompareTo() {
 		SemanticVersionNumber vNum = VersionNumberImpl.fromString(v1_0_0);
-		SemanticVersionNumber verNum = VersionNumberImpl.fromString(v1_0_0pdf);
+		SemanticVersionNumber verNum = VersionNumberImpl.fromString(v1_0_0snap);
 		assertEquals(vNum, verNum);
 		assertEquals(0, vNum.compareTo(verNum));
 		SemanticVersionNumber lessThan = VersionNumberImpl.fromInts(0,90,100);

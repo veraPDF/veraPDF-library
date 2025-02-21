@@ -119,9 +119,4 @@ public class Foundries {
 		if (defaultFlavour != PDFAFlavour.NO_FLAVOUR)
 			AbstractFoundry.defaultFlavour = defaultFlavour;
 	}
-
-	public static boolean defaultParserIsPDFBox() {
-		VeraFoundryProvider provider = providers.get(DEFAULT_PROVIDER_ID);
-		return provider != null && "PDFBox".equals(provider.getInstance().getParserId());
-	}
 }
