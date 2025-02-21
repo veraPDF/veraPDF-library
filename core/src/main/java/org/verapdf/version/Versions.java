@@ -33,8 +33,6 @@ package org.verapdf.version;
  */
 
 public final class Versions {
-	public static final String PDFBOX_BUILD_INFO = "PDFBOX"; //$NON-NLS-1$
-	private static final String pdfBoxBuildInfo = "-" + PDFBOX_BUILD_INFO; //$NON-NLS-1$
 	private static final String snapshotBuildInfo = "-SNAPSHOT"; //$NON-NLS-1$
 	private static final String versionPrefix = "v"; //$NON-NLS-1$
 
@@ -50,8 +48,7 @@ public final class Versions {
 			throw new IllegalArgumentException("Argument versionString can not be null"); //$NON-NLS-1$
 		if (versionString.isEmpty())
 			throw new IllegalArgumentException("Argument versionString can not be empty"); //$NON-NLS-1$
-		String strippedVersion = (versionString.endsWith(pdfBoxBuildInfo)) ? versionString.replace(pdfBoxBuildInfo, "") //$NON-NLS-1$
-				: versionString;
+		String strippedVersion = versionString;
 		strippedVersion = (strippedVersion.endsWith(snapshotBuildInfo)) ? strippedVersion.replace(snapshotBuildInfo, "") //$NON-NLS-1$
 				: strippedVersion;
 		strippedVersion = strippedVersion.startsWith(versionPrefix) ? strippedVersion.replaceFirst(versionPrefix, "") //$NON-NLS-1$
