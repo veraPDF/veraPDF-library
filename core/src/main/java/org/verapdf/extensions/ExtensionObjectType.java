@@ -27,6 +27,7 @@ public enum ExtensionObjectType {
 	AAPL,
 	ADBE_Extn3,
 	C2PA,
+	EAPDF_1,
 	ETSI_PAdES,
 	ISO_19005_3,
 	ISO_19593,

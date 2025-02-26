@@ -29421,12 +29421,22 @@
 		<rule object="AEmbeddedFileStream">
 			<id specification="PDF_1_6" clause="EmbeddedFileStream" testNumber="1"/>
 			<description>EmbeddedFileStream shall not contain entries except DL, DecodeParms, F, FDecodeParms, FFilter, Filter, Length, Params, Subtype, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Params' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Mail_MediaTypeParameters' &amp;&amp; elem != 'Params' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>EmbeddedFileStream contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Params' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'DL' &amp;&amp; elem != 'DecodeParms' &amp;&amp; elem != 'F' &amp;&amp; elem != 'FDecodeParms' &amp;&amp; elem != 'FFilter' &amp;&amp; elem != 'Filter' &amp;&amp; elem != 'Length' &amp;&amp; elem != 'Mail_MediaTypeParameters' &amp;&amp; elem != 'Params' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AEmbeddedFileStream">
+			<id specification="PDF_1_6" clause="EmbeddedFileStream" testNumber="22"/>
+			<description>EmbeddedFileStream shall not contain entry Mail_MediaTypeParameters in PDF 1.6. This entry appears in later pdf versions</description>
+			<test>containsMail_MediaTypeParameters == false</test>
+			<error>
+				<message>EmbeddedFileStream contains entry Mail_MediaTypeParameters</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
