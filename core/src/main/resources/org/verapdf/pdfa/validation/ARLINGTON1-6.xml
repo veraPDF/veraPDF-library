@@ -22043,7 +22043,7 @@
 		<rule object="AArrayOfOPI2Inks">
 			<id specification="PDF_1_6" clause="ArrayOfOPI2Inks" testNumber="3"/>
 			<description>ArrayOfOPI2Inks shall contain 2 * n + 1 elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 1</test>
+			<test>size % 2 == 1</test>
 			<error>
 				<message>ArrayOfOPI2Inks contains %1 element(s)</message>
 				<arguments>
@@ -22287,7 +22287,7 @@
 		<rule object="AArrayOfQuadPoints">
 			<id specification="PDF_1_6" clause="ArrayOfQuadPoints" testNumber="3"/>
 			<description>ArrayOfQuadPoints shall contain 8 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 8 == 0</test>
+			<test>size % 8 == 0</test>
 			<error>
 				<message>ArrayOfQuadPoints contains %1 element(s)</message>
 				<arguments>
@@ -22685,7 +22685,7 @@
 		<rule object="AArrayOfTags">
 			<id specification="PDF_1_6" clause="ArrayOfTags" testNumber="3"/>
 			<description>ArrayOfTags shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>ArrayOfTags contains %1 element(s)</message>
 				<arguments>
@@ -22970,7 +22970,7 @@
 		<rule object="AArrayOfXFA">
 			<id specification="PDF_1_6" clause="ArrayOfXFA" testNumber="3"/>
 			<description>ArrayOfXFA shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>ArrayOfXFA contains %1 element(s)</message>
 				<arguments>
@@ -23028,7 +23028,7 @@
 		<rule object="AArrayOfXRefIndexIntegers">
 			<id specification="PDF_1_6" clause="ArrayOfXRefIndexIntegers" testNumber="3"/>
 			<description>ArrayOfXRefIndexIntegers shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>ArrayOfXRefIndexIntegers contains %1 element(s)</message>
 				<arguments>
@@ -48939,7 +48939,7 @@
 		<rule object="ANameTreeNodeNamesArray">
 			<id specification="PDF_1_6" clause="NameTreeNodeNamesArray" testNumber="3"/>
 			<description>NameTreeNodeNamesArray shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>NameTreeNodeNamesArray contains %1 element(s)</message>
 				<arguments>
@@ -49438,7 +49438,7 @@
 		<rule object="ANumberTreeNodeNumsArray">
 			<id specification="PDF_1_6" clause="NumberTreeNodeNumsArray" testNumber="3"/>
 			<description>NumberTreeNodeNumsArray shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>NumberTreeNodeNumsArray contains %1 element(s)</message>
 				<arguments>
@@ -49487,7 +49487,7 @@
 		<rule object="AOOAdditionalStmsArray">
 			<id specification="PDF_1_6" clause="OOAdditionalStmsArray" testNumber="3"/>
 			<description>OOAdditionalStmsArray shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>OOAdditionalStmsArray contains %1 element(s)</message>
 				<arguments>
@@ -54355,7 +54355,7 @@
 		<rule object="ARelatedFilesArray">
 			<id specification="PDF_1_6" clause="RelatedFilesArray" testNumber="3"/>
 			<description>RelatedFilesArray shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>RelatedFilesArray contains %1 element(s)</message>
 				<arguments>

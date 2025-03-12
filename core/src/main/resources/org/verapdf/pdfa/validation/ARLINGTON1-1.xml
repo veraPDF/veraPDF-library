@@ -7298,7 +7298,7 @@
 		<rule object="AOOAdditionalStmsArray">
 			<id specification="PDF_1_1" clause="OOAdditionalStmsArray" testNumber="3"/>
 			<description>OOAdditionalStmsArray shall contain 2 * n elements</description>
-			<test>size &gt; 0 &amp;&amp; size % 2 == 0</test>
+			<test>size % 2 == 0</test>
 			<error>
 				<message>OOAdditionalStmsArray contains %1 element(s)</message>
 				<arguments>
