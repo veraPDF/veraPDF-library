@@ -1557,7 +1557,7 @@
             <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema</description>
             <test>containsPDFAIdentification == true</test>
             <error>
-                <message>The document metadata stream doesn't contains PDF/A Identification Schema</message>
+                <message>The document metadata stream doesn't contain PDF/A Identification Schema</message>
                 <arguments/>
             </error>
             <references/>
