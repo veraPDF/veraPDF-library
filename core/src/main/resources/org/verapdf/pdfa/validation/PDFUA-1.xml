@@ -11,7 +11,7 @@
             <description>The PDF/UA version and conformance level of a file shall be specified using the PDF/UA Identification extension schema</description>
             <test>containsPDFUAIdentification == true</test>
             <error>
-                <message>The document metadata stream doesn't contains PDF/UA Identification Schema</message>
+                <message>The document metadata stream doesn't contain PDF/UA Identification Schema</message>
                 <arguments/>
             </error>
             <references/>
@@ -78,7 +78,7 @@
         </rule>
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="1"/>
-            <description>Content marked as Artifact should not present inside tagged content</description>
+            <description>Content marked as Artifact should not be present inside tagged content</description>
             <test>tag != 'Artifact' || isTaggedContent == false</test>
             <error>
                 <message>Content marked as Artifact is present inside tagged content (parent struct element %1)</message>
@@ -90,7 +90,7 @@
         </rule>
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
-            <description>Tagged content should not present inside content marked as Artifact</description>
+            <description>Tagged content should not be present inside content marked as Artifact</description>
             <test>isTaggedContent == false || parentsTags.contains('Artifact') == false</test>
             <error>
                 <message>Tagged content (parent struct element %1) is present inside content marked as Artifact</message>
