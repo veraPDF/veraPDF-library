@@ -11,7 +11,7 @@
             <description>The PDF/UA version of a file shall be specified in the value of the Metadata entry in the document catalog using the PDF/UA identification schema</description>
             <test>containsPDFUAIdentification == true</test>
             <error>
-                <message>The document metadata stream doesn't contains PDF/UA Identification Schema</message>
+                <message>The document metadata stream doesn't contain PDF/UA Identification Schema</message>
                 <arguments/>
             </error>
             <references/>
