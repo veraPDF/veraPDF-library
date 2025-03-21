@@ -42,6 +42,7 @@ final class ValidationProfileImpl implements ValidationProfile {
     private Map<String, Set<Variable>> objectVariableMap;
     private final Map<RuleId, Rule> ruleLookup = new HashMap<>();
     private static final ValidationProfileImpl DEFAULT = new ValidationProfileImpl();
+    private final Object lock = new Object();
 
     @XmlAttribute
     private final PDFAFlavour flavour;
@@ -128,8 +129,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Rule> getRulesByObject(final String objectName) {
-        if (this.objectRuleMap == null) {
-            this.objectRuleMap = createObjectRuleMap(this.rules);
+        synchronized (this.lock) {
+            if (this.objectRuleMap == null) {
+                this.objectRuleMap = createObjectRuleMap(this.rules);
+            }
         }
         Set<Rule> objRules = this.objectRuleMap.get(objectName);
         return objRules == null ? Collections.emptySet() : Collections.unmodifiableSet(objRules);
@@ -140,8 +143,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Variable> getVariablesByObject(String objectName) {
-        if (this.objectVariableMap == null) {
-            this.objectVariableMap = createObjectVariableMap(this.variables);
+        synchronized (this.lock) {
+            if (this.objectVariableMap == null) {
+                this.objectVariableMap = createObjectVariableMap(this.variables);
+            }
         }
         Set<Variable> objRules = this.objectVariableMap.get(objectName);
         return objRules == null ? Collections.emptySet() : Collections.unmodifiableSet(objRules);
@@ -152,8 +157,10 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Rule getRuleByRuleId(RuleId id) {
-        if (this.ruleLookup.isEmpty()) {
-            this.objectRuleMap = createObjectRuleMap(this.rules);
+        synchronized (this.lock) {
+            if (this.ruleLookup.isEmpty()) {
+                this.objectRuleMap = createObjectRuleMap(this.rules);
+            }
         }
         return this.ruleLookup.get(id);
     }
