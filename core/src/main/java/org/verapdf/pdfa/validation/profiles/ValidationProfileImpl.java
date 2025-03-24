@@ -42,7 +42,8 @@ final class ValidationProfileImpl implements ValidationProfile {
     private Map<String, Set<Variable>> objectVariableMap;
     private final Map<RuleId, Rule> ruleLookup = new HashMap<>();
     private static final ValidationProfileImpl DEFAULT = new ValidationProfileImpl();
-    private final Object lock = new Object();
+    private final Object objectVariableMapLock = new Object();
+    private final Object objectRuleMapAndRuleLookupLock = new Object();
 
     @XmlAttribute
     private final PDFAFlavour flavour;
@@ -129,7 +130,7 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Rule> getRulesByObject(final String objectName) {
-        synchronized (this.lock) {
+        synchronized (this.objectRuleMapAndRuleLookupLock) {
             if (this.objectRuleMap == null) {
                 this.objectRuleMap = createObjectRuleMap(this.rules);
             }
@@ -143,7 +144,7 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Set<Variable> getVariablesByObject(String objectName) {
-        synchronized (this.lock) {
+        synchronized (this.objectVariableMapLock) {
             if (this.objectVariableMap == null) {
                 this.objectVariableMap = createObjectVariableMap(this.variables);
             }
@@ -157,7 +158,7 @@ final class ValidationProfileImpl implements ValidationProfile {
      */
     @Override
     public Rule getRuleByRuleId(RuleId id) {
-        synchronized (this.lock) {
+        synchronized (this.objectRuleMapAndRuleLookupLock) {
             if (this.ruleLookup.isEmpty()) {
                 this.objectRuleMap = createObjectRuleMap(this.rules);
             }
