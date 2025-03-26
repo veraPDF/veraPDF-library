@@ -53,7 +53,7 @@ public class ValidationProfileImplTest {
 	 */
 	@Test
 	public final void testEqualsObject() {
-		EqualsVerifier.forClass(ValidationProfileImpl.class).withIgnoredFields("ruleLookup", "objectVariableMap", "objectRuleMap").suppress(Warning.NULL_FIELDS).verify();
+		EqualsVerifier.forClass(ValidationProfileImpl.class).withIgnoredFields("ruleLookup", "objectVariableMap", "objectRuleMap", "objectVariableMapLock", "objectRuleMapAndRuleLookupLock").suppress(Warning.NULL_FIELDS).verify();
 	}
 
 	/**
