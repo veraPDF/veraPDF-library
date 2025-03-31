@@ -3770,10 +3770,10 @@
 		</rule>
 		<rule object="AAnnotCaret">
 			<id specification="PDF_1_5" clause="AnnotCaret-RD" testNumber="8"/>
-			<description>Entry RD in AnnotCaret shall have type Rectangle</description>
-			<test>containsRD == false || RDHasTypeRectangle == true</test>
+			<description>Entry RD in AnnotCaret shall have type Array</description>
+			<test>containsRD == false || RDHasTypeArray == true</test>
 			<error>
-				<message>Entry RD in AnnotCaret has type %1 instead of type Rectangle</message>
+				<message>Entry RD in AnnotCaret has type %1 instead of type Array</message>
 				<arguments>
 					<argument>RDType</argument>
 				</arguments>
@@ -3781,11 +3781,11 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotCaret">
-			<id specification="PDF_1_5" clause="AnnotCaret-RD-Rectangle" testNumber="9"/>
-			<description>Entry RD with type Rectangle in AnnotCaret shall satisfy special case: fn:Eval((RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; (RectHasTypeRectangle == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RectHasTypeRectangle == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
+			<id specification="PDF_1_5" clause="AnnotCaret-RD-Array" testNumber="9"/>
+			<description>Entry RD with type Array in AnnotCaret shall satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
+			<test>RDHasTypeArray != true || ((RDArraySize == 4) &amp;&amp; (RD0HasTypeNumber == false || (RD0NumberValue &gt;= 0)) &amp;&amp; (RD1HasTypeNumber == false || (RD1NumberValue &gt;= 0)) &amp;&amp; (RD2HasTypeNumber == false || (RD2NumberValue &gt;= 0)) &amp;&amp; (RD3HasTypeNumber == false || (RD3NumberValue &gt;= 0)) &amp;&amp; (RectHasTypeRectangle == false || RD3HasTypeNumber == false || RD1HasTypeNumber == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RD2HasTypeNumber == false || RectHasTypeRectangle == false || RD0HasTypeNumber == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
 			<error>
-				<message>Entry RD with type Rectangle in AnnotCaret does not satisfy special case: fn:Eval((RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
+				<message>Entry RD with type Array in AnnotCaret does not satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -4252,10 +4252,10 @@
 		</rule>
 		<rule object="AAnnotCircle">
 			<id specification="PDF_1_5" clause="AnnotCircle-RD" testNumber="8"/>
-			<description>Entry RD in AnnotCircle shall have type Rectangle</description>
-			<test>containsRD == false || RDHasTypeRectangle == true</test>
+			<description>Entry RD in AnnotCircle shall have type Array</description>
+			<test>containsRD == false || RDHasTypeArray == true</test>
 			<error>
-				<message>Entry RD in AnnotCircle has type %1 instead of type Rectangle</message>
+				<message>Entry RD in AnnotCircle has type %1 instead of type Array</message>
 				<arguments>
 					<argument>RDType</argument>
 				</arguments>
@@ -4263,11 +4263,11 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotCircle">
-			<id specification="PDF_1_5" clause="AnnotCircle-RD-Rectangle" testNumber="9"/>
-			<description>Entry RD with type Rectangle in AnnotCircle shall satisfy special case: fn:Eval((RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; (RectHasTypeRectangle == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RectHasTypeRectangle == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
+			<id specification="PDF_1_5" clause="AnnotCircle-RD-Array" testNumber="9"/>
+			<description>Entry RD with type Array in AnnotCircle shall satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
+			<test>RDHasTypeArray != true || ((RDArraySize == 4) &amp;&amp; (RD0HasTypeNumber == false || (RD0NumberValue &gt;= 0)) &amp;&amp; (RD1HasTypeNumber == false || (RD1NumberValue &gt;= 0)) &amp;&amp; (RD2HasTypeNumber == false || (RD2NumberValue &gt;= 0)) &amp;&amp; (RD3HasTypeNumber == false || (RD3NumberValue &gt;= 0)) &amp;&amp; (RectHasTypeRectangle == false || RD3HasTypeNumber == false || RD1HasTypeNumber == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RD2HasTypeNumber == false || RectHasTypeRectangle == false || RD0HasTypeNumber == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
 			<error>
-				<message>Entry RD with type Rectangle in AnnotCircle does not satisfy special case: fn:Eval((RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
+				<message>Entry RD with type Array in AnnotCircle does not satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -9922,10 +9922,10 @@
 		</rule>
 		<rule object="AAnnotSquare">
 			<id specification="PDF_1_5" clause="AnnotSquare-RD" testNumber="8"/>
-			<description>Entry RD in AnnotSquare shall have type Rectangle</description>
-			<test>containsRD == false || RDHasTypeRectangle == true</test>
+			<description>Entry RD in AnnotSquare shall have type Array</description>
+			<test>containsRD == false || RDHasTypeArray == true</test>
 			<error>
-				<message>Entry RD in AnnotSquare has type %1 instead of type Rectangle</message>
+				<message>Entry RD in AnnotSquare has type %1 instead of type Array</message>
 				<arguments>
 					<argument>RDType</argument>
 				</arguments>
@@ -9933,11 +9933,11 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotSquare">
-			<id specification="PDF_1_5" clause="AnnotSquare-RD-Rectangle" testNumber="9"/>
-			<description>Entry RD with type Rectangle in AnnotSquare shall satisfy special case: fn:Eval((RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeRectangle != true || ((RD0NumberValue &gt;= 0) &amp;&amp; (RD1NumberValue &gt;= 0) &amp;&amp; (RD2NumberValue &gt;= 0) &amp;&amp; (RD3NumberValue &gt;= 0) &amp;&amp; (RectHasTypeRectangle == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RectHasTypeRectangle == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
+			<id specification="PDF_1_5" clause="AnnotSquare-RD-Array" testNumber="9"/>
+			<description>Entry RD with type Array in AnnotSquare shall satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
+			<test>RDHasTypeArray != true || ((RDArraySize == 4) &amp;&amp; (RD0HasTypeNumber == false || (RD0NumberValue &gt;= 0)) &amp;&amp; (RD1HasTypeNumber == false || (RD1NumberValue &gt;= 0)) &amp;&amp; (RD2HasTypeNumber == false || (RD2NumberValue &gt;= 0)) &amp;&amp; (RD3HasTypeNumber == false || (RD3NumberValue &gt;= 0)) &amp;&amp; (RectHasTypeRectangle == false || RD3HasTypeNumber == false || RD1HasTypeNumber == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RD2HasTypeNumber == false || RectHasTypeRectangle == false || RD0HasTypeNumber == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
 			<error>
-				<message>Entry RD with type Rectangle in AnnotSquare does not satisfy special case: fn:Eval((RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
+				<message>Entry RD with type Array in AnnotSquare does not satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments/>
 			</error>
 			<references/>
