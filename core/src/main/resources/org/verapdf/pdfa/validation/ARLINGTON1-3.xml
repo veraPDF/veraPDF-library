@@ -33763,6 +33763,16 @@
 			<references/>
 		</rule>
 		<rule object="APageObject">
+			<id specification="PDF_1_3" clause="PageObject-PieceInfo-Dictionary" testNumber="9"/>
+			<description>Entry PieceInfo with type Dictionary in PageObject shall satisfy special case: fn:Eval(fn:IsPresent(LastModified))</description>
+			<test>PieceInfoHasTypeDictionary != true || (containsLastModified == true)</test>
+			<error>
+				<message>Entry PieceInfo with type Dictionary in PageObject does not satisfy special case: fn:Eval(fn:IsPresent(LastModified))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageObject">
 			<id specification="PDF_1_3" clause="PageObject-Resources" testNumber="8"/>
 			<description>Entry Resources in PageObject shall have type Dictionary</description>
 			<test>containsResources == false || ResourcesHasTypeDictionary == true</test>
@@ -42713,6 +42723,16 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectFormTrapNet">
+			<id specification="PDF_1_3" clause="XObjectFormTrapNet-PieceInfo-Dictionary" testNumber="9"/>
+			<description>Entry PieceInfo with type Dictionary in XObjectFormTrapNet shall satisfy special case: fn:Eval(fn:IsPresent(LastModified))</description>
+			<test>PieceInfoHasTypeDictionary != true || (containsLastModified == true)</test>
+			<error>
+				<message>Entry PieceInfo with type Dictionary in XObjectFormTrapNet does not satisfy special case: fn:Eval(fn:IsPresent(LastModified))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormTrapNet">
 			<id specification="PDF_1_3" clause="XObjectFormTrapNet-Resources" testNumber="8"/>
 			<description>Entry Resources in XObjectFormTrapNet shall have type Dictionary</description>
 			<test>containsResources == false || ResourcesHasTypeDictionary == true</test>
@@ -43155,6 +43175,16 @@
 				<arguments>
 					<argument>PieceInfoType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectFormType1">
+			<id specification="PDF_1_3" clause="XObjectFormType1-PieceInfo-Dictionary" testNumber="9"/>
+			<description>Entry PieceInfo with type Dictionary in XObjectFormType1 shall satisfy special case: fn:Eval(fn:IsPresent(LastModified))</description>
+			<test>PieceInfoHasTypeDictionary != true || (containsLastModified == true)</test>
+			<error>
+				<message>Entry PieceInfo with type Dictionary in XObjectFormType1 does not satisfy special case: fn:Eval(fn:IsPresent(LastModified))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
