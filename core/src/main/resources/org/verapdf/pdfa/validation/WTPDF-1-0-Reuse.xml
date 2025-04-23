@@ -884,7 +884,7 @@
                 <reference specification="ISO 32000-2:2020" clause="Table 228"/>
             </references>
         </rule>
-        <rule object="SELineArtItem" tags="alt-text">
+        <rule object="SEGraphicContentItem" tags="alt-text">
             <id specification="WTPDF_1_0" clause="8.10.3.5" testNumber="1"/>
             <description>If a portion of the appearance of a signature is represented by a graphic, alternative text shall be provided for that graphic</description>
             <test>isSignature == false || Alt != null</test>
