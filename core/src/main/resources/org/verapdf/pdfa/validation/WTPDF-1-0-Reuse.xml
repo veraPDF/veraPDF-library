@@ -937,7 +937,7 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.7"/>
             </references>
         </rule>
         <rule object="PDStructElem" tags="structure">
@@ -949,7 +949,22 @@
                 <arguments/>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.7.2, Table 323"/>
+            </references>
+        </rule>
+        <rule object="CosDocument" tags="syntax">
+            <id specification="ISO_32005" clause="1" testNumber="3"/>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true</description>
+            <test>Marked == true</test>
+            <error>
+                <message>MarkInfo dictionary is not present in the document catalog, or Marked entry is set to false or is not present in the MarkInfo dictionary (MarkInfo = %1, Marked = %2)</message>
+                <arguments>
+                    <argument>MarkInfo</argument>
+                    <argument>Marked</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="14.7.1"/>
             </references>
         </rule>
         <rule object="SENonStandard" tags="structure">
@@ -963,7 +978,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.8.6"/>
             </references>
         </rule>
         <rule object="SENonStandard" tags="structure">
@@ -977,7 +992,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.8.6"/>
             </references>
         </rule>
         <rule object="SENonStandard" tags="structure">
@@ -991,7 +1006,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.8.6"/>
             </references>
         </rule>
         <rule object="SEMathMLStructureElement" tags="structure">
@@ -1005,7 +1020,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.8.6.3"/>
             </references>
         </rule>
         <rule object="SERuby" tags="structure">
@@ -1019,7 +1034,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.8.4.7.3, Table 369"/>
             </references>
         </rule>
         <rule object="SEWarichu" tags="structure">
@@ -1033,7 +1048,7 @@
                 </arguments>
             </error>
             <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
+                <reference specification="ISO-32000-2" clause="14.8.4.7.3, Table 369"/>
             </references>
         </rule>
         <rule object="SEDocument" tags="structure">
