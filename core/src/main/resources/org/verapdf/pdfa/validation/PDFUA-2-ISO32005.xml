@@ -771,7 +771,7 @@
         <rule object="PDAnnot" tags="annotation,artifact">
             <id specification="ISO_14289_2" clause="8.9.2.2" testNumber="2"/>
             <description>Annotations shall be artifacts if the NoView flag is set and the ToggleNoView flag is not set in accordance with ISO 32000-2:2020, Table 167</description>
-            <test>structParentType == null || isArtifact == true || ((F &amp; 32) == 0 || (F &amp; 256) == 1)</test>
+            <test>structParentType == null || isArtifact == true || ((F &amp; 32) == 0 || (F &amp; 256) == 256)</test>
             <error>
                 <message>A no-view annotation is included in logical structure with tag %1 (standard type = %2, NoView = %3, ToggleNoView = %4)</message>
                 <arguments>
