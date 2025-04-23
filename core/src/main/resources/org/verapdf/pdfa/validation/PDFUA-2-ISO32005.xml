@@ -64,6 +64,21 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosDocument" tags="syntax">
+            <id specification="ISO_14289_2" clause="6.2" testNumber="1"/>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true</description>
+            <test>Marked == true</test>
+            <error>
+                <message>MarkInfo dictionary is not present in the document catalog, or Marked entry is set to false or is not present in the MarkInfo dictionary (MarkInfo = %1, Marked = %2)</message>
+                <arguments>
+                    <argument>MarkInfo</argument>
+                    <argument>Marked</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="14.7.1"/>
+            </references>
+        </rule>
         <rule object="PDDocument" tags="structure">
             <id specification="ISO_14289_2" clause="8.2.1" testNumber="1"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-2:2020, 14.7</description>
@@ -1126,21 +1141,6 @@
                 <arguments/>
             </error>
             <references/>
-        </rule>
-        <rule object="CosDocument" tags="syntax">
-            <id specification="ISO_32005" clause="1" testNumber="3"/>
-            <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true</description>
-            <test>Marked == true</test>
-            <error>
-                <message>MarkInfo dictionary is not present in the document catalog, or Marked entry is set to false or is not present in the MarkInfo dictionary (MarkInfo = %1, Marked = %2)</message>
-                <arguments>
-                    <argument>MarkInfo</argument>
-                    <argument>Marked</argument>
-                </arguments>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="14.7.1"/>
-            </references>
         </rule>
         <rule object="SEDocument" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Annot-Document" testNumber="1"/>
