@@ -33,7 +33,7 @@
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library-jakarta</artifactId>
-  <version>1.28.0-RC1</version>
+  <version>1.28.0</version>
   <packaging>pom</packaging>
 
   <name>veraPDF Validation Library for Jakarta EE</name>
@@ -72,7 +72,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.28.0-RC,1.29.0)</verapdf.model.version>
+    <verapdf.model.version>[1.28.0,1.29.0)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
