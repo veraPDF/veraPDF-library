@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -28,6 +28,7 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.pdfa.validation.validators.ValidatorConfig;
 import org.verapdf.pdfa.validation.validators.ValidatorFactory;
 
+import java.util.List;
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>
@@ -58,6 +59,16 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
+	public PDFAValidator createValidator(ValidatorConfig config, List<PDFAFlavour> flavours) {
+		if (config.getMaxFails() > 0) {
+			return createFailFastValidator(flavours, config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
+					config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
+		}
+		return createValidator(flavours, config.getMaxNumberOfDisplayedFailedChecks(),
+				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
+	}
+
+	@Override
 	public PDFAValidator createValidator(ValidatorConfig config, ValidationProfile profile) {
 		if (config.getMaxFails() > 0) {
 			return createFailFastValidator(profile, config.getMaxFails(), config.getMaxNumberOfDisplayedFailedChecks(),
@@ -65,6 +76,11 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 		}
 		return createValidator(profile, config.getMaxNumberOfDisplayedFailedChecks(),
 				config.isRecordPasses(), config.showErrorMessages(), config.getShowProgress());
+	}
+
+	@Override
+	public PDFAValidator createValidator(List<PDFAFlavour> flavours) {
+		return ValidatorFactory.createValidator(flavours);
 	}
 
 	@Override
@@ -85,6 +101,13 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	}
 
 	@Override
+	public PDFAValidator createValidator(List<PDFAFlavour> flavours, int maxNumberOfDisplayedFailedChecks,
+										 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidatorByFlavours(flavours, maxNumberOfDisplayedFailedChecks, logSuccess, showErrorMessages,
+				showProgress);
+	}
+
+	@Override
 	public PDFAValidator createValidator(ValidationProfile profile, int maxNumberOfDisplayedFailedChecks,
 										 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
 		return ValidatorFactory.createValidator(profile, maxNumberOfDisplayedFailedChecks, logSuccess, showErrorMessages,
@@ -95,6 +118,13 @@ public abstract class AbstractFoundry implements VeraPDFFoundry {
 	public PDFAValidator createFailFastValidator(PDFAFlavour flavour, int maxFailures, int maxNumberOfDisplayedFailedChecks,
 												 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
 		return ValidatorFactory.createValidator(flavour, logSuccess, maxFailures, maxNumberOfDisplayedFailedChecks,
+				showErrorMessages, showProgress);
+	}
+
+	@Override
+	public PDFAValidator createFailFastValidator(List<PDFAFlavour> flavours, int maxFailures, int maxNumberOfDisplayedFailedChecks,
+												 boolean logSuccess, boolean showErrorMessages, boolean showProgress) {
+		return ValidatorFactory.createValidator(flavours, logSuccess, maxFailures, maxNumberOfDisplayedFailedChecks,
 				showErrorMessages, showProgress);
 	}
 

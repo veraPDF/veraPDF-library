@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -27,7 +27,6 @@ import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
 import org.verapdf.model.xmplayer.XMPPackage;
-import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,7 +56,6 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
     //------------------------------------------------------------------------------ veraPDF: additional field for actual encoding
     private final String actualEncoding;
     private final boolean isMainMetadata;
-    private final PDFAFlavour flavour;
     private final boolean isClosedChoiceCheck;
     private Map<String, SchemasDefinition> mainPackageSchemasDefinition;
     private Map<String, SchemasDefinition> currentSchemasDefinitionPDFA_1;
@@ -65,22 +63,21 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
 
     public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
             boolean isClosedChoiceCheck,
-            VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+            VeraPDFXMPNode mainPackageExtensionNode) {
         this(xmpMetadata, isSerializationValid, false, isClosedChoiceCheck,
-                mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
+                mainPackageExtensionNode, XMP_PACKAGE_TYPE);
     }
 
     public AXLXMPPackage(VeraPDFMeta xmpMetadata, boolean isSerializationValid,
-            VeraPDFXMPNode mainPackageExtensionNode, PDFAFlavour flavour) {
+            VeraPDFXMPNode mainPackageExtensionNode) {
         this(xmpMetadata, isSerializationValid, false, false,
-                mainPackageExtensionNode, XMP_PACKAGE_TYPE, flavour);
+                mainPackageExtensionNode, XMP_PACKAGE_TYPE);
     }
 
     protected AXLXMPPackage(VeraPDFMeta xmpMetadata,
             boolean isSerializationValid, boolean isMainMetadata,
             boolean isClosedChoiceCheck,
-            VeraPDFXMPNode mainPackageExtensionNode, final String type,
-            PDFAFlavour flavour) {
+            VeraPDFXMPNode mainPackageExtensionNode, final String type) {
         super(type);
         this.xmpMetadata = xmpMetadata;
         this.isSerializationValid = isSerializationValid;
@@ -91,7 +88,6 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
         this.mainPackageSchemasDefinition = SchemasDefinitionCreator
                 .createExtendedSchemasDefinitionForPDFA_2_3(
                         mainPackageExtensionNode, this.isClosedChoiceCheck);
-        this.flavour = flavour;
     }
 
     /**
@@ -117,8 +113,7 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
             List<AXLExtensionSchemasContainer> res = new ArrayList<>(1);
             res.add(new AXLExtensionSchemasContainer(this.getXmpMetadata()
                     .getExtensionSchemasNode(), getCurrentSchemasDefinitionPDFA_1(),
-                    getCurrentSchemasDefinitionPDFA_2_3(),
-                    this.flavour));
+                    getCurrentSchemasDefinitionPDFA_2_3()));
             return Collections.unmodifiableList(res);
         }
 
@@ -146,23 +141,20 @@ public class AXLXMPPackage extends AXLXMPObject implements XMPPackage {
                     this.isClosedChoiceCheck,
                     this.getMainPackageSchemasDefinitionForNS(namespaceURI),
                     this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
-                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
-                    this.flavour);
+                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI));
         }
         if (node.isLanguageAlternative()) {
             return new AXLXMPLangAlt(node, this.isMainMetadata,
                     this.isClosedChoiceCheck,
                     this.getMainPackageSchemasDefinitionForNS(namespaceURI),
                     this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
-                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
-                    this.flavour);
+                    this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI));
         }
         return new AXLXMPProperty(node, this.isMainMetadata,
                 this.isClosedChoiceCheck,
                 this.getMainPackageSchemasDefinitionForNS(namespaceURI),
                 this.getCurrentSchemasDefinitionPDFA_1ForNS(namespaceURI),
-                this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI),
-                this.flavour);
+                this.getCurrentSchemasDefinitionPDFA_2_3ForNS(namespaceURI));
     }
 
     protected VeraPDFMeta getXmpMetadata() {

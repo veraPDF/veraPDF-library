@@ -1,3 +1,23 @@
+/**
+ * This file is part of veraPDF Library core, a module of the veraPDF project.
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
+ * All rights reserved.
+ *
+ * veraPDF Library core is free software: you can redistribute it and/or modify
+ * it under the terms of either:
+ *
+ * The GNU General public license GPLv3+.
+ * You should have received a copy of the GNU General Public License
+ * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
+ * tree.  If not, see http://www.gnu.org/licenses/ or
+ * https://www.gnu.org/licenses/gpl-3.0.en.html.
+ *
+ * The Mozilla Public License MPLv2+.
+ * You should have received a copy of the Mozilla Public License along with
+ * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
+ * If a copy of the MPL was not distributed with this file, you can obtain one at
+ * http://mozilla.org/MPL/2.0/.
+ */
 package org.verapdf.pdfa.validation.validators;
 
 import org.mozilla.javascript.Context;
@@ -10,10 +30,7 @@ import org.verapdf.pdfa.validation.profiles.ErrorArgumentImpl;
 import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.Variable;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class JavaScriptEvaluator {
 	private static final int OPTIMIZATION_LEVEL = 9;
@@ -60,48 +77,44 @@ public class JavaScriptEvaluator {
 		return context.get().compileString(source, null, 0, null);
 	}
 
-	private static String getStringScript(Object obj, String arg) {
-		return getScriptPrefix(obj, arg) + arg + getScriptSuffix();
-	}
-
-	private static String getScriptPrefix(Object obj, String test) {
+	private static String getStringScript(Object obj, String test) {
+		String resultTest = test;
 		StringBuilder builder = new StringBuilder();
 		String[] vars = test.split("\\W");
-
 		for (String prop : obj.getProperties()) {
-			if (contains(vars, prop)) {
-				builder.append("var ");
-				builder.append(prop);
-				builder.append(" = obj.get");
-				builder.append(prop);
-				builder.append("();\n");
-			}
+			resultTest = updateTest(builder, resultTest, vars, prop, "obj.get" + prop + "()");
 		}
-
 		for (String linkName : obj.getLinks()) {
-			if (contains(vars, linkName + "_size")) {
-				builder.append("var ");
-				builder.append(linkName);
-				builder.append("_size = obj.getLinkedObjects(\"");
-				builder.append(linkName);
-				builder.append("\").size();\n");
-			}
+			resultTest = updateTest(builder, resultTest, vars, linkName + "_size", "obj.getLinkedObjects(\"" + linkName + "\").size()");
 		}
 		builder.append("function test(){return ");
+		builder.append(resultTest);
+		builder.append(";}\ntest();");
 		return builder.toString();
 	}
-
-	private static boolean contains(String[] values, String prop) {
-		for (String value : values) {
-			if (value.equals(prop)) {
-				return true;
-			}
+	
+	private static String updateTest(StringBuilder builder, String test, String[] vars, String varName, String methodCall) {
+		int number = numberOfOccurrences(vars, varName);
+		if (number > 1) {
+			builder.append("var ");
+			builder.append(varName);
+			builder.append(" = ");
+			builder.append(methodCall);
+			builder.append(";\n");
+		} else if (number == 1) {
+			return test.replaceFirst("(?<!\\w)" + varName + "(?!\\w)", methodCall);
 		}
-		return false;
+		return test;
 	}
 
-	private static String getScriptSuffix() {
-		return ";}\ntest();";
+	private static int numberOfOccurrences(String[] values, String prop) {
+		int number = 0;
+		for (String value : values) {
+			if (value.equals(prop)) {
+				number++;
+			}
+		}
+		return number;
 	}
 
 	private static String getScript(Object obj, String test) {

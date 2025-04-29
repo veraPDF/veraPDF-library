@@ -402,7 +402,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_4" clause="6.2.5" testNumber="1"/>
             <description>A graphics state parameter dictionary (ISO 32000-2:2020, 8.4.5) shall not contain the TR key</description>
-            <test>TR == null</test>
+            <test>containsTR == false</test>
             <error>
                 <message>A graphics state parameter dictionary contains the TR key</message>
                 <arguments/>
@@ -414,12 +414,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_4" clause="6.2.5" testNumber="2"/>
             <description>A graphics state parameter dictionary shall not contain the TR2 key with a value other than Default</description>
-            <test>TR2 == null || TR2 == "Default"</test>
+            <test>containsTR2 == false || TR2NameValue == "Default"</test>
             <error>
-                <message>A graphics state parameter dictionary contains the TR2 key with value %1 other than Default</message>
-                <arguments>
-                    <argument>TR2</argument>
-                </arguments>
+                <message>A graphics state parameter dictionary contains the TR2 key with a value other than Default</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -500,9 +498,23 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_4" clause="6.2.7.1" testNumber="4"/>
             <description>If an Image dictionary contains the BitsPerComponent key, its value shall be 1, 2, 4, 8 or 16</description>
-            <test>BitsPerComponent == null || BitsPerComponent == 1 || BitsPerComponent == 2 || BitsPerComponent == 4 || BitsPerComponent == 8 || BitsPerComponent == 16</test>
+            <test>isMask == true || BitsPerComponent == null || BitsPerComponent == 1 || BitsPerComponent == 2 || BitsPerComponent == 4 || BitsPerComponent == 8 || BitsPerComponent == 16</test>
             <error>
                 <message>The value of the BitsPerComponent key in the Image dictionary is %1</message>
+                <arguments>
+                    <argument>BitsPerComponent</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="8.9.5.1, Table 87"/>
+            </references>
+        </rule>
+        <rule object="PDMaskImage">
+            <id specification="ISO_19005_4" clause="6.2.7.1" testNumber="5"/>
+            <description>If an image mask dictionary contains the BitsPerComponent key, its value shall be 1</description>
+            <test>BitsPerComponent == null || BitsPerComponent == 1</test>
+            <error>
+                <message>The value of the BitsPerComponent key in the image mask dictionary is %1</message>
                 <arguments>
                     <argument>BitsPerComponent</argument>
                 </arguments>
@@ -744,7 +756,7 @@
         <rule object="PDCIDFont">
             <id specification="ISO_19005_4" clause="6.2.10.3.2" testNumber="1"/>
             <description>ISO 32000-2:2020, 9.7.4 Table 115 requires that all embedded Type 2 CIDFonts, the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-2:2020, 9.7.4 Table 115</description>
-            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || fontFile_size == 0</test>
+            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || containsFontFile == false</test>
             <error>
                 <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
                 <arguments/>
@@ -756,7 +768,7 @@
         <rule object="PDCMap">
             <id specification="ISO_19005_4" clause="6.2.10.3.3" testNumber="1"/>
             <description>All CMaps used within a conforming PDF/A-4 file, except those listed in ISO 32000-2:2020, 9.7.5.2 Table 116, shall be embedded in that file as described in ISO 32000-2:2020, 9.7.5</description>
-            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || embeddedFile_size == 1</test>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || containsEmbeddedFile == true</test>
             <error>
                 <message>A non-standard CMap %1 is not embedded</message>
                 <arguments>
@@ -797,7 +809,7 @@
         <rule object="PDFont">
             <id specification="ISO_19005_4" clause="6.2.10.4.1" testNumber="1"/>
             <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-2:2020, 9.9</description>
-            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || containsFontFile == true</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -975,7 +987,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_4" clause="6.3.3" testNumber="3"/>
             <description>If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance subdictionary</description>
-            <test>AP != "N" || Subtype != "Widget" || FT != "Btn" || (N_type == "Dict" &amp;&amp; appearance_size &gt; 0)</test>
+            <test>AP != "N" || Subtype != "Widget" || FT != "Btn" || (N_type == "Dict" &amp;&amp; containsAppearances == true)</test>
             <error>
                 <message>An annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, but the value of the N key is %1 instead of appearance subdictionary</message>
                 <arguments>
@@ -1080,10 +1092,10 @@
         </rule>
         <rule object="PDDocument">
             <id specification="ISO_19005_4" clause="6.7.2.1" testNumber="1"/>
-            <description>The document catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-2:2020, 14.3.2</description>
-            <test>metadata_size == 1</test>
+            <description>The document catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-2:2020, 14.3.2. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
+            <test>containsMetadata == true</test>
             <error>
-                <message>The document catalog dictionary doesn't contain metadata key</message>
+                <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
             </error>
             <references>
@@ -1139,9 +1151,9 @@
         <rule object="MainXMPPackage">
             <id specification="ISO_19005_4" clause="6.7.3" testNumber="1"/>
             <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema. The PDF/A Identification schema defined in Table 2 uses the namespace URI "http://www.aiim.org/pdfa/ns/id/"</description>
-            <test>Identification_size == 1</test>
+            <test>containsPDFAIdentification == true</test>
             <error>
-                <message>The document metadata stream doesn't contains PDF/A Identification Schema</message>
+                <message>The document metadata stream doesn't contain PDF/A Identification Schema</message>
                 <arguments/>
             </error>
             <references/>
@@ -1282,7 +1294,7 @@
             <description>If an optional content configuration dictionary contains the Order key, the array which is the value of this Order key shall contain references to all OCGs in the conforming file</description>
             <test>OCGsNotContainedInOrder == null</test>
             <error>
-                <message>Optional content group(s) %1 not presented in the Order entry of the optional content configuration dictionary</message>
+                <message>Optional content group(s) %1 not present in the Order entry of the optional content configuration dictionary</message>
                 <arguments>
                     <argument>OCGsNotContainedInOrder</argument>
                 </arguments>

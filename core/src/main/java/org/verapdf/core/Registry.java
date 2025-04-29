@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -48,7 +48,7 @@ public interface Registry<K, V> extends Directory<K, V> {
     V registerItem(final K key, final V value);
 
     /**
-     * Add a Map<K, V> of items to the Registry
+     * Add a Map&lt;K, V&gt; of items to the Registry
      * 
      * @param itemMap
      */
@@ -86,9 +86,8 @@ public interface Registry<K, V> extends Directory<K, V> {
     /**
      * Registers or updates all item in Registry caring not if the items already
      * exist or not.
-     * 
-     * @param itemMap
-     *            a Map of keys & values to add.
+     *
+     * @param itemMap a Map of keys &amp; values to add.
      */
     void putdateItems(final Map<K, V> itemMap);
 
@@ -101,14 +100,14 @@ public interface Registry<K, V> extends Directory<K, V> {
      * @param value
      *            the value used in the update
      * @return the old value of the item
-     * @throws NoSuchElementException
+     * @throws java.util.NoSuchElementException
      *             if no value is associated with the key
      */
     V updateItem(final K key, final V value);
 
     /**
      * @param itemMap
-     * @throws NoSuchElementException
+     * @throws java.util.NoSuchElementException
      *             if no value is associated with one of the keys
      */
     void updateItems(final Map<K, V> itemMap);

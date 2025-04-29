@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -51,9 +51,9 @@ import jakarta.xml.bind.annotation.XmlAnyElement;
 /**
  * Generic collection wrapper class.
  *
- * Makes it easier to (un)marshall a collectiono of a single type.
+ * Makes it easier to (un)marshall a collection of a single type.
  *
- * @author Arno Moonen <info@arnom.nl>
+ * @author <a href="mailto:info@arnom.nl">Arno Moonen</a>
  */
 public class JAXBCollection<T>
 {

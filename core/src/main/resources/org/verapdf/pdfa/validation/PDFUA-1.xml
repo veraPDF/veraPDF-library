@@ -9,9 +9,9 @@
         <rule object="MainXMPPackage" tags="metadata">
             <id specification="ISO_14289_1" clause="5" testNumber="1"/>
             <description>The PDF/UA version and conformance level of a file shall be specified using the PDF/UA Identification extension schema</description>
-            <test>UAIdentification_size == 1</test>
+            <test>containsPDFUAIdentification == true</test>
             <error>
-                <message>The document metadata stream doesn't contains PDF/UA Identification Schema</message>
+                <message>The document metadata stream doesn't contain PDF/UA Identification Schema</message>
                 <arguments/>
             </error>
             <references/>
@@ -64,9 +64,36 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosDocument" tags="syntax">
+            <id specification="ISO_14289_1" clause="6.1" testNumber="1"/>
+            <description>The file header shall consist of "%PDF-1.n" followed by a single EOL marker, where 'n' is a single digit number between 0 (30h) and 7 (37h)</description>
+            <test>/^%PDF-1\.[0-7]$/.test(header)</test>
+            <error>
+                <message>File header %1 does not match the pattern %PDF-1.n, where 'n' is a single digit number between 0 and 7</message>
+                <arguments>
+                    <argument>header</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
+        <rule object="CosDocument" tags="syntax">
+            <id specification="ISO_14289_1" clause="6.2" testNumber="1"/>
+            <description>The document catalog dictionary shall include a MarkInfo dictionary containing an entry, Marked, whose value shall be true</description>
+            <test>Marked == true</test>
+            <error>
+                <message>MarkInfo dictionary is not present in the document catalog, or Marked entry is set to false or is not present in the MarkInfo dictionary (MarkInfo = %1, Marked = %2)</message>
+                <arguments>
+                    <argument>MarkInfo</argument>
+                    <argument>Marked</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-1:2008" clause="14.7.1"/>
+            </references>
+        </rule>
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="1"/>
-            <description>Content marked as Artifact should not present inside tagged content</description>
+            <description>Content marked as Artifact should not be present inside tagged content</description>
             <test>tag != 'Artifact' || isTaggedContent == false</test>
             <error>
                 <message>Content marked as Artifact is present inside tagged content (parent struct element %1)</message>
@@ -78,8 +105,8 @@
         </rule>
         <rule object="SEMarkedContent" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="2"/>
-            <description>Tagged content should not present inside content marked as Artifact</description>
-            <test>isTaggedContent == false || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length == 0</test>
+            <description>Tagged content should not be present inside content marked as Artifact</description>
+            <test>isTaggedContent == false || parentsTags.contains('Artifact') == false</test>
             <error>
                 <message>Tagged content (parent struct element %1) is present inside content marked as Artifact</message>
                 <arguments>
@@ -91,7 +118,7 @@
         <rule object="SESimpleContentItem" tags="artifact">
             <id specification="ISO_14289_1" clause="7.1" testNumber="3"/>
             <description>Content shall be marked as Artifact or tagged as real content</description>
-            <test>isTaggedContent == true || parentsTags.split('&amp;').filter(elem =&gt; elem == 'Artifact').length &gt; 0</test>
+            <test>isTaggedContent == true || parentsTags.contains('Artifact') == true</test>
             <error>
                 <message>Content is neither marked as Artifact nor tagged as real content</message>
                 <arguments/>
@@ -152,10 +179,10 @@
         </rule>
         <rule object="PDDocument" tags="metadata">
             <id specification="ISO_14289_1" clause="7.1" testNumber="8"/>
-            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2</description>
-            <test>metadata_size == 1</test>
+            <description>The Catalog dictionary of a conforming file shall contain the Metadata key whose value is a metadata stream as defined in ISO 32000-1:2008, 14.3.2. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
+            <test>containsMetadata == true</test>
             <error>
-                <message>The document catalog dictionary doesn't contain metadata key</message>
+                <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
             </error>
             <references>
@@ -188,7 +215,7 @@
         <rule object="PDDocument" tags="structure">
             <id specification="ISO_14289_1" clause="7.1" testNumber="11"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in ISO 32000-1:2008, 14.7</description>
-            <test>StructTreeRoot_size == 1</test>
+            <test>containsStructTreeRoot == true</test>
             <error>
                 <message>StructTreeRoot entry is not present in the document catalog</message>
                 <arguments/>
@@ -212,7 +239,7 @@
         <rule object="PDOutline" tags="lang">
             <id specification="ISO_14289_1" clause="7.2" testNumber="2"/>
             <description>Natural language in the Outline entries shall be determined</description>
-            <test>gSizeCatalogLang != 0</test>
+            <test>gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language in the Outline entries cannot be determined</message>
                 <arguments/>
@@ -466,7 +493,7 @@
         <rule object="PDStructElem" tags="structure,lang">
             <id specification="ISO_14289_1" clause="7.2" testNumber="21"/>
             <description>Natural language for text in ActualText attribute shall be determined</description>
-            <test>ActualText == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
+            <test>ActualText == null || containsLang == true || parentLang != null || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for text in ActualText attribute cannot be determined</message>
                 <arguments/>
@@ -476,7 +503,7 @@
         <rule object="PDStructElem" tags="structure,lang">
             <id specification="ISO_14289_1" clause="7.2" testNumber="22"/>
             <description>Natural language for text in Alt attribute shall be determined</description>
-            <test>Alt == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
+            <test>Alt == null || containsLang == true || parentLang != null || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for text in Alt attribute cannot be determined</message>
                 <arguments/>
@@ -486,7 +513,7 @@
         <rule object="PDStructElem" tags="structure,lang">
             <id specification="ISO_14289_1" clause="7.2" testNumber="23"/>
             <description>Natural language for text in E attribute shall be determined</description>
-            <test>E == null || Lang_size != 0 || parentLang != null || gSizeCatalogLang != 0</test>
+            <test>E == null || containsLang == true || parentLang != null || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for text in E attribute cannot be determined</message>
                 <arguments/>
@@ -496,7 +523,7 @@
         <rule object="PDAnnot" tags="lang,annotation,structure">
             <id specification="ISO_14289_1" clause="7.2" testNumber="24"/>
             <description>Natural language in the Contents entry for annotations shall be determined</description>
-            <test>Contents == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>Contents == null || containsLang == true || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language in the Contents entry for annotations cannot be determined</message>
                 <arguments/>
@@ -506,7 +533,7 @@
         <rule object="PDFormField" tags="structure,lang">
             <id specification="ISO_14289_1" clause="7.2" testNumber="25"/>
             <description>Natural language in the TU key for form fields shall be determined</description>
-            <test>TU == null || Lang_size != 0 || gSizeCatalogLang != 0</test>
+            <test>TU == null || containsLang == true || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language in the TU key for form fields cannot be determined</message>
                 <arguments/>
@@ -574,7 +601,7 @@
         <rule object="SEMarkedContent" tags="lang,alt-text">
             <id specification="ISO_14289_1" clause="7.2" testNumber="30"/>
             <description>Natural language for text in ActualText attribute in Span Marked Content shall be determined</description>
-            <test>tag != 'Span' || ActualText == null || Lang != null || inheritedLang != null || gSizeCatalogLang != 0</test>
+            <test>tag != 'Span' || ActualText == null || Lang != null || inheritedLang != null || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for text in ActualText attribute in Span Marked Content cannot be determined</message>
                 <arguments/>
@@ -584,7 +611,7 @@
         <rule object="SEMarkedContent" tags="lang,alt-text">
             <id specification="ISO_14289_1" clause="7.2" testNumber="31"/>
             <description>Natural language for text in Alt attribute in Span Marked Content shall be determined</description>
-            <test>tag != 'Span' || Alt == null || Lang != null || inheritedLang != null || gSizeCatalogLang != 0</test>
+            <test>tag != 'Span' || Alt == null || Lang != null || inheritedLang != null || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for text in Alt attribute in Span Marked Content cannot be determined</message>
                 <arguments/>
@@ -594,7 +621,7 @@
         <rule object="SEMarkedContent" tags="lang,alt-text">
             <id specification="ISO_14289_1" clause="7.2" testNumber="32"/>
             <description>Natural language for text in E attribute in Span Marked Content shall be determined</description>
-            <test>tag != 'Span' || E == null || Lang != null || inheritedLang != null || gSizeCatalogLang != 0</test>
+            <test>tag != 'Span' || E == null || Lang != null || inheritedLang != null || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for text in E attribute in Span Marked Content cannot be determined</message>
                 <arguments/>
@@ -604,7 +631,7 @@
         <rule object="XMPLangAlt" deferred="true" tags="lang,metadata">
             <id specification="ISO_14289_1" clause="7.2" testNumber="33"/>
             <description>Natural language for document metadata shall be determined</description>
-            <test>xDefault == false || gSizeCatalogLang != 0</test>
+            <test>xDefault == false || gContainsCatalogLang == true</test>
             <error>
                 <message>Natural language for document metadata cannot be determined</message>
                 <arguments/>
@@ -614,7 +641,7 @@
         <rule object="SETextItem" tags="lang,text">
             <id specification="ISO_14289_1" clause="7.2" testNumber="34"/>
             <description>Natural language for text in page content shall be determined</description>
-            <test>gSizeCatalogLang != 0 || Lang != null</test>
+            <test>gContainsCatalogLang == true || Lang != null</test>
             <error>
                 <message>Natural language for text in page content cannot be determined</message>
                 <arguments/>
@@ -958,7 +985,7 @@
         <rule object="PDPage" tags="page">
             <id specification="ISO_14289_1" clause="7.18.3" testNumber="1"/>
             <description>Every page on which there is an annotation shall contain in its page dictionary the key Tabs, and its value shall be S</description>
-            <test>annots_size == 0 || Tabs == 'S'</test>
+            <test>containsAnnotations == false || Tabs == 'S'</test>
             <error>
                 <message>A page with annotation(s) contains Tabs key with value %1 instead of S</message>
                 <arguments>
@@ -1014,7 +1041,7 @@
             <description>Links shall contain an alternate description via their Contents key as described in ISO 32000-1:2008, 14.9.3</description>
             <test>(Contents != null &amp;&amp; Contents != '') || isOutsideCropBox == true || (F &amp; 2) == 2</test>
             <error>
-                <message>A link annotation does not include an alternate description in the Contents Key</message>
+                <message>A link annotation does not include an alternate description in the Contents key</message>
                 <arguments/>
             </error>
             <references>
@@ -1101,7 +1128,7 @@
         <rule object="PDCIDFont" tags="font">
             <id specification="ISO_14289_1" clause="7.21.3.2" testNumber="1"/>
             <description>ISO 32000-1:2008, 9.7.4, Table 117 requires that all embedded Type 2 CIDFonts in the CIDFont dictionary shall contain a CIDToGIDMap entry that shall be a stream mapping from CIDs to glyph indices or the name Identity, as described in ISO 32000-1:2008, 9.7.4, Table 117</description>
-            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || fontFile_size == 0</test>
+            <test>Subtype != "CIDFontType2" || CIDToGIDMap != null || containsFontFile == false</test>
             <error>
                 <message>A Type 2 CIDFont dictionary has missing or invalid CIDToGIDMap entry</message>
                 <arguments/>
@@ -1113,7 +1140,7 @@
         <rule object="PDCMap" tags="font">
             <id specification="ISO_14289_1" clause="7.21.3.3" testNumber="1"/>
             <description>All CMaps used within a PDF/UA file, except those listed in ISO 32000-1:2008, 9.7.5.2, Table 118, shall be embedded in that file as described in ISO 32000-1:2008, 9.7.5</description>
-            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || embeddedFile_size == 1</test>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || CMapName == "GB-EUC-H" || CMapName == "GB-EUC-V" || CMapName == "GBpc-EUC-H" || CMapName == "GBpc-EUC-V" || CMapName == "GBK-EUC-H" || CMapName == "GBK-EUC-V" || CMapName == "GBKp-EUC-H" || CMapName == "GBKp-EUC-V" || CMapName == "GBK2K-H" || CMapName == "GBK2K-V" || CMapName == "UniGB-UCS2-H" || CMapName == "UniGB-UCS2-V" || CMapName == "UniGB-UFT16-H" || CMapName == "UniGB-UFT16-V" || CMapName == "B5pc-H" || CMapName == "B5pc-V" || CMapName == "HKscs-B5-H" || CMapName == "HKscs-B5-V" || CMapName == "ETen-B5-H" || CMapName == "ETen-B5-V" || CMapName == "ETenms-B5-H" || CMapName == "ETenms-B5-V" || CMapName == "CNS-EUC-H" || CMapName == "CNS-EUC-V" || CMapName == "UniCNS-UCS2-H" || CMapName == "UniCNS-UCS2-V" || CMapName == "UniCNS-UFT16-H" || CMapName == "UniCNS-UTF16-V" || CMapName == "83pv-RKSJ-H" || CMapName == "90ms-RKSJ-H" || CMapName == "90ms-RKSJ-V" || CMapName == "90msp-RKSJ-H" || CMapName == "90msp-RKSJ-V" || CMapName == "90pv-RKSJ-H" || CMapName == "Add-RKSJ-H" || CMapName == "Add-RKSJ-V" || CMapName == "EUC-H" || CMapName == "EUC-V" || CMapName == "Ext-RKSJ-H" || CMapName == "Ext-RKSJ-V" || CMapName == "H" || CMapName == "V" || CMapName == "UniJIS-UCS2-H" || CMapName == "UniJIS-UCS2-V" || CMapName == "UniJIS-UCS2-HW-H" || CMapName == "UniJIS-UCS2-HW-V" || CMapName == "UniJIS-UTF16-H" || CMapName == "UniJIS-UTF16-V" || CMapName == "KSC-EUC-H" || CMapName == "KSC-EUC-V" || CMapName == "KSCms-UHC-H" || CMapName == "KSCms-UHC-V" || CMapName == "KSCms-UHC-HW-H" || CMapName == "KSCms-UHC-HW-V" || CMapName == "KSCpc-EUC-H" || CMapName == "UniKS-UCS2-H" || CMapName == "UniKS-UCS2-V" || CMapName == "UniKS-UTF16-H" || CMapName == "UniKS-UTF16-V" || containsEmbeddedFile == true</test>
             <error>
                 <message>A non-standard CMap %1 is not embedded</message>
                 <arguments>
@@ -1154,7 +1181,7 @@
         <rule object="PDFont" tags="font">
             <id specification="ISO_14289_1" clause="7.21.4.1" testNumber="1"/>
             <description>The font programs for all fonts used for rendering within a conforming file shall be embedded within that file, as defined in ISO 32000-1:2008, 9.9</description>
-            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || containsFontFile == true</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -1179,7 +1206,7 @@
         <rule object="PDType1Font" tags="font">
             <id specification="ISO_14289_1" clause="7.21.4.2" testNumber="1"/>
             <description>If the FontDescriptor dictionary of an embedded Type 1 font contains a CharSet string, then it shall list the character names of all glyphs present in the font program, regardless of whether a glyph in the font is referenced or used by the PDF or not</description>
-            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || CharSet == null || charSetListsAllGlyphs == true</test>
+            <test>containsFontFile == false || fontName.search(/[A-Z]{6}\+/) != 0 || CharSet == null || charSetListsAllGlyphs == true</test>
             <error>
                 <message>A CharSet entry in the Descriptor dictionary of a Type1 font incorrectly lists glyphs present in the font program</message>
                 <arguments/>
@@ -1189,7 +1216,7 @@
         <rule object="PDCIDFont" tags="font">
             <id specification="ISO_14289_1" clause="7.21.4.2" testNumber="2"/>
             <description>If the FontDescriptor dictionary of an embedded CID font contains a CIDSet stream, then it shall identify all CIDs which are present in the font program, regardless of whether a CID in the font is referenced or used by the PDF or not</description>
-            <test>fontFile_size == 0 || fontName.search(/[A-Z]{6}\+/) != 0 || containsCIDSet == false || cidSetListsAllGlyphs == true</test>
+            <test>containsFontFile == false || fontName.search(/[A-Z]{6}\+/) != 0 || containsCIDSet == false || cidSetListsAllGlyphs == true</test>
             <error>
                 <message>A CIDSet entry in the Font descriptor does not correctly identify all glyphs present in the embedded font subset</message>
                 <arguments/>
@@ -1289,9 +1316,9 @@
         </rule>
     </rules>
     <variables>
-        <variable name="gSizeCatalogLang" object="PDDocument">
-            <defaultValue>0</defaultValue>
-            <value>Lang_size</value>
+        <variable name="gContainsCatalogLang" object="PDDocument">
+            <defaultValue>false</defaultValue>
+            <value>containsLang</value>
         </variable>
         <variable name="usesH" object="SEH">
             <defaultValue>false</defaultValue>

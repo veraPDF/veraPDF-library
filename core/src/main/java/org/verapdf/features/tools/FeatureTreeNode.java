@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -70,7 +70,7 @@ public final class FeatureTreeNode {
 	/**
 	 * Add a child to the node
 	 *
-	 * @param child
+	 * @param nodeName
 	 *            new child node for the current node
 	 * @throws FeatureParsingException
 	 *             occurs when child adds to node with value or if the node is a
@@ -84,7 +84,7 @@ public final class FeatureTreeNode {
 	/**
 	 * Add a child to the node
 	 *
-	 * @param child
+	 * @param nodeName
 	 *            new child node for the current node
 	 * @throws FeatureParsingException
 	 *             occurs when child adds to node with value or if the node is a

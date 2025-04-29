@@ -496,9 +496,23 @@
         <rule object="PDXImage">
             <id specification="ISO_19005_1" clause="6.2.4" testNumber="4"/>
             <description>If an Image dictionary contains the BitsPerComponent key, its value shall be 1, 2, 4 or 8</description>
-            <test>BitsPerComponent == null || BitsPerComponent == 1 || BitsPerComponent == 2 || BitsPerComponent == 4 || BitsPerComponent == 8</test>
+            <test>isMask == true || BitsPerComponent == null || BitsPerComponent == 1 || BitsPerComponent == 2 || BitsPerComponent == 4 || BitsPerComponent == 8</test>
             <error>
                 <message>The value of the BitsPerComponent key in the Image dictionary is %1</message>
+                <arguments>
+                    <argument>BitsPerComponent</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="PDF 1.4 Reference" clause="4.8.4, Table 4.35"/>
+            </references>
+        </rule>
+        <rule object="PDMaskImage">
+            <id specification="ISO_19005_1" clause="6.2.4" testNumber="5"/>
+            <description>If an image mask dictionary contains the BitsPerComponent key, its value shall be 1</description>
+            <test>BitsPerComponent == null || BitsPerComponent == 1</test>
+            <error>
+                <message>The value of the BitsPerComponent key in the image mask dictionary is %1</message>
                 <arguments>
                     <argument>BitsPerComponent</argument>
                 </arguments>
@@ -540,7 +554,7 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.2.8" testNumber="1"/>
             <description>An ExtGState dictionary shall not contain the TR key</description>
-            <test>TR == null</test>
+            <test>containsTR == false</test>
             <error>
                 <message>An ExtGState dictionary contains the TR key</message>
                 <arguments/>
@@ -550,12 +564,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.2.8" testNumber="2"/>
             <description>An ExtGState dictionary shall not contain the TR2 key with a value other than Default</description>
-            <test>TR2 == null || TR2 == "Default"</test>
+            <test>containsTR2 == false || TR2NameValue == "Default"</test>
             <error>
-                <message>An ExtGState dictionary contains the TR2 key with value %1 other than Default</message>
-                <arguments>
-                    <argument>TR2</argument>
-                </arguments>
+                <message>An ExtGState dictionary contains the TR2 key with a value other than Default</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -723,7 +735,7 @@
         <rule object="PDCMap">
             <id specification="ISO_19005_1" clause="6.3.3.3" testNumber="1"/>
             <description>All CMaps used within a conforming file, except Identity-H and Identity-V, shall be embedded in that file as described in PDF Reference 5.6.4</description>
-            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || embeddedFile_size == 1</test>
+            <test>CMapName == "Identity-H" || CMapName == "Identity-V" || containsEmbeddedFile == true</test>
             <error>
                 <message>A CMap is different from "Identity-H" or "Identity-V" and is not embedded</message>
                 <arguments/>
@@ -748,7 +760,7 @@
         <rule object="PDFont">
             <id specification="ISO_19005_1" clause="6.3.4" testNumber="1"/>
             <description>The font programs for all fonts used within a conforming file shall be embedded within that file, as defined in PDF Reference 5.8, except when the fonts are used exclusively with text rendering mode 3</description>
-            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || fontFile_size == 1</test>
+            <test>Subtype == "Type3" || Subtype == "Type0" || renderingMode == 3 || containsFontFile == true</test>
             <error>
                 <message>The font program is not embedded</message>
                 <arguments/>
@@ -860,12 +872,10 @@
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="1"/>
             <description>If an SMask key appears in an ExtGState dictionary, its value shall be None</description>
-            <test>SMask == null || SMask == "None"</test>
+            <test>containsSMask == false || SMaskNameValue == "None"</test>
             <error>
-                <message>An ExtGState contains SMask key with value %1 instead of None</message>
-                <arguments>
-                    <argument>SMask</argument>
-                </arguments>
+                <message>An ExtGState contains SMask key with a value other than None</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
@@ -895,8 +905,8 @@
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="4"/>
-            <description>The following keys, if present in an ExtGState object, shall have the values shown: BM - Normal or Compatible</description>
-            <test>BM == null || BM == "Normal" || BM == "Compatible"</test>
+            <description>If a BM key is present in an ExtGState object, its value shall be Normal or Compatible</description>
+            <test>containsBM == false || BMNameValue == "Normal" || BMNameValue == "Compatible"</test>
             <error>
                 <message>An ExtGState dictionary contains the BM key (blend mode) with value %1 that is neither Normal or Compatible</message>
                 <arguments>
@@ -907,7 +917,7 @@
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="5"/>
-            <description>The following keys, if present in an ExtGState object, shall have the values shown: CA - 1.0</description>
+            <description>If a CA key is present in an ExtGState object, its value shall be 1.0</description>
             <test>CA == null || CA - 1.0 &lt; 0.000001 &amp;&amp; CA - 1.0 &gt; -0.000001</test>
             <error>
                 <message>An ExtGState dictionary contains the CA key (stroke alpha) with value %1 other than 1.0</message>
@@ -919,7 +929,7 @@
         </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_1" clause="6.4" testNumber="6"/>
-            <description>The following keys, if present in an ExtGState object, shall have the values shown: ca - 1.0</description>
+            <description>If a ca key is present in an ExtGState object, its value shall be 1.0</description>
             <test>ca == null || ca - 1.0 &lt; 0.000001 &amp;&amp; ca - 1.0 &gt; -0.000001</test>
             <error>
                 <message>An ExtGState dictionary contains the ca key (fill alpha) with value %1 other than 1.0</message>
@@ -1001,7 +1011,7 @@
         <rule object="PDAnnot">
             <id specification="ISO_19005_1" clause="6.5.3" testNumber="5"/>
             <description>If an annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, the value of the N key shall be an appearance subdictionary</description>
-            <test>AP != "N" || Subtype != "Widget" || FT != "Btn" || (N_type == "Dict" &amp;&amp; appearance_size &gt; 0)</test>
+            <test>AP != "N" || Subtype != "Widget" || FT != "Btn" || (N_type == "Dict" &amp;&amp; containsAppearances == true)</test>
             <error>
                 <message>An annotation dictionary's Subtype key has a value of Widget and its FT key has a value of Btn, but the value of the N key is %1 instead of appearance subdictionary</message>
                 <arguments>
@@ -1097,20 +1107,20 @@
         </rule>
         <rule object="PDDocument">
             <id specification="ISO_19005_1" clause="6.7.2" testNumber="1"/>
-            <description>The document catalog dictionary of a conforming file shall contain the Metadata key</description>
-            <test>metadata_size == 1</test>
+            <description>The document catalog dictionary of a conforming file shall contain the Metadata key. The metadata stream dictionary shall contain entry Type with value /Metadata and entry Subtype with value /XML</description>
+            <test>containsMetadata == true</test>
             <error>
-                <message>The document catalog dictionary doesn't contain metadata key</message>
+                <message>The document catalog dictionary doesn't contain metadata key or metadata stream dictionary does not contain either entry Type with value /Metadata or entry Subtype with value /XML</message>
                 <arguments/>
             </error>
             <references/>
         </rule>
         <rule object="PDMetadata">
             <id specification="ISO_19005_1" clause="6.7.2" testNumber="2"/>
-            <description>Metadata object stream dictionaries shall not contain the Filter key</description>
-            <test>Filter == null</test>
+            <description>The Metadata object stream dictionary in the document’s catalog shall not contain the Filter key</description>
+            <test>isCatalogMetadata == false || Filter == null</test>
             <error>
-                <message>The metadata object stream dictionary contains the Filter key</message>
+                <message>The catalog metadata object stream dictionary contains the Filter key</message>
                 <arguments/>
             </error>
             <references/>
@@ -1555,9 +1565,9 @@
         <rule object="MainXMPPackage">
             <id specification="ISO_19005_1" clause="6.7.11" testNumber="1"/>
             <description>The PDF/A version and conformance level of a file shall be specified using the PDF/A Identification extension schema</description>
-            <test>Identification_size == 1</test>
+            <test>containsPDFAIdentification == true</test>
             <error>
-                <message>The document metadata stream doesn't contains PDF/A Identification Schema</message>
+                <message>The document metadata stream doesn't contain PDF/A Identification Schema</message>
                 <arguments/>
             </error>
             <references/>
@@ -1640,7 +1650,7 @@
         <rule object="PDDocument">
             <id specification="ISO_19005_1" clause="6.8.3.3" testNumber="1"/>
             <description>The logical structure of the conforming file shall be described by a structure hierarchy rooted in the StructTreeRoot entry of the document catalog dictionary, as described in PDF Reference 9.6</description>
-            <test>StructTreeRoot_size == 1</test>
+            <test>containsStructTreeRoot == true</test>
             <error>
                 <message>StructTreeRoot entry is not present in the document catalog</message>
                 <arguments/>

@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -49,9 +49,8 @@ public class MapBackedRegistry<K, V> extends MapBackedDirectory<K, V> implements
 
     /**
      * Creates a registry instance initialise using the passed map
-     * 
-     * @param map
-     *            a <code>Map<K, V> instance used to initialise the registry.
+     *
+     * @param map a <code>Map&lt;K, V&gt;</code> instance used to initialise the registry.
      */
     public MapBackedRegistry(final Map<K, V> map) {
         super(map);

@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -53,14 +53,13 @@ public interface BatchProcessingHandler extends Closeable {
 	public void handleBatchStart(ProcessorConfig config) throws VeraPDFException;
 
 	/**
-	 * This method is called by the {@link BatchProcessor} after each item in
-	 * the batch is processed allowing the implementor to take specific action
-	 * for each item processed.
-	 * 
-	 * @param result
-	 *            the {@link ProcessorResult} for the last item processed.
-	 * @throws VeraPDFException
-	 *             if there's a problem with the particular result.
+	 * This method is called by the {@link BatchProcessor} after each item in the batch is processed allowing the
+	 * implementor to take specific action for each item processed.
+	 *
+	 * @param result        the {@link ProcessorResult} for the last item processed.
+	 * @param isLogsEnabled flag if logs are enabled or not
+	 *
+	 * @throws VeraPDFException if there's a problem with the particular result.
 	 */
 	public void handleResult(ProcessorResult result, Boolean isLogsEnabled) throws VeraPDFException;
 

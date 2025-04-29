@@ -2,7 +2,7 @@
 <!--
 
     This file is part of veraPDF PDF/A Validation Library, a module of the veraPDF project.
-    Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+    Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
     All rights reserved.
 
     veraPDF PDF/A Validation Library is free software: you can redistribute it and/or modify
@@ -28,16 +28,16 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-parent</artifactId>
-    <version>1.26.2</version>
+    <version>1.28.1</version>
   </parent>
 
   <groupId>org.verapdf</groupId>
   <artifactId>verapdf-library-jakarta</artifactId>
-  <version>1.26.0</version>
+  <version>1.28.0</version>
   <packaging>pom</packaging>
 
-  <name>veraPDF PDF/A Validation Library</name>
-  <description>veraPDF PDF/A Validation API and core types.</description>
+  <name>veraPDF Validation Library for Jakarta EE</name>
+  <description>veraPDF Validation API and core types with Jakarta EE support.</description>
 
   <repositories>
     <repository>
@@ -72,7 +72,7 @@
   </scm>
 
   <properties>
-    <verapdf.model.version>[1.26.0,1.27.0)</verapdf.model.version>
+    <verapdf.model.version>[1.28.0,1.29.0)</verapdf.model.version>
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.language>java</sonar.language>
   </properties>
@@ -167,7 +167,7 @@
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.11.0</version>
+        <version>2.14.0</version>
         <scope>test</scope>
       </dependency>
 

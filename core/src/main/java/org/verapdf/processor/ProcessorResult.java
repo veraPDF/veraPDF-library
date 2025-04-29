@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -20,9 +20,7 @@
  */
 package org.verapdf.processor;
 
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.EnumSet;
+import java.util.*;
 
 import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -68,7 +66,7 @@ public interface ProcessorResult {
 	 *         {@link org.verapdf.pdfa.results.ValidationResults#defaultResult()}
 	 *         if validation not performed.
 	 */
-	public ValidationResult getValidationResult();
+	public List<ValidationResult> getValidationResults();
 
 	/**
 	 * @return the {@link FeaturesReport}.

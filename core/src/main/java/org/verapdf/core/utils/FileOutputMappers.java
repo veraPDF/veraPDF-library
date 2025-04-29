@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -31,10 +31,6 @@ import java.nio.file.Path;
  * @version 0.1 Created 13 Nov 2016:14:07:32
  */
 public class FileOutputMappers {
-	private FileOutputMappers() {
-		// TODO Auto-generated constructor stub
-	}
-
 	/**
 	 * Get a {@link FileOutputMapper} instance that maps output to the same
 	 * directory as the source with a veraPDF_ prefix
@@ -270,7 +266,7 @@ public class FileOutputMappers {
 	/**
 	 * Maps to a relative subfolder of the original with no prefix or suffix
 	 * 
-	 * @param relativePath
+	 * @param path
 	 *            the relative path to the results folder from the original
 	 *            source file location
 	 * @param prefix

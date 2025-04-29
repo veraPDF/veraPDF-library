@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -82,9 +82,6 @@ public enum FeatureObjectType {
 		return this.fullName;
 	}
 
-	/**
-	 * @return the idPrefix
-	 */
 	public String getIdPrefix() {
 		return idPrefix;
 	}

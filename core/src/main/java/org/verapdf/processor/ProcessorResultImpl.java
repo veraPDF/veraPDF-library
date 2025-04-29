@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -20,9 +20,7 @@
  */
 package org.verapdf.processor;
 
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.EnumSet;
+import java.util.*;
 
 import jakarta.xml.bind.annotation.XmlAttribute;
 import jakarta.xml.bind.annotation.XmlElement;
@@ -40,7 +38,8 @@ import org.verapdf.report.FeaturesReport;
 
 /**
  * Instance of this class contains result of
- * {@link org.verapdf.processor.ProcessorImpl#validate(InputStream, ItemDetails, Config, OutputStream)}
+ * {@link org.verapdf.processor.ItemProcessor#process(ItemDetails, java.io.InputStream)} and 
+ * {@link org.verapdf.processor.ItemProcessor#process(java.io.File)}
  * work.
  *
  * @author Sergey Shemyakov
@@ -60,7 +59,7 @@ class ProcessorResultImpl implements ProcessorResult {
 	private final ItemDetails itemDetails;
 	private final EnumMap<TaskType, TaskResult> taskResults;
 	@XmlElement
-	private final ValidationResult validationResult;
+	private final List<ValidationResult> validationResults;
 	private final FeatureExtractionResult featuresResult;
 	@XmlElement
 	private final MetadataFixerResult fixerResult;
@@ -79,19 +78,19 @@ class ProcessorResultImpl implements ProcessorResult {
 
 	private ProcessorResultImpl(final ItemDetails details, boolean isValidPdf, boolean isEncrypted, boolean isOutOfMemory,
 			final TaskResult result) {
-		this(details, isValidPdf, isEncrypted, isOutOfMemory, resMap(result), ValidationResults.defaultResult(),
+		this(details, isValidPdf, isEncrypted, isOutOfMemory, resMap(result), Collections.singletonList(ValidationResults.defaultResult()),
 				new FeatureExtractionResult(), FixerFactory.defaultResult());
 	}
 
 	private ProcessorResultImpl(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
-			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
+			final List<ValidationResult> validationResults, final FeatureExtractionResult featuresResult,
 			final MetadataFixerResult fixerResult) {
-		this(details, true, false, false, results, validationResult, featuresResult, fixerResult);
+		this(details, true, false, false, results, validationResults, featuresResult, fixerResult);
 	}
 
 	private ProcessorResultImpl(final ItemDetails details, final boolean isPdf, final boolean isEncrypted,
 			final boolean isOutOfMemory,
-			final EnumMap<TaskType, TaskResult> results, final ValidationResult validationResult,
+			final EnumMap<TaskType, TaskResult> results, final List<ValidationResult> validationResults,
 			final FeatureExtractionResult featuresResult, final MetadataFixerResult fixerResult) {
 		super();
 		this.itemDetails = details;
@@ -101,14 +100,11 @@ class ProcessorResultImpl implements ProcessorResult {
 		this.taskResults = results;
 		this.hasException = !isEncryptedPdf && !this.isOutOfMemory && this.isPdf &&
 				this.taskResults.values().stream().anyMatch(res -> res.getException() != null);
-		this.validationResult = validationResult;
+		this.validationResults = validationResults;
 		this.featuresResult = featuresResult;
 		this.fixerResult = fixerResult;
 	}
 
-	/**
-	 * @return the results
-	 */
 	@Override
 	public EnumMap<TaskType, TaskResult> getResults() {
 		return this.taskResults;
@@ -136,9 +132,9 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	static ProcessorResult fromValues(final ItemDetails details, final EnumMap<TaskType, TaskResult> results,
-			final ValidationResult validationResult, final FeatureExtractionResult featuresResult,
-			final MetadataFixerResult fixerResult) {
-		return new ProcessorResultImpl(details, true, false, false, results, validationResult, featuresResult, fixerResult);
+									  final List<ValidationResult> validationResults, final FeatureExtractionResult featuresResult,
+									  final MetadataFixerResult fixerResult) {
+		return new ProcessorResultImpl(details, true, false, false, results, validationResults, featuresResult, fixerResult);
 	}
 
 	static ProcessorResult invalidPdfResult(final ItemDetails details, final TaskResult res) {
@@ -158,8 +154,8 @@ class ProcessorResultImpl implements ProcessorResult {
 	}
 
 	@Override
-	public ValidationResult getValidationResult() {
-		return this.validationResult;
+	public List<ValidationResult> getValidationResults() {
+		return this.validationResults;
 	}
 
 	@Override

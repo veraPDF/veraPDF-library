@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -27,7 +27,7 @@ import org.verapdf.pdfa.results.MetadataFixerResult;
 
 /**
  * Current interface provide necessary behavior of pdf document
- * for {@link MetadataFixerImpl}
+ * for {@link org.verapdf.pdfa.MetadataFixer}
  *
  * @author Evgeniy Muravitskiy
  */
@@ -54,15 +54,12 @@ public interface PDFDocument {
 	 */
 	InfoDictionary getInfoDictionary();
 
-	/**
-	 * @return
-	 */
 	boolean isNeedToBeUpdated();
 
 	/**
 	 * Incremental save of pdf document. Document must be saved if and
 	 * only if metadata or information dictionary of document was changed.
-	 * In {@link MetadataFixerResultImpl} must set 1 of 3 states:
+	 * In {@link org.verapdf.pdfa.results.MetadataFixerResultImpl} must set 1 of 3 states:
 	 * <ul>
 	 * <li>
 	 * {@link org.verapdf.pdfa.results.MetadataFixerResult.RepairStatus#FIX_ERROR}
@@ -78,7 +75,7 @@ public interface PDFDocument {
 	 * </li>
 	 * </ul>
 	 *
-	 * @param report result of {@code MetadataFixerImpl} handling
+	 * @param status result of {@code MetadataFixerImpl} handling
 	 * @param output output stream for document save
 	 * @return 
 	 */

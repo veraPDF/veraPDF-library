@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.containers.StaticCoreContainers;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import org.verapdf.xmp.XMPException;
@@ -66,9 +67,10 @@ public class XMPHeaderTest {
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
+        StaticCoreContainers.setFlavour(PDFAFlavour.PDFA_1_B);
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
         VeraPDFMeta meta = VeraPDFMeta.parse(in);
-        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null, PDFAFlavour.PDFA_1_B);
+        AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
         assertEquals(this.bytes, pack.getbytes());
         assertEquals(this.encoding, pack.getencoding());
         }

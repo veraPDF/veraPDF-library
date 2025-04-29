@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -44,10 +44,10 @@ public final class ErrorsHelper {
 	}
 
 	/**
-	 * Adds an error to a {@link FeaturesCollection}
+	 * Adds an error to a {@link FeatureExtractionResult}
 	 *
 	 * @param collection
-	 *            the {@link FeaturesCollection} to add the error to
+	 *            the {@link FeatureExtractionResult} to add the error to
 	 * @param element
 	 *            element which contains error
 	 * @param errorMessageArg

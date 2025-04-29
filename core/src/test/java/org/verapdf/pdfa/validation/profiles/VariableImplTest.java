@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -99,8 +99,8 @@ public class VariableImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#toXml(Variable)} and
-     * {@link org.verapdf.pdfa.validation.profiles.VariableImpl#fromXml(String)}.
+     * {@link XmlSerialiser#toXml(Object, boolean, boolean)} and
+     * {@link XmlSerialiser#typeFromXml(Class, String)} (String)}.
      * 
      * @throws JAXBException
      */

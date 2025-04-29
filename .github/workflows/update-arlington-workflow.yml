@@ -1,3 +1,24 @@
+#
+# This file is part of veraPDF PDF/A Validation Library, a module of the veraPDF project.
+# Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
+# All rights reserved.
+#
+# veraPDF PDF/A Validation Library is free software: you can redistribute it and/or modify
+# it under the terms of either:
+#
+# The GNU General public license GPLv3+.
+# You should have received a copy of the GNU General Public License
+# along with veraPDF PDF/A Validation Library as the LICENSE.GPL file in the root of the source
+# tree.  If not, see http://www.gnu.org/licenses/ or
+# https://www.gnu.org/licenses/gpl-3.0.en.html.
+#
+# The Mozilla Public License MPLv2+.
+# You should have received a copy of the Mozilla Public License along with
+# veraPDF PDF/A Validation Library as the LICENSE.MPL file in the root of the source tree.
+# If a copy of the MPL was not distributed with this file, you can obtain one at
+# http://mozilla.org/MPL/2.0/.
+#
+
 name: Update arlington branch
 
 on:
@@ -18,17 +39,18 @@ on:
       - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFA-4F.xml'
       - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-1.xml'
       - 'core/src/main/resources/org/verapdf/pdfa/validation/PDFUA-2-ISO32005.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/WTPDF-1-0-Accessibility.xml'
+      - 'core/src/main/resources/org/verapdf/pdfa/validation/WTPDF-1-0-Reuse.xml'
 
 jobs:
   checkout-and-build:
+    if: github.repository == 'veraPDF/veraPDF-library'
     runs-on: ubuntu-latest
-
-    continue-on-error: true
 
     strategy:
       fail-fast: false
       matrix:
-        java-version: [11, 16, 17, 21]
+        java-version: [11, 17, 21]
 
     steps:
       - name: Checkout code
@@ -38,6 +60,7 @@ jobs:
           ref: integration
       - name: JDK setup
         uses: actions/setup-java@v4
+        continue-on-error: true
         with:
           java-version: ${{ matrix.java-version }}
           distribution: 'temurin'
@@ -46,12 +69,12 @@ jobs:
         run: |
           git fetch origin arlington:arlington
           git checkout -b test-branch arlington
-      - name: Configure user nameF
+      - name: Configure user name
         run: |
           git config user.name "Git User"
           git config user.email "user@test.com"
       - name: Add commit to the test branch
-        run: git cherry-pick -m 1 ${{ github.sha }}
+        run: git cherry-pick -m 1 ${{ github.event.before }}..${{ github.event.after }} --empty=drop
       - name: Build project with Maven
         if: success()
         run: mvn --batch-mode --update-snapshots verify
@@ -77,7 +100,7 @@ jobs:
           git config user.name "Git User"
           git config user.email "user@temp.com"
       - name: Add commit to new branch
-        run: git cherry-pick -m 1 ${{ github.sha }}
+        run: git cherry-pick -m 1 ${{ github.event.before }}..${{ github.event.after }} --empty=drop
       - name: Merge branch into arlington
         if: success()
         run: |
@@ -93,6 +116,7 @@ jobs:
     needs: [checkout-and-build, merge]
     if: |
       always() &&
+      github.repository == 'veraPDF/veraPDF-library' &&
       (contains(needs.*.result, 'failure') ||
       contains(needs.*.result, 'skipped') ||
       contains(needs.*.result, 'cancelled'))

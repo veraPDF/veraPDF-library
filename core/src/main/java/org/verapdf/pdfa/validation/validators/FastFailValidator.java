@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -27,6 +27,9 @@ import org.verapdf.pdfa.validation.profiles.Rule;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.model.baselayer.Object;
 
+import java.util.Collections;
+import java.util.List;
+
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
@@ -50,14 +53,20 @@ class FastFailValidator extends BaseValidator {
     protected FastFailValidator(final ValidationProfile profile, final boolean logPassedChecks,
                                 final int maxFailedTests, final boolean showErrorMessages, boolean showProgress,
                                 int maxNumberOfDisplayedFailedChecks) {
-        super(profile, maxNumberOfDisplayedFailedChecks, logPassedChecks, showErrorMessages, showProgress);
+        this(Collections.singletonList(profile), logPassedChecks, maxFailedTests, showErrorMessages, showProgress, maxNumberOfDisplayedFailedChecks);
+    }
+
+    protected FastFailValidator(final List<ValidationProfile> profiles, final boolean logPassedChecks,
+                                final int maxFailedTests, final boolean showErrorMessages, boolean showProgress,
+                                int maxNumberOfDisplayedFailedChecks) {
+        super(profiles, maxNumberOfDisplayedFailedChecks, logPassedChecks, showErrorMessages, showProgress);
         this.maxFailedTests = maxFailedTests;
     }
 
     @Override
-    protected void processAssertionResult(final boolean assertionResult,
+    protected void processAssertionResult(FlavourValidator flavourValidator, final boolean assertionResult,
             final String locationContext, final Rule rule, final Object obj) {
-        super.processAssertionResult(assertionResult, locationContext, rule, obj);
+        super.processAssertionResult(flavourValidator, assertionResult, locationContext, rule, obj);
         if (!assertionResult) {
             this.failureCount++;
             if ((this.maxFailedTests > 0) && (this.failureCount >= this.maxFailedTests)) {
