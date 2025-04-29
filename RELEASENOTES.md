@@ -3,7 +3,7 @@ Version 1.28 (April 30, 2025)
 
 ###  Applications
 - updated izpack to version 5.2.4
-- 
+
 ###  Validation
 - (PDF/UA-1,2, WTPDF-1, ISO 32005) added rules to require Marked=true entry in MarkInfo dictionary
 - (PDF/UA-2, WTPDF-1, ISO 32005) fixed parent-child rules for NonStruct, Part and Div
