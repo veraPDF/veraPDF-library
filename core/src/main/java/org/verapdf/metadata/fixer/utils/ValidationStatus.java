@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -41,11 +41,10 @@ package org.verapdf.metadata.fixer.utils;
  * as other than metadata rules
  * </li>
  * </ul>
- * According to this status {@link MetadataFixerImpl}
+ * According to this status {@link org.verapdf.pdfa.MetadataFixer}
  * run different handling of document.
  *
  * @author Evgeniy Muravitskiy
- * @see MetadataFixerImpl#fixAndSaveDocument(OutputStream, FixerConfig)
  * @see org.verapdf.metadata.fixer.utils.ProcessedObjectsInspector
  */
 public enum ValidationStatus {
@@ -87,17 +86,16 @@ public enum ValidationStatus {
 
 	/**
 	 * Return combination of current status and given status according to next table:
+	 * <p>
+	 *
 	 * <table border="1" style="border: 1px solid">
-	 *     <col border="1" style="border: 1px solid"/>
-	 *     <col border="1" style="border: 1px solid"/>
-	 *     <col border="1" style="border: 1px solid"/>
-	 *     <body>
+	 *     <caption>Table: Validation status</caption>
 	 *         <tr>
 	 *             <th>Current value</th>
 	 *             <th>Passed value</th>
 	 *             <th>Result value</th>
 	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">INVALID_DOCUMENT</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -115,8 +113,7 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>INVALID_DOCUMENT</td>
 	 *             </tr>
-	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">INVALID_STRUCTURE</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -134,8 +131,7 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>INVALID_STRUCTURE</td>
 	 *             </tr>
-	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">INVALID_METADATA</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -153,8 +149,7 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>INVALID_METADATA</td>
 	 *             </tr>
-	 *         </tr>
-	 *         <tr border="1" style="border: 1px solid" >
+	 *         <tr style="border: 1px solid">
 	 *             <td rowspan="5">VALID</td>
 	 *             <tr>
 	 *                 <td>INVALID_DOCUMENT</td>
@@ -172,11 +167,10 @@ public enum ValidationStatus {
 	 *                 <td>VALID</td>
 	 *                 <td>VALID</td>
 	 *             </tr>
-	 *         </tr>
-	 *     </body>
 	 * </table>
 	 *
 	 * @param status passed status argument
+	 *
 	 * @return result status
 	 */
 	public ValidationStatus getStatus(ValidationStatus status) {

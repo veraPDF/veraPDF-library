@@ -1,17 +1,17 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
- * <p>
+ *
  * veraPDF Library core is free software: you can redistribute it and/or modify
  * it under the terms of either:
- * <p>
+ *
  * The GNU General public license GPLv3+.
  * You should have received a copy of the GNU General Public License
  * along with veraPDF Library core as the LICENSE.GPL file in the root of the source
  * tree.  If not, see http://www.gnu.org/licenses/ or
  * https://www.gnu.org/licenses/gpl-3.0.en.html.
- * <p>
+ *
  * The Mozilla Public License MPLv2+.
  * You should have received a copy of the Mozilla Public License along with
  * veraPDF Library core as the LICENSE.MPL file in the root of the source tree.
@@ -33,6 +33,7 @@ import org.verapdf.core.utils.ValidationProgress;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.pdfa.PDFAParser;
 import org.verapdf.pdfa.PDFAValidator;
+import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.Location;
 import org.verapdf.pdfa.results.TestAssertion;
 import org.verapdf.pdfa.results.TestAssertion.Status;
@@ -43,29 +44,27 @@ import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import java.net.URI;
 import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */
 public class BaseValidator implements PDFAValidator {
+	private static final Logger LOGGER = Logger.getLogger(BaseValidator.class.getCanonicalName());
 	public static final int DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS = 100;
 	private static final int MAX_CHECKS_NUMBER = 10_000;
 	private static final URI componentId = URI.create("http://pdfa.verapdf.org/validators#default");
-	private static final String componentName = "veraPDF PDF/A Validator";
+	private static final String componentName = "veraPDF Validator";
 	private static final ComponentDetails componentDetails = Components.libraryDetails(componentId, componentName);
-	private final ValidationProfile profile;
+	List<FlavourValidator> validators = new LinkedList<>();
 	private ScriptableObject scope;
 
 	private final Deque<Object> objectsStack = new ArrayDeque<>();
 	private final Deque<String> objectsContext = new ArrayDeque<>();
-	private final Map<Rule, List<ObjectWithContext>> deferredRules = new HashMap<>();
-	protected final List<TestAssertion> results = new ArrayList<>();
-	private final HashMap<RuleId, Integer> failedChecks = new HashMap<>();
-	protected int testCounter = 0;
 	protected volatile boolean abortProcessing = false;
 	protected final boolean logPassedChecks;
 	protected final int maxNumberOfDisplayedFailedChecks;
-	protected boolean isCompliant = true;
 	private boolean showErrorMessages = false;
 	protected final ValidationProgress validationProgress;
 	protected volatile JobEndStatus jobEndStatus = JobEndStatus.NORMAL;
@@ -78,32 +77,74 @@ public class BaseValidator implements PDFAValidator {
 		this(profile, false);
 	}
 
+	protected BaseValidator(final List<ValidationProfile> profiles) {
+		this(profiles, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, false, false, false);
+	}
+
 	protected BaseValidator(final ValidationProfile profile, final boolean logPassedChecks) {
 		this(profile, DEFAULT_MAX_NUMBER_OF_DISPLAYED_FAILED_CHECKS, logPassedChecks, false, false);
 	}
 
 	protected BaseValidator(final ValidationProfile profile, final int maxNumberOfDisplayedFailedChecks,
 							final boolean logPassedChecks, final boolean showErrorMessages, boolean showProgress) {
+		this(Collections.singletonList(profile), maxNumberOfDisplayedFailedChecks, logPassedChecks, showErrorMessages, showProgress);
+	}
+
+	protected BaseValidator(final List<ValidationProfile> profiles, final int maxNumberOfDisplayedFailedChecks,
+							final boolean logPassedChecks, final boolean showErrorMessages, boolean showProgress) {
 		super();
-		this.profile = profile;
+		createCompatibleValidators(profiles);
 		this.maxNumberOfDisplayedFailedChecks = maxNumberOfDisplayedFailedChecks;
 		this.logPassedChecks = logPassedChecks;
 		this.showErrorMessages = showErrorMessages;
 		this.validationProgress = new ValidationProgress(showProgress);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.verapdf.pdfa.PDFAValidator#getProfile()
-	 */
+	private void createCompatibleValidators(List<ValidationProfile> profiles) {
+		if (profiles.isEmpty()) {
+			return;
+		}
+		PDFAFlavour flavour = profiles.get(0).getPDFAFlavour();
+		PDFAFlavour.PDFSpecification pdfSpecification = flavour.getPart().getPdfSpecification();
+		for (ValidationProfile profile : profiles) {
+			PDFAFlavour currentFlavour = profile.getPDFAFlavour();
+			PDFAFlavour.PDFSpecification currentPDFSpecification = currentFlavour.getPart().getPdfSpecification();
+			if (pdfSpecification == currentPDFSpecification) {
+				validators.add(new FlavourValidator(profile));
+			} else {
+				LOGGER.log(Level.WARNING,String.format("PDF version %s of detected flavour %s is incompatible with the PDF version %s of other detected flavour %s. The validation of flavour %s is skipped",
+						currentPDFSpecification, currentFlavour, pdfSpecification, flavour, currentFlavour));
+			}
+		}
+	}
+	
+
 	@Override
 	public ValidationProfile getProfile() {
-		return this.profile;
+		return this.validators.isEmpty() ? null : this.validators.get(0).getProfile();
+	}
+	
+	private List<PDFAFlavour> getFlavours() {
+		List<PDFAFlavour> flavours = new LinkedList<>();
+		for (FlavourValidator validator : validators) {
+			flavours.add(validator.getProfile().getPDFAFlavour());
+		}
+		return flavours;
 	}
 
 	@Override
 	public ValidationResult validate(PDFAParser toValidate) throws ValidationException {
+		if (validators.isEmpty()) {
+			return null;
+		}
+		validators = Collections.singletonList(validators.get(0));
+		List<ValidationResult> validationResults = validateAll(toValidate);
+		return validationResults.get(0);
+	}
+
+	@Override
+	public List<ValidationResult> validateAll(PDFAParser toValidate) throws ValidationException {
+		toValidate.setFlavours(getFlavours());
 		try {
 			return this.validate(toValidate.getRoot());
 		} catch (RuntimeException e) {
@@ -129,7 +170,7 @@ public class BaseValidator implements PDFAValidator {
 		this.abortProcessing = true;
 	}
 
-	protected ValidationResult validate(Object root) throws ValidationException {
+	protected List<ValidationResult> validate(Object root) throws ValidationException {
 		initialise();
 		this.validationProgress.updateVariables();
 		this.rootType = root.getObjectType();
@@ -146,45 +187,55 @@ public class BaseValidator implements PDFAValidator {
 			this.validationProgress.updateNumberOfObjectsToBeProcessed(objectsStack.size());
 		}
 
-		for (Map.Entry<Rule, List<ObjectWithContext>> entry : this.deferredRules.entrySet()) {
-			for (ObjectWithContext objectWithContext : entry.getValue()) {
-				checkObjWithRule(objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
-			}
+		for (FlavourValidator validator : validators) {
+			for (Map.Entry<Rule, List<ObjectWithContext>> entry : validator.getDeferredRules().entrySet()) {
+				for (ObjectWithContext objectWithContext : entry.getValue()) {
+					checkObjWithRule(validator, objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
+				}
+			}			
 		}
 
 		this.validationProgress.showProgressAfterValidation();
 
 		JavaScriptEvaluator.exitContext();
 
-		return ValidationResults.resultFromValues(this.profile, this.results, this.failedChecks, this.isCompliant,
-		                                          this.testCounter, this.jobEndStatus);
+		List<ValidationResult> results = new LinkedList<>();
+		for (FlavourValidator validator : validators) {
+			results.add(ValidationResults.resultFromValues(validator.getProfile(), validator.results, validator.getFailedChecks(), validator.isCompliant,
+					validator.testCounter, this.jobEndStatus));
+		}
+		return results;
 	}
 
 	protected void initialise() {
 		this.scope = JavaScriptEvaluator.initialise();
-		this.failedChecks.clear();
 		this.objectsStack.clear();
 		this.objectsContext.clear();
-		this.deferredRules.clear();
-		this.results.clear();
 		this.idSet.clear();
-		this.testCounter = 0;
-		this.isCompliant = true;
+		for (FlavourValidator validator : validators) {
+			validator.getFailedChecks().clear();
+			validator.getDeferredRules().clear();
+			validator.results.clear();
+			validator.testCounter = 0;
+			validator.isCompliant = true;
+		}
 		initializeAllVariables();
 	}
 
 	private void initializeAllVariables() {
-		for (Variable var : this.profile.getVariables()) {
-			if (var == null) {
-				continue;
-			}
+		for (FlavourValidator flavourValidator : validators) {
+			for (Variable var : flavourValidator.getProfile().getVariables()) {
+				if (var == null) {
+					continue;
+				}
 
-			java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
+				java.lang.Object res = JavaScriptEvaluator.evaluateString(var.getDefaultValue(), this.scope);
 
-			if (res instanceof NativeJavaObject) {
-				res = ((NativeJavaObject) res).unwrap();
-			}
-			this.scope.put(var.getName(), this.scope, res);
+				if (res instanceof NativeJavaObject) {
+					res = ((NativeJavaObject) res).unwrap();
+				}
+				this.scope.put(var.getName(), this.scope, res);
+			}			
 		}
 	}
 
@@ -210,13 +261,15 @@ public class BaseValidator implements PDFAValidator {
 	}
 
 	private void updateVariableForObjectWithType(Object object, String objectType) {
-		for (Variable var : this.profile.getVariablesByObject(objectType)) {
-			if (var == null) {
-				continue;
-			}
-			java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
+		for (FlavourValidator flavourValidator : validators) {
+			for (Variable var : flavourValidator.getProfile().getVariablesByObject(objectType)) {
+				if (var == null) {
+					continue;
+				}
+				java.lang.Object variable = JavaScriptEvaluator.evalVariableResult(var, object, this.scope);
 
-			this.scope.put(var.getName(), this.scope, variable);
+				this.scope.put(var.getName(), this.scope, variable);
+			}
 		}
 	}
 
@@ -277,17 +330,18 @@ public class BaseValidator implements PDFAValidator {
 
 	private boolean checkAllRules(Object checkObject, String checkContext) {
 		boolean res = true;
-		Set<Rule> roolsForObject = this.profile.getRulesByObject(checkObject.getObjectType());
-		for (Rule rule : roolsForObject) {
-			res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
-		}
-
-		for (String checkType : checkObject.getSuperTypes()) {
-			roolsForObject = this.profile.getRulesByObject(checkType);
-			if (roolsForObject != null) {
-				for (Rule rule : roolsForObject) {
-					if (rule != null) {
-						res &= firstProcessObjectWithRule(checkObject, checkContext, rule);
+		for (FlavourValidator flavourValidator : validators) {
+			Set<Rule> roolsForObject = flavourValidator.getProfile().getRulesByObject(checkObject.getObjectType());
+			for (Rule rule : roolsForObject) {
+				res &= firstProcessObjectWithRule(flavourValidator, checkObject, checkContext, rule);
+			}
+			for (String checkType : checkObject.getSuperTypes()) {
+				roolsForObject = flavourValidator.getProfile().getRulesByObject(checkType);
+				if (roolsForObject != null) {
+					for (Rule rule : roolsForObject) {
+						if (rule != null) {
+							res &= firstProcessObjectWithRule(flavourValidator, checkObject, checkContext, rule);
+						}
 					}
 				}
 			}
@@ -295,53 +349,53 @@ public class BaseValidator implements PDFAValidator {
 		return res;
 	}
 
-	private boolean firstProcessObjectWithRule(Object checkObject, String checkContext, Rule rule) {
+	public boolean firstProcessObjectWithRule(FlavourValidator flavourValidator, Object checkObject, String checkContext, Rule rule) {
 		Boolean deferred = rule.getDeferred();
 		if (deferred != null && deferred) {
-			List<ObjectWithContext> list = this.deferredRules.computeIfAbsent(rule, k -> new ArrayList<>());
-			list.add(new ObjectWithContext(checkObject, checkContext));
+			List<BaseValidator.ObjectWithContext> list = flavourValidator.getDeferredRules().computeIfAbsent(rule, k -> new ArrayList<>());
+			list.add(new BaseValidator.ObjectWithContext(checkObject, checkContext));
 			return true;
 		}
-		return checkObjWithRule(checkObject, checkContext, rule);
+		return checkObjWithRule(flavourValidator, checkObject, checkContext, rule);
 	}
 
-	private boolean checkObjWithRule(Object obj, String contextForRule, Rule rule) {
+	private boolean checkObjWithRule(FlavourValidator flavourValidator, Object obj, String contextForRule, Rule rule) {
 		boolean testEvalResult = JavaScriptEvaluator.getTestEvalResult(obj, rule, this.scope);
 
-		this.processAssertionResult(testEvalResult, contextForRule, rule, obj);
+		this.processAssertionResult(flavourValidator, testEvalResult, contextForRule, rule, obj);
 
-		this.validationProgress.updateNumberOfFailedChecks(this.failedChecks.size());
+		this.validationProgress.updateNumberOfFailedChecks(flavourValidator.getFailedChecks().size());
 		this.validationProgress.incrementNumberOfChecks();
 
 		return testEvalResult;
 	}
 
-	protected void processAssertionResult(final boolean assertionResult, final String locationContext,
+	protected void processAssertionResult(FlavourValidator flavourValidator, final boolean assertionResult, final String locationContext,
 										  final Rule rule, final Object obj) {
 		if (!this.abortProcessing) {
-			this.testCounter++;
-			if (this.isCompliant) {
-				this.isCompliant = assertionResult;
+			flavourValidator.testCounter++;
+			if (flavourValidator.isCompliant) {
+				flavourValidator.isCompliant = assertionResult;
 			}
 			if (!assertionResult) {
-				int failedChecksNumberOfRule = failedChecks.getOrDefault(rule.getRuleId(), 0);
-				failedChecks.put(rule.getRuleId(), ++failedChecksNumberOfRule);
+				int failedChecksNumberOfRule = flavourValidator.getFailedChecks().getOrDefault(rule.getRuleId(), 0);
+				flavourValidator.getFailedChecks().put(rule.getRuleId(), ++failedChecksNumberOfRule);
 				if ((failedChecksNumberOfRule <= maxNumberOfDisplayedFailedChecks || maxNumberOfDisplayedFailedChecks == -1) &&
-						(this.results.size() <= MAX_CHECKS_NUMBER || failedChecksNumberOfRule <= 1)) {
+						(flavourValidator.results.size() <= MAX_CHECKS_NUMBER || failedChecksNumberOfRule <= 1)) {
 					Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
 					List<ErrorArgument> errorArguments = showErrorMessages ?
 							JavaScriptEvaluator.getErrorArgumentsResult(obj, rule.getError().getArguments(),
 									this.scope) : Collections.emptyList();
 					String errorMessage = showErrorMessages ? createErrorMessage(rule.getError().getMessage(), errorArguments) : null;
-					TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+					TestAssertion assertion = ValidationResults.assertionFromValues(flavourValidator.testCounter, rule.getRuleId(),
 							Status.FAILED, rule.getDescription(), location, obj.getContext(), errorMessage, errorArguments);
-					this.results.add(assertion);
+					flavourValidator.results.add(assertion);
 				}
-			} else if (this.logPassedChecks && this.results.size() <= MAX_CHECKS_NUMBER) {
+			} else if (this.logPassedChecks && flavourValidator.results.size() <= MAX_CHECKS_NUMBER) {
 				Location location = ValidationResults.locationFromValues(this.rootType, locationContext);
-				TestAssertion assertion = ValidationResults.assertionFromValues(this.testCounter, rule.getRuleId(),
+				TestAssertion assertion = ValidationResults.assertionFromValues(flavourValidator.testCounter, rule.getRuleId(),
 						Status.PASSED, rule.getDescription(), location, obj.getContext(), null, Collections.emptyList());
-				this.results.add(assertion);
+				flavourValidator.results.add(assertion);
 			}
 		}
 	}
@@ -364,7 +418,7 @@ public class BaseValidator implements PDFAValidator {
 		 */
 	}
 
-	private static class ObjectWithContext {
+	public static class ObjectWithContext {
 		private final Object object;
 		private final String context;
 

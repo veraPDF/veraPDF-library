@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -66,7 +66,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#fromValues(RuleId, String, String, String, ErrorDetails, List)}
+     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#fromValues(RuleId, String, Boolean, String, String, String, ErrorDetails, List)}
      * .
      */
     @Test
@@ -100,7 +100,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#toXml(org.verapdf.pdfa.validation.profiles.Rule, Boolean)}
+     * {@link XmlSerialiser#toXml(Object, boolean, boolean)}
      * .
      *
      * @throws JAXBException
@@ -120,7 +120,7 @@ public class RuleImplTest {
 
     /**
      * Test method for
-     * {@link org.verapdf.pdfa.validation.profiles.RuleImpl#toXml(Rule, java.io.OutputStream, Boolean)}
+     * {@link XmlSerialiser#toXml(Object, boolean, boolean)}
      * .
      *
      * @throws JAXBException

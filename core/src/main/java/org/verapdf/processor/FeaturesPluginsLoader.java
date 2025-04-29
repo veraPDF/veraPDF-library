@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -141,7 +141,6 @@ public class FeaturesPluginsLoader {
 		String name = getNonNullString(config.getName());
 		String version = getNonNullString(config.getVersion());
 		String description = getNonNullString(config.getDescription());
-		AbstractFeaturesExtractor.ExtractorDetails details = new AbstractFeaturesExtractor.ExtractorDetails(name, version, description);
 
 		Map<String, String> attributes = new HashMap<>();
 		List<Attribute> attributesList = config.getAttributes();
@@ -152,6 +151,7 @@ public class FeaturesPluginsLoader {
 				}
 			}
 		}
+		AbstractFeaturesExtractor.ExtractorDetails details = new AbstractFeaturesExtractor.ExtractorDetails(name, version, description);
 		extractor.initialize(details, attributes);
 	}
 

@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -104,7 +104,7 @@ public class ValidationProfileImplTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.pdfa.validation.profiles.ValidationProfileImpl#toXml(ValidationProfile, OutputStream, Boolean)}
+	 * {@link Profiles#profileToXml(ValidationProfile, OutputStream, boolean, boolean)}
 	 * .
 	 * 
 	 * @throws JAXBException
@@ -113,8 +113,8 @@ public class ValidationProfileImplTest {
 	@Test
 	public final void testToXmlStream() throws JAXBException, IOException {
 		Set<Rule> rules = new HashSet<>();
-		Set<Variable> vars = new HashSet<>();
 		rules.add(Profiles.defaultRule());
+		Set<Variable> vars = new HashSet<>();
 		vars.add(Profiles.defaultVariable());
 		ValidationProfile profile = Profiles.profileFromValues(PDFAFlavour.NO_FLAVOUR,
 				ProfileDetailsImpl.defaultInstance(), "hash", rules, vars);

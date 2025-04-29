@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -20,6 +20,8 @@
  */
 package org.verapdf.model.impl.axl;
 
+import org.verapdf.containers.StaticCoreContainers;
+import org.verapdf.pdfa.flavours.PDFFlavours;
 import org.verapdf.xmp.XMPConst;
 import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.ValidatorsContainer;
@@ -42,8 +44,8 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
     private static final String VALUE_TYPE = "valueType";
     private static final Set<String> validChildNames = new HashSet<>();
 
-    public AXLExtensionSchemaProperty(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3, PDFAFlavour flavour) {
-        super(EXTENSION_SCHEMA_PROPERTY, xmpNode, containerForPDFA_1, containerForPDFA_2_3, flavour);
+    public AXLExtensionSchemaProperty(VeraPDFXMPNode xmpNode, ValidatorsContainer containerForPDFA_1, ValidatorsContainer containerForPDFA_2_3) {
+        super(EXTENSION_SCHEMA_PROPERTY, xmpNode, containerForPDFA_1, containerForPDFA_2_3);
     }
 
     @Override
@@ -98,7 +100,7 @@ public class AXLExtensionSchemaProperty extends AXLExtensionSchemaObject impleme
 
     @Override
     public Boolean getisValueTypeDefined() {
-        if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
+        if (PDFFlavours.isFlavourPart(StaticCoreContainers.getFlavour(), PDFAFlavour.Specification.ISO_19005_1)) {
             return isValueTypeValidForPDFA_1();
         }
         return isValueTypeValidForPDFA_2_3();

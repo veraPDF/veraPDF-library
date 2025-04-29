@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -63,7 +63,7 @@ public class FixerConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.metadata.fixer.FixerConfigImpl#fromValues(java.lang.String, boolean)}.
+	 * {@link org.verapdf.metadata.fixer.FixerFactory#configFromValues(String)}
 	 */
 	@Test
 	public void testFromValues() {
@@ -75,7 +75,7 @@ public class FixerConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.metadata.fixer.FixerConfigImpl#toXml(org.verapdf.metadata.fixer.MetadataFixerConfig, java.lang.Boolean)}.
+	 * {@link XmlSerialiser#toXml(Object, OutputStream, boolean, boolean)}
 	 */
 	@Test
 	public void testToXmlMetadataFixerConfigBoolean() throws JAXBException {
@@ -87,7 +87,7 @@ public class FixerConfigTest {
 
 	/**
 	 * Test method for
-	 * {@link org.verapdf.metadata.fixer.FixerConfigImpl#toXml(org.verapdf.metadata.fixer.MetadataFixerConfig, java.io.OutputStream, java.lang.Boolean)}.
+	 * {@link XmlSerialiser#toXml(Object, OutputStream, boolean, boolean)}.
 	 */
 	@Test
 	public void testToXmlMetadataFixerConfigOutputStreamBoolean() throws IOException, JAXBException {

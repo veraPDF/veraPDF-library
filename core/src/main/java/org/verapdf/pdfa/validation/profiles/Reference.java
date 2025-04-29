@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlJavaTypeAdapter(ReferenceImpl.Adapter.class)
 public interface Reference {
     /**
-     * @return a {@link Specification} that identifies the PDF/A Specification
-     *         referred to.
+     * @return a {@link String} that identifies the Specification referred to.
      */
     public String getSpecification();
 

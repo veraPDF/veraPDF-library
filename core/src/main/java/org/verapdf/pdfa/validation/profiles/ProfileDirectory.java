@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@
  */
 package org.verapdf.pdfa.validation.profiles;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -72,6 +73,8 @@ public interface ProfileDirectory {
      *             if flavour is null
      */
     public ValidationProfile getValidationProfileByFlavour(PDFAFlavour flavour);
+    
+    public List<ValidationProfile> getValidationProfilesByFlavours(List<PDFAFlavour> flavours);
 
     /**
      * @return the full set of {@link ValidationProfile}s held in the directory.

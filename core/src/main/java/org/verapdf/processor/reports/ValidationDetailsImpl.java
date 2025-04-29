@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -70,41 +70,26 @@ final class ValidationDetailsImpl implements ValidationDetails {
 		this.tags = tags != null && !tags.isEmpty() ? tags : null;
 	}
 
-	/**
-	 * @return the passedRules
-	 */
 	@Override
 	public int getPassedRules() {
 		return this.passedRules;
 	}
 
-	/**
-	 * @return the failedRules
-	 */
 	@Override
 	public int getFailedRules() {
 		return this.failedRules;
 	}
 
-	/**
-	 * @return the passedChecks
-	 */
 	@Override
 	public int getPassedChecks() {
 		return this.passedChecks;
 	}
 
-	/**
-	 * @return the failedChecks
-	 */
 	@Override
 	public int getFailedChecks() {
 		return this.failedChecks;
 	}
 
-	/**
-	 * @return the ruleSummaries
-	 */
 	@Override
 	public Set<RuleSummary> getRuleSummaries() {
 		return this.ruleSummaries;

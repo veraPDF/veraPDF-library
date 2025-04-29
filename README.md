@@ -2,7 +2,7 @@ veraPDF-library
 ===============
 *Industry Supported PDF/A and PDF/UA Validation*
 
-[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.26/job/library/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.26/job/library/ "OPF Jenkins")
+[![Build Status](https://jenkins.openpreservation.org/job/veraPDF/job/1.28/job/library/badge/icon)](https://jenkins.openpreservation.org/job/veraPDF/job/1.28/job/library/ "OPF Jenkins")
 [![Maven Central](https://img.shields.io/maven-central/v/org.verapdf/verapdf-library.svg)](https://repo1.maven.org/maven2/org/verapdf/verapdf-library/ "Maven central")
 [![CodeCov Coverage](https://img.shields.io/codecov/c/github/veraPDF/veraPDF-library.svg)](https://codecov.io/gh/veraPDF/veraPDF-library/ "CodeCov coverage")
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/79a5ff15e77444d79d6e97cc40bb458c)](https://app.codacy.com/gh/veraPDF/veraPDF-library/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade "Codacy grade")
@@ -29,7 +29,7 @@ Quick Start
 
 In order to build the library you'll need:
 
- * Java 8 - 21, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
+ * Java 8, 11, 17 or 21, which can be downloaded [from Oracle](https://www.oracle.com/technetwork/java/javase/downloads/index.html), or for Linux users [OpenJDK](https://openjdk.java.net/install/index.html).
  * [Maven v3+](https://maven.apache.org/)
 
 Life will be easier if you also use [Git](https://git-scm.com/) to obtain and manage the source.

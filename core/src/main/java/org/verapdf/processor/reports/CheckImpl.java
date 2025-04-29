@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -67,42 +67,27 @@ final class CheckImpl implements Check {
 	private CheckImpl() {
 		this(TestAssertion.Status.PASSED, "", null, null, null);
 	}
-	
-	/**
-	 * @return the status
-	 */
+
 	@Override
 	public String getStatus() {
 		return this.status;
 	}
 
-	/**
-	 * @return the location
-	 */
 	@Override
 	public String getLocation() {
 		return this.location;
 	}
 
-	/**
-	 * @return the context
-	 */
 	@Override
 	public String getContext() {
 		return this.context;
 	}
 
-	/**
-	 * @return the error message
-	 */
 	@Override
 	public String getErrorMessage() {
 		return this.errorMessage;
 	}
 
-	/**
-	 * @return the error arguments
-	 */
 	@Override
 	public List<String> getErrorArguments() {
 		return this.errorArguments;

@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -29,10 +29,7 @@ import org.verapdf.pdfa.results.MetadataFixerResult;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.report.FeaturesReport;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumMap;
+import java.util.*;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -81,7 +78,7 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 			switch (taskType) {
 			case VALIDATE:
 				if (taskResult.isSuccess())
-					validationSuccess(taskResult, result.getValidationResult());
+					validationSuccess(taskResult, result.getValidationResults());
 				else
 					validationFailure(taskResult);
 				break;
@@ -123,7 +120,7 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 
 	abstract void pdfEncrypted(final TaskResult taskResult) throws VeraPDFException;
 
-	abstract void validationSuccess(final TaskResult taskResult, final ValidationResult validationResult)
+	abstract void validationSuccess(final TaskResult taskResult, final List<ValidationResult> validationResults)
 			throws VeraPDFException;
 
 	abstract void validationFailure(final TaskResult taskResult) throws VeraPDFException;

@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -64,48 +64,30 @@ class ComponentDetailsImpl implements ComponentDetails {
 		this.description = description;
 	}
 
-	/**
-	 * @return the defaultid
-	 */
 	public static URI getDefaultid() {
 		return defaultId;
 	}
 
-	/**
-	 * @return the id
-	 */
 	@Override
 	public URI getId() {
 		return this.id;
 	}
 
-	/**
-	 * @return the name
-	 */
 	@Override
 	public String getName() {
 		return this.name;
 	}
 
-	/**
-	 * @return the version
-	 */
 	@Override
 	public String getVersion() {
 		return this.version;
 	}
 
-	/**
-	 * @return the provider
-	 */
 	@Override
 	public String getProvider() {
 		return this.provider;
 	}
 
-	/**
-	 * @return the description
-	 */
 	@Override
 	public String getDescription() {
 		return this.description;

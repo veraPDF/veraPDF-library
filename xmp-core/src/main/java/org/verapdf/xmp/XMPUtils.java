@@ -255,7 +255,7 @@ public class XMPUtils
 	 *    		    <li>&quot;t&quot; and &quot;f&quot;
 	 *    		    <li>&quot;on&quot; and &quot;off&quot;
 	 *    		    <li>&quot;yes&quot; and &quot;no&quot;
-	 *   		  	<li>&quot;value <> 0&quot; and &quot;value == 0&quot;
+	 *   		  	<li>&quot;value &lt;&gt; 0&quot; and &quot;value == 0&quot;
 	 *         </ul>
 	 * @throws XMPException If an empty string is passed.
 	 */

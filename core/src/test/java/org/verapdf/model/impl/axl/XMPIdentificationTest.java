@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.containers.StaticCoreContainers;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import org.verapdf.xmp.XMPException;
@@ -90,12 +91,12 @@ public class XMPIdentificationTest {
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
+        StaticCoreContainers.setFlavour(PDFAFlavour.PDFA_1_B);
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
-            AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true,
-                    PDFAFlavour.PDFA_1_B);
+            AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
             List<? extends org.verapdf.model.baselayer.Object> list = pack
-                    .getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
+                    .getLinkedObjects(AXLMainXMPPackage.PDFA_IDENTIFICATION);
             assertEquals(this.identificationSchemaNumber, list.size());
             if (!list.isEmpty()) {
                 AXLPDFAIdentification identification = (AXLPDFAIdentification) list

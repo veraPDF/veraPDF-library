@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -116,12 +116,12 @@ public final class AuditDurationImpl implements AuditDuration {
 	}
 
 	public static String getStringDuration(final long difference) {
-		long hours = difference / (minInHour * secInMin * msInSec);
-		long minutes = difference / (secInMin * msInSec) % minInHour;
-		long seconds = difference / msInSec % secInMin;
-		long millis = difference % msInSec;
 
 		try (Formatter formatter = new Formatter()) {
+			long hours = difference / (minInHour * secInMin * msInSec);
+			long minutes = difference / (secInMin * msInSec) % minInHour;
+			long seconds = difference / msInSec % secInMin;
+			long millis = difference % msInSec;
 			formatter.format("%02d:%02d:%02d.%03d", hours, minutes, seconds, //$NON-NLS-1$
 					millis);
 			return formatter.toString();

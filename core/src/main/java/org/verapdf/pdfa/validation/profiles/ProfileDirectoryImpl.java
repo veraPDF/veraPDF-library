@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -31,12 +31,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
+import java.util.List;
+import java.util.LinkedList;
 import javax.xml.bind.JAXBException;
 
 import org.verapdf.core.Directory;
 import org.verapdf.core.MapBackedDirectory;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFFlavours;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -106,6 +108,15 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         return profile;
     }
 
+    @Override
+    public List<ValidationProfile> getValidationProfilesByFlavours(List<PDFAFlavour> flavours) {
+        List<ValidationProfile> profiles = new LinkedList<>();
+        for (PDFAFlavour flavour : flavours) {
+            profiles.add(getValidationProfileByFlavour(flavour));
+        }
+        return profiles;
+    }
+
     /**
      * { @inheritDoc }
      */
@@ -149,7 +160,6 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
                 if (is != null)
                     profiles.add(Profiles.profileFromXml(is));
             } catch (JAXBException | IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -158,9 +168,22 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
     
     private static String getProfilePath(PDFAFlavour flavour) {
         StringBuilder profilePath = new StringBuilder();
-        profilePath.append(PROFILE_RESOURCE_ROOT).append(flavour.getPart().getFamily().getFamily().replace("/", "") //$NON-NLS-1$
-        ).append("-").append(flavour.getPart().getPartNumber()).append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
-        if (flavour == PDFAFlavour.PDFUA_2) {
+        profilePath.append(PROFILE_RESOURCE_ROOT);
+
+        profilePath.append(flavour.getPart().getFamily().getFamily().replace("/", "")); //$NON-NLS-1$
+        profilePath.append("-"); //$NON-NLS-1$
+        profilePath.append(flavour.getPart().getPartNumber());
+        if (flavour.getPart().getSubpartNumber() != null) {
+            profilePath.append("-"); //$NON-NLS-1$
+            profilePath.append(flavour.getPart().getSubpartNumber());
+        }
+        if (PDFFlavours.isWTPDFFlavour(flavour)) {
+            profilePath.append("-"); //$NON-NLS-1$
+            profilePath.append(flavour.getLevel().getCode());
+        } else {
+            profilePath.append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
+        }
+        if (PDFFlavours.isFlavour(flavour, PDFAFlavour.PDFUA_2)) {
             profilePath.append("-").append("ISO32005");
         }
         profilePath.append(XML_SUFFIX);

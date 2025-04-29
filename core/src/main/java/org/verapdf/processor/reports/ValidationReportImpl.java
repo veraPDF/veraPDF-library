@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -64,33 +64,21 @@ final class ValidationReportImpl implements ValidationReport {
 		this.jobEndStatus = jobEndStatus;
 	}
 
-	/**
-	 * @return the details
-	 */
 	@Override
 	public ValidationDetails getDetails() {
 		return this.details;
 	}
 
-	/**
-	 * @return the profileName
-	 */
 	@Override
 	public String getProfileName() {
 		return this.profileName;
 	}
 
-	/**
-	 * @return the statement
-	 */
 	@Override
 	public String getStatement() {
 		return this.statement;
 	}
 
-	/**
-	 * @return the isCompliant
-	 */
 	@Override
 	public boolean isCompliant() {
 		return this.isCompliant;

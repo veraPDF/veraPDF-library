@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@ import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.verapdf.containers.StaticCoreContainers;
 import org.verapdf.model.xmplayer.XMPProperty;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
@@ -111,10 +112,10 @@ public class XMPCustomPropertiesTest {
 
     @Test
     public void test() throws URISyntaxException, XMPException, IOException {
+        StaticCoreContainers.setFlavour(PDFAFlavour.PDFA_1_B);
         try (InputStream in = getClass().getClassLoader().getResourceAsStream(this.filePath)) {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
-            AXLXMPPackage pack = new AXLXMPPackage(meta, true, null,
-                    PDFAFlavour.PDFA_1_B);
+            AXLXMPPackage pack = new AXLXMPPackage(meta, true, null);
             for (Object obj : pack.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
                 XMPProperty prop = (XMPProperty) obj;
                 assertEquals(Boolean.FALSE, prop.getisPredefinedInXMP2004());
@@ -125,8 +126,7 @@ public class XMPCustomPropertiesTest {
                 assertEquals(this.isValueTypeCorrectForPDFA_1,
                         prop.getisValueTypeCorrect());
             }
-            AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true,
-                    PDFAFlavour.PDFA_1_B);
+            AXLMainXMPPackage mainPack = new AXLMainXMPPackage(meta, true);
             for (Object obj : mainPack
                     .getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
                 XMPProperty prop = (XMPProperty) obj;
@@ -139,8 +139,8 @@ public class XMPCustomPropertiesTest {
                 assertEquals(this.isValueTypeCorrectForPDFA_1,
                         prop.getisValueTypeCorrect());
             }
-            AXLXMPPackage pack2 = new AXLXMPPackage(meta, true, true, null,
-                    PDFAFlavour.PDFA_2_B);
+            StaticCoreContainers.setFlavour(PDFAFlavour.PDFA_2_B);
+            AXLXMPPackage pack2 = new AXLXMPPackage(meta, true, true, null);
             for (Object obj : pack2.getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
                 XMPProperty prop = (XMPProperty) obj;
                 assertEquals(this.isDefinedInCurrentPackageForPDFA_2_3,
@@ -149,8 +149,7 @@ public class XMPCustomPropertiesTest {
                 assertEquals(this.isValueTypeCorrectForPDFA_2_3,
                         prop.getisValueTypeCorrect());
             }
-            AXLMainXMPPackage mainPack2 = new AXLMainXMPPackage(meta, true,
-                    true, PDFAFlavour.PDFA_2_B);
+            AXLMainXMPPackage mainPack2 = new AXLMainXMPPackage(meta, true, true);
             for (Object obj : mainPack2
                     .getLinkedObjects(AXLXMPPackage.PROPERTIES)) {
                 XMPProperty prop = (XMPProperty) obj;

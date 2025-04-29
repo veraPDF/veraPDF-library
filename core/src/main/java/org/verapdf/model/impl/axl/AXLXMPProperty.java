@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -20,6 +20,8 @@
  */
 package org.verapdf.model.impl.axl;
 
+import org.verapdf.containers.StaticCoreContainers;
+import org.verapdf.pdfa.flavours.PDFFlavours;
 import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.tools.xmp.SchemasDefinition;
 import org.verapdf.model.tools.xmp.SchemasDefinitionCreator;
@@ -36,16 +38,15 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     protected final VeraPDFXMPNode xmpNode;
     private final boolean isMainMetadata;
     private final boolean isClosedChoiceCheck;
-    private final PDFAFlavour flavour;
     private final SchemasDefinition mainPackageSchemasDefinition;
     private final SchemasDefinition currentSchemasDefinitionPDFA_1;
     private final SchemasDefinition currentSchemasDefinitionPDFA_2_3;
 
-    public AXLXMPProperty(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
-        this(xmpNode, XMP_PROPERTY_TYPE, isMainMetadata, isClosedChoiceCheck, mainPackageSchemasDefinition, currentSchemasDefinitionPDFA_1, currentSchemasDefinitionPDFA_2_3, flavour);
+    public AXLXMPProperty(VeraPDFXMPNode xmpNode, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3) {
+        this(xmpNode, XMP_PROPERTY_TYPE, isMainMetadata, isClosedChoiceCheck, mainPackageSchemasDefinition, currentSchemasDefinitionPDFA_1, currentSchemasDefinitionPDFA_2_3);
     }
 
-    protected AXLXMPProperty(VeraPDFXMPNode xmpNode, String type, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3, PDFAFlavour flavour) {
+    protected AXLXMPProperty(VeraPDFXMPNode xmpNode, String type, boolean isMainMetadata, boolean isClosedChoiceCheck, SchemasDefinition mainPackageSchemasDefinition, SchemasDefinition currentSchemasDefinitionPDFA_1, SchemasDefinition currentSchemasDefinitionPDFA_2_3) {
         super(type);
         this.xmpNode = xmpNode;
         this.isMainMetadata = isMainMetadata;
@@ -54,7 +55,6 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
         this.currentSchemasDefinitionPDFA_1 = currentSchemasDefinitionPDFA_1;
         this.currentSchemasDefinitionPDFA_2_3 = currentSchemasDefinitionPDFA_2_3;
         this.contextDependent = Boolean.TRUE;
-        this.flavour = flavour;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
 
     @Override
     public Boolean getisDefinedInCurrentPackage() {
-        if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
+        if (PDFFlavours.isFlavourPart(StaticCoreContainers.getFlavour(), PDFAFlavour.Specification.ISO_19005_1)) {
             return this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode);
         }
         return this.currentSchemasDefinitionPDFA_2_3.isDefinedProperty(this.xmpNode);
@@ -104,7 +104,7 @@ public class AXLXMPProperty extends AXLXMPObject implements XMPProperty {
     }
 
     private SchemasDefinition getSchemasDefinition() {
-        if (this.flavour != null && this.flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
+        if (PDFFlavours.isFlavourPart(StaticCoreContainers.getFlavour(), PDFAFlavour.Specification.ISO_19005_1)) {
             if (this.currentSchemasDefinitionPDFA_1.isDefinedProperty(this.xmpNode)) {
                 return this.currentSchemasDefinitionPDFA_1;
             }

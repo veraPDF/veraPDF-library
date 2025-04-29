@@ -15,7 +15,7 @@
     <xsl:param name="parserType"/>
     <!-- Parameter to show release details -->
     <xsl:param name="appName"/>
-    <!-- Prameter to set the base path to the Wiki instance -->
+    <!-- Parameter to set the base path to the Wiki instance -->
     <xsl:param name="wikiPath"
                select="'https://github.com/veraPDF/veraPDF-validation-profiles/wiki/'"/>
     <xsl:strip-space elements="*"/>
@@ -88,18 +88,6 @@
                 });
                 }
             </script>
-
-            <xsl:variable name="validClass">
-                <xsl:choose>
-                    <xsl:when
-                            test="/report/jobs/job/validationReport/@isCompliant = 'true'">
-                        <xsl:value-of select="'valid'"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="'invalid'"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:variable>
             <!-- General information -->
             <table border="0" id="table1">
                 <tr>
@@ -110,31 +98,8 @@
                         <xsl:value-of select="/report/jobs/job/item/name"/>
                     </td>
                 </tr>
-                <xsl:if test="/report/jobs/job/validationReport/@profileName">
-                    <tr>
-                        <td width="200">
-                            <b>Validation Profile:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/validationReport/@profileName"/>
-                        </td>
-                    </tr>
-                </xsl:if>
-                <xsl:if test="/report/jobs/job/validationReport/@isCompliant">
-                    <tr>
-                        <td width="200" class="{$validClass}">
-                            Compliance:
-                        </td>
-                        <td class="{$validClass}">
-                            <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'true'">
-                                Passed
-                            </xsl:if>
-                            <xsl:if test="/report/jobs/job/validationReport/@isCompliant = 'false'">
-                                Failed
-                            </xsl:if>
-                        </td>
-                    </tr>
+                <xsl:if test="/report/jobs/job/validationReport">
+                    <xsl:apply-templates select="/report/jobs/job/validationReport" mode="validation_report_info"/>
                 </xsl:if>
                 <xsl:if test="/report/jobs/job/taskException/exceptionMessage">
                     <tr>
@@ -152,18 +117,18 @@
                         <xsl:choose>
                             <xsl:when
                                     test="/report/jobs/job/policyReport/@failedChecks > 0">
-                                <td class="invalid">Policy compliance:</td>
+                                <td width="200" class="invalid">Policy compliance:</td>
                                 <td class="invalid">Failed</td>
                             </xsl:when>
                             <xsl:otherwise>
-                                <td class="valid">Policy compliance:</td>
+                                <td width="200" class="valid">Policy compliance:</td>
                                 <td class="valid">Passed</td>
                             </xsl:otherwise>
                         </xsl:choose>
                     </tr>
                 </xsl:if>
             </table>
-
+            <hr/>
             <h2>Statistics</h2>
             <table border="0" id="table2">
                 <tr>
@@ -201,39 +166,6 @@
                         <xsl:value-of select="/report/jobs/job/duration"/>
                     </td>
                 </tr>
-                <xsl:if test="/report/jobs/job/validationReport/details/@passedRules or /report/jobs/job/validationReport/details/@failedRules">
-                    <tr>
-                        <td width="250">
-                            <b>Total rules in Profile:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/validationReport/details/@passedRules + /report/jobs/job/validationReport/details/@failedRules"/>
-                        </td>
-                    </tr>
-                </xsl:if>
-                <xsl:if test="/report/jobs/job/validationReport/details/@passedChecks">
-                    <tr>
-                        <td width="250">
-                            <b>Passed Checks:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/validationReport/details/@passedChecks"/>
-                        </td>
-                    </tr>
-                </xsl:if>
-                <xsl:if test="/report/jobs/job/validationReport/details/@failedChecks">
-                    <tr>
-                        <td width="250">
-                            <b>Failed Checks:</b>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/validationReport/details/@failedChecks"/>
-                        </td>
-                    </tr>
-                </xsl:if>
                 <xsl:if test="/report/jobs/job/policyReport">
                     <tr>
                         <td width="250">
@@ -300,21 +232,8 @@
                 </table>
             </xsl:if>
 
-            <xsl:if test="/report/jobs/job/validationReport/details/rule">
-                <h2>Validation information</h2>
-
-                <table border="0" id="table3">
-                    <tr style="BACKGROUND: #bcbad6">
-                        <td width="800">
-                            <b>Rule</b>
-                        </td>
-                        <td width="50">
-                            <b>Status</b>
-                        </td>
-                    </tr>
-                    <xsl:apply-templates
-                            select="/report/jobs/job/validationReport/details/rule"/>
-                </table>
+            <xsl:if test="/report/jobs/job/validationReport">
+                <xsl:apply-templates select="/report/jobs/job/validationReport" mode="validation_report"/>
             </xsl:if>
 
             <xsl:if test="/report/jobs/job/policyReport">
@@ -326,7 +245,7 @@
         <xsl:if test="/report/jobs/job/logs">
             <h2>Logs information</h2>
 
-            <table border="0" id="table5">
+            <table border="0" id="table6">
                 <tr style="BACKGROUND: #bcbad6">
                     <td width="100">
                         <b>Type</b>
@@ -347,7 +266,7 @@
         <xsl:if test="/report/jobs/job/featuresReport">
             <h2>Features information</h2>
 
-            <table border="0" id="table4">
+            <table border="0" id="table7">
                 <tr style="BACKGROUND: #bcbad6">
                     <td width="800">
                         <b>Feature</b>
@@ -396,11 +315,149 @@
         </tr>
     </xsl:template>
 
-    <!-- Validation Information -->
-    <xsl:template match="/report/jobs/job/validationReport/details/rule">
+    <xsl:template match="/report/jobs/job/validationReport" mode="validation_report">
+        <xsl:variable name="validClass">
+            <xsl:choose>
+                <xsl:when
+                        test="@isCompliant = 'true'">
+                    <xsl:value-of select="'valid'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'invalid'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+        <h2 id="{@profileName}">Validation information</h2>
+        <table border="0">
+            <xsl:if test="@profileName">
+                <tr>
+                    <td width="200">
+                        <b>Validation Profile:</b>
+                    </td>
+                    <td>
+                        <xsl:value-of
+                                select="@profileName"/>
+                    </td>
+                </tr>
+            </xsl:if>
+            <xsl:if test="@isCompliant">
+                <tr>
+                    <td width="200" class="{$validClass}">
+                        Compliance:
+                    </td>
+                    <td class="{$validClass}">
+                        <xsl:if test="@isCompliant = 'true'">
+                            Passed
+                        </xsl:if>
+                        <xsl:if test="@isCompliant = 'false'">
+                            Failed
+                        </xsl:if>
+                    </td>
+                </tr>
+            </xsl:if>
+            <xsl:if test="details/@passedRules or details/@failedRules">
+                <tr>
+                    <td width="250">
+                        <b>Total rules in Profile:</b>
+                    </td>
+                    <td>
+                        <xsl:value-of
+                                select="details/@passedRules + details/@failedRules"/>
+                    </td>
+                </tr>
+            </xsl:if>
+            <xsl:if test="details/@passedChecks">
+                <tr>
+                    <td width="250">
+                        <b>Passed Checks:</b>
+                    </td>
+                    <td>
+                        <xsl:value-of
+                                select="details/@passedChecks"/>
+                    </td>
+                </tr>
+            </xsl:if>
+            <xsl:if test="details/@failedChecks">
+                <tr>
+                    <td width="250">
+                        <b>Failed Checks:</b>
+                    </td>
+                    <td>
+                        <xsl:value-of
+                                select="details/@failedChecks"/>
+                    </td>
+                </tr>
+            </xsl:if>
+        </table>
 
-        <xsl:param name="idWithDots" select="concat(@clause, 't', @testNumber)"/>
-        <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
+        <xsl:if test="details/rule">
+            <table border="0" id="table3">
+                <tr style="BACKGROUND: #bcbad6">
+                    <td width="800">
+                        <b>Rule</b>
+                    </td>
+                    <td width="50">
+                        <b>Status</b>
+                    </td>
+                </tr>
+                <xsl:apply-templates
+                        select="details/rule"/>
+            </table>
+        </xsl:if>
+        
+        <a href="#table1">back to top
+        </a>
+        <hr/>
+    </xsl:template>
+
+    <xsl:template match="/report/jobs/job/validationReport" mode="validation_report_info">
+        <xsl:variable name="validClass">
+            <xsl:choose>
+                <xsl:when
+                        test="@isCompliant = 'true'">
+                    <xsl:value-of select="'valid'"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="'invalid'"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:variable>
+            <xsl:if test="@profileName">
+                <tr>
+                    <td width="200">
+                        <b>Validation Profile:</b>
+                    </td>
+                    <td>
+                        <a href="#{@profileName}">
+                            <xsl:value-of
+                                select="@profileName"/>
+                        </a>
+                    </td>
+                </tr>
+            </xsl:if>
+            <xsl:if test="@isCompliant">
+                <tr>
+                    <td width="200" class="{$validClass}">
+                        Compliance:
+                    </td>
+                    <td class="{$validClass}">
+                        <xsl:if test="@isCompliant = 'true'">
+                            Passed
+                        </xsl:if>
+                        <xsl:if test="@isCompliant = 'false'">
+                            Failed
+                        </xsl:if>
+                    </td>
+                </tr>
+            </xsl:if>
+    </xsl:template>
+
+
+    <!-- Validation Information -->
+    <xsl:template match="details/rule">
+
+        <xsl:param name="idWithDots" select="concat(../../@profileName, @clause, 't', @testNumber)"/>
+        <xsl:param name="id" select="translate($idWithDots, '.+ -/', '_____')"/>
 
         <xsl:variable name="wikiLinkEnd">
             <xsl:choose>
@@ -421,7 +478,10 @@
                 </xsl:when>
                 <xsl:when test="starts-with(@specification, 'ISO 14289-2')">
                     <xsl:value-of select="'PDFUA-Part-2-rules'"/>
-                </xsl:when>                
+                </xsl:when>
+                <xsl:when test="starts-with(@specification, 'WTPDF1.0')">
+                    <xsl:value-of select="'WTPDF-1.0-rules'"/>
+                </xsl:when>
             </xsl:choose>
         </xsl:variable>
         <xsl:variable name="tempWikiLink">
@@ -450,7 +510,8 @@
         <xsl:variable name="hasLink"
                       select="starts-with(@specification, 'ISO 19005-1') or starts-with(@specification, 'ISO 19005-2') or 
                       starts-with(@specification, 'ISO 19005-3') or starts-with(@specification, 'ISO 19005-4') or 
-                      starts-with(@specification, 'ISO 14289-1') or starts-with(@specification, 'ISO 14289-2')"/>
+                      starts-with(@specification, 'ISO 14289-1') or starts-with(@specification, 'ISO 14289-2') or 
+                      starts-with(@specification, 'WTPDF1.0')"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,
@@ -680,6 +741,7 @@
                 </tr>
             </xsl:for-each>
         </table>
+        <hr/>
     </xsl:template>
 
 </xsl:stylesheet>
