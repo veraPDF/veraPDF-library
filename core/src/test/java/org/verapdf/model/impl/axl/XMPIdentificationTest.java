@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -96,7 +96,7 @@ public class XMPIdentificationTest {
             VeraPDFMeta meta = VeraPDFMeta.parse(in);
             AXLMainXMPPackage pack = new AXLMainXMPPackage(meta, true);
             List<? extends org.verapdf.model.baselayer.Object> list = pack
-                    .getLinkedObjects(AXLMainXMPPackage.IDENTIFICATION);
+                    .getLinkedObjects(AXLMainXMPPackage.PDFA_IDENTIFICATION);
             assertEquals(this.identificationSchemaNumber, list.size());
             if (!list.isEmpty()) {
                 AXLPDFAIdentification identification = (AXLPDFAIdentification) list

@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -50,7 +50,6 @@ import java.util.logging.Logger;
  * </ul>
  * Regarding the FeatureReporting mechanism, it's crying out for a generics
  * based approach but that can come over the re-design.
- * </p>
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  */

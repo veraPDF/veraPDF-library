@@ -2,7 +2,7 @@
 <appliedObjects>
     <ruleDescription>
         <objectType>MainXMPPackage</objectType>
-        <test>UAIdentification_size == 1</test>
+        <test>containsPDFUAIdentification == true</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>PDFUAIdentification</objectType>

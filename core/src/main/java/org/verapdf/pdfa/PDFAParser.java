@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -54,6 +54,10 @@ public interface PDFAParser extends Component {
 	 * @return {@link PDFAFlavour} for the model that has been parsed
 	 */
 	public PDFAFlavour getFlavour();
+
+	public List<PDFAFlavour> getFlavours();
+
+	public void setFlavours(List<PDFAFlavour> flavours);
 
 	/**
 	 * @return the {@link org.verapdf.metadata.fixer.entity.PDFDocument} parsed.

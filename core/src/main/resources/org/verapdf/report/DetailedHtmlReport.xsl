@@ -377,8 +377,8 @@
     <!-- Validation Information -->
     <xsl:template match="/report/jobs/job/arlingtonReport/details/rule">
 
-        <xsl:param name="idWithDots" select="concat(@clause, 't', @testNumber)"/>
-        <xsl:param name="id" select="translate($idWithDots, '.', '_')"/>
+        <xsl:param name="idWithDots" select="concat(../../@profileName, @clause, 't', @testNumber)"/>
+        <xsl:param name="id" select="translate($idWithDots, '.+ -/', '_____')"/>
 
         <xsl:variable name="wikiLinkEnd">
             <xsl:choose>
@@ -475,8 +475,9 @@
                             starts-with(@specification, 'ISO 19005-2') or starts-with(@specification, 'ISO 19005-3') or
                             starts-with(@specification, 'ISO 19005-4') or starts-with(@specification, 'ISO 14289-1') or 
                             starts-with(@specification, 'ISO 14289-2') or starts-with(@specification, 'PDF Reference')) and 
-                            (not(object = 'ADocument')) and not(starts-with(object, 'ANameTreeNode')) and 
-                            not(starts-with(object, 'ANumberTreeNode')) and not(starts-with(object, 'AnnotWidgetField'))"/>
+                            not(object = 'ADocument') and not(starts-with(object, 'ANameTreeNode')) and 
+                            not(starts-with(object, 'ANumberTreeNode')) and not(starts-with(object, 'AAnnotWidgetField')) and 
+                            not(object = 'AAddActionWidgetAnnotationFormField')"/>
         <xsl:variable name="ruleInformation">
             Specification:
             <xsl:value-of select="@specification"/>,

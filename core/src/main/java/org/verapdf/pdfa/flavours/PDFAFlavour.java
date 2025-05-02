@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -28,43 +28,40 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Enums used as id for PDF/A flavours where a flavour uniquely identifies a
- * specific PDF/A Standard part and associated conformance level.
- *
- * The PDF/A Specification:<br/>
- * ISO 19005 - Document Management - Electronic document format for long-term
- * preservation (PDF/A)<br/>
+ * Enums used as id for PDF/A flavours where a flavour uniquely identifies a specific PDF/A Standard part and
+ * associated conformance level. The PDF/A Specification:<br/>
+ * ISO 19005 - Document Management - Electronic document format for long-term preservation (PDF/A)<br/>
  * comprises 4 parts:
  * <ol>
- * <li>Part 1: PDF/A-1 - Use of PDF 1.4</li>
- * <li>Part 2: PDF/A-2 - Use of ISO 32000-1</li>
- * <li>Part 3: PDF/A-3 - Use of ISO 32000-1 with support for embedded files</li>
- * <li>Part 4: PDF/A-4 - Use of ISO 32000-2</li>
- * <ol>
+ * <li>Part 1: PDF/A-1 - Use of PDF 1.4
+ * <li>Part 2: PDF/A-2 - Use of ISO 32000-1
+ * <li>Part 3: PDF/A-3 - Use of ISO 32000-1 with support for embedded files
+ * <li>Part 4: PDF/A-4 - Use of ISO 32000-2
+ * </ol>
  * Note that "Use of ISO 32000-1" indicates that PDF/A parts 2 and 3 are based
  * upon PDF 1.7. ISO 32000-1 is the code for the PDF 1.7 ISO standard. The
  * specification parts specify different conformance levels:
  * <ul>
- * <li>Level b - basic</li>
- * <li>Level a - accessible</li>
- * <li>Level u - unicode</li>
- * <li>Level f - embedded files</li>
- * <li>Level e - engineering</li>
+ * <li>Level b - basic
+ * <li>Level a - accessible
+ * <li>Level u - unicode
+ * <li>Level f - embedded files
+ * <li>Level e - engineering
  * </ul>
- * Part 1 does not allow a conformance level u (Unicode) so there are eight
+ * <p>Part 1 does not allow a conformance level u (Unicode) so there are eight
  * valid combinations of specification part and level, shown below:
  * <ul>
- * <li>1a</li>
- * <li>1b</li>
- * <li>2a</li>
- * <li>2b</li>
- * <li>2u</li>
- * <li>3a</li>
- * <li>3b</li>
- * <li>3u</li>
- * <li>4</li>
- * <li>4f</li>
- * <li>4e</li>
+ * <li>1a
+ * <li>1b
+ * <li>2a
+ * <li>2b
+ * <li>2u
+ * <li>3a
+ * <li>3b
+ * <li>3u
+ * <li>4
+ * <li>4f
+ * <li>4e
  * </ul>
  *
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -375,9 +372,8 @@ public enum PDFAFlavour {
     }
 
     /**
-     * Enum type that identifies the different PDF/A Conformance Levels A
-     * (accessible), B (basic), U (unicode), F (embedded files) & E (engineering).
-     *
+     * Enum type that identifies the different PDF/A Conformance Levels A (accessible), B (basic), U (unicode),
+     * F (embedded files) &amp; E (engineering).
      */
     public enum Level {
         /** Special identifier for the none case */

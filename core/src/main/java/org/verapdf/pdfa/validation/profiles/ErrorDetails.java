@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * Encapsulates the details of an error message, a String message and a
- * <code>List<String></code> of arguments to substitute into the error message
+ * <code>List&lt;String&gt;</code> of arguments to substitute into the error message
  * 
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *

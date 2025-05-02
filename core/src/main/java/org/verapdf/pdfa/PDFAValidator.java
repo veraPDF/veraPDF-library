@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -25,6 +25,8 @@ import org.verapdf.core.ValidationException;
 import org.verapdf.pdfa.results.ValidationResult;
 import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.processor.reports.enums.JobEndStatus;
+
+import java.util.List;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
@@ -54,16 +56,14 @@ public interface PDFAValidator extends Component {
      *
      * @param toValidate
      *            a {@link java.io.InputStream} to be validated
-     * @return a {@link ValidationResult} containing the result of valdiation
+     * @return a {@link ValidationResult} containing the result of validation
      *         and details of failed checks and possibly passed checks,
      *         dependent upon configuration.
-     * @throws ValidationException 
-     * @throws org.verapdf.core.ModelParsingException 
-     * @throws IllegalArgumentException
-     *             if the toValidate parameter is null PDFAValidationException
-     *             if the validation process fails
+     * @throws ValidationException
      */
     public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
+
+    public List<ValidationResult> validateAll(PDFAParser toValidate) throws ValidationException;
 
     public String getValidationProgressString();
 

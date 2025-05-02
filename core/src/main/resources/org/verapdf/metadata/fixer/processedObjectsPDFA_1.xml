@@ -34,15 +34,15 @@
     </ruleDescription>
     <ruleDescription>
         <objectType>PDMetadata</objectType>
-        <test>Filter == null</test>
+        <test>isCatalogMetadata == false || Filter == null</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>PDDocument</objectType>
-        <test>metadata_size == 1</test>
+        <test>containsMetadata == true</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>MainXMPPackage</objectType>
-        <test>Identification_size == 1</test>
+        <test>containsPDFAIdentification == true</test>
     </ruleDescription>
     <ruleDescription>
         <objectType>PDFAIdentification</objectType>

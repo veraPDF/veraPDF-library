@@ -1,5 +1,5 @@
 This file is part of ${project.name}, a module of the veraPDF project.
-Copyright (c) ${project.inceptionYear}, ${owner} <${email}>
+Copyright (c) ${project.inceptionYear}-${current.year}, ${owner} <${email}>
 All rights reserved.
 
 ${project.name} is free software: you can redistribute it and/or modify

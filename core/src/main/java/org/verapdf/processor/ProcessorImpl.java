@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -70,7 +70,7 @@ final class ProcessorImpl implements ItemProcessor {
 
 	private final List<String> errors = new ArrayList<>();
 	private final EnumMap<TaskType, TaskResult> taskResults = new EnumMap<>(TaskType.class);
-	private ValidationResult validationResult = ValidationResults.defaultResult();
+	private List<ValidationResult> validationResults = Collections.singletonList(ValidationResults.defaultResult());
 	private FeatureExtractionResult featureResult = new FeatureExtractionResult();
 	private MetadataFixerResult fixerResult = new MetadataFixerResultImpl.Builder().build();
 
@@ -95,7 +95,7 @@ final class ProcessorImpl implements ItemProcessor {
 	private void initialise() {
 		this.errors.clear();
 		this.taskResults.clear();
-		this.validationResult = ValidationResults.defaultResult();
+		this.validationResults = Collections.singletonList(ValidationResults.defaultResult());
 		this.featureResult = new FeatureExtractionResult();
 		this.fixerResult = new MetadataFixerResultImpl.Builder().build();
 	}
@@ -155,7 +155,7 @@ final class ProcessorImpl implements ItemProcessor {
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
-		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
+		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResults, this.featureResult,
 				this.fixerResult);
 	}
 
@@ -212,7 +212,7 @@ final class ProcessorImpl implements ItemProcessor {
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
 		}
-		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResult, this.featureResult,
+		return ProcessorResultImpl.fromValues(fileDetails, this.taskResults, this.validationResults, this.featureResult,
 				this.fixerResult);
 	}
 
@@ -242,9 +242,10 @@ final class ProcessorImpl implements ItemProcessor {
 		TaskType type = TaskType.VALIDATE;
 		Components.Timer timer = Components.Timer.start();
 
-		try (PDFAValidator validator = validator(parser.getFlavour())) {
-			this.validationResult = validator.validate(parser);
-			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
+		try (PDFAValidator validator = validator(parser.getFlavours())) {
+			this.validationResults = validator.validateAll(parser);
+			TaskResult taskResult = TaskResultImpl.fromValues(type, timer.stop());
+			this.taskResults.put(type, taskResult);
 		} catch (ValidationException excep) {
 			logger.log(Level.WARNING, "Exception caught when validating item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
@@ -253,17 +254,17 @@ final class ProcessorImpl implements ItemProcessor {
 		}
 	}
 
-	private PDFAValidator validator(PDFAFlavour parsedFlavour) {
-		PDFAFlavour flavour = Foundries.defaultInstance().defaultFlavour();
+	private PDFAValidator validator(List<PDFAFlavour> parsedFlavours) {
+		List<PDFAFlavour> flavours = Collections.singletonList(Foundries.defaultInstance().defaultFlavour());
 		if (this.isAuto()) {
-			if (parsedFlavour != PDFAFlavour.NO_FLAVOUR)
-				flavour = parsedFlavour;
+			if (parsedFlavours.get(0) != PDFAFlavour.NO_FLAVOUR)
+				flavours = parsedFlavours;
 		} else {
-			flavour = this.valConf().getFlavour();
+			flavours = Collections.singletonList(this.valConf().getFlavour());
 		}
 		if (this.hasCustomProfile())
 			return foundry.createValidator(this.valConf(), this.processorConfig.getCustomProfile());
-		return foundry.createValidator(this.valConf(), flavour);
+		return foundry.createValidator(this.valConf(), flavours);
 	}
 
 	private boolean hasCustomProfile() {
@@ -285,14 +286,18 @@ final class ProcessorImpl implements ItemProcessor {
 			return;
 		}
 		MetadataFixerResult.RepairStatus rpStat = MetadataFixerResult.RepairStatus.NO_ACTION;
-		try (OutputStream fxos = new BufferedOutputStream(new FileOutputStream(fxfl))) {
-			MetadataFixer fixer = foundry.createMetadataFixer();
-			this.fixerResult = fixer.fixMetadata(parser, fxos, this.validationResult);
-			rpStat = this.fixerResult.getRepairStatus();
-			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
-		} catch (IOException excep) {
-			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
-					new VeraPDFException("Processing exception in metadata fixer", excep))); //$NON-NLS-1$
+		if (this.validationResults.size() == 1) {
+			try (OutputStream fxos = new BufferedOutputStream(new FileOutputStream(fxfl))) {
+				MetadataFixer fixer = foundry.createMetadataFixer();
+				this.fixerResult = fixer.fixMetadata(parser, fxos, this.validationResults.get(0));
+				rpStat = this.fixerResult.getRepairStatus();
+				this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop()));
+			} catch (IOException excep) {
+				this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(),
+						new VeraPDFException("Processing exception in metadata fixer", excep))); //$NON-NLS-1$
+			}
+		} else {
+			logger.log(Level.WARNING, "Fixing metadata is not supported for several flavours.");
 		}
 
 		if (rpStat != MetadataFixerResult.RepairStatus.SUCCESS && rpStat != MetadataFixerResult.RepairStatus.ID_REMOVED) {

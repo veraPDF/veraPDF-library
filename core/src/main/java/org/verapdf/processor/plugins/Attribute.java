@@ -1,6 +1,6 @@
 /**
  * This file is part of veraPDF Library core, a module of the veraPDF project.
- * Copyright (c) 2015, veraPDF Consortium <info@verapdf.org>
+ * Copyright (c) 2015-2025, veraPDF Consortium <info@verapdf.org>
  * All rights reserved.
  *
  * veraPDF Library core is free software: you can redistribute it and/or modify
@@ -29,29 +29,47 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "attribute")
 public class Attribute {
 
-	@XmlAttribute
-	private final String key;
-	@XmlAttribute
-	private final String value;
+    @XmlAttribute
+    private final String key;
+    @XmlAttribute
+    private final String value;
 
-	private Attribute(String key, String value) {
-		this.key = key;
-		this.value = value;
-	}
+    private Attribute(String key, String value) {
+        this.key = key;
+        this.value = value;
+    }
 
-	private Attribute() {
-		this("", "");
-	}
+    private Attribute() {
+        this("", "");
+    }
 
-	public static Attribute fromValues(String key, String value) {
-		return new Attribute(key, value);
-	}
+    /**
+     * Creates attribute key and value.
+     *
+     * @param key   an attribute key
+     * @param value an attribute value
+     *
+     * @return an attribute a pair of key and value
+     */
+    public static Attribute fromValues(String key, String value) {
+        return new Attribute(key, value);
+    }
 
-	public String getKey() {
-		return key;
-	}
+    /**
+     * Gets attribute key.
+     *
+     * @return an attribute key
+     */
+    public String getKey() {
+        return key;
+    }
 
-	public String getValue() {
-		return value;
-	}
+    /**
+     * Gets attribute value.
+     *
+     * @return an attribute value
+     */
+    public String getValue() {
+        return value;
+    }
 }

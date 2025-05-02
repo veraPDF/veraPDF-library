@@ -6,13 +6,13 @@
   <parent>
     <groupId>org.verapdf</groupId>
     <artifactId>verapdf-library-arlington</artifactId>
-    <version>1.26.0</version>
+    <version>1.28.0</version>
   </parent>
 
   <artifactId>verapdf-xmp-core-coverage-arlington</artifactId>
 
-  <name>veraPDF PDF/A XMP Library Core Coverage</name>
-  <description>Coverage and tests for core components for the veraPDF PDF/A XMP Parsing and Validation library.</description>
+  <name>veraPDF XMP Library Core Coverage for Arlington PDF Model</name>
+  <description>Coverage and tests for core components for the veraPDF XMP Parsing and Validation library of Arlington PDF Model.</description>
 
   <url>https://github.com/veraPDF/veraPDF-xmp/</url>
   <licenses>
