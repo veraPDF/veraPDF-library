@@ -244,19 +244,6 @@
             </error>
             <references/>
         </rule>
-        <rule object="PDLinkAnnot" tags="annotation,structure">
-            <id specification="WTPDF_1_0" clause="8.2.5.20" testNumber="3"/>
-            <description>Multiple link annotations shall be included in a single Link or Reference structure element if they target the same location and are semantically perceived to be a single link</description>
-            <test>sameTargetAnnotObjectKey == null</test>
-            <error>
-                <message>Annotations %1 and %2 target the same location, but are included into different structure elements</message>
-                <arguments>
-                    <argument>objectKey</argument>
-                    <argument>sameTargetAnnotObjectKey</argument>
-                </arguments>
-            </error>
-            <references/>
-        </rule>
         <rule object="SERuby" tags="structure">
             <id specification="WTPDF_1_0" clause="8.2.5.23" testNumber="1"/>
             <description>A Ruby structure element shall contain a single RB structure element and a single RT structure element or a Ruby structure element shall consist of a four-element subsequence: RB, RP, RT, RP</description>
