@@ -91,6 +91,8 @@ public final class PDFAFlavours {
     static final String LEVEL_E_CODE = "e"; //$NON-NLS-1$
     static final String LEVEL_F_CODE = "f"; //$NON-NLS-1$
 
+    static final String LEVEL_HUMAN = "Human"; //$NON-NLS-1$
+    static final String LEVEL_MACHINE = "Machine"; //$NON-NLS-1$
     static final String LEVEL_REUSE = "Reuse"; //$NON-NLS-1$
     static final String LEVEL_ACCESSIBILITY = "Accessibility"; //$NON-NLS-1$
     static final String LEVEL_A_NAME = "accessible"; //$NON-NLS-1$

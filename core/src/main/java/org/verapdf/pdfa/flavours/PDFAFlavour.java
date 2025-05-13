@@ -110,8 +110,10 @@ public enum PDFAFlavour {
     ARLINGTON2_0(Specification.ISO_32000_2_0, Level.NO_LEVEL),
     /** wcag PDF version 2.1 */
     WCAG_2_1(Specification.WCAG_2_1, Level.NO_LEVEL),
-    /** wcag PDF version 2.2 */
-    WCAG_2_2(Specification.WCAG_2_2, Level.NO_LEVEL);
+    /** human wcag PDF version 2.2 */
+    WCAG_2_2_HUMAN(Specification.WCAG_2_2, Level.HUMAN),
+    /** machine wcag PDF version 2.2 */
+    WCAG_2_2_MACHINE(Specification.WCAG_2_2, Level.MACHINE);
 
     private static final Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -388,6 +390,8 @@ public enum PDFAFlavour {
         F(PDFAFlavours.LEVEL_F_CODE, PDFAFlavours.LEVEL_F_NAME),
         /** Level E */
         E(PDFAFlavours.LEVEL_E_CODE, PDFAFlavours.LEVEL_E_NAME),
+        HUMAN(PDFAFlavours.LEVEL_HUMAN, PDFAFlavours.LEVEL_HUMAN),
+        MACHINE(PDFAFlavours.LEVEL_MACHINE, PDFAFlavours.LEVEL_MACHINE),
         ACCESSIBILITY(PDFAFlavours.LEVEL_ACCESSIBILITY, PDFAFlavours.LEVEL_ACCESSIBILITY),
         REUSE(PDFAFlavours.LEVEL_REUSE, PDFAFlavours.LEVEL_REUSE);
 
