@@ -111,6 +111,19 @@ public class PDFFlavours {
         return flavour != null && flavour.getPart() == part;
     }
 
+    public static boolean isFlavourLevel(List<PDFAFlavour> flavours, PDFAFlavour.Level level) {
+        for (PDFAFlavour flavour : flavours) {
+            if (isFlavourLevel(flavour, level)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isFlavourLevel(PDFAFlavour flavour, PDFAFlavour.Level level) {
+        return flavour != null && flavour.getLevel() == level;
+    }
+
     public static boolean isPDFSpecification(List<PDFAFlavour> flavours, PDFAFlavour.PDFSpecification pdfSpecification) {
         for (PDFAFlavour flavour : flavours) {
             if (isPDFSpecification(flavour, pdfSpecification)) {
