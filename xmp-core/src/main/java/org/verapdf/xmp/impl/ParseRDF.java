@@ -98,14 +98,15 @@ public class ParseRDF implements XMPError, XMPConst
 	 */
 	static void rdf_RDF(XMPMetaImpl xmp, Node rdfRdfNode) throws XMPException
 	{
-		if (rdfRdfNode.hasAttributes())
-		{
+		//------------------------------------------------------------------------------ veraPDF: disabled exception for rdf without attributes https://github.com/veraPDF/veraPDF-library/issues/1528
+//		if (rdfRdfNode.hasAttributes())
+//		{
 			rdf_NodeElementList (xmp, xmp.getRoot(), rdfRdfNode);
-		}	
-		else
-		{	
-			throw new XMPException("Invalid attributes of rdf:RDF element", BADRDF);
-		}
+//		}	
+//		else
+//		{	
+//			throw new XMPException("Invalid attributes of rdf:RDF element", BADRDF);
+//		}
 	}
 	
 	
