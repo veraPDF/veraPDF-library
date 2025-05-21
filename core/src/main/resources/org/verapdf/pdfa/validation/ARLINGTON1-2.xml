@@ -10563,10 +10563,10 @@
 		</rule>
 		<rule object="AColorSpaceMapEntry">
 			<id specification="PDF_1_2" clause="ColorSpaceMapEntry-Name" testNumber="6"/>
-			<description>Entry with type Name in ColorSpaceMap shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
-			<test>HasTypeName != true || NameValue == "DeviceCMYK" || NameValue == "DeviceRGB" || NameValue == "DeviceGray"</test>
+			<description>Entry with type Name in ColorSpaceMap shall have one of values: Pattern, DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<test>HasTypeName != true || NameValue == "DeviceCMYK" || NameValue == "DeviceRGB" || NameValue == "DeviceGray" || NameValue == "Pattern"</test>
 			<error>
-				<message>Entry %keyName% with type Name in ColorSpaceMap has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry %keyName% with type Name in ColorSpaceMap has incorrect value %1 instead of Pattern, DeviceGray, DeviceRGB, DeviceCMYK</message>
 				<arguments>
 					<argument>NameValue</argument>
 					<argument name="keyName">keyName</argument>
