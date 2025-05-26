@@ -62834,6 +62834,16 @@
 			<references/>
 		</rule>
 		<rule object="ATarget">
+			<id specification="PDF_1_6" clause="Target-A-StringText" testNumber="14"/>
+			<description>Entry A with type StringText in Target shall satisfy possible value predicate: fn:Eval(fn:FindNMValueInArray(fn:PageProperty(@P, Annots), @A))</description>
+			<test>AHasTypeStringText != true || (FindNMValueAInArraypagePAnnots == true)</test>
+			<error>
+				<message>Entry A with type StringText in Target does not satisfy possible value predicate: fn:Eval(fn:FindNMValueInArray(fn:PageProperty(@P, Annots), @A))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ATarget">
 			<id specification="PDF_1_6" clause="Target-N" testNumber="8"/>
 			<description>Entry N in Target shall have type StringByte</description>
 			<test>containsN == false || NHasTypeStringByte == true</test>
