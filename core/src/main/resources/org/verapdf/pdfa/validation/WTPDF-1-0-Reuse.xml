@@ -978,18 +978,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEPrivate" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Annot-Private" testNumber="1"/>
-            <description>&lt;Annot&gt; shall not contain &lt;Private&gt;</description>
-            <test>parentStandardType != 'Annot'</test>
-            <error>
-                <message>&lt;Annot&gt; contains &lt;Private&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SERB" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Annot-RB" testNumber="1"/>
             <description>&lt;Annot&gt; shall not contain &lt;RB&gt;</description>
@@ -1164,6 +1152,18 @@
             <test>parentStandardType != 'Art'</test>
             <error>
                 <message>&lt;Art&gt; contains &lt;BibEntry&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEArt" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Art-Caption" testNumber="1"/>
+            <description>&lt;Art&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <error>
+                <message>&lt;Art&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -2778,60 +2778,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEArt" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Art" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Art&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Art&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEAside" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Aside" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Aside&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Aside&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEBlockQuote" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-BlockQuote" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;BlockQuote&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;BlockQuote&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SECaption" tags="structure,caption">
+        <rule object="SECode" tags="structure,caption">
             <id specification="ISO_32005" clause="Table 5. Code-Caption" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Caption&gt;</description>
-            <test>parentStandardType != 'Code'</test>
+            <description>&lt;Code&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
             <error>
-                <message>&lt;Code&gt; contains &lt;Caption&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SECode" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Code" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Code&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Code&gt;</message>
+                <message>&lt;Code&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -2844,42 +2796,6 @@
             <test>parentStandardType != 'Code'</test>
             <error>
                 <message>&lt;Code&gt; contains &lt;Document&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEFigure" tags="structure,figure">
-            <id specification="ISO_32005" clause="Table 5. Code-Figure" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Figure&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Figure&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEForm" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Form" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Form&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Form&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEFormula" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Formula" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Formula&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Formula&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -2910,30 +2826,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEIndex" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Index" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Index&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Index&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEL" tags="structure,list">
-            <id specification="ISO_32005" clause="Table 5. Code-L" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;L&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;L&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SELBody" tags="structure,list">
             <id specification="ISO_32005" clause="Table 5. Code-LBody" testNumber="1"/>
             <description>&lt;Code&gt; shall not contain &lt;LBody&gt;</description>
@@ -2952,42 +2844,6 @@
             <test>parentStandardType != 'Code'</test>
             <error>
                 <message>&lt;Code&gt; contains &lt;LI&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SELbl" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Lbl" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Lbl&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Lbl&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEP" tags="structure,paragraph">
-            <id specification="ISO_32005" clause="Table 5. Code-P" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;P&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;P&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEQuote" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Quote" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Quote&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Quote&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -3024,30 +2880,6 @@
             <test>parentStandardType != 'Code'</test>
             <error>
                 <message>&lt;Code&gt; contains &lt;RT&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SERuby" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Ruby" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Ruby&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Ruby&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SESect" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Sect" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Sect&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Sect&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -3150,18 +2982,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SETable" tags="structure,table">
-            <id specification="ISO_32005" clause="Table 5. Code-Table" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Table&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Table&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SETitle" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Code-Title" testNumber="1"/>
             <description>&lt;Code&gt; shall not contain &lt;Title&gt;</description>
@@ -3192,18 +3012,6 @@
             <test>parentStandardType != 'Code'</test>
             <error>
                 <message>&lt;Code&gt; contains &lt;WT&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEWarichu" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Code-Warichu" testNumber="1"/>
-            <description>&lt;Code&gt; shall not contain &lt;Warichu&gt;</description>
-            <test>parentStandardType != 'Code'</test>
-            <error>
-                <message>&lt;Code&gt; contains &lt;Warichu&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -4230,18 +4038,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEBibEntry" tags="structure,note">
-            <id specification="ISO_32005" clause="Table 5. FENote-BibEntry" testNumber="1"/>
-            <description>&lt;FENote&gt; shall not contain &lt;BibEntry&gt;</description>
-            <test>parentStandardType != 'FENote'</test>
-            <error>
-                <message>&lt;FENote&gt; contains &lt;BibEntry&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SEDocument" tags="structure,note">
             <id specification="ISO_32005" clause="Table 5. FENote-Document" testNumber="1"/>
             <description>&lt;FENote&gt; shall not contain &lt;Document&gt;</description>
@@ -4272,18 +4068,6 @@
             <test>parentStandardType != 'FENote'</test>
             <error>
                 <message>&lt;FENote&gt; contains &lt;Hn&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEIndex" tags="structure,note">
-            <id specification="ISO_32005" clause="Table 5. FENote-Index" testNumber="1"/>
-            <description>&lt;FENote&gt; shall not contain &lt;Index&gt;</description>
-            <test>parentStandardType != 'FENote'</test>
-            <error>
-                <message>&lt;FENote&gt; contains &lt;Index&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -5430,12 +5214,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEH" tags="structure,heading">
+        <rule object="SEArt" tags="structure,heading">
             <id specification="ISO_32005" clause="Table 5. H-Art" testNumber="1"/>
-            <description>&lt;H&gt; shall contain at most one &lt;Art&gt;</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Art').length &lt;= 1</test>
+            <description>&lt;H&gt; shall not contain &lt;Art&gt;</description>
+            <test>parentStandardType != 'H'</test>
             <error>
-                <message>&lt;H&gt; contains more than one &lt;Art&gt;</message>
+                <message>&lt;H&gt; contains &lt;Art&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -5802,12 +5586,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEHn" tags="structure">
+        <rule object="SEArt" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Hn-Art" testNumber="1"/>
-            <description>&lt;Hn&gt; shall contain at most one &lt;Art&gt;</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Art').length &lt;= 1</test>
+            <description>&lt;Hn&gt; shall not contain &lt;Art&gt;</description>
+            <test>/^H[1-9][0-9]*$/.test(parentStandardType) == false</test>
             <error>
-                <message>&lt;Hn&gt; contains more than one &lt;Art&gt;</message>
+                <message>&lt;Hn&gt; contains &lt;Art&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -6216,6 +6000,18 @@
             <test>parentStandardType != 'Index'</test>
             <error>
                 <message>&lt;Index&gt; contains &lt;BlockQuote&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEIndex" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Index-Caption" testNumber="1"/>
+            <description>&lt;Index&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <error>
+                <message>&lt;Index&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8568,6 +8364,18 @@
             <test>parentStandardType != 'Link'</test>
             <error>
                 <message>&lt;Link&gt; contains &lt;WT&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SENote" tags="structure,caption,note">
+            <id specification="ISO_32005" clause="Table 5. Note-Caption" testNumber="1"/>
+            <description>&lt;Note&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <error>
+                <message>&lt;Note&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11064,18 +10872,6 @@
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;Form&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEFormula" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Formula" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Formula&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Formula&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -16692,18 +16488,6 @@
             <test>parentStandardType != 'TOC'</test>
             <error>
                 <message>&lt;TOC&gt; contains &lt;P&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEPart" tags="structure,toc">
-            <id specification="ISO_32005" clause="Table 5. TOC-Part" testNumber="1"/>
-            <description>&lt;TOC&gt; shall not contain &lt;Part&gt;</description>
-            <test>parentStandardType != 'TOC'</test>
-            <error>
-                <message>&lt;TOC&gt; contains &lt;Part&gt;</message>
                 <arguments/>
             </error>
             <references>
