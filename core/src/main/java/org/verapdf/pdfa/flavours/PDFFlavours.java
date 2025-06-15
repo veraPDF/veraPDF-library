@@ -24,6 +24,15 @@ import java.util.List;
 
 public class PDFFlavours {
 
+    public static boolean isOnlyPDFUARelatedFlavour(List<PDFAFlavour> flavours) {
+        for (PDFAFlavour flavour : flavours) {
+            if (!isPDFUARelatedFlavour(flavour)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public static boolean isPDFUARelatedFlavour(List<PDFAFlavour> flavours) {
         for (PDFAFlavour flavour : flavours) {
             if (isPDFUARelatedFlavour(flavour)) {
@@ -88,6 +97,15 @@ public class PDFFlavours {
             }
         }
         return false;
+    }
+
+    public static boolean isOnlyFlavour(List<PDFAFlavour> flavours, PDFAFlavour checkedFlavour) {
+        for (PDFAFlavour flavour : flavours) {
+            if (!isFlavour(flavour, checkedFlavour)) {
+                return false;
+            }
+        }
+        return true;
     }
     
     public static boolean isFlavour(PDFAFlavour currentFlavour, PDFAFlavour checkedFlavour) {
