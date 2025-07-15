@@ -1,3 +1,26 @@
+Version 1.28.2 (July 15, 2025)
+=================================
+
+### Applications
+- updated vulnerable dependencies ([commit](https://github.com/veraPDF/veraPDF-library/commit/b75a016))
+  
+###  Validation
+- (PDF/UA-2, WTPDF-1) disabled rule about multiple link annotations that target the same location ([commit](https://github.com/veraPDF/veraPDF-library/commit/3c05a38))
+- (PDF/UA-2, WTPDF-1) fixed structure destination validation ([commit](https://github.com/veraPDF/veraPDF-validation/commit/7fe5283))
+- fixed validation of Unicode for several flavours ([commit](https://github.com/veraPDF/veraPDF-validation/commit/7d143de))
+
+### PDF Parser
+- fixed width calculation in an edge case of Type2CharString ([commit](https://github.com/veraPDF/veraPDF-parser/commit/ea6ba8b))
+- fixed COSPredictorDecode (commits [1](https://github.com/veraPDF/veraPDF-parser/commit/e8f9024) [2](https://github.com/veraPDF/veraPDF-parser/commit/703fe86))
+- fixed RDF parsing with no attributes in metadata ([commit](https://github.com/veraPDF/veraPDF-library/commit/be2f0fb))
+- fixed exceptions in case of malformed PDFs
+
+
+### Maintenance
+- moved Maven publication from the decommissioned Sonatype service to Maven central publication
+- added the new maven-central-publication plugin to veraPDF-parent POM for publication for all projects ([commit](https://github.com/veraPDF/veraPDF-parent-pom/commit/16c02dd))
+- updated the Maven plugins used to the latest versions ([commit](https://github.com/veraPDF/veraPDF-parent-pom/commit/07e58ea))
+
 Version 1.28 (April 30, 2025)
 =================================
 
