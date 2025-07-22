@@ -15635,10 +15635,10 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="PDF_1_6" clause="AnnotWidget-Parent-Dictionary" testNumber="17"/>
-			<description>Entry Parent with type Dictionary in AnnotWidget shall be one of objects Field, AnnotWidgetField</description>
+			<description>Entry Parent with type Dictionary in AnnotWidget shall be one of objects FieldTx, FieldBtnPush, FieldBtnCheckbox, FieldBtnRadio, FieldChoice, FieldSig, Field</description>
 			<test>ParentHasTypeDictionary != true || Parent_size == 1</test>
 			<error>
-				<message>Entry Parent with type Dictionary in AnnotWidget is not one of objects Field, AnnotWidgetField</message>
+				<message>Entry Parent with type Dictionary in AnnotWidget is not one of objects FieldTx, FieldBtnPush, FieldBtnCheckbox, FieldBtnRadio, FieldChoice, FieldSig, Field</message>
 				<arguments/>
 			</error>
 			<references/>
