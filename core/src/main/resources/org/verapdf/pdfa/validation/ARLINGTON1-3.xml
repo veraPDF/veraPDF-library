@@ -38268,7 +38268,7 @@
 		</rule>
 		<rule object="ASignature">
 			<id specification="PDF_1_3" clause="Signature-SubFilter-Name-ETSI.CAdES.detached" testNumber="27"/>
-			<description>Entry SubFilter with type Name in Signature should not have value ETSI.CAdES.detached, if extension ETSI_PAdES does not chosen</description>
+			<description>Entry SubFilter with type Name in Signature should not have value ETSI.CAdES.detached unless extension ETSI_PAdES is enabled</description>
 			<test>(hasExtensionETSI_PAdES == true) || SubFilterNameValue != "ETSI.CAdES.detached"</test>
 			<error>
 				<message>Entry SubFilter with type Name in Signature has value ETSI.CAdES.detached</message>
@@ -39468,7 +39468,7 @@
 		</rule>
 		<rule object="AStructureAttributesDict">
 			<id specification="PDF_1_3" clause="StructureAttributesDict-O-Name-FENote" testNumber="27"/>
-			<description>Entry O with type Name in StructureAttributesDict should not have value FENote, if extension WTPDF does not chosen</description>
+			<description>Entry O with type Name in StructureAttributesDict should not have value FENote unless extension WTPDF is enabled</description>
 			<test>(hasExtensionWTPDF == true) || ONameValue != "FENote"</test>
 			<error>
 				<message>Entry O with type Name in StructureAttributesDict has value FENote</message>
