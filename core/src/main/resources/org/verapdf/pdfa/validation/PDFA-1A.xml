@@ -910,7 +910,7 @@
             <error>
                 <message>An ExtGState dictionary contains the BM key (blend mode) with value %1 that is neither Normal or Compatible</message>
                 <arguments>
-                    <argument>BM</argument>
+                    <argument>BMNameValue</argument>
                 </arguments>
             </error>
             <references/>
