@@ -1081,6 +1081,18 @@
             </error>
             <references/>
         </rule>
+        <rule object="SEAnnot" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Annot-Caption" testNumber="1"/>
+            <description>&lt;Annot&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <error>
+                <message>&lt;Annot&gt; contains more than one &lt;Caption&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEDocument" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Annot-Document" testNumber="1"/>
             <description>&lt;Annot&gt; shall not contain &lt;Document&gt;</description>
@@ -4183,6 +4195,18 @@
             <test>parentStandardType != 'Em'</test>
             <error>
                 <message>&lt;Em&gt; contains &lt;WT&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEFENote" tags="structure,caption,note">
+            <id specification="ISO_32005" clause="Table 5. FENote-Caption" testNumber="1"/>
+            <description>&lt;FENote&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <error>
+                <message>&lt;FENote&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8305,6 +8329,18 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SELink" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Link-Caption" testNumber="1"/>
+            <description>&lt;Link&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <error>
+                <message>&lt;Link&gt; contains more than one &lt;Caption&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEDocument" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Link-Document" testNumber="1"/>
             <description>&lt;Link&gt; shall not contain &lt;Document&gt;</description>
@@ -10921,72 +10957,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEArt" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Art" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Art&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Art&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEAside" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Aside" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Aside&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Aside&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEBlockQuote" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-BlockQuote" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;BlockQuote&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;BlockQuote&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SECaption" tags="structure,caption">
+        <rule object="SEReference" tags="structure,caption">
             <id specification="ISO_32005" clause="Table 5. Reference-Caption" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Caption&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
+            <description>&lt;Reference&gt; shall contain at most one &lt;Caption&gt;</description>
+            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
             <error>
-                <message>&lt;Reference&gt; contains &lt;Caption&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SECode" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Code" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Code&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Code&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEDiv" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Div" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Div&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Div&gt;</message>
+                <message>&lt;Reference&gt; contains more than one &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11005,72 +10981,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEDocumentFragment" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-DocumentFragment" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;DocumentFragment&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;DocumentFragment&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEForm" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Form" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Form&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Form&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEH" tags="structure,heading">
-            <id specification="ISO_32005" clause="Table 5. Reference-H" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;H&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;H&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEHn" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Hn" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Hn&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Hn&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SEIndex" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Reference-Index" testNumber="1"/>
             <description>&lt;Reference&gt; shall not contain &lt;Index&gt;</description>
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;Index&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEL" tags="structure,list">
-            <id specification="ISO_32005" clause="Table 5. Reference-L" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;L&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;L&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11101,36 +11017,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEP" tags="structure,paragraph">
-            <id specification="ISO_32005" clause="Table 5. Reference-P" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;P&gt;</description>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-Link" testNumber="1"/>
+            <description>&lt;Reference&gt; shall not contain &lt;Link&gt;</description>
             <test>parentStandardType != 'Reference'</test>
             <error>
-                <message>&lt;Reference&gt; contains &lt;P&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEPart" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Part" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Part&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Part&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEQuote" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Quote" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Quote&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Quote&gt;</message>
+                <message>&lt;Reference&gt; contains &lt;Link&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11167,54 +11059,6 @@
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;RT&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEReference" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Reference" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Reference&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Reference&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SERuby" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Ruby" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Ruby&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Ruby&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SESect" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Sect" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Sect&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Sect&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SESub" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Sub" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Sub&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Sub&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11317,30 +11161,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SETable" tags="structure,table">
-            <id specification="ISO_32005" clause="Table 5. Reference-Table" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Table&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Table&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SETitle" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Title" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Title&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Title&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SEWP" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Reference-WP" testNumber="1"/>
             <description>&lt;Reference&gt; shall not contain &lt;WP&gt;</description>
@@ -11359,18 +11179,6 @@
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;WT&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEWarichu" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Warichu" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Warichu&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Warichu&gt;</message>
                 <arguments/>
             </error>
             <references>
