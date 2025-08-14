@@ -3372,7 +3372,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="PDF_1_4" clause="AnnotFreeText" testNumber="1"/>
-			<description>AnnotFreeText shall not contain entries except AP, AS, BS, Border, C, CA, Contents, DA, F, M, NM, P, Popup, Q, Rect, StructParent, Subtype, T, Type</description>
+			<description>AnnotFreeText shall not contain entries except AP, AS, Border, C, CA, Contents, DA, F, M, NM, P, Popup, Q, Rect, StructParent, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'CL' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
@@ -3384,12 +3384,12 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="PDF_1_4" clause="AnnotFreeText" testNumber="22"/>
-			<description>AnnotFreeText shall not contain entries AF, BE, BM, CL, CreationDate, DS, ExData, IRT, IT, LE, Lang, OC, RC, RD, RT, Subj, ca in PDF 1.4. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BE' || elem == 'BM' || elem == 'CL' || elem == 'CreationDate' || elem == 'DS' || elem == 'ExData' || elem == 'IRT' || elem == 'IT' || elem == 'LE' || elem == 'Lang' || elem == 'OC' || elem == 'RC' || elem == 'RD' || elem == 'RT' || elem == 'Subj' || elem == 'ca').length == 0</test>
+			<description>AnnotFreeText shall not contain entries AF, BE, BM, BS, CL, CreationDate, DS, ExData, IRT, IT, LE, Lang, OC, RC, RD, RT, Subj, ca in PDF 1.4. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BE' || elem == 'BM' || elem == 'BS' || elem == 'CL' || elem == 'CreationDate' || elem == 'DS' || elem == 'ExData' || elem == 'IRT' || elem == 'IT' || elem == 'LE' || elem == 'Lang' || elem == 'OC' || elem == 'RC' || elem == 'RD' || elem == 'RT' || elem == 'Subj' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BE' || elem == 'BM' || elem == 'CL' || elem == 'CreationDate' || elem == 'DS' || elem == 'ExData' || elem == 'IRT' || elem == 'IT' || elem == 'LE' || elem == 'Lang' || elem == 'OC' || elem == 'RC' || elem == 'RD' || elem == 'RT' || elem == 'Subj' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BE' || elem == 'BM' || elem == 'BS' || elem == 'CL' || elem == 'CreationDate' || elem == 'DS' || elem == 'ExData' || elem == 'IRT' || elem == 'IT' || elem == 'LE' || elem == 'Lang' || elem == 'OC' || elem == 'RC' || elem == 'RD' || elem == 'RT' || elem == 'Subj' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3425,18 +3425,6 @@
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
 				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_4" clause="AnnotFreeText-BS" testNumber="8"/>
-			<description>Entry BS in AnnotFreeText shall have type Dictionary</description>
-			<test>containsBS == false || BSHasTypeDictionary == true</test>
-			<error>
-				<message>Entry BS in AnnotFreeText has type %1 instead of type Dictionary</message>
-				<arguments>
-					<argument>BSType</argument>
-				</arguments>
 			</error>
 			<references/>
 		</rule>

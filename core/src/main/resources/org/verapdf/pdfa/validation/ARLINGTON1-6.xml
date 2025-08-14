@@ -6503,7 +6503,7 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="PDF_1_6" clause="AnnotFreeText" testNumber="1"/>
-			<description>AnnotFreeText shall not contain entries except AP, AS, BE, BS, Border, C, CA, CL, Contents, CreationDate, DA, DS, F, IRT, IT, LE, M, NM, OC, P, Popup, Q, RC, RD, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
+			<description>AnnotFreeText shall not contain entries except AP, AS, Border, C, CA, CL, Contents, CreationDate, DA, DS, F, IRT, IT, M, NM, OC, P, Popup, Q, RC, RT, Rect, StructParent, Subj, Subtype, T, Type</description>
 			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BE' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'BS' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'CL' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'DA' &amp;&amp; elem != 'DS' &amp;&amp; elem != 'ExData' &amp;&amp; elem != 'F' &amp;&amp; elem != 'IRT' &amp;&amp; elem != 'IT' &amp;&amp; elem != 'LE' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Popup' &amp;&amp; elem != 'Q' &amp;&amp; elem != 'RC' &amp;&amp; elem != 'RD' &amp;&amp; elem != 'RT' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subj' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
@@ -6515,12 +6515,12 @@
 		</rule>
 		<rule object="AAnnotFreeText">
 			<id specification="PDF_1_6" clause="AnnotFreeText" testNumber="22"/>
-			<description>AnnotFreeText shall not contain entries AF, BM, ExData, Lang, ca in PDF 1.6. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'ExData' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotFreeText shall not contain entries AF, BE, BM, BS, ExData, LE, Lang, RD, ca in PDF 1.6. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BE' || elem == 'BM' || elem == 'BS' || elem == 'ExData' || elem == 'LE' || elem == 'Lang' || elem == 'RD' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotFreeText contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'ExData' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BE' || elem == 'BM' || elem == 'BS' || elem == 'ExData' || elem == 'LE' || elem == 'Lang' || elem == 'RD' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -6556,30 +6556,6 @@
 			<error>
 				<message>Entry AS in AnnotFreeText is missing</message>
 				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_6" clause="AnnotFreeText-BE" testNumber="8"/>
-			<description>Entry BE in AnnotFreeText shall have type Dictionary</description>
-			<test>containsBE == false || BEHasTypeDictionary == true</test>
-			<error>
-				<message>Entry BE in AnnotFreeText has type %1 instead of type Dictionary</message>
-				<arguments>
-					<argument>BEType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_6" clause="AnnotFreeText-BS" testNumber="8"/>
-			<description>Entry BS in AnnotFreeText shall have type Dictionary</description>
-			<test>containsBS == false || BSHasTypeDictionary == true</test>
-			<error>
-				<message>Entry BS in AnnotFreeText has type %1 instead of type Dictionary</message>
-				<arguments>
-					<argument>BSType</argument>
-				</arguments>
 			</error>
 			<references/>
 		</rule>
@@ -6778,30 +6754,6 @@
 			<references/>
 		</rule>
 		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_6" clause="AnnotFreeText-LE" testNumber="8"/>
-			<description>Entry LE in AnnotFreeText shall have type Name</description>
-			<test>containsLE == false || LEHasTypeName == true</test>
-			<error>
-				<message>Entry LE in AnnotFreeText has type %1 instead of type Name</message>
-				<arguments>
-					<argument>LEType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_6" clause="AnnotFreeText-LE-Name" testNumber="6"/>
-			<description>Entry LE with type Name in AnnotFreeText shall have one of values: ClosedArrow, Circle, ROpenArrow, Slash, Diamond, OpenArrow, Square, Butt, None, RClosedArrow</description>
-			<test>LEHasTypeName != true || LENameValue == "Square" || LENameValue == "Circle" || LENameValue == "Diamond" || LENameValue == "OpenArrow" || LENameValue == "ClosedArrow" || LENameValue == "None" || LENameValue == "Butt" || LENameValue == "ROpenArrow" || LENameValue == "RClosedArrow" || LENameValue == "Slash"</test>
-			<error>
-				<message>Entry LE with type Name in AnnotFreeText has incorrect value %1 instead of ClosedArrow, Circle, ROpenArrow, Slash, Diamond, OpenArrow, Square, Butt, None, RClosedArrow</message>
-				<arguments>
-					<argument>LENameValue</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
 			<id specification="PDF_1_6" clause="AnnotFreeText-M" testNumber="8"/>
 			<description>Entry M in AnnotFreeText shall have one of types: Date, StringText</description>
 			<test>containsM == false || MHasTypeDate == true || MHasTypeStringText == true</test>
@@ -6933,28 +6885,6 @@
 			<test>RCHasTypeStream != true || isRCIndirect == true</test>
 			<error>
 				<message>Entry RC with type Stream in AnnotFreeText is direct</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_6" clause="AnnotFreeText-RD" testNumber="8"/>
-			<description>Entry RD in AnnotFreeText shall have type Array</description>
-			<test>containsRD == false || RDHasTypeArray == true</test>
-			<error>
-				<message>Entry RD in AnnotFreeText has type %1 instead of type Array</message>
-				<arguments>
-					<argument>RDType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AAnnotFreeText">
-			<id specification="PDF_1_6" clause="AnnotFreeText-RD-Array" testNumber="9"/>
-			<description>Entry RD with type Array in AnnotFreeText shall satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</description>
-			<test>RDHasTypeArray != true || ((RDArraySize == 4) &amp;&amp; (RD0HasTypeNumber == false || (RD0NumberValue &gt;= 0)) &amp;&amp; (RD1HasTypeNumber == false || (RD1NumberValue &gt;= 0)) &amp;&amp; (RD2HasTypeNumber == false || (RD2NumberValue &gt;= 0)) &amp;&amp; (RD3HasTypeNumber == false || (RD3NumberValue &gt;= 0)) &amp;&amp; (RectHasTypeRectangle == false || RD3HasTypeNumber == false || RD1HasTypeNumber == false || ((RD1NumberValue + RD3NumberValue) &lt; RectRectHeight)) &amp;&amp; (RD2HasTypeNumber == false || RectHasTypeRectangle == false || RD0HasTypeNumber == false || ((RD0NumberValue + RD2NumberValue) &lt; RectRectWidth)))</test>
-			<error>
-				<message>Entry RD with type Array in AnnotFreeText does not satisfy special case: fn:Eval((fn:ArrayLength(RD) == 4) &amp;&amp; (RD::@0 &gt;= 0) &amp;&amp; (RD::@1 &gt;= 0) &amp;&amp; (RD::@2 &gt;= 0) &amp;&amp; (RD::@3 &gt;= 0) &amp;&amp; ((RD::@1 + RD::@3) &lt; fn:RectHeight(Rect)) &amp;&amp; ((RD::@0 + RD::@2) &lt; fn:RectWidth(Rect)))</message>
 				<arguments/>
 			</error>
 			<references/>
