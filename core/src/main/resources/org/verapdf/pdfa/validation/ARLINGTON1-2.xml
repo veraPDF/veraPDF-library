@@ -10993,6 +10993,114 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="ADeviceCMYKColorSpace">
+			<id specification="PDF_1_2" clause="DeviceCMYKColorSpace" testNumber="2"/>
+			<description>DeviceCMYKColorSpace shall contain exactly 1 element</description>
+			<test>size == 1</test>
+			<error>
+				<message>DeviceCMYKColorSpace contains %1 element(s) instead of 1</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceCMYKColorSpace">
+			<id specification="PDF_1_2" clause="DeviceCMYKColorSpace-0" testNumber="8"/>
+			<description>Entry 0 in DeviceCMYKColorSpace shall have type Name</description>
+			<test>size &lt;= 0 || entry0HasTypeName == true</test>
+			<error>
+				<message>Entry 0 in DeviceCMYKColorSpace has type %1 instead of type Name</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceCMYKColorSpace">
+			<id specification="PDF_1_2" clause="DeviceCMYKColorSpace-0-Name" testNumber="6"/>
+			<description>Entry 0 with type Name in DeviceCMYKColorSpace shall have value DeviceCMYK</description>
+			<test>entry0HasTypeName != true || entry0NameValue == "DeviceCMYK"</test>
+			<error>
+				<message>Entry 0 with type Name in DeviceCMYKColorSpace has incorrect value %1 instead of DeviceCMYK</message>
+				<arguments>
+					<argument>entry0NameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceGrayColorSpace">
+			<id specification="PDF_1_2" clause="DeviceGrayColorSpace" testNumber="2"/>
+			<description>DeviceGrayColorSpace shall contain exactly 1 element</description>
+			<test>size == 1</test>
+			<error>
+				<message>DeviceGrayColorSpace contains %1 element(s) instead of 1</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceGrayColorSpace">
+			<id specification="PDF_1_2" clause="DeviceGrayColorSpace-0" testNumber="8"/>
+			<description>Entry 0 in DeviceGrayColorSpace shall have type Name</description>
+			<test>size &lt;= 0 || entry0HasTypeName == true</test>
+			<error>
+				<message>Entry 0 in DeviceGrayColorSpace has type %1 instead of type Name</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceGrayColorSpace">
+			<id specification="PDF_1_2" clause="DeviceGrayColorSpace-0-Name" testNumber="6"/>
+			<description>Entry 0 with type Name in DeviceGrayColorSpace shall have value DeviceGray</description>
+			<test>entry0HasTypeName != true || entry0NameValue == "DeviceGray"</test>
+			<error>
+				<message>Entry 0 with type Name in DeviceGrayColorSpace has incorrect value %1 instead of DeviceGray</message>
+				<arguments>
+					<argument>entry0NameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceRGBColorSpace">
+			<id specification="PDF_1_2" clause="DeviceRGBColorSpace" testNumber="2"/>
+			<description>DeviceRGBColorSpace shall contain exactly 1 element</description>
+			<test>size == 1</test>
+			<error>
+				<message>DeviceRGBColorSpace contains %1 element(s) instead of 1</message>
+				<arguments>
+					<argument>size</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceRGBColorSpace">
+			<id specification="PDF_1_2" clause="DeviceRGBColorSpace-0" testNumber="8"/>
+			<description>Entry 0 in DeviceRGBColorSpace shall have type Name</description>
+			<test>size &lt;= 0 || entry0HasTypeName == true</test>
+			<error>
+				<message>Entry 0 in DeviceRGBColorSpace has type %1 instead of type Name</message>
+				<arguments>
+					<argument>entry0Type</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADeviceRGBColorSpace">
+			<id specification="PDF_1_2" clause="DeviceRGBColorSpace-0-Name" testNumber="6"/>
+			<description>Entry 0 with type Name in DeviceRGBColorSpace shall have value DeviceRGB</description>
+			<test>entry0HasTypeName != true || entry0NameValue == "DeviceRGB"</test>
+			<error>
+				<message>Entry 0 with type Name in DeviceRGBColorSpace has incorrect value %1 instead of DeviceRGB</message>
+				<arguments>
+					<argument>entry0NameValue</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="ADictionaryOfDictionariesEntry">
 			<id specification="PDF_1_2" clause="DictionaryOfDictionariesEntry" testNumber="8"/>
 			<description>Entry in DictionaryOfDictionaries shall have type Dictionary</description>
@@ -19427,10 +19535,10 @@
 		</rule>
 		<rule object="AIndexedColorSpace">
 			<id specification="PDF_1_2" clause="IndexedColorSpace-1-Array" testNumber="17"/>
-			<description>Entry 1 with type Array in IndexedColorSpace shall be one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, SeparationColorSpace</description>
+			<description>Entry 1 with type Array in IndexedColorSpace shall be one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, SeparationColorSpace</description>
 			<test>entry1HasTypeArray != true || entry1_size == 1</test>
 			<error>
-				<message>Entry 1 with type Array in IndexedColorSpace is not one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, SeparationColorSpace</message>
+				<message>Entry 1 with type Array in IndexedColorSpace is not one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, SeparationColorSpace</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -22504,11 +22612,11 @@
 			<references/>
 		</rule>
 		<rule object="APatternColorSpace">
-			<id specification="PDF_1_2" clause="PatternColorSpace" testNumber="2"/>
-			<description>PatternColorSpace shall contain exactly 2 elements</description>
-			<test>size == 2</test>
+			<id specification="PDF_1_2" clause="PatternColorSpace" testNumber="24"/>
+			<description>PatternColorSpace shall contain 1 to 2 elements</description>
+			<test>size &gt;= 1 &amp;&amp; size &lt;= 2</test>
 			<error>
-				<message>PatternColorSpace contains %1 element(s) instead of 2</message>
+				<message>PatternColorSpace contains %1 element(s)</message>
 				<arguments>
 					<argument>size</argument>
 				</arguments>
@@ -22541,10 +22649,10 @@
 		</rule>
 		<rule object="APatternColorSpace">
 			<id specification="PDF_1_2" clause="PatternColorSpace-1-Array" testNumber="17"/>
-			<description>Entry 1 with type Array in PatternColorSpace shall be one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace</description>
+			<description>Entry 1 with type Array in PatternColorSpace shall be one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace</description>
 			<test>entry1HasTypeArray != true || entry1_size == 1</test>
 			<error>
-				<message>Entry 1 with type Array in PatternColorSpace is not one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace</message>
+				<message>Entry 1 with type Array in PatternColorSpace is not one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -23202,10 +23310,10 @@
 		</rule>
 		<rule object="ASeparationColorSpace">
 			<id specification="PDF_1_2" clause="SeparationColorSpace-2-Array" testNumber="17"/>
-			<description>Entry 2 with type Array in SeparationColorSpace shall be one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace</description>
+			<description>Entry 2 with type Array in SeparationColorSpace shall be one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace</description>
 			<test>entry2HasTypeArray != true || entry2_size == 1</test>
 			<error>
-				<message>Entry 2 with type Array in SeparationColorSpace is not one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace</message>
+				<message>Entry 2 with type Array in SeparationColorSpace is not one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -23947,6 +24055,16 @@
 				<arguments>
 					<argument>BitsPerComponentIntegerValue</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AThumbnail">
+			<id specification="PDF_1_2" clause="Thumbnail-ColorSpace-Array" testNumber="17"/>
+			<description>Entry ColorSpace with type Array in Thumbnail shall be one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, IndexedColorSpace</description>
+			<test>ColorSpaceHasTypeArray != true || ColorSpace_size == 1</test>
+			<error>
+				<message>Entry ColorSpace with type Array in Thumbnail is not one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, IndexedColorSpace</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -26032,10 +26150,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_2" clause="XObjectImage-ColorSpace-Array" testNumber="17"/>
-			<description>Entry ColorSpace with type Array in XObjectImage shall be one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace, PatternColorSpace</description>
+			<description>Entry ColorSpace with type Array in XObjectImage shall be one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace, PatternColorSpace</description>
 			<test>ColorSpaceHasTypeArray != true || ColorSpace_size == 1</test>
 			<error>
-				<message>Entry ColorSpace with type Array in XObjectImage is not one of objects CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace, PatternColorSpace</message>
+				<message>Entry ColorSpace with type Array in XObjectImage is not one of objects DeviceGrayColorSpace, DeviceRGBColorSpace, DeviceCMYKColorSpace, CalGrayColorSpace, CalRGBColorSpace, LabColorSpace, IndexedColorSpace, SeparationColorSpace, PatternColorSpace</message>
 				<arguments/>
 			</error>
 			<references/>
