@@ -90,7 +90,8 @@ final class SchematronPipeline {
 	}
 
 	private static TransformerFactory getTransformerFactory() {
-		TransformerFactory fact = TransformerFactory.newInstance();
+		TransformerFactory fact = TransformerFactory.newInstance("net.sf.saxon.TransformerFactoryImpl",
+				null);
 		try {
 			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
