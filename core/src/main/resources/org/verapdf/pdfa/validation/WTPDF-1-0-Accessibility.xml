@@ -1081,12 +1081,48 @@
             </error>
             <references/>
         </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-Aside" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Aside&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Aside').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Aside&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-BlockQuote" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;BlockQuote&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'BlockQuote').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;BlockQuote&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEAnnot" tags="structure,caption">
             <id specification="ISO_32005" clause="Table 5. Annot-Caption" testNumber="1"/>
-            <description>&lt;Annot&gt; shall contain at most one &lt;Caption&gt;</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <description>&lt;Annot&gt;, when used as a grouping element, shall contain at most one &lt;Caption&gt;</description>
+            <test>isGrouping == false || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
             <error>
-                <message>&lt;Annot&gt; contains more than one &lt;Caption&gt;</message>
+                <message>&lt;Annot&gt; is used as a grouping element, but contains more than one &lt;Caption&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Annot-Caption" testNumber="2"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Caption&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -1105,12 +1141,72 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-DocumentFragment" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-Form" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Form&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Form').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Form&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure,heading">
+            <id specification="ISO_32005" clause="Table 5. Annot-H" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;H&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'H').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;H&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-Hn" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Hn&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; /^H[1-9][0-9]*$/.test(elem)).length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Hn&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEIndex" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Annot-Index" testNumber="1"/>
             <description>&lt;Annot&gt; shall not contain &lt;Index&gt;</description>
             <test>parentStandardType != 'Annot'</test>
             <error>
                 <message>&lt;Annot&gt; contains &lt;Index&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure,list">
+            <id specification="ISO_32005" clause="Table 5. Annot-L" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;L&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'L').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;L&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -1135,6 +1231,30 @@
             <test>parentStandardType != 'Annot'</test>
             <error>
                 <message>&lt;Annot&gt; contains &lt;LI&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure,paragraph">
+            <id specification="ISO_32005" clause="Table 5. Annot-P" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;P&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'P').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;P&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-Part" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Part&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Part').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Part&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -1171,6 +1291,18 @@
             <test>parentStandardType != 'Annot'</test>
             <error>
                 <message>&lt;Annot&gt; contains &lt;RT&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-Reference" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Reference&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Reference').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Reference&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -1267,6 +1399,30 @@
             <test>parentStandardType != 'Annot'</test>
             <error>
                 <message>&lt;Annot&gt; contains &lt;TR&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure,table">
+            <id specification="ISO_32005" clause="Table 5. Annot-Table" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Table&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Table').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Table&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEAnnot" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Annot-Title" testNumber="1"/>
+            <description>&lt;Annot&gt;, when used as a non-grouping element, shall not contain &lt;Title&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Title').length == 0</test>
+            <error>
+                <message>&lt;Annot&gt; is used as a non-grouping element, but contains &lt;Title&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -2737,6 +2893,18 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SECaption" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Caption-DocumentFragment" testNumber="1"/>
+            <description>&lt;Caption&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;Caption&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SECaption" tags="structure,heading,caption">
             <id specification="ISO_32005" clause="Table 5. Caption-H" testNumber="1"/>
             <description>&lt;Caption&gt; shall contain at most one &lt;H&gt;</description>
@@ -2959,6 +3127,18 @@
             <test>parentStandardType != 'Code'</test>
             <error>
                 <message>&lt;Code&gt; contains &lt;Document&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SECode" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Code-DocumentFragment" testNumber="1"/>
+            <description>&lt;Code&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;Code&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -4203,10 +4383,22 @@
         </rule>
         <rule object="SEFENote" tags="structure,caption,note">
             <id specification="ISO_32005" clause="Table 5. FENote-Caption" testNumber="1"/>
-            <description>&lt;FENote&gt; shall contain at most one &lt;Caption&gt;</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <description>&lt;FENote&gt;, when used as a grouping element, shall contain at most one &lt;Caption&gt;</description>
+            <test>isGrouping == false || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
             <error>
-                <message>&lt;FENote&gt; contains more than one &lt;Caption&gt;</message>
+                <message>&lt;FENote&gt; is used as a grouping element, but contains more than one &lt;Caption&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEFENote" tags="structure,caption,note">
+            <id specification="ISO_32005" clause="Table 5. FENote-Caption" testNumber="2"/>
+            <description>&lt;FENote&gt;, when used as a non-grouping element, shall not contain &lt;Caption&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length == 0</test>
+            <error>
+                <message>&lt;FENote&gt; is used as a non-grouping element, but contains &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -4219,6 +4411,18 @@
             <test>parentStandardType != 'FENote'</test>
             <error>
                 <message>&lt;FENote&gt; contains &lt;Document&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEFENote" tags="structure,note">
+            <id specification="ISO_32005" clause="Table 5. FENote-DocumentFragment" testNumber="1"/>
+            <description>&lt;FENote&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;FENote&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -4549,6 +4753,18 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEFigure" tags="structure,figure">
+            <id specification="ISO_32005" clause="Table 5. Figure-Sub" testNumber="1"/>
+            <description>&lt;Figure&gt;, when used as a non-grouping element, shall not contain &lt;Sub&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Sub').length == 0</test>
+            <error>
+                <message>&lt;Figure&gt; is used as a non-grouping element, but contains &lt;Sub&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SETBody" tags="structure,table,figure">
             <id specification="ISO_32005" clause="Table 5. Figure-TBody" testNumber="1"/>
             <description>&lt;Figure&gt; shall not contain &lt;TBody&gt;</description>
@@ -4741,6 +4957,18 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEForm" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Form-Code" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;Code&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Code').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;Code&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEDocument" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Form-Document" testNumber="1"/>
             <description>&lt;Form&gt; shall not contain &lt;Document&gt;</description>
@@ -4777,12 +5005,36 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEForm" tags="structure,figure">
+            <id specification="ISO_32005" clause="Table 5. Form-Figure" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;Figure&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Figure').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;Figure&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEForm" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Form-Form" testNumber="1"/>
             <description>&lt;Form&gt; shall not contain &lt;Form&gt;</description>
             <test>parentStandardType != 'Form'</test>
             <error>
                 <message>&lt;Form&gt; contains &lt;Form&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEForm" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Form-Formula" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;Formula&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Formula').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;Formula&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -4819,6 +5071,18 @@
             <test>parentStandardType != 'Form'</test>
             <error>
                 <message>&lt;Form&gt; contains &lt;Index&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEForm" tags="structure,list">
+            <id specification="ISO_32005" clause="Table 5. Form-L" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;L&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'L').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;L&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -4873,6 +5137,18 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEForm" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Form-Part" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;Part&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Part').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;Part&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEQuote" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Form-Quote" testNumber="1"/>
             <description>&lt;Form&gt; shall not contain &lt;Quote&gt;</description>
@@ -4915,6 +5191,18 @@
             <test>parentStandardType != 'Form'</test>
             <error>
                 <message>&lt;Form&gt; contains &lt;RT&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEForm" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Form-Reference" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;Reference&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Reference').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;Reference&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -5071,6 +5359,18 @@
             <test>parentStandardType != 'Form'</test>
             <error>
                 <message>&lt;Form&gt; contains &lt;TR&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEForm" tags="structure,table">
+            <id specification="ISO_32005" clause="Table 5. Form-Table" testNumber="1"/>
+            <description>&lt;Form&gt;, when used as a non-grouping element, shall not contain &lt;Table&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Table').length == 0</test>
+            <error>
+                <message>&lt;Form&gt; is used as a non-grouping element, but contains &lt;Table&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8329,12 +8629,48 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-Aside" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Aside&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Aside').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Aside&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-BlockQuote" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;BlockQuote&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'BlockQuote').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;BlockQuote&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SELink" tags="structure,caption">
             <id specification="ISO_32005" clause="Table 5. Link-Caption" testNumber="1"/>
-            <description>&lt;Link&gt; shall contain at most one &lt;Caption&gt;</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <description>&lt;Link&gt;, when used as a grouping element, shall contain at most one &lt;Caption&gt;</description>
+            <test>isGrouping == false || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
             <error>
-                <message>&lt;Link&gt; contains more than one &lt;Caption&gt;</message>
+                <message>&lt;Link&gt; is used as a grouping element, but contains more than one &lt;Caption&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Link-Caption" testNumber="2"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Caption&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8353,12 +8689,72 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-DocumentFragment" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-Form" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Form&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Form').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Form&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure,heading">
+            <id specification="ISO_32005" clause="Table 5. Link-H" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;H&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'H').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;H&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-Hn" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Hn&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; /^H[1-9][0-9]*$/.test(elem)).length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Hn&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEIndex" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Link-Index" testNumber="1"/>
             <description>&lt;Link&gt; shall not contain &lt;Index&gt;</description>
             <test>parentStandardType != 'Link'</test>
             <error>
                 <message>&lt;Link&gt; contains &lt;Index&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure,list">
+            <id specification="ISO_32005" clause="Table 5. Link-L" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;L&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'L').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;L&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8395,6 +8791,30 @@
             <test>parentStandardType != 'Link'</test>
             <error>
                 <message>&lt;Link&gt; contains &lt;Link&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure,paragraph">
+            <id specification="ISO_32005" clause="Table 5. Link-P" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;P&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'P').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;P&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-Part" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Part&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Part').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Part&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8533,6 +8953,30 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SELink" tags="structure,table">
+            <id specification="ISO_32005" clause="Table 5. Link-Table" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Table&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Table').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Table&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SELink" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Link-Title" testNumber="1"/>
+            <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;Title&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Title').length == 0</test>
+            <error>
+                <message>&lt;Link&gt; is used as a non-grouping element, but contains &lt;Title&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEWP" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Link-WP" testNumber="1"/>
             <description>&lt;Link&gt; shall not contain &lt;WP&gt;</description>
@@ -8575,6 +9019,18 @@
             <test>parentStandardType != 'Note'</test>
             <error>
                 <message>&lt;Note&gt; contains &lt;Document&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SENote" tags="structure,note">
+            <id specification="ISO_32005" clause="Table 5. Note-DocumentFragment" testNumber="1"/>
+            <description>&lt;Note&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;Note&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -10957,12 +11413,48 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-Aside" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Aside&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Aside').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Aside&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-BlockQuote" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;BlockQuote&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'BlockQuote').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;BlockQuote&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEReference" tags="structure,caption">
             <id specification="ISO_32005" clause="Table 5. Reference-Caption" testNumber="1"/>
-            <description>&lt;Reference&gt; shall contain at most one &lt;Caption&gt;</description>
-            <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
+            <description>&lt;Reference&gt;, when used as a grouping element, shall contain at most one &lt;Caption&gt;</description>
+            <test>isGrouping == false || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length &lt;= 1</test>
             <error>
-                <message>&lt;Reference&gt; contains more than one &lt;Caption&gt;</message>
+                <message>&lt;Reference&gt; is used as a grouping element, but contains more than one &lt;Caption&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure,caption">
+            <id specification="ISO_32005" clause="Table 5. Reference-Caption" testNumber="2"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Caption&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Caption').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Caption&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -10981,12 +11473,72 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-DocumentFragment" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;DocumentFragment&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'DocumentFragment').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;DocumentFragment&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-Form" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Form&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Form').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Form&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure,heading">
+            <id specification="ISO_32005" clause="Table 5. Reference-H" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;H&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'H').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;H&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-Hn" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Hn&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; /^H[1-9][0-9]*$/.test(elem)).length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Hn&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
         <rule object="SEIndex" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Reference-Index" testNumber="1"/>
             <description>&lt;Reference&gt; shall not contain &lt;Index&gt;</description>
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;Index&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure,list">
+            <id specification="ISO_32005" clause="Table 5. Reference-L" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;L&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'L').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;L&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11023,6 +11575,30 @@
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;Link&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure,paragraph">
+            <id specification="ISO_32005" clause="Table 5. Reference-P" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;P&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'P').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;P&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-Part" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Part&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Part').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Part&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11155,6 +11731,30 @@
             <test>parentStandardType != 'Reference'</test>
             <error>
                 <message>&lt;Reference&gt; contains &lt;TR&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure,table">
+            <id specification="ISO_32005" clause="Table 5. Reference-Table" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Table&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Table').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Table&gt;</message>
+                <arguments/>
+            </error>
+            <references>
+                <reference specification="ISO-32000-2" clause="Annex_L"/>
+            </references>
+        </rule>
+        <rule object="SEReference" tags="structure">
+            <id specification="ISO_32005" clause="Table 5. Reference-Title" testNumber="1"/>
+            <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;Title&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Title').length == 0</test>
+            <error>
+                <message>&lt;Reference&gt; is used as a non-grouping element, but contains &lt;Title&gt;</message>
                 <arguments/>
             </error>
             <references>
