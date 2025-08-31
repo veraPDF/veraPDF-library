@@ -30903,10 +30903,10 @@
 		</rule>
 		<rule object="AArrayOfIndirectFileSpecificationsEntry">
 			<id specification="ISO_32000_1_7" clause="ArrayOfIndirectFileSpecificationsEntry-Dictionary" testNumber="9"/>
-			<description>Entry with type Dictionary in ArrayOfIndirectFileSpecifications shall satisfy special case: fn:IsNameTreeValue(parent::RichMediaContent::Assets, @*)</description>
-			<test>HasTypeDictionary != true || (IsNameTreeparentRichMediaContentAssetsValue == true)</test>
+			<description>Entry with type Dictionary in ArrayOfIndirectFileSpecifications shall satisfy special case: fn:IsNameTreeValue(parent::parent::parent::RichMediaContent::Assets, @*)</description>
+			<test>HasTypeDictionary != true || (IsNameTreeparentparentparentRichMediaContentAssetsValue == true)</test>
 			<error>
-				<message>Entry %keyName% with type Dictionary in ArrayOfIndirectFileSpecifications does not satisfy special case: fn:IsNameTreeValue(parent::RichMediaContent::Assets, @*)</message>
+				<message>Entry %keyName% with type Dictionary in ArrayOfIndirectFileSpecifications does not satisfy special case: fn:IsNameTreeValue(parent::parent::parent::RichMediaContent::Assets, @*)</message>
 				<arguments>
 					<argument name="keyName">keyName</argument>
 				</arguments>
