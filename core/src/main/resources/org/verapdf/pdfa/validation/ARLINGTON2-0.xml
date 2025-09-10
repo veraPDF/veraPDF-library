@@ -64774,10 +64774,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_2_0" clause="ISO_DevExtensions-ExtensionLevel-Integer" testNumber="6"/>
-			<description>Entry ExtensionLevel with type Integer in ISO_DevExtensions shall have one of values: 32003, 32001, 24064, 32002, 32007</description>
-			<test>ExtensionLevelHasTypeInteger != true || ExtensionLevelIntegerValue == 32001 || ExtensionLevelIntegerValue == 32002 || ExtensionLevelIntegerValue == 32003 || ExtensionLevelIntegerValue == 24064 || ExtensionLevelIntegerValue == 32007</test>
+			<description>Entry ExtensionLevel with type Integer in ISO_DevExtensions shall have one of values: 32003, 32004, 32001, 24064, 32002, 32007</description>
+			<test>ExtensionLevelHasTypeInteger != true || ExtensionLevelIntegerValue == 32001 || ExtensionLevelIntegerValue == 32002 || ExtensionLevelIntegerValue == 32003 || ExtensionLevelIntegerValue == 32004 || ExtensionLevelIntegerValue == 24064 || ExtensionLevelIntegerValue == 32007</test>
 			<error>
-				<message>Entry ExtensionLevel with type Integer in ISO_DevExtensions has incorrect value %1 instead of 32003, 32001, 24064, 32002, 32007</message>
+				<message>Entry ExtensionLevel with type Integer in ISO_DevExtensions has incorrect value %1 instead of 32003, 32004, 32001, 24064, 32002, 32007</message>
 				<arguments>
 					<argument>ExtensionLevelIntegerValue</argument>
 				</arguments>
@@ -64818,10 +64818,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_2_0" clause="ISO_DevExtensions-ExtensionRevision-StringText" testNumber="6"/>
-			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall have one of values: :2022, :2023, 1:2023</description>
-			<test>ExtensionRevisionHasTypeStringText != true || ExtensionRevisionStringTextValue == ":2022" || ExtensionRevisionStringTextValue == ":2023" || ExtensionRevisionStringTextValue == "1:2023"</test>
+			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall have one of values: :2022, :2023, :2024, 1:2023</description>
+			<test>ExtensionRevisionHasTypeStringText != true || ExtensionRevisionStringTextValue == ":2022" || ExtensionRevisionStringTextValue == ":2023" || ExtensionRevisionStringTextValue == "1:2023" || ExtensionRevisionStringTextValue == ":2024"</test>
 			<error>
-				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions has incorrect value %1 instead of :2022, :2023, 1:2023</message>
+				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions has incorrect value %1 instead of :2022, :2023, :2024, 1:2023</message>
 				<arguments>
 					<argument>ExtensionRevisionStringTextValue</argument>
 				</arguments>
@@ -64830,10 +64830,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_2_0" clause="ISO_DevExtensions-ExtensionRevision-StringText" testNumber="9"/>
-			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')))</description>
-			<test>ExtensionRevisionHasTypeStringText != true || (((ExtensionLevelHasTypeInteger == false || ((ExtensionLevelIntegerValue == 32001) || (ExtensionLevelIntegerValue == 32002))) &amp;&amp; (ExtensionRevisionStringTextValue == ":2022")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32003)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 24064)) &amp;&amp; (ExtensionRevisionStringTextValue == "1:2023")))</test>
+			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')) || ((@ExtensionLevel == 32004) &amp;&amp; (@ExtensionRevision == ':2024')))</description>
+			<test>ExtensionRevisionHasTypeStringText != true || (((ExtensionLevelHasTypeInteger == false || ((ExtensionLevelIntegerValue == 32001) || (ExtensionLevelIntegerValue == 32002))) &amp;&amp; (ExtensionRevisionStringTextValue == ":2022")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32003)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 24064)) &amp;&amp; (ExtensionRevisionStringTextValue == "1:2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32004)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2024")))</test>
 			<error>
-				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions does not satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')))</message>
+				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions does not satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')) || ((@ExtensionLevel == 32004) &amp;&amp; (@ExtensionRevision == ':2024')))</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -64916,10 +64916,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_2_0" clause="ISO_DevExtensions-URL-String" testNumber="9"/>
-			<description>Entry URL with type String in ISO_DevExtensions shall satisfy special case: fn:Eval(((@ExtensionLevel == 32001) &amp;&amp; (@URL == 'https://www.iso.org/standard/45874.html')) || ((@ExtensionLevel == 32002) &amp;&amp; (@URL == 'https://www.iso.org/standard/45875.html')) || ((@ExtensionLevel == 32003) &amp;&amp; (@URL == 'https://www.iso.org/standard/45876.html')) || ((@ExtensionLevel == 24064) &amp;&amp; (@URL == 'https://www.iso.org/standard/77686.html')) || ((@ExtensionLevel == 32007) &amp;&amp; (@URL == 'https://www.iso.org/standard/45880.html')))</description>
-			<test>URLHasTypeString != true || (((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32001)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45874.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32002)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45875.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32003)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45876.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 24064)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/77686.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32007)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45880.html")))</test>
+			<description>Entry URL with type String in ISO_DevExtensions shall satisfy special case: fn:Eval(((@ExtensionLevel == 32001) &amp;&amp; (@URL == 'https://www.iso.org/standard/45874.html')) || ((@ExtensionLevel == 32002) &amp;&amp; (@URL == 'https://www.iso.org/standard/45875.html')) || ((@ExtensionLevel == 32003) &amp;&amp; (@URL == 'https://www.iso.org/standard/45876.html')) || ((@ExtensionLevel == 32004) &amp;&amp; (@URL == 'https://www.iso.org/standard/45877.html')) || ((@ExtensionLevel == 24064) &amp;&amp; (@URL == 'https://www.iso.org/standard/77686.html')) || ((@ExtensionLevel == 32007) &amp;&amp; (@URL == 'https://www.iso.org/standard/45880.html')))</description>
+			<test>URLHasTypeString != true || (((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32001)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45874.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32002)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45875.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32003)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45876.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32004)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45877.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 24064)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/77686.html")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32007)) &amp;&amp; (URLStringValue == "https://www.iso.org/standard/45880.html")))</test>
 			<error>
-				<message>Entry URL with type String in ISO_DevExtensions does not satisfy special case: fn:Eval(((@ExtensionLevel == 32001) &amp;&amp; (@URL == 'https://www.iso.org/standard/45874.html')) || ((@ExtensionLevel == 32002) &amp;&amp; (@URL == 'https://www.iso.org/standard/45875.html')) || ((@ExtensionLevel == 32003) &amp;&amp; (@URL == 'https://www.iso.org/standard/45876.html')) || ((@ExtensionLevel == 24064) &amp;&amp; (@URL == 'https://www.iso.org/standard/77686.html')) || ((@ExtensionLevel == 32007) &amp;&amp; (@URL == 'https://www.iso.org/standard/45880.html')))</message>
+				<message>Entry URL with type String in ISO_DevExtensions does not satisfy special case: fn:Eval(((@ExtensionLevel == 32001) &amp;&amp; (@URL == 'https://www.iso.org/standard/45874.html')) || ((@ExtensionLevel == 32002) &amp;&amp; (@URL == 'https://www.iso.org/standard/45875.html')) || ((@ExtensionLevel == 32003) &amp;&amp; (@URL == 'https://www.iso.org/standard/45876.html')) || ((@ExtensionLevel == 32004) &amp;&amp; (@URL == 'https://www.iso.org/standard/45877.html')) || ((@ExtensionLevel == 24064) &amp;&amp; (@URL == 'https://www.iso.org/standard/77686.html')) || ((@ExtensionLevel == 32007) &amp;&amp; (@URL == 'https://www.iso.org/standard/45880.html')))</message>
 				<arguments/>
 			</error>
 			<references/>

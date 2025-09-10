@@ -61528,10 +61528,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_1_7" clause="ISO_DevExtensions-ExtensionLevel-Integer" testNumber="6"/>
-			<description>Entry ExtensionLevel with type Integer in ISO_DevExtensions shall have one of values: 32003, 32001, 24064, 32002, 32007</description>
-			<test>ExtensionLevelHasTypeInteger != true || ExtensionLevelIntegerValue == 32001 || ExtensionLevelIntegerValue == 32002 || ExtensionLevelIntegerValue == 32003 || ExtensionLevelIntegerValue == 24064 || ExtensionLevelIntegerValue == 32007</test>
+			<description>Entry ExtensionLevel with type Integer in ISO_DevExtensions shall have one of values: 32003, 32004, 32001, 24064, 32002, 32007</description>
+			<test>ExtensionLevelHasTypeInteger != true || ExtensionLevelIntegerValue == 32001 || ExtensionLevelIntegerValue == 32002 || ExtensionLevelIntegerValue == 32003 || ExtensionLevelIntegerValue == 32004 || ExtensionLevelIntegerValue == 24064 || ExtensionLevelIntegerValue == 32007</test>
 			<error>
-				<message>Entry ExtensionLevel with type Integer in ISO_DevExtensions has incorrect value %1 instead of 32003, 32001, 24064, 32002, 32007</message>
+				<message>Entry ExtensionLevel with type Integer in ISO_DevExtensions has incorrect value %1 instead of 32003, 32004, 32001, 24064, 32002, 32007</message>
 				<arguments>
 					<argument>ExtensionLevelIntegerValue</argument>
 				</arguments>
