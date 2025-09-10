@@ -74,10 +74,10 @@
 		</rule>
 		<rule object="AAAPL_ST">
 			<id specification="PDF_1_3" clause="AAPL_ST-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in AAPL_ST shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in AAPL_ST shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in AAPL_ST has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in AAPL_ST has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -1134,10 +1134,10 @@
 		</rule>
 		<rule object="AActionMovie">
 			<id specification="PDF_1_3" clause="ActionMovie-Operation-Name" testNumber="6"/>
-			<description>Entry Operation with type Name in ActionMovie shall have one of values: Play, Pause, Stop, Resume</description>
+			<description>Entry Operation with type Name in ActionMovie shall have one of values: Play, Stop, Pause, Resume</description>
 			<test>OperationHasTypeName != true || OperationNameValue == "Play" || OperationNameValue == "Stop" || OperationNameValue == "Pause" || OperationNameValue == "Resume"</test>
 			<error>
-				<message>Entry Operation with type Name in ActionMovie has incorrect value %1 instead of Play, Pause, Stop, Resume</message>
+				<message>Entry Operation with type Name in ActionMovie has incorrect value %1 instead of Play, Stop, Pause, Resume</message>
 				<arguments>
 					<argument>OperationNameValue</argument>
 				</arguments>
@@ -1674,10 +1674,10 @@
 		</rule>
 		<rule object="AActionSubmitForm">
 			<id specification="PDF_1_3" clause="ActionSubmitForm-CharSet-String" testNumber="6"/>
-			<description>Entry CharSet with type String in ActionSubmitForm shall have one of values: GBK, UHC, utf-16, utf-8, Shift-JIS, BigFive</description>
+			<description>Entry CharSet with type String in ActionSubmitForm shall have one of values: utf-8, utf-16, Shift-JIS, BigFive, GBK, UHC</description>
 			<test>CharSetHasTypeString != true || CharSetStringValue == "utf-8" || CharSetStringValue == "utf-16" || CharSetStringValue == "Shift-JIS" || CharSetStringValue == "BigFive" || CharSetStringValue == "GBK" || CharSetStringValue == "UHC"</test>
 			<error>
-				<message>Entry CharSet with type String in ActionSubmitForm has incorrect value %1 instead of GBK, UHC, utf-16, utf-8, Shift-JIS, BigFive</message>
+				<message>Entry CharSet with type String in ActionSubmitForm has incorrect value %1 instead of utf-8, utf-16, Shift-JIS, BigFive, GBK, UHC</message>
 				<arguments>
 					<argument>CharSetStringValue</argument>
 				</arguments>
@@ -4620,10 +4620,10 @@
 		</rule>
 		<rule object="AAnnotLink">
 			<id specification="PDF_1_3" clause="AnnotLink-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotLink shall have one of values: P, I, N, O</description>
+			<description>Entry H with type Name in AnnotLink shall have one of values: N, I, O, P</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P"</test>
 			<error>
-				<message>Entry H with type Name in AnnotLink has incorrect value %1 instead of P, I, N, O</message>
+				<message>Entry H with type Name in AnnotLink has incorrect value %1 instead of N, I, O, P</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -6668,10 +6668,10 @@
 		</rule>
 		<rule object="AAnnotText">
 			<id specification="PDF_1_3" clause="AnnotText-Name-Name" testNumber="6"/>
-			<description>Entry Name with type Name in AnnotText shall have one of values: Comment, Help, Note, Insert, Key, NewParagraph, Paragraph</description>
+			<description>Entry Name with type Name in AnnotText shall have one of values: Comment, Key, Note, Help, NewParagraph, Paragraph, Insert</description>
 			<test>NameHasTypeName != true || NameNameValue == "Comment" || NameNameValue == "Key" || NameNameValue == "Note" || NameNameValue == "Help" || NameNameValue == "NewParagraph" || NameNameValue == "Paragraph" || NameNameValue == "Insert"</test>
 			<error>
-				<message>Entry Name with type Name in AnnotText has incorrect value %1 instead of Comment, Help, Note, Insert, Key, NewParagraph, Paragraph</message>
+				<message>Entry Name with type Name in AnnotText has incorrect value %1 instead of Comment, Key, Note, Help, NewParagraph, Paragraph, Insert</message>
 				<arguments>
 					<argument>NameNameValue</argument>
 				</arguments>
@@ -7642,10 +7642,10 @@
 		</rule>
 		<rule object="AAnnotWidget">
 			<id specification="PDF_1_3" clause="AnnotWidget-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidget shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidget shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidget has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidget has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -8058,10 +8058,10 @@
 		</rule>
 		<rule object="AAnnotWidgetField">
 			<id specification="PDF_1_3" clause="AnnotWidgetField-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetField shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetField shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetField has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetField has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -8530,10 +8530,10 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnCheckbox">
 			<id specification="PDF_1_3" clause="AnnotWidgetFieldBtnCheckbox-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetFieldBtnCheckbox shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetFieldBtnCheckbox shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetFieldBtnCheckbox has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetFieldBtnCheckbox has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -9038,10 +9038,10 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnPush">
 			<id specification="PDF_1_3" clause="AnnotWidgetFieldBtnPush-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetFieldBtnPush shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetFieldBtnPush shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetFieldBtnPush has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetFieldBtnPush has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -9546,10 +9546,10 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldBtnRadio">
 			<id specification="PDF_1_3" clause="AnnotWidgetFieldBtnRadio-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetFieldBtnRadio shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetFieldBtnRadio shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetFieldBtnRadio has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetFieldBtnRadio has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -10054,10 +10054,10 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldChoice">
 			<id specification="PDF_1_3" clause="AnnotWidgetFieldChoice-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetFieldChoice shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetFieldChoice shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetFieldChoice has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetFieldChoice has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -10586,10 +10586,10 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldSig">
 			<id specification="PDF_1_3" clause="AnnotWidgetFieldSig-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetFieldSig shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetFieldSig shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetFieldSig has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetFieldSig has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -11104,10 +11104,10 @@
 		</rule>
 		<rule object="AAnnotWidgetFieldTx">
 			<id specification="PDF_1_3" clause="AnnotWidgetFieldTx-H-Name" testNumber="6"/>
-			<description>Entry H with type Name in AnnotWidgetFieldTx shall have one of values: P, T, I, N, O</description>
+			<description>Entry H with type Name in AnnotWidgetFieldTx shall have one of values: N, I, O, P, T</description>
 			<test>HHasTypeName != true || HNameValue == "N" || HNameValue == "I" || HNameValue == "O" || HNameValue == "P" || HNameValue == "T"</test>
 			<error>
-				<message>Entry H with type Name in AnnotWidgetFieldTx has incorrect value %1 instead of P, T, I, N, O</message>
+				<message>Entry H with type Name in AnnotWidgetFieldTx has incorrect value %1 instead of N, I, O, P, T</message>
 				<arguments>
 					<argument>HNameValue</argument>
 				</arguments>
@@ -12363,10 +12363,10 @@
 		</rule>
 		<rule object="AArrayOfCompressionFilterNamesEntry">
 			<id specification="PDF_1_3" clause="ArrayOfCompressionFilterNamesEntry-Name" testNumber="6"/>
-			<description>Entry with type Name in ArrayOfCompressionFilterNames shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry with type Name in ArrayOfCompressionFilterNames shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>HasTypeName != true || NameValue == "ASCIIHexDecode" || NameValue == "ASCII85Decode" || NameValue == "LZWDecode" || NameValue == "FlateDecode" || NameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry %keyName% with type Name in ArrayOfCompressionFilterNames has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry %keyName% with type Name in ArrayOfCompressionFilterNames has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>NameValue</argument>
 					<argument name="keyName">keyName</argument>
@@ -12603,10 +12603,10 @@
 		</rule>
 		<rule object="AArrayOfFilterNamesEntry">
 			<id specification="PDF_1_3" clause="ArrayOfFilterNamesEntry-Name" testNumber="6"/>
-			<description>Entry with type Name in ArrayOfFilterNames shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry with type Name in ArrayOfFilterNames shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>HasTypeName != true || NameValue == "ASCIIHexDecode" || NameValue == "ASCII85Decode" || NameValue == "LZWDecode" || NameValue == "FlateDecode" || NameValue == "RunLengthDecode" || NameValue == "CCITTFaxDecode" || NameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry %keyName% with type Name in ArrayOfFilterNames has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry %keyName% with type Name in ArrayOfFilterNames has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>NameValue</argument>
 					<argument name="keyName">keyName</argument>
@@ -12821,10 +12821,10 @@
 		</rule>
 		<rule object="AArrayOfNamesForProcSetEntry">
 			<id specification="PDF_1_3" clause="ArrayOfNamesForProcSetEntry-Name" testNumber="6"/>
-			<description>Entry with type Name in ArrayOfNamesForProcSet shall have one of values: ImageI, PDF, ImageC, ImageB, Text</description>
+			<description>Entry with type Name in ArrayOfNamesForProcSet shall have one of values: PDF, Text, ImageB, ImageC, ImageI</description>
 			<test>HasTypeName != true || NameValue == "PDF" || NameValue == "Text" || NameValue == "ImageB" || NameValue == "ImageC" || NameValue == "ImageI"</test>
 			<error>
-				<message>Entry %keyName% with type Name in ArrayOfNamesForProcSet has incorrect value %1 instead of ImageI, PDF, ImageC, ImageB, Text</message>
+				<message>Entry %keyName% with type Name in ArrayOfNamesForProcSet has incorrect value %1 instead of PDF, Text, ImageB, ImageC, ImageI</message>
 				<arguments>
 					<argument>NameValue</argument>
 					<argument name="keyName">keyName</argument>
@@ -15126,10 +15126,10 @@
 		</rule>
 		<rule object="ABorderStyle">
 			<id specification="PDF_1_3" clause="BorderStyle-S-Name" testNumber="6"/>
-			<description>Entry S with type Name in BorderStyle shall have one of values: B, S, D, U, I</description>
+			<description>Entry S with type Name in BorderStyle shall have one of values: S, B, D, I, U</description>
 			<test>SHasTypeName != true || SNameValue == "S" || SNameValue == "B" || SNameValue == "D" || SNameValue == "I" || SNameValue == "U"</test>
 			<error>
-				<message>Entry S with type Name in BorderStyle has incorrect value %1 instead of B, S, D, U, I</message>
+				<message>Entry S with type Name in BorderStyle has incorrect value %1 instead of S, B, D, I, U</message>
 				<arguments>
 					<argument>SNameValue</argument>
 				</arguments>
@@ -15742,10 +15742,10 @@
 		</rule>
 		<rule object="ACMapStream">
 			<id specification="PDF_1_3" clause="CMapStream-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in CMapStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in CMapStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in CMapStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in CMapStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -15776,10 +15776,10 @@
 		</rule>
 		<rule object="ACMapStream">
 			<id specification="PDF_1_3" clause="CMapStream-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in CMapStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in CMapStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in CMapStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in CMapStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -15856,10 +15856,10 @@
 		</rule>
 		<rule object="ACMapStream">
 			<id specification="PDF_1_3" clause="CMapStream-UseCMap-Name" testNumber="6"/>
-			<description>Entry UseCMap with type Name in CMapStream shall have one of values: GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</description>
+			<description>Entry UseCMap with type Name in CMapStream shall have one of values: GB-EUC-H, GB-EUC-V, GBpc-EUC-H, GBpc-EUC-V, GBK-EUC-H, GBK-EUC-V, GBKp-EUC-H, GBKp-EUC-V, GBK2K-H, GBK2K-V, UniGB-UCS2-H, UniGB-UCS2-V, UniGB-UTF16-H, UniGB-UTF16-V, B5pc-H, B5pc-V, HKscs-B5-H, HKscs-B5-V, ETen-B5-H, ETen-B5-V, ETenms-B5-H, ETenms-B5-V, CNS-EUC-H, CNS-EUC-V, UniCNS-UCS2-H, UniCNS-UCS2-V, UniCNS-UTF16-H, UniCNS-UTF16-V, 83pv-RKSJ-H, 90ms-RKSJ-H, 90ms-RKSJ-V, 90msp-RKSJ-H, 90msp-RKSJ-V, 90pv-RKSJ-H, Add-RKSJ-H, Add-RKSJ-V, EUC-H, EUC-V, Ext-RKSJ-H, Ext-RKSJ-V, H, V, UniJIS-UCS2-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, UniJIS-UCS2-HW-V, UniJIS-UTF16-H, UniJIS-UTF16-V, KSC-EUC-H, KSC-EUC-V, KSCms-UHC-H, KSCms-UHC-V, KSCms-UHC-HW-H, KSCms-UHC-HW-V, KSCpc-EUC-H, UniKS-UCS2-H, UniKS-UCS2-V, UniKS-UTF16-H, UniKS-UTF16-V, Identity-H, Identity-V</description>
 			<test>UseCMapHasTypeName != true || UseCMapNameValue == "GB-EUC-H" || UseCMapNameValue == "GB-EUC-V" || UseCMapNameValue == "GBpc-EUC-H" || UseCMapNameValue == "GBpc-EUC-V" || UseCMapNameValue == "GBK-EUC-H" || UseCMapNameValue == "GBK-EUC-V" || UseCMapNameValue == "GBKp-EUC-H" || UseCMapNameValue == "GBKp-EUC-V" || UseCMapNameValue == "GBK2K-H" || UseCMapNameValue == "GBK2K-V" || UseCMapNameValue == "UniGB-UCS2-H" || UseCMapNameValue == "UniGB-UCS2-V" || UseCMapNameValue == "UniGB-UTF16-H" || UseCMapNameValue == "UniGB-UTF16-V" || UseCMapNameValue == "B5pc-H" || UseCMapNameValue == "B5pc-V" || UseCMapNameValue == "HKscs-B5-H" || UseCMapNameValue == "HKscs-B5-V" || UseCMapNameValue == "ETen-B5-H" || UseCMapNameValue == "ETen-B5-V" || UseCMapNameValue == "ETenms-B5-H" || UseCMapNameValue == "ETenms-B5-V" || UseCMapNameValue == "CNS-EUC-H" || UseCMapNameValue == "CNS-EUC-V" || UseCMapNameValue == "UniCNS-UCS2-H" || UseCMapNameValue == "UniCNS-UCS2-V" || UseCMapNameValue == "UniCNS-UTF16-H" || UseCMapNameValue == "UniCNS-UTF16-V" || UseCMapNameValue == "83pv-RKSJ-H" || UseCMapNameValue == "90ms-RKSJ-H" || UseCMapNameValue == "90ms-RKSJ-V" || UseCMapNameValue == "90msp-RKSJ-H" || UseCMapNameValue == "90msp-RKSJ-V" || UseCMapNameValue == "90pv-RKSJ-H" || UseCMapNameValue == "Add-RKSJ-H" || UseCMapNameValue == "Add-RKSJ-V" || UseCMapNameValue == "EUC-H" || UseCMapNameValue == "EUC-V" || UseCMapNameValue == "Ext-RKSJ-H" || UseCMapNameValue == "Ext-RKSJ-V" || UseCMapNameValue == "H" || UseCMapNameValue == "V" || UseCMapNameValue == "UniJIS-UCS2-H" || UseCMapNameValue == "UniJIS-UCS2-V" || UseCMapNameValue == "UniJIS-UCS2-HW-H" || UseCMapNameValue == "UniJIS-UCS2-HW-V" || UseCMapNameValue == "UniJIS-UTF16-H" || UseCMapNameValue == "UniJIS-UTF16-V" || UseCMapNameValue == "KSC-EUC-H" || UseCMapNameValue == "KSC-EUC-V" || UseCMapNameValue == "KSCms-UHC-H" || UseCMapNameValue == "KSCms-UHC-V" || UseCMapNameValue == "KSCms-UHC-HW-H" || UseCMapNameValue == "KSCms-UHC-HW-V" || UseCMapNameValue == "KSCpc-EUC-H" || UseCMapNameValue == "UniKS-UCS2-H" || UseCMapNameValue == "UniKS-UCS2-V" || UseCMapNameValue == "UniKS-UTF16-H" || UseCMapNameValue == "UniKS-UTF16-V" || UseCMapNameValue == "Identity-H" || UseCMapNameValue == "Identity-V"</test>
 			<error>
-				<message>Entry UseCMap with type Name in CMapStream has incorrect value %1 instead of GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</message>
+				<message>Entry UseCMap with type Name in CMapStream has incorrect value %1 instead of GB-EUC-H, GB-EUC-V, GBpc-EUC-H, GBpc-EUC-V, GBK-EUC-H, GBK-EUC-V, GBKp-EUC-H, GBKp-EUC-V, GBK2K-H, GBK2K-V, UniGB-UCS2-H, UniGB-UCS2-V, UniGB-UTF16-H, UniGB-UTF16-V, B5pc-H, B5pc-V, HKscs-B5-H, HKscs-B5-V, ETen-B5-H, ETen-B5-V, ETenms-B5-H, ETenms-B5-V, CNS-EUC-H, CNS-EUC-V, UniCNS-UCS2-H, UniCNS-UCS2-V, UniCNS-UTF16-H, UniCNS-UTF16-V, 83pv-RKSJ-H, 90ms-RKSJ-H, 90ms-RKSJ-V, 90msp-RKSJ-H, 90msp-RKSJ-V, 90pv-RKSJ-H, Add-RKSJ-H, Add-RKSJ-V, EUC-H, EUC-V, Ext-RKSJ-H, Ext-RKSJ-V, H, V, UniJIS-UCS2-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, UniJIS-UCS2-HW-V, UniJIS-UTF16-H, UniJIS-UTF16-V, KSC-EUC-H, KSC-EUC-V, KSCms-UHC-H, KSCms-UHC-V, KSCms-UHC-HW-H, KSCms-UHC-HW-V, KSCpc-EUC-H, UniKS-UCS2-H, UniKS-UCS2-V, UniKS-UTF16-H, UniKS-UTF16-V, Identity-H, Identity-V</message>
 				<arguments>
 					<argument>UseCMapNameValue</argument>
 				</arguments>
@@ -15890,10 +15890,10 @@
 		</rule>
 		<rule object="ACMapStream">
 			<id specification="PDF_1_3" clause="CMapStream-WMode-Integer" testNumber="6"/>
-			<description>Entry WMode with type Integer in CMapStream shall have one of values: 0, 1</description>
+			<description>Entry WMode with type Integer in CMapStream shall have one of values: 1, 0</description>
 			<test>WModeHasTypeInteger != true || WModeIntegerValue == 1 || WModeIntegerValue == 0</test>
 			<error>
-				<message>Entry WMode with type Integer in CMapStream has incorrect value %1 instead of 0, 1</message>
+				<message>Entry WMode with type Integer in CMapStream has incorrect value %1 instead of 1, 0</message>
 				<arguments>
 					<argument>WModeIntegerValue</argument>
 				</arguments>
@@ -16318,10 +16318,10 @@
 		</rule>
 		<rule object="ACatalog">
 			<id specification="PDF_1_3" clause="Catalog-PageLayout-Name" testNumber="6"/>
-			<description>Entry PageLayout with type Name in Catalog shall have one of values: SinglePage, TwoColumnLeft, OneColumn, TwoPageRight, TwoPageLeft, TwoColumnRight</description>
+			<description>Entry PageLayout with type Name in Catalog shall have one of values: SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight, TwoPageLeft, TwoPageRight</description>
 			<test>PageLayoutHasTypeName != true || PageLayoutNameValue == "SinglePage" || PageLayoutNameValue == "OneColumn" || PageLayoutNameValue == "TwoColumnLeft" || PageLayoutNameValue == "TwoColumnRight" || PageLayoutNameValue == "TwoPageLeft" || PageLayoutNameValue == "TwoPageRight"</test>
 			<error>
-				<message>Entry PageLayout with type Name in Catalog has incorrect value %1 instead of SinglePage, TwoColumnLeft, OneColumn, TwoPageRight, TwoPageLeft, TwoColumnRight</message>
+				<message>Entry PageLayout with type Name in Catalog has incorrect value %1 instead of SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight, TwoPageLeft, TwoPageRight</message>
 				<arguments>
 					<argument>PageLayoutNameValue</argument>
 				</arguments>
@@ -16342,10 +16342,10 @@
 		</rule>
 		<rule object="ACatalog">
 			<id specification="PDF_1_3" clause="Catalog-PageMode-Name" testNumber="6"/>
-			<description>Entry PageMode with type Name in Catalog shall have one of values: UseOutlines, UseThumbs, UseOC, UseAttachments, UseNone, FullScreen</description>
+			<description>Entry PageMode with type Name in Catalog shall have one of values: UseNone, UseOutlines, UseThumbs, FullScreen, UseOC, UseAttachments</description>
 			<test>PageModeHasTypeName != true || PageModeNameValue == "UseNone" || PageModeNameValue == "UseOutlines" || PageModeNameValue == "UseThumbs" || PageModeNameValue == "FullScreen" || PageModeNameValue == "UseOC" || PageModeNameValue == "UseAttachments"</test>
 			<error>
-				<message>Entry PageMode with type Name in Catalog has incorrect value %1 instead of UseOutlines, UseThumbs, UseOC, UseAttachments, UseNone, FullScreen</message>
+				<message>Entry PageMode with type Name in Catalog has incorrect value %1 instead of UseNone, UseOutlines, UseThumbs, FullScreen, UseOC, UseAttachments</message>
 				<arguments>
 					<argument>PageModeNameValue</argument>
 				</arguments>
@@ -16642,10 +16642,10 @@
 		</rule>
 		<rule object="AColorSpaceMapEntry">
 			<id specification="PDF_1_3" clause="ColorSpaceMapEntry-Name" testNumber="6"/>
-			<description>Entry with type Name in ColorSpaceMap shall have one of values: Pattern, DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry with type Name in ColorSpaceMap shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray, Pattern</description>
 			<test>HasTypeName != true || NameValue == "DeviceCMYK" || NameValue == "DeviceRGB" || NameValue == "DeviceGray" || NameValue == "Pattern"</test>
 			<error>
-				<message>Entry %keyName% with type Name in ColorSpaceMap has incorrect value %1 instead of Pattern, DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry %keyName% with type Name in ColorSpaceMap has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray, Pattern</message>
 				<arguments>
 					<argument>NameValue</argument>
 					<argument name="keyName">keyName</argument>
@@ -16841,10 +16841,10 @@
 		</rule>
 		<rule object="ADest1Array">
 			<id specification="PDF_1_3" clause="Dest1Array-1-Name" testNumber="6"/>
-			<description>Entry 1 with type Name in Dest1Array shall have one of values: FitV, FitH, FitBH, FitBV</description>
+			<description>Entry 1 with type Name in Dest1Array shall have one of values: FitH, FitV, FitBH, FitBV</description>
 			<test>entry1HasTypeName != true || entry1NameValue == "FitH" || entry1NameValue == "FitV" || entry1NameValue == "FitBH" || entry1NameValue == "FitBV"</test>
 			<error>
-				<message>Entry 1 with type Name in Dest1Array has incorrect value %1 instead of FitV, FitH, FitBH, FitBV</message>
+				<message>Entry 1 with type Name in Dest1Array has incorrect value %1 instead of FitH, FitV, FitBH, FitBV</message>
 				<arguments>
 					<argument>entry1NameValue</argument>
 				</arguments>
@@ -17298,10 +17298,10 @@
 		</rule>
 		<rule object="ADeviceNColorSpace">
 			<id specification="PDF_1_3" clause="DeviceNColorSpace-2-Name" testNumber="6"/>
-			<description>Entry 2 with type Name in DeviceNColorSpace shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry 2 with type Name in DeviceNColorSpace shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>entry2HasTypeName != true || entry2NameValue == "DeviceCMYK" || entry2NameValue == "DeviceRGB" || entry2NameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry 2 with type Name in DeviceNColorSpace has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry 2 with type Name in DeviceNColorSpace has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>entry2NameValue</argument>
 				</arguments>
@@ -17567,10 +17567,10 @@
 		</rule>
 		<rule object="ADocInfo">
 			<id specification="PDF_1_3" clause="DocInfo-Trapped-Name" testNumber="6"/>
-			<description>Entry Trapped with type Name in DocInfo shall have one of values: Unknown, True, False</description>
+			<description>Entry Trapped with type Name in DocInfo shall have one of values: True, False, Unknown</description>
 			<test>TrappedHasTypeName != true || TrappedNameValue == "True" || TrappedNameValue == "False" || TrappedNameValue == "Unknown"</test>
 			<error>
-				<message>Entry Trapped with type Name in DocInfo has incorrect value %1 instead of Unknown, True, False</message>
+				<message>Entry Trapped with type Name in DocInfo has incorrect value %1 instead of True, False, Unknown</message>
 				<arguments>
 					<argument>TrappedNameValue</argument>
 				</arguments>
@@ -17838,10 +17838,10 @@
 		</rule>
 		<rule object="AEmbeddedFileStream">
 			<id specification="PDF_1_3" clause="EmbeddedFileStream-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in EmbeddedFileStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry FFilter with type Name in EmbeddedFileStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode" || FFilterNameValue == "CCITTFaxDecode" || FFilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in EmbeddedFileStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry FFilter with type Name in EmbeddedFileStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -17872,10 +17872,10 @@
 		</rule>
 		<rule object="AEmbeddedFileStream">
 			<id specification="PDF_1_3" clause="EmbeddedFileStream-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in EmbeddedFileStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry Filter with type Name in EmbeddedFileStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode" || FilterNameValue == "CCITTFaxDecode" || FilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in EmbeddedFileStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry Filter with type Name in EmbeddedFileStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -17978,10 +17978,10 @@
 		</rule>
 		<rule object="AEncoding">
 			<id specification="PDF_1_3" clause="Encoding-BaseEncoding-Name" testNumber="6"/>
-			<description>Entry BaseEncoding with type Name in Encoding shall have one of values: MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</description>
+			<description>Entry BaseEncoding with type Name in Encoding shall have one of values: MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</description>
 			<test>BaseEncodingHasTypeName != true || BaseEncodingNameValue == "MacRomanEncoding" || BaseEncodingNameValue == "MacExpertEncoding" || BaseEncodingNameValue == "WinAnsiEncoding"</test>
 			<error>
-				<message>Entry BaseEncoding with type Name in Encoding has incorrect value %1 instead of MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</message>
+				<message>Entry BaseEncoding with type Name in Encoding has incorrect value %1 instead of MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</message>
 				<arguments>
 					<argument>BaseEncodingNameValue</argument>
 				</arguments>
@@ -20977,10 +20977,10 @@
 		</rule>
 		<rule object="AFilterFlateDecode">
 			<id specification="PDF_1_3" clause="FilterFlateDecode-Predictor-Integer" testNumber="6"/>
-			<description>Entry Predictor with type Integer in FilterFlateDecode shall have one of values: 11, 1, 12, 2, 13, 14, 15, 10</description>
+			<description>Entry Predictor with type Integer in FilterFlateDecode shall have one of values: 1, 2, 10, 11, 12, 13, 14, 15</description>
 			<test>PredictorHasTypeInteger != true || PredictorIntegerValue == 1 || PredictorIntegerValue == 2 || PredictorIntegerValue == 10 || PredictorIntegerValue == 11 || PredictorIntegerValue == 12 || PredictorIntegerValue == 13 || PredictorIntegerValue == 14 || PredictorIntegerValue == 15</test>
 			<error>
-				<message>Entry Predictor with type Integer in FilterFlateDecode has incorrect value %1 instead of 11, 1, 12, 2, 13, 14, 15, 10</message>
+				<message>Entry Predictor with type Integer in FilterFlateDecode has incorrect value %1 instead of 1, 2, 10, 11, 12, 13, 14, 15</message>
 				<arguments>
 					<argument>PredictorIntegerValue</argument>
 				</arguments>
@@ -21095,10 +21095,10 @@
 		</rule>
 		<rule object="AFilterLZWDecode">
 			<id specification="PDF_1_3" clause="FilterLZWDecode-Predictor-Integer" testNumber="6"/>
-			<description>Entry Predictor with type Integer in FilterLZWDecode shall have one of values: 11, 1, 12, 2, 13, 14, 15, 10</description>
+			<description>Entry Predictor with type Integer in FilterLZWDecode shall have one of values: 1, 2, 10, 11, 12, 13, 14, 15</description>
 			<test>PredictorHasTypeInteger != true || PredictorIntegerValue == 1 || PredictorIntegerValue == 2 || PredictorIntegerValue == 10 || PredictorIntegerValue == 11 || PredictorIntegerValue == 12 || PredictorIntegerValue == 13 || PredictorIntegerValue == 14 || PredictorIntegerValue == 15</test>
 			<error>
-				<message>Entry Predictor with type Integer in FilterLZWDecode has incorrect value %1 instead of 11, 1, 12, 2, 13, 14, 15, 10</message>
+				<message>Entry Predictor with type Integer in FilterLZWDecode has incorrect value %1 instead of 1, 2, 10, 11, 12, 13, 14, 15</message>
 				<arguments>
 					<argument>PredictorIntegerValue</argument>
 				</arguments>
@@ -23689,10 +23689,10 @@
 		</rule>
 		<rule object="AFontFile">
 			<id specification="PDF_1_3" clause="FontFile-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FontFile shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FontFile shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FontFile has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FontFile has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -23723,10 +23723,10 @@
 		</rule>
 		<rule object="AFontFile">
 			<id specification="PDF_1_3" clause="FontFile-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FontFile shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FontFile shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FontFile has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FontFile has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -23835,10 +23835,10 @@
 		</rule>
 		<rule object="AFontFile">
 			<id specification="PDF_1_3" clause="FontFile-Subtype-Name" testNumber="6"/>
-			<description>Entry Subtype with type Name in FontFile shall have one of values: CIDFontType0C, Type1C</description>
+			<description>Entry Subtype with type Name in FontFile shall have one of values: Type1C, CIDFontType0C</description>
 			<test>SubtypeHasTypeName != true || SubtypeNameValue == "Type1C" || SubtypeNameValue == "CIDFontType0C"</test>
 			<error>
-				<message>Entry Subtype with type Name in FontFile has incorrect value %1 instead of CIDFontType0C, Type1C</message>
+				<message>Entry Subtype with type Name in FontFile has incorrect value %1 instead of Type1C, CIDFontType0C</message>
 				<arguments>
 					<argument>SubtypeNameValue</argument>
 				</arguments>
@@ -23969,10 +23969,10 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="PDF_1_3" clause="FontFile2-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FontFile2 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FontFile2 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FontFile2 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FontFile2 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -24003,10 +24003,10 @@
 		</rule>
 		<rule object="AFontFile2">
 			<id specification="PDF_1_3" clause="FontFile2-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FontFile2 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FontFile2 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FontFile2 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FontFile2 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -24247,10 +24247,10 @@
 		</rule>
 		<rule object="AFontFile3CIDType0">
 			<id specification="PDF_1_3" clause="FontFile3CIDType0-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FontFile3CIDType0 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FontFile3CIDType0 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FontFile3CIDType0 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FontFile3CIDType0 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -24281,10 +24281,10 @@
 		</rule>
 		<rule object="AFontFile3CIDType0">
 			<id specification="PDF_1_3" clause="FontFile3CIDType0-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FontFile3CIDType0 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FontFile3CIDType0 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FontFile3CIDType0 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FontFile3CIDType0 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -24537,10 +24537,10 @@
 		</rule>
 		<rule object="AFontFile3Type1">
 			<id specification="PDF_1_3" clause="FontFile3Type1-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FontFile3Type1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FontFile3Type1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FontFile3Type1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FontFile3Type1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -24571,10 +24571,10 @@
 		</rule>
 		<rule object="AFontFile3Type1">
 			<id specification="PDF_1_3" clause="FontFile3Type1-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FontFile3Type1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FontFile3Type1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FontFile3Type1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FontFile3Type1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -24827,10 +24827,10 @@
 		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_3" clause="FontFileType1-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FontFileType1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FontFileType1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FontFileType1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FontFileType1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -24861,10 +24861,10 @@
 		</rule>
 		<rule object="AFontFileType1">
 			<id specification="PDF_1_3" clause="FontFileType1-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FontFileType1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FontFileType1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FontFileType1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FontFileType1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -25086,10 +25086,10 @@
 		</rule>
 		<rule object="AFontMultipleMaster">
 			<id specification="PDF_1_3" clause="FontMultipleMaster-Encoding-Name" testNumber="6"/>
-			<description>Entry Encoding with type Name in FontMultipleMaster shall have one of values: MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</description>
+			<description>Entry Encoding with type Name in FontMultipleMaster shall have one of values: MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</description>
 			<test>EncodingHasTypeName != true || EncodingNameValue == "MacRomanEncoding" || EncodingNameValue == "MacExpertEncoding" || EncodingNameValue == "WinAnsiEncoding"</test>
 			<error>
-				<message>Entry Encoding with type Name in FontMultipleMaster has incorrect value %1 instead of MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</message>
+				<message>Entry Encoding with type Name in FontMultipleMaster has incorrect value %1 instead of MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</message>
 				<arguments>
 					<argument>EncodingNameValue</argument>
 				</arguments>
@@ -25344,10 +25344,10 @@
 		</rule>
 		<rule object="AFontTrueType">
 			<id specification="PDF_1_3" clause="FontTrueType-Encoding-Name" testNumber="6"/>
-			<description>Entry Encoding with type Name in FontTrueType shall have one of values: MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</description>
+			<description>Entry Encoding with type Name in FontTrueType shall have one of values: MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</description>
 			<test>EncodingHasTypeName != true || EncodingNameValue == "MacRomanEncoding" || EncodingNameValue == "MacExpertEncoding" || EncodingNameValue == "WinAnsiEncoding"</test>
 			<error>
-				<message>Entry Encoding with type Name in FontTrueType has incorrect value %1 instead of MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</message>
+				<message>Entry Encoding with type Name in FontTrueType has incorrect value %1 instead of MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</message>
 				<arguments>
 					<argument>EncodingNameValue</argument>
 				</arguments>
@@ -25634,10 +25634,10 @@
 		</rule>
 		<rule object="AFontType0">
 			<id specification="PDF_1_3" clause="FontType0-Encoding-Name" testNumber="6"/>
-			<description>Entry Encoding with type Name in FontType0 shall have one of values: GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</description>
+			<description>Entry Encoding with type Name in FontType0 shall have one of values: GB-EUC-H, GB-EUC-V, GBpc-EUC-H, GBpc-EUC-V, GBK-EUC-H, GBK-EUC-V, GBKp-EUC-H, GBKp-EUC-V, GBK2K-H, GBK2K-V, UniGB-UCS2-H, UniGB-UCS2-V, UniGB-UTF16-H, UniGB-UTF16-V, B5pc-H, B5pc-V, HKscs-B5-H, HKscs-B5-V, ETen-B5-H, ETen-B5-V, ETenms-B5-H, ETenms-B5-V, CNS-EUC-H, CNS-EUC-V, UniCNS-UCS2-H, UniCNS-UCS2-V, UniCNS-UTF16-H, UniCNS-UTF16-V, 83pv-RKSJ-H, 90ms-RKSJ-H, 90ms-RKSJ-V, 90msp-RKSJ-H, 90msp-RKSJ-V, 90pv-RKSJ-H, Add-RKSJ-H, Add-RKSJ-V, EUC-H, EUC-V, Ext-RKSJ-H, Ext-RKSJ-V, H, V, UniJIS-UCS2-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, UniJIS-UCS2-HW-V, UniJIS-UTF16-H, UniJIS-UTF16-V, KSC-EUC-H, KSC-EUC-V, KSCms-UHC-H, KSCms-UHC-V, KSCms-UHC-HW-H, KSCms-UHC-HW-V, KSCpc-EUC-H, UniKS-UCS2-H, UniKS-UCS2-V, UniKS-UTF16-H, UniKS-UTF16-V, Identity-H, Identity-V</description>
 			<test>EncodingHasTypeName != true || EncodingNameValue == "GB-EUC-H" || EncodingNameValue == "GB-EUC-V" || EncodingNameValue == "GBpc-EUC-H" || EncodingNameValue == "GBpc-EUC-V" || EncodingNameValue == "GBK-EUC-H" || EncodingNameValue == "GBK-EUC-V" || EncodingNameValue == "GBKp-EUC-H" || EncodingNameValue == "GBKp-EUC-V" || EncodingNameValue == "GBK2K-H" || EncodingNameValue == "GBK2K-V" || EncodingNameValue == "UniGB-UCS2-H" || EncodingNameValue == "UniGB-UCS2-V" || EncodingNameValue == "UniGB-UTF16-H" || EncodingNameValue == "UniGB-UTF16-V" || EncodingNameValue == "B5pc-H" || EncodingNameValue == "B5pc-V" || EncodingNameValue == "HKscs-B5-H" || EncodingNameValue == "HKscs-B5-V" || EncodingNameValue == "ETen-B5-H" || EncodingNameValue == "ETen-B5-V" || EncodingNameValue == "ETenms-B5-H" || EncodingNameValue == "ETenms-B5-V" || EncodingNameValue == "CNS-EUC-H" || EncodingNameValue == "CNS-EUC-V" || EncodingNameValue == "UniCNS-UCS2-H" || EncodingNameValue == "UniCNS-UCS2-V" || EncodingNameValue == "UniCNS-UTF16-H" || EncodingNameValue == "UniCNS-UTF16-V" || EncodingNameValue == "83pv-RKSJ-H" || EncodingNameValue == "90ms-RKSJ-H" || EncodingNameValue == "90ms-RKSJ-V" || EncodingNameValue == "90msp-RKSJ-H" || EncodingNameValue == "90msp-RKSJ-V" || EncodingNameValue == "90pv-RKSJ-H" || EncodingNameValue == "Add-RKSJ-H" || EncodingNameValue == "Add-RKSJ-V" || EncodingNameValue == "EUC-H" || EncodingNameValue == "EUC-V" || EncodingNameValue == "Ext-RKSJ-H" || EncodingNameValue == "Ext-RKSJ-V" || EncodingNameValue == "H" || EncodingNameValue == "V" || EncodingNameValue == "UniJIS-UCS2-H" || EncodingNameValue == "UniJIS-UCS2-V" || EncodingNameValue == "UniJIS-UCS2-HW-H" || EncodingNameValue == "UniJIS-UCS2-HW-V" || EncodingNameValue == "UniJIS-UTF16-H" || EncodingNameValue == "UniJIS-UTF16-V" || EncodingNameValue == "KSC-EUC-H" || EncodingNameValue == "KSC-EUC-V" || EncodingNameValue == "KSCms-UHC-H" || EncodingNameValue == "KSCms-UHC-V" || EncodingNameValue == "KSCms-UHC-HW-H" || EncodingNameValue == "KSCms-UHC-HW-V" || EncodingNameValue == "KSCpc-EUC-H" || EncodingNameValue == "UniKS-UCS2-H" || EncodingNameValue == "UniKS-UCS2-V" || EncodingNameValue == "UniKS-UTF16-H" || EncodingNameValue == "UniKS-UTF16-V" || EncodingNameValue == "Identity-H" || EncodingNameValue == "Identity-V"</test>
 			<error>
-				<message>Entry Encoding with type Name in FontType0 has incorrect value %1 instead of GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</message>
+				<message>Entry Encoding with type Name in FontType0 has incorrect value %1 instead of GB-EUC-H, GB-EUC-V, GBpc-EUC-H, GBpc-EUC-V, GBK-EUC-H, GBK-EUC-V, GBKp-EUC-H, GBKp-EUC-V, GBK2K-H, GBK2K-V, UniGB-UCS2-H, UniGB-UCS2-V, UniGB-UTF16-H, UniGB-UTF16-V, B5pc-H, B5pc-V, HKscs-B5-H, HKscs-B5-V, ETen-B5-H, ETen-B5-V, ETenms-B5-H, ETenms-B5-V, CNS-EUC-H, CNS-EUC-V, UniCNS-UCS2-H, UniCNS-UCS2-V, UniCNS-UTF16-H, UniCNS-UTF16-V, 83pv-RKSJ-H, 90ms-RKSJ-H, 90ms-RKSJ-V, 90msp-RKSJ-H, 90msp-RKSJ-V, 90pv-RKSJ-H, Add-RKSJ-H, Add-RKSJ-V, EUC-H, EUC-V, Ext-RKSJ-H, Ext-RKSJ-V, H, V, UniJIS-UCS2-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, UniJIS-UCS2-HW-V, UniJIS-UTF16-H, UniJIS-UTF16-V, KSC-EUC-H, KSC-EUC-V, KSCms-UHC-H, KSCms-UHC-V, KSCms-UHC-HW-H, KSCms-UHC-HW-V, KSCpc-EUC-H, UniKS-UCS2-H, UniKS-UCS2-V, UniKS-UTF16-H, UniKS-UTF16-V, Identity-H, Identity-V</message>
 				<arguments>
 					<argument>EncodingNameValue</argument>
 				</arguments>
@@ -25792,10 +25792,10 @@
 		</rule>
 		<rule object="AFontType1">
 			<id specification="PDF_1_3" clause="FontType1-Encoding-Name" testNumber="6"/>
-			<description>Entry Encoding with type Name in FontType1 shall have one of values: MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</description>
+			<description>Entry Encoding with type Name in FontType1 shall have one of values: MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</description>
 			<test>EncodingHasTypeName != true || EncodingNameValue == "MacRomanEncoding" || EncodingNameValue == "MacExpertEncoding" || EncodingNameValue == "WinAnsiEncoding"</test>
 			<error>
-				<message>Entry Encoding with type Name in FontType1 has incorrect value %1 instead of MacExpertEncoding, MacRomanEncoding, WinAnsiEncoding</message>
+				<message>Entry Encoding with type Name in FontType1 has incorrect value %1 instead of MacRomanEncoding, MacExpertEncoding, WinAnsiEncoding</message>
 				<arguments>
 					<argument>EncodingNameValue</argument>
 				</arguments>
@@ -26380,10 +26380,10 @@
 		</rule>
 		<rule object="AFunctionType0">
 			<id specification="PDF_1_3" clause="FunctionType0-BitsPerSample-Integer" testNumber="6"/>
-			<description>Entry BitsPerSample with type Integer in FunctionType0 shall have one of values: 1, 12, 2, 24, 4, 16, 8, 32</description>
+			<description>Entry BitsPerSample with type Integer in FunctionType0 shall have one of values: 1, 2, 4, 8, 12, 16, 24, 32</description>
 			<test>BitsPerSampleHasTypeInteger != true || BitsPerSampleIntegerValue == 1 || BitsPerSampleIntegerValue == 2 || BitsPerSampleIntegerValue == 4 || BitsPerSampleIntegerValue == 8 || BitsPerSampleIntegerValue == 12 || BitsPerSampleIntegerValue == 16 || BitsPerSampleIntegerValue == 24 || BitsPerSampleIntegerValue == 32</test>
 			<error>
-				<message>Entry BitsPerSample with type Integer in FunctionType0 has incorrect value %1 instead of 1, 12, 2, 24, 4, 16, 8, 32</message>
+				<message>Entry BitsPerSample with type Integer in FunctionType0 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16, 24, 32</message>
 				<arguments>
 					<argument>BitsPerSampleIntegerValue</argument>
 				</arguments>
@@ -26566,10 +26566,10 @@
 		</rule>
 		<rule object="AFunctionType0">
 			<id specification="PDF_1_3" clause="FunctionType0-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FunctionType0 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FunctionType0 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FunctionType0 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FunctionType0 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -26600,10 +26600,10 @@
 		</rule>
 		<rule object="AFunctionType0">
 			<id specification="PDF_1_3" clause="FunctionType0-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FunctionType0 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FunctionType0 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FunctionType0 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FunctionType0 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -27270,10 +27270,10 @@
 		</rule>
 		<rule object="AFunctionType4">
 			<id specification="PDF_1_3" clause="FunctionType4-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in FunctionType4 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in FunctionType4 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in FunctionType4 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in FunctionType4 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -27304,10 +27304,10 @@
 		</rule>
 		<rule object="AFunctionType4">
 			<id specification="PDF_1_3" clause="FunctionType4-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in FunctionType4 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in FunctionType4 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in FunctionType4 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in FunctionType4 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -27878,10 +27878,10 @@
 		</rule>
 		<rule object="AGraphicsStateParameter">
 			<id specification="PDF_1_3" clause="GraphicsStateParameter-RI-Name" testNumber="6"/>
-			<description>Entry RI with type Name in GraphicsStateParameter shall have one of values: AbsoluteColorimetric, Perceptual, Saturation, RelativeColorimetric</description>
+			<description>Entry RI with type Name in GraphicsStateParameter shall have one of values: AbsoluteColorimetric, RelativeColorimetric, Saturation, Perceptual</description>
 			<test>RIHasTypeName != true || RINameValue == "AbsoluteColorimetric" || RINameValue == "RelativeColorimetric" || RINameValue == "Saturation" || RINameValue == "Perceptual"</test>
 			<error>
-				<message>Entry RI with type Name in GraphicsStateParameter has incorrect value %1 instead of AbsoluteColorimetric, Perceptual, Saturation, RelativeColorimetric</message>
+				<message>Entry RI with type Name in GraphicsStateParameter has incorrect value %1 instead of AbsoluteColorimetric, RelativeColorimetric, Saturation, Perceptual</message>
 				<arguments>
 					<argument>RINameValue</argument>
 				</arguments>
@@ -28307,10 +28307,10 @@
 		</rule>
 		<rule object="AHalftoneType1">
 			<id specification="PDF_1_3" clause="HalftoneType1-SpotFunction-Name" testNumber="6"/>
-			<description>Entry SpotFunction with type Name in HalftoneType1 shall have one of values: Ellipse, LineX, SimpleDot, LineY, Cross, InvertedDouble, Diamond, InvertedDoubleDot, Square, Double, InvertedEllipseC, InvertedEllipseA, Line, CosineDot, InvertedSimpleDot, Round, EllipseA, DoubleDot, EllipseC, Rhomboid, EllipseB</description>
+			<description>Entry SpotFunction with type Name in HalftoneType1 shall have one of values: SimpleDot, InvertedSimpleDot, DoubleDot, InvertedDoubleDot, CosineDot, Double, InvertedDouble, Line, LineX, LineY, Round, Ellipse, EllipseA, InvertedEllipseA, EllipseB, EllipseC, InvertedEllipseC, Square, Cross, Rhomboid, Diamond</description>
 			<test>SpotFunctionHasTypeName != true || SpotFunctionNameValue == "SimpleDot" || SpotFunctionNameValue == "InvertedSimpleDot" || SpotFunctionNameValue == "DoubleDot" || SpotFunctionNameValue == "InvertedDoubleDot" || SpotFunctionNameValue == "CosineDot" || SpotFunctionNameValue == "Double" || SpotFunctionNameValue == "InvertedDouble" || SpotFunctionNameValue == "Line" || SpotFunctionNameValue == "LineX" || SpotFunctionNameValue == "LineY" || SpotFunctionNameValue == "Round" || SpotFunctionNameValue == "Ellipse" || SpotFunctionNameValue == "EllipseA" || SpotFunctionNameValue == "InvertedEllipseA" || SpotFunctionNameValue == "EllipseB" || SpotFunctionNameValue == "EllipseC" || SpotFunctionNameValue == "InvertedEllipseC" || SpotFunctionNameValue == "Square" || SpotFunctionNameValue == "Cross" || SpotFunctionNameValue == "Rhomboid" || SpotFunctionNameValue == "Diamond"</test>
 			<error>
-				<message>Entry SpotFunction with type Name in HalftoneType1 has incorrect value %1 instead of Ellipse, LineX, SimpleDot, LineY, Cross, InvertedDouble, Diamond, InvertedDoubleDot, Square, Double, InvertedEllipseC, InvertedEllipseA, Line, CosineDot, InvertedSimpleDot, Round, EllipseA, DoubleDot, EllipseC, Rhomboid, EllipseB</message>
+				<message>Entry SpotFunction with type Name in HalftoneType1 has incorrect value %1 instead of SimpleDot, InvertedSimpleDot, DoubleDot, InvertedDoubleDot, CosineDot, Double, InvertedDouble, Line, LineX, LineY, Round, Ellipse, EllipseA, InvertedEllipseA, EllipseB, EllipseC, InvertedEllipseC, Square, Cross, Rhomboid, Diamond</message>
 				<arguments>
 					<argument>SpotFunctionNameValue</argument>
 				</arguments>
@@ -28537,10 +28537,10 @@
 		</rule>
 		<rule object="AHalftoneType10">
 			<id specification="PDF_1_3" clause="HalftoneType10-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in HalftoneType10 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in HalftoneType10 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in HalftoneType10 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in HalftoneType10 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -28571,10 +28571,10 @@
 		</rule>
 		<rule object="AHalftoneType10">
 			<id specification="PDF_1_3" clause="HalftoneType10-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in HalftoneType10 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in HalftoneType10 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in HalftoneType10 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in HalftoneType10 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -28923,10 +28923,10 @@
 		</rule>
 		<rule object="AHalftoneType16">
 			<id specification="PDF_1_3" clause="HalftoneType16-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in HalftoneType16 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in HalftoneType16 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in HalftoneType16 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in HalftoneType16 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -28957,10 +28957,10 @@
 		</rule>
 		<rule object="AHalftoneType16">
 			<id specification="PDF_1_3" clause="HalftoneType16-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in HalftoneType16 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in HalftoneType16 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in HalftoneType16 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in HalftoneType16 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -29512,10 +29512,10 @@
 		</rule>
 		<rule object="AHalftoneType6">
 			<id specification="PDF_1_3" clause="HalftoneType6-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in HalftoneType6 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in HalftoneType6 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in HalftoneType6 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in HalftoneType6 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -29546,10 +29546,10 @@
 		</rule>
 		<rule object="AHalftoneType6">
 			<id specification="PDF_1_3" clause="HalftoneType6-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in HalftoneType6 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in HalftoneType6 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in HalftoneType6 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in HalftoneType6 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -29982,10 +29982,10 @@
 		</rule>
 		<rule object="AICCProfileStream">
 			<id specification="PDF_1_3" clause="ICCProfileStream-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in ICCProfileStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in ICCProfileStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in ICCProfileStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in ICCProfileStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -30016,10 +30016,10 @@
 		</rule>
 		<rule object="AICCProfileStream">
 			<id specification="PDF_1_3" clause="ICCProfileStream-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in ICCProfileStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in ICCProfileStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in ICCProfileStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in ICCProfileStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -30162,10 +30162,10 @@
 		</rule>
 		<rule object="AIconFit">
 			<id specification="PDF_1_3" clause="IconFit-S-Name" testNumber="6"/>
-			<description>Entry S with type Name in IconFit shall have one of values: P, A</description>
+			<description>Entry S with type Name in IconFit shall have one of values: A, P</description>
 			<test>SHasTypeName != true || SNameValue == "A" || SNameValue == "P"</test>
 			<error>
-				<message>Entry S with type Name in IconFit has incorrect value %1 instead of P, A</message>
+				<message>Entry S with type Name in IconFit has incorrect value %1 instead of A, P</message>
 				<arguments>
 					<argument>SNameValue</argument>
 				</arguments>
@@ -30256,10 +30256,10 @@
 		</rule>
 		<rule object="AIndexedColorSpace">
 			<id specification="PDF_1_3" clause="IndexedColorSpace-1-Name" testNumber="6"/>
-			<description>Entry 1 with type Name in IndexedColorSpace shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry 1 with type Name in IndexedColorSpace shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>entry1HasTypeName != true || entry1NameValue == "DeviceCMYK" || entry1NameValue == "DeviceRGB" || entry1NameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry 1 with type Name in IndexedColorSpace has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry 1 with type Name in IndexedColorSpace has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>entry1NameValue</argument>
 				</arguments>
@@ -31276,10 +31276,10 @@
 		</rule>
 		<rule object="AMicrosoftWindowsLaunchParam">
 			<id specification="PDF_1_3" clause="MicrosoftWindowsLaunchParam-O-StringAscii" testNumber="6"/>
-			<description>Entry O with type StringAscii in MicrosoftWindowsLaunchParam shall have one of values: print, open</description>
+			<description>Entry O with type StringAscii in MicrosoftWindowsLaunchParam shall have one of values: open, print</description>
 			<test>OHasTypeStringAscii != true || OStringAsciiValue == "open" || OStringAsciiValue == "print"</test>
 			<error>
-				<message>Entry O with type StringAscii in MicrosoftWindowsLaunchParam has incorrect value %1 instead of print, open</message>
+				<message>Entry O with type StringAscii in MicrosoftWindowsLaunchParam has incorrect value %1 instead of open, print</message>
 				<arguments>
 					<argument>OStringAsciiValue</argument>
 				</arguments>
@@ -31490,10 +31490,10 @@
 		</rule>
 		<rule object="AMovieActivation">
 			<id specification="PDF_1_3" clause="MovieActivation-Mode-Name" testNumber="6"/>
-			<description>Entry Mode with type Name in MovieActivation shall have one of values: Palindrome, Once, Repeat, Open</description>
+			<description>Entry Mode with type Name in MovieActivation shall have one of values: Once, Open, Repeat, Palindrome</description>
 			<test>ModeHasTypeName != true || ModeNameValue == "Once" || ModeNameValue == "Open" || ModeNameValue == "Repeat" || ModeNameValue == "Palindrome"</test>
 			<error>
-				<message>Entry Mode with type Name in MovieActivation has incorrect value %1 instead of Palindrome, Once, Repeat, Open</message>
+				<message>Entry Mode with type Name in MovieActivation has incorrect value %1 instead of Once, Open, Repeat, Palindrome</message>
 				<arguments>
 					<argument>ModeNameValue</argument>
 				</arguments>
@@ -32793,10 +32793,10 @@
 		</rule>
 		<rule object="AOPIVersion20Dict">
 			<id specification="PDF_1_3" clause="OPIVersion20Dict-Inks-Name" testNumber="6"/>
-			<description>Entry Inks with type Name in OPIVersion20Dict shall have one of values: registration, full_color</description>
+			<description>Entry Inks with type Name in OPIVersion20Dict shall have one of values: full_color, registration</description>
 			<test>InksHasTypeName != true || InksNameValue == "full_color" || InksNameValue == "registration"</test>
 			<error>
-				<message>Entry Inks with type Name in OPIVersion20Dict has incorrect value %1 instead of registration, full_color</message>
+				<message>Entry Inks with type Name in OPIVersion20Dict has incorrect value %1 instead of full_color, registration</message>
 				<arguments>
 					<argument>InksNameValue</argument>
 				</arguments>
@@ -33493,10 +33493,10 @@
 		</rule>
 		<rule object="APageLabel">
 			<id specification="PDF_1_3" clause="PageLabel-S-Name" testNumber="6"/>
-			<description>Entry S with type Name in PageLabel shall have one of values: A, a, R, r, D</description>
+			<description>Entry S with type Name in PageLabel shall have one of values: D, R, r, A, a</description>
 			<test>SHasTypeName != true || SNameValue == "D" || SNameValue == "R" || SNameValue == "r" || SNameValue == "A" || SNameValue == "a"</test>
 			<error>
-				<message>Entry S with type Name in PageLabel has incorrect value %1 instead of A, a, R, r, D</message>
+				<message>Entry S with type Name in PageLabel has incorrect value %1 instead of D, R, r, A, a</message>
 				<arguments>
 					<argument>SNameValue</argument>
 				</arguments>
@@ -34452,10 +34452,10 @@
 		</rule>
 		<rule object="APatternColorSpace">
 			<id specification="PDF_1_3" clause="PatternColorSpace-1-Name" testNumber="6"/>
-			<description>Entry 1 with type Name in PatternColorSpace shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry 1 with type Name in PatternColorSpace shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>entry1HasTypeName != true || entry1NameValue == "DeviceCMYK" || entry1NameValue == "DeviceRGB" || entry1NameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry 1 with type Name in PatternColorSpace has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry 1 with type Name in PatternColorSpace has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>entry1NameValue</argument>
 				</arguments>
@@ -34631,10 +34631,10 @@
 		</rule>
 		<rule object="APatternType1">
 			<id specification="PDF_1_3" clause="PatternType1-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in PatternType1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in PatternType1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in PatternType1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in PatternType1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -34665,10 +34665,10 @@
 		</rule>
 		<rule object="APatternType1">
 			<id specification="PDF_1_3" clause="PatternType1-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in PatternType1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in PatternType1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in PatternType1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in PatternType1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -35420,10 +35420,10 @@
 		</rule>
 		<rule object="ASeparationColorSpace">
 			<id specification="PDF_1_3" clause="SeparationColorSpace-2-Name" testNumber="6"/>
-			<description>Entry 2 with type Name in SeparationColorSpace shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry 2 with type Name in SeparationColorSpace shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>entry2HasTypeName != true || entry2NameValue == "DeviceCMYK" || entry2NameValue == "DeviceRGB" || entry2NameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry 2 with type Name in SeparationColorSpace has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry 2 with type Name in SeparationColorSpace has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>entry2NameValue</argument>
 				</arguments>
@@ -35603,10 +35603,10 @@
 		</rule>
 		<rule object="AShadingType1">
 			<id specification="PDF_1_3" clause="ShadingType1-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType1 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType1 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType1 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType1 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -35805,10 +35805,10 @@
 		</rule>
 		<rule object="AShadingType2">
 			<id specification="PDF_1_3" clause="ShadingType2-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType2 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType2 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType2 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType2 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -36029,10 +36029,10 @@
 		</rule>
 		<rule object="AShadingType3">
 			<id specification="PDF_1_3" clause="ShadingType3-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType3 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType3 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType3 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType3 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -36253,10 +36253,10 @@
 		</rule>
 		<rule object="AShadingType4">
 			<id specification="PDF_1_3" clause="ShadingType4-BitsPerComponent-Integer" testNumber="6"/>
-			<description>Entry BitsPerComponent with type Integer in ShadingType4 shall have one of values: 1, 12, 2, 4, 16, 8</description>
+			<description>Entry BitsPerComponent with type Integer in ShadingType4 shall have one of values: 1, 2, 4, 8, 12, 16</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 12 || BitsPerComponentIntegerValue == 16</test>
 			<error>
-				<message>Entry BitsPerComponent with type Integer in ShadingType4 has incorrect value %1 instead of 1, 12, 2, 4, 16, 8</message>
+				<message>Entry BitsPerComponent with type Integer in ShadingType4 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16</message>
 				<arguments>
 					<argument>BitsPerComponentIntegerValue</argument>
 				</arguments>
@@ -36287,10 +36287,10 @@
 		</rule>
 		<rule object="AShadingType4">
 			<id specification="PDF_1_3" clause="ShadingType4-BitsPerCoordinate-Integer" testNumber="6"/>
-			<description>Entry BitsPerCoordinate with type Integer in ShadingType4 shall have one of values: 1, 12, 2, 24, 4, 16, 8, 32</description>
+			<description>Entry BitsPerCoordinate with type Integer in ShadingType4 shall have one of values: 1, 2, 4, 8, 12, 16, 24, 32</description>
 			<test>BitsPerCoordinateHasTypeInteger != true || BitsPerCoordinateIntegerValue == 1 || BitsPerCoordinateIntegerValue == 2 || BitsPerCoordinateIntegerValue == 4 || BitsPerCoordinateIntegerValue == 8 || BitsPerCoordinateIntegerValue == 12 || BitsPerCoordinateIntegerValue == 16 || BitsPerCoordinateIntegerValue == 24 || BitsPerCoordinateIntegerValue == 32</test>
 			<error>
-				<message>Entry BitsPerCoordinate with type Integer in ShadingType4 has incorrect value %1 instead of 1, 12, 2, 24, 4, 16, 8, 32</message>
+				<message>Entry BitsPerCoordinate with type Integer in ShadingType4 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16, 24, 32</message>
 				<arguments>
 					<argument>BitsPerCoordinateIntegerValue</argument>
 				</arguments>
@@ -36365,10 +36365,10 @@
 		</rule>
 		<rule object="AShadingType4">
 			<id specification="PDF_1_3" clause="ShadingType4-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType4 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType4 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType4 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType4 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -36487,10 +36487,10 @@
 		</rule>
 		<rule object="AShadingType4">
 			<id specification="PDF_1_3" clause="ShadingType4-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in ShadingType4 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in ShadingType4 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in ShadingType4 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in ShadingType4 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -36521,10 +36521,10 @@
 		</rule>
 		<rule object="AShadingType4">
 			<id specification="PDF_1_3" clause="ShadingType4-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in ShadingType4 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in ShadingType4 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in ShadingType4 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in ShadingType4 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -36711,10 +36711,10 @@
 		</rule>
 		<rule object="AShadingType5">
 			<id specification="PDF_1_3" clause="ShadingType5-BitsPerComponent-Integer" testNumber="6"/>
-			<description>Entry BitsPerComponent with type Integer in ShadingType5 shall have one of values: 1, 12, 2, 4, 16, 8</description>
+			<description>Entry BitsPerComponent with type Integer in ShadingType5 shall have one of values: 1, 2, 4, 8, 12, 16</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 12 || BitsPerComponentIntegerValue == 16</test>
 			<error>
-				<message>Entry BitsPerComponent with type Integer in ShadingType5 has incorrect value %1 instead of 1, 12, 2, 4, 16, 8</message>
+				<message>Entry BitsPerComponent with type Integer in ShadingType5 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16</message>
 				<arguments>
 					<argument>BitsPerComponentIntegerValue</argument>
 				</arguments>
@@ -36745,10 +36745,10 @@
 		</rule>
 		<rule object="AShadingType5">
 			<id specification="PDF_1_3" clause="ShadingType5-BitsPerCoordinate-Integer" testNumber="6"/>
-			<description>Entry BitsPerCoordinate with type Integer in ShadingType5 shall have one of values: 1, 12, 2, 24, 4, 16, 8, 32</description>
+			<description>Entry BitsPerCoordinate with type Integer in ShadingType5 shall have one of values: 1, 2, 4, 8, 12, 16, 24, 32</description>
 			<test>BitsPerCoordinateHasTypeInteger != true || BitsPerCoordinateIntegerValue == 1 || BitsPerCoordinateIntegerValue == 2 || BitsPerCoordinateIntegerValue == 4 || BitsPerCoordinateIntegerValue == 8 || BitsPerCoordinateIntegerValue == 12 || BitsPerCoordinateIntegerValue == 16 || BitsPerCoordinateIntegerValue == 24 || BitsPerCoordinateIntegerValue == 32</test>
 			<error>
-				<message>Entry BitsPerCoordinate with type Integer in ShadingType5 has incorrect value %1 instead of 1, 12, 2, 24, 4, 16, 8, 32</message>
+				<message>Entry BitsPerCoordinate with type Integer in ShadingType5 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16, 24, 32</message>
 				<arguments>
 					<argument>BitsPerCoordinateIntegerValue</argument>
 				</arguments>
@@ -36789,10 +36789,10 @@
 		</rule>
 		<rule object="AShadingType5">
 			<id specification="PDF_1_3" clause="ShadingType5-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType5 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType5 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType5 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType5 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -36911,10 +36911,10 @@
 		</rule>
 		<rule object="AShadingType5">
 			<id specification="PDF_1_3" clause="ShadingType5-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in ShadingType5 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in ShadingType5 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in ShadingType5 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in ShadingType5 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -36945,10 +36945,10 @@
 		</rule>
 		<rule object="AShadingType5">
 			<id specification="PDF_1_3" clause="ShadingType5-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in ShadingType5 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in ShadingType5 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in ShadingType5 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in ShadingType5 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -37167,10 +37167,10 @@
 		</rule>
 		<rule object="AShadingType6">
 			<id specification="PDF_1_3" clause="ShadingType6-BitsPerComponent-Integer" testNumber="6"/>
-			<description>Entry BitsPerComponent with type Integer in ShadingType6 shall have one of values: 1, 12, 2, 4, 16, 8</description>
+			<description>Entry BitsPerComponent with type Integer in ShadingType6 shall have one of values: 1, 2, 4, 8, 12, 16</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 12 || BitsPerComponentIntegerValue == 16</test>
 			<error>
-				<message>Entry BitsPerComponent with type Integer in ShadingType6 has incorrect value %1 instead of 1, 12, 2, 4, 16, 8</message>
+				<message>Entry BitsPerComponent with type Integer in ShadingType6 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16</message>
 				<arguments>
 					<argument>BitsPerComponentIntegerValue</argument>
 				</arguments>
@@ -37201,10 +37201,10 @@
 		</rule>
 		<rule object="AShadingType6">
 			<id specification="PDF_1_3" clause="ShadingType6-BitsPerCoordinate-Integer" testNumber="6"/>
-			<description>Entry BitsPerCoordinate with type Integer in ShadingType6 shall have one of values: 1, 12, 2, 24, 4, 16, 8, 32</description>
+			<description>Entry BitsPerCoordinate with type Integer in ShadingType6 shall have one of values: 1, 2, 4, 8, 12, 16, 24, 32</description>
 			<test>BitsPerCoordinateHasTypeInteger != true || BitsPerCoordinateIntegerValue == 1 || BitsPerCoordinateIntegerValue == 2 || BitsPerCoordinateIntegerValue == 4 || BitsPerCoordinateIntegerValue == 8 || BitsPerCoordinateIntegerValue == 12 || BitsPerCoordinateIntegerValue == 16 || BitsPerCoordinateIntegerValue == 24 || BitsPerCoordinateIntegerValue == 32</test>
 			<error>
-				<message>Entry BitsPerCoordinate with type Integer in ShadingType6 has incorrect value %1 instead of 1, 12, 2, 24, 4, 16, 8, 32</message>
+				<message>Entry BitsPerCoordinate with type Integer in ShadingType6 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16, 24, 32</message>
 				<arguments>
 					<argument>BitsPerCoordinateIntegerValue</argument>
 				</arguments>
@@ -37267,10 +37267,10 @@
 		</rule>
 		<rule object="AShadingType6">
 			<id specification="PDF_1_3" clause="ShadingType6-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType6 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType6 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType6 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType6 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -37389,10 +37389,10 @@
 		</rule>
 		<rule object="AShadingType6">
 			<id specification="PDF_1_3" clause="ShadingType6-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in ShadingType6 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in ShadingType6 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in ShadingType6 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in ShadingType6 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -37423,10 +37423,10 @@
 		</rule>
 		<rule object="AShadingType6">
 			<id specification="PDF_1_3" clause="ShadingType6-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in ShadingType6 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in ShadingType6 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in ShadingType6 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in ShadingType6 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -37613,10 +37613,10 @@
 		</rule>
 		<rule object="AShadingType7">
 			<id specification="PDF_1_3" clause="ShadingType7-BitsPerComponent-Integer" testNumber="6"/>
-			<description>Entry BitsPerComponent with type Integer in ShadingType7 shall have one of values: 1, 12, 2, 4, 16, 8</description>
+			<description>Entry BitsPerComponent with type Integer in ShadingType7 shall have one of values: 1, 2, 4, 8, 12, 16</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 12 || BitsPerComponentIntegerValue == 16</test>
 			<error>
-				<message>Entry BitsPerComponent with type Integer in ShadingType7 has incorrect value %1 instead of 1, 12, 2, 4, 16, 8</message>
+				<message>Entry BitsPerComponent with type Integer in ShadingType7 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16</message>
 				<arguments>
 					<argument>BitsPerComponentIntegerValue</argument>
 				</arguments>
@@ -37647,10 +37647,10 @@
 		</rule>
 		<rule object="AShadingType7">
 			<id specification="PDF_1_3" clause="ShadingType7-BitsPerCoordinate-Integer" testNumber="6"/>
-			<description>Entry BitsPerCoordinate with type Integer in ShadingType7 shall have one of values: 1, 12, 2, 24, 4, 16, 8, 32</description>
+			<description>Entry BitsPerCoordinate with type Integer in ShadingType7 shall have one of values: 1, 2, 4, 8, 12, 16, 24, 32</description>
 			<test>BitsPerCoordinateHasTypeInteger != true || BitsPerCoordinateIntegerValue == 1 || BitsPerCoordinateIntegerValue == 2 || BitsPerCoordinateIntegerValue == 4 || BitsPerCoordinateIntegerValue == 8 || BitsPerCoordinateIntegerValue == 12 || BitsPerCoordinateIntegerValue == 16 || BitsPerCoordinateIntegerValue == 24 || BitsPerCoordinateIntegerValue == 32</test>
 			<error>
-				<message>Entry BitsPerCoordinate with type Integer in ShadingType7 has incorrect value %1 instead of 1, 12, 2, 24, 4, 16, 8, 32</message>
+				<message>Entry BitsPerCoordinate with type Integer in ShadingType7 has incorrect value %1 instead of 1, 2, 4, 8, 12, 16, 24, 32</message>
 				<arguments>
 					<argument>BitsPerCoordinateIntegerValue</argument>
 				</arguments>
@@ -37713,10 +37713,10 @@
 		</rule>
 		<rule object="AShadingType7">
 			<id specification="PDF_1_3" clause="ShadingType7-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in ShadingType7 shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in ShadingType7 shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in ShadingType7 has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in ShadingType7 has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -37835,10 +37835,10 @@
 		</rule>
 		<rule object="AShadingType7">
 			<id specification="PDF_1_3" clause="ShadingType7-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in ShadingType7 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in ShadingType7 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in ShadingType7 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in ShadingType7 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -37869,10 +37869,10 @@
 		</rule>
 		<rule object="AShadingType7">
 			<id specification="PDF_1_3" clause="ShadingType7-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in ShadingType7 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in ShadingType7 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in ShadingType7 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in ShadingType7 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -38549,10 +38549,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="PDF_1_3" clause="SoundObject-E-Name" testNumber="6"/>
-			<description>Entry E with type Name in SoundObject shall have one of values: Signed, Raw, muLaw, ALaw</description>
+			<description>Entry E with type Name in SoundObject shall have one of values: Raw, Signed, muLaw, ALaw</description>
 			<test>EHasTypeName != true || ENameValue == "Raw" || ENameValue == "Signed" || ENameValue == "muLaw" || ENameValue == "ALaw"</test>
 			<error>
-				<message>Entry E with type Name in SoundObject has incorrect value %1 instead of Signed, Raw, muLaw, ALaw</message>
+				<message>Entry E with type Name in SoundObject has incorrect value %1 instead of Raw, Signed, muLaw, ALaw</message>
 				<arguments>
 					<argument>ENameValue</argument>
 				</arguments>
@@ -38627,10 +38627,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="PDF_1_3" clause="SoundObject-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in SoundObject shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in SoundObject shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in SoundObject has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in SoundObject has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -38661,10 +38661,10 @@
 		</rule>
 		<rule object="ASoundObject">
 			<id specification="PDF_1_3" clause="SoundObject-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in SoundObject shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in SoundObject shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in SoundObject has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in SoundObject has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -38973,10 +38973,10 @@
 		</rule>
 		<rule object="AStream">
 			<id specification="PDF_1_3" clause="Stream-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in Stream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry FFilter with type Name in Stream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode" || FFilterNameValue == "CCITTFaxDecode" || FFilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in Stream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry FFilter with type Name in Stream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -39007,10 +39007,10 @@
 		</rule>
 		<rule object="AStream">
 			<id specification="PDF_1_3" clause="Stream-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in Stream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry Filter with type Name in Stream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode" || FilterNameValue == "CCITTFaxDecode" || FilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in Stream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry Filter with type Name in Stream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -39727,10 +39727,10 @@
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_3" clause="Thumbnail-BitsPerComponent-Integer" testNumber="6"/>
-			<description>Entry BitsPerComponent with type Integer in Thumbnail shall have one of values: 1, 2, 4, 16, 8</description>
+			<description>Entry BitsPerComponent with type Integer in Thumbnail shall have one of values: 1, 2, 4, 8, 16</description>
 			<test>BitsPerComponentHasTypeInteger != true || BitsPerComponentIntegerValue == 1 || BitsPerComponentIntegerValue == 2 || BitsPerComponentIntegerValue == 4 || BitsPerComponentIntegerValue == 8 || BitsPerComponentIntegerValue == 16</test>
 			<error>
-				<message>Entry BitsPerComponent with type Integer in Thumbnail has incorrect value %1 instead of 1, 2, 4, 16, 8</message>
+				<message>Entry BitsPerComponent with type Integer in Thumbnail has incorrect value %1 instead of 1, 2, 4, 8, 16</message>
 				<arguments>
 					<argument>BitsPerComponentIntegerValue</argument>
 				</arguments>
@@ -39771,10 +39771,10 @@
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_3" clause="Thumbnail-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in Thumbnail shall have one of values: DeviceGray, DeviceRGB</description>
+			<description>Entry ColorSpace with type Name in Thumbnail shall have one of values: DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in Thumbnail has incorrect value %1 instead of DeviceGray, DeviceRGB</message>
+				<message>Entry ColorSpace with type Name in Thumbnail has incorrect value %1 instead of DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -39893,10 +39893,10 @@
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_3" clause="Thumbnail-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in Thumbnail shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry FFilter with type Name in Thumbnail shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode" || FFilterNameValue == "CCITTFaxDecode" || FFilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in Thumbnail has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry FFilter with type Name in Thumbnail has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -39927,10 +39927,10 @@
 		</rule>
 		<rule object="AThumbnail">
 			<id specification="PDF_1_3" clause="Thumbnail-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in Thumbnail shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry Filter with type Name in Thumbnail shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode" || FilterNameValue == "CCITTFaxDecode" || FilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in Thumbnail has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry Filter with type Name in Thumbnail has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -40197,10 +40197,10 @@
 		</rule>
 		<rule object="AToUnicodeCMapStream">
 			<id specification="PDF_1_3" clause="ToUnicodeCMapStream-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in ToUnicodeCMapStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in ToUnicodeCMapStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in ToUnicodeCMapStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in ToUnicodeCMapStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -40231,10 +40231,10 @@
 		</rule>
 		<rule object="AToUnicodeCMapStream">
 			<id specification="PDF_1_3" clause="ToUnicodeCMapStream-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in ToUnicodeCMapStream shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in ToUnicodeCMapStream shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in ToUnicodeCMapStream has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in ToUnicodeCMapStream has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -40301,10 +40301,10 @@
 		</rule>
 		<rule object="AToUnicodeCMapStream">
 			<id specification="PDF_1_3" clause="ToUnicodeCMapStream-UseCMap-Name" testNumber="6"/>
-			<description>Entry UseCMap with type Name in ToUnicodeCMapStream shall have one of values: GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</description>
+			<description>Entry UseCMap with type Name in ToUnicodeCMapStream shall have one of values: GB-EUC-H, GB-EUC-V, GBpc-EUC-H, GBpc-EUC-V, GBK-EUC-H, GBK-EUC-V, GBKp-EUC-H, GBKp-EUC-V, GBK2K-H, GBK2K-V, UniGB-UCS2-H, UniGB-UCS2-V, UniGB-UTF16-H, UniGB-UTF16-V, B5pc-H, B5pc-V, HKscs-B5-H, HKscs-B5-V, ETen-B5-H, ETen-B5-V, ETenms-B5-H, ETenms-B5-V, CNS-EUC-H, CNS-EUC-V, UniCNS-UCS2-H, UniCNS-UCS2-V, UniCNS-UTF16-H, UniCNS-UTF16-V, 83pv-RKSJ-H, 90ms-RKSJ-H, 90ms-RKSJ-V, 90msp-RKSJ-H, 90msp-RKSJ-V, 90pv-RKSJ-H, Add-RKSJ-H, Add-RKSJ-V, EUC-H, EUC-V, Ext-RKSJ-H, Ext-RKSJ-V, H, V, UniJIS-UCS2-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, UniJIS-UCS2-HW-V, UniJIS-UTF16-H, UniJIS-UTF16-V, KSC-EUC-H, KSC-EUC-V, KSCms-UHC-H, KSCms-UHC-V, KSCms-UHC-HW-H, KSCms-UHC-HW-V, KSCpc-EUC-H, UniKS-UCS2-H, UniKS-UCS2-V, UniKS-UTF16-H, UniKS-UTF16-V, Identity-H, Identity-V</description>
 			<test>UseCMapHasTypeName != true || UseCMapNameValue == "GB-EUC-H" || UseCMapNameValue == "GB-EUC-V" || UseCMapNameValue == "GBpc-EUC-H" || UseCMapNameValue == "GBpc-EUC-V" || UseCMapNameValue == "GBK-EUC-H" || UseCMapNameValue == "GBK-EUC-V" || UseCMapNameValue == "GBKp-EUC-H" || UseCMapNameValue == "GBKp-EUC-V" || UseCMapNameValue == "GBK2K-H" || UseCMapNameValue == "GBK2K-V" || UseCMapNameValue == "UniGB-UCS2-H" || UseCMapNameValue == "UniGB-UCS2-V" || UseCMapNameValue == "UniGB-UTF16-H" || UseCMapNameValue == "UniGB-UTF16-V" || UseCMapNameValue == "B5pc-H" || UseCMapNameValue == "B5pc-V" || UseCMapNameValue == "HKscs-B5-H" || UseCMapNameValue == "HKscs-B5-V" || UseCMapNameValue == "ETen-B5-H" || UseCMapNameValue == "ETen-B5-V" || UseCMapNameValue == "ETenms-B5-H" || UseCMapNameValue == "ETenms-B5-V" || UseCMapNameValue == "CNS-EUC-H" || UseCMapNameValue == "CNS-EUC-V" || UseCMapNameValue == "UniCNS-UCS2-H" || UseCMapNameValue == "UniCNS-UCS2-V" || UseCMapNameValue == "UniCNS-UTF16-H" || UseCMapNameValue == "UniCNS-UTF16-V" || UseCMapNameValue == "83pv-RKSJ-H" || UseCMapNameValue == "90ms-RKSJ-H" || UseCMapNameValue == "90ms-RKSJ-V" || UseCMapNameValue == "90msp-RKSJ-H" || UseCMapNameValue == "90msp-RKSJ-V" || UseCMapNameValue == "90pv-RKSJ-H" || UseCMapNameValue == "Add-RKSJ-H" || UseCMapNameValue == "Add-RKSJ-V" || UseCMapNameValue == "EUC-H" || UseCMapNameValue == "EUC-V" || UseCMapNameValue == "Ext-RKSJ-H" || UseCMapNameValue == "Ext-RKSJ-V" || UseCMapNameValue == "H" || UseCMapNameValue == "V" || UseCMapNameValue == "UniJIS-UCS2-H" || UseCMapNameValue == "UniJIS-UCS2-V" || UseCMapNameValue == "UniJIS-UCS2-HW-H" || UseCMapNameValue == "UniJIS-UCS2-HW-V" || UseCMapNameValue == "UniJIS-UTF16-H" || UseCMapNameValue == "UniJIS-UTF16-V" || UseCMapNameValue == "KSC-EUC-H" || UseCMapNameValue == "KSC-EUC-V" || UseCMapNameValue == "KSCms-UHC-H" || UseCMapNameValue == "KSCms-UHC-V" || UseCMapNameValue == "KSCms-UHC-HW-H" || UseCMapNameValue == "KSCms-UHC-HW-V" || UseCMapNameValue == "KSCpc-EUC-H" || UseCMapNameValue == "UniKS-UCS2-H" || UseCMapNameValue == "UniKS-UCS2-V" || UseCMapNameValue == "UniKS-UTF16-H" || UseCMapNameValue == "UniKS-UTF16-V" || UseCMapNameValue == "Identity-H" || UseCMapNameValue == "Identity-V"</test>
 			<error>
-				<message>Entry UseCMap with type Name in ToUnicodeCMapStream has incorrect value %1 instead of GBK2K-V, ETenms-B5-H, 83pv-RKSJ-H, UniKS-UTF16-V, KSCpc-EUC-H, KSCms-UHC-HW-V, GB-EUC-H, B5pc-V, KSC-EUC-H, HKscs-B5-V, GBK2K-H, B5pc-H, KSCms-UHC-H, HKscs-B5-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, GB-EUC-V, 90msp-RKSJ-H, UniJIS-UTF16-H, KSC-EUC-V, ETen-B5-V, CNS-EUC-H, UniCNS-UCS2-H, UniJIS-UCS2-H, UniJIS-UCS2-HW-V, ETenms-B5-V, CNS-EUC-V, 90msp-RKSJ-V, UniKS-UCS2-H, UniKS-UTF16-H, ETen-B5-H, 90ms-RKSJ-V, GBpc-EUC-H, Ext-RKSJ-H, UniKS-UCS2-V, Identity-V, H, GBpc-EUC-V, GBKp-EUC-H, KSCms-UHC-V, Add-RKSJ-H, UniCNS-UTF16-H, UniJIS-UTF16-V, V, UniCNS-UCS2-V, GBKp-EUC-V, Add-RKSJ-V, 90pv-RKSJ-H, GBK-EUC-V, UniGB-UTF16-V, UniCNS-UTF16-V, GBK-EUC-H, UniGB-UCS2-H, EUC-V, UniGB-UTF16-H, Ext-RKSJ-V, 90ms-RKSJ-H, Identity-H, UniGB-UCS2-V, EUC-H, KSCms-UHC-HW-H</message>
+				<message>Entry UseCMap with type Name in ToUnicodeCMapStream has incorrect value %1 instead of GB-EUC-H, GB-EUC-V, GBpc-EUC-H, GBpc-EUC-V, GBK-EUC-H, GBK-EUC-V, GBKp-EUC-H, GBKp-EUC-V, GBK2K-H, GBK2K-V, UniGB-UCS2-H, UniGB-UCS2-V, UniGB-UTF16-H, UniGB-UTF16-V, B5pc-H, B5pc-V, HKscs-B5-H, HKscs-B5-V, ETen-B5-H, ETen-B5-V, ETenms-B5-H, ETenms-B5-V, CNS-EUC-H, CNS-EUC-V, UniCNS-UCS2-H, UniCNS-UCS2-V, UniCNS-UTF16-H, UniCNS-UTF16-V, 83pv-RKSJ-H, 90ms-RKSJ-H, 90ms-RKSJ-V, 90msp-RKSJ-H, 90msp-RKSJ-V, 90pv-RKSJ-H, Add-RKSJ-H, Add-RKSJ-V, EUC-H, EUC-V, Ext-RKSJ-H, Ext-RKSJ-V, H, V, UniJIS-UCS2-H, UniJIS-UCS2-V, UniJIS-UCS2-HW-H, UniJIS-UCS2-HW-V, UniJIS-UTF16-H, UniJIS-UTF16-V, KSC-EUC-H, KSC-EUC-V, KSCms-UHC-H, KSCms-UHC-V, KSCms-UHC-HW-H, KSCms-UHC-HW-V, KSCpc-EUC-H, UniKS-UCS2-H, UniKS-UCS2-V, UniKS-UTF16-H, UniKS-UTF16-V, Identity-H, Identity-V</message>
 				<arguments>
 					<argument>UseCMapNameValue</argument>
 				</arguments>
@@ -40335,10 +40335,10 @@
 		</rule>
 		<rule object="AToUnicodeCMapStream">
 			<id specification="PDF_1_3" clause="ToUnicodeCMapStream-WMode-Integer" testNumber="6"/>
-			<description>Entry WMode with type Integer in ToUnicodeCMapStream shall have one of values: 0, 1</description>
+			<description>Entry WMode with type Integer in ToUnicodeCMapStream shall have one of values: 1, 0</description>
 			<test>WModeHasTypeInteger != true || WModeIntegerValue == 1 || WModeIntegerValue == 0</test>
 			<error>
-				<message>Entry WMode with type Integer in ToUnicodeCMapStream has incorrect value %1 instead of 0, 1</message>
+				<message>Entry WMode with type Integer in ToUnicodeCMapStream has incorrect value %1 instead of 1, 0</message>
 				<arguments>
 					<argument>WModeIntegerValue</argument>
 				</arguments>
@@ -40511,10 +40511,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="PDF_1_3" clause="Transition-Di-Integer" testNumber="6"/>
-			<description>Entry Di with type Integer in Transition shall have one of values: 0, 90, 315, 180, 270</description>
+			<description>Entry Di with type Integer in Transition shall have one of values: 0, 90, 180, 270, 315</description>
 			<test>DiHasTypeInteger != true || DiIntegerValue == 0 || DiIntegerValue == 90 || DiIntegerValue == 180 || DiIntegerValue == 270 || DiIntegerValue == 315</test>
 			<error>
-				<message>Entry Di with type Integer in Transition has incorrect value %1 instead of 0, 90, 315, 180, 270</message>
+				<message>Entry Di with type Integer in Transition has incorrect value %1 instead of 0, 90, 180, 270, 315</message>
 				<arguments>
 					<argument>DiIntegerValue</argument>
 				</arguments>
@@ -40557,10 +40557,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="PDF_1_3" clause="Transition-Dm-Name" testNumber="6"/>
-			<description>Entry Dm with type Name in Transition shall have one of values: V, H</description>
+			<description>Entry Dm with type Name in Transition shall have one of values: H, V</description>
 			<test>DmHasTypeName != true || DmNameValue == "H" || DmNameValue == "V"</test>
 			<error>
-				<message>Entry Dm with type Name in Transition has incorrect value %1 instead of V, H</message>
+				<message>Entry Dm with type Name in Transition has incorrect value %1 instead of H, V</message>
 				<arguments>
 					<argument>DmNameValue</argument>
 				</arguments>
@@ -40605,10 +40605,10 @@
 		</rule>
 		<rule object="ATransition">
 			<id specification="PDF_1_3" clause="Transition-S-Name" testNumber="6"/>
-			<description>Entry S with type Name in Transition shall have one of values: Uncover, Glitter, R, Fly, Cover, Dissolve, Box, Split, Push, Blinds, Fade, Wipe</description>
+			<description>Entry S with type Name in Transition shall have one of values: Split, Blinds, Box, Wipe, Dissolve, Glitter, R, Fly, Push, Cover, Uncover, Fade</description>
 			<test>SHasTypeName != true || SNameValue == "Split" || SNameValue == "Blinds" || SNameValue == "Box" || SNameValue == "Wipe" || SNameValue == "Dissolve" || SNameValue == "Glitter" || SNameValue == "R" || SNameValue == "Fly" || SNameValue == "Push" || SNameValue == "Cover" || SNameValue == "Uncover" || SNameValue == "Fade"</test>
 			<error>
-				<message>Entry S with type Name in Transition has incorrect value %1 instead of Uncover, Glitter, R, Fly, Cover, Dissolve, Box, Split, Push, Blinds, Fade, Wipe</message>
+				<message>Entry S with type Name in Transition has incorrect value %1 instead of Split, Blinds, Box, Wipe, Dissolve, Glitter, R, Fly, Push, Cover, Uncover, Fade</message>
 				<arguments>
 					<argument>SNameValue</argument>
 				</arguments>
@@ -40887,10 +40887,10 @@
 		</rule>
 		<rule object="AViewerPreferences">
 			<id specification="PDF_1_3" clause="ViewerPreferences-NonFullScreenPageMode-Name" testNumber="6"/>
-			<description>Entry NonFullScreenPageMode with type Name in ViewerPreferences shall have one of values: UseOutlines, UseThumbs, UseOC, UseNone</description>
+			<description>Entry NonFullScreenPageMode with type Name in ViewerPreferences shall have one of values: UseNone, UseOutlines, UseThumbs, UseOC</description>
 			<test>NonFullScreenPageModeHasTypeName != true || NonFullScreenPageModeNameValue == "UseNone" || NonFullScreenPageModeNameValue == "UseOutlines" || NonFullScreenPageModeNameValue == "UseThumbs" || NonFullScreenPageModeNameValue == "UseOC"</test>
 			<error>
-				<message>Entry NonFullScreenPageMode with type Name in ViewerPreferences has incorrect value %1 instead of UseOutlines, UseThumbs, UseOC, UseNone</message>
+				<message>Entry NonFullScreenPageMode with type Name in ViewerPreferences has incorrect value %1 instead of UseNone, UseOutlines, UseThumbs, UseOC</message>
 				<arguments>
 					<argument>NonFullScreenPageModeNameValue</argument>
 				</arguments>
@@ -41745,10 +41745,10 @@
 		</rule>
 		<rule object="AXObjectFormPS">
 			<id specification="PDF_1_3" clause="XObjectFormPS-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in XObjectFormPS shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in XObjectFormPS shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in XObjectFormPS has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in XObjectFormPS has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -41789,10 +41789,10 @@
 		</rule>
 		<rule object="AXObjectFormPS">
 			<id specification="PDF_1_3" clause="XObjectFormPS-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in XObjectFormPS shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in XObjectFormPS shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in XObjectFormPS has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in XObjectFormPS has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -42125,10 +42125,10 @@
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="PDF_1_3" clause="XObjectFormPSpassthrough-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in XObjectFormPSpassthrough shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in XObjectFormPSpassthrough shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in XObjectFormPSpassthrough has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in XObjectFormPSpassthrough has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -42169,10 +42169,10 @@
 		</rule>
 		<rule object="AXObjectFormPSpassthrough">
 			<id specification="PDF_1_3" clause="XObjectFormPSpassthrough-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in XObjectFormPSpassthrough shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in XObjectFormPSpassthrough shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in XObjectFormPSpassthrough has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in XObjectFormPSpassthrough has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -42609,10 +42609,10 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="PDF_1_3" clause="XObjectFormTrapNet-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in XObjectFormTrapNet shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in XObjectFormTrapNet shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in XObjectFormTrapNet has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in XObjectFormTrapNet has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -42643,10 +42643,10 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="PDF_1_3" clause="XObjectFormTrapNet-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in XObjectFormTrapNet shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in XObjectFormTrapNet shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in XObjectFormTrapNet has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in XObjectFormTrapNet has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -42791,10 +42791,10 @@
 		</rule>
 		<rule object="AXObjectFormTrapNet">
 			<id specification="PDF_1_3" clause="XObjectFormTrapNet-PCM-Name" testNumber="6"/>
-			<description>Entry PCM with type Name in XObjectFormTrapNet shall have one of values: DeviceGray, DeviceRGBK, DeviceRGB, DeviceN, DeviceCMYK, DeviceCMY</description>
+			<description>Entry PCM with type Name in XObjectFormTrapNet shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK, DeviceCMY, DeviceRGBK, DeviceN</description>
 			<test>PCMHasTypeName != true || PCMNameValue == "DeviceGray" || PCMNameValue == "DeviceRGB" || PCMNameValue == "DeviceCMYK" || PCMNameValue == "DeviceCMY" || PCMNameValue == "DeviceRGBK" || PCMNameValue == "DeviceN"</test>
 			<error>
-				<message>Entry PCM with type Name in XObjectFormTrapNet has incorrect value %1 instead of DeviceGray, DeviceRGBK, DeviceRGB, DeviceN, DeviceCMYK, DeviceCMY</message>
+				<message>Entry PCM with type Name in XObjectFormTrapNet has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK, DeviceCMY, DeviceRGBK, DeviceN</message>
 				<arguments>
 					<argument>PCMNameValue</argument>
 				</arguments>
@@ -43099,10 +43099,10 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="PDF_1_3" clause="XObjectFormType1-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in XObjectFormType1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry FFilter with type Name in XObjectFormType1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in XObjectFormType1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry FFilter with type Name in XObjectFormType1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -43133,10 +43133,10 @@
 		</rule>
 		<rule object="AXObjectFormType1">
 			<id specification="PDF_1_3" clause="XObjectFormType1-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in XObjectFormType1 shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</description>
+			<description>Entry Filter with type Name in XObjectFormType1 shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in XObjectFormType1 has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, FlateDecode</message>
+				<message>Entry Filter with type Name in XObjectFormType1 has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -43559,10 +43559,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_3" clause="XObjectImage-ColorSpace-Name" testNumber="6"/>
-			<description>Entry ColorSpace with type Name in XObjectImage shall have one of values: DeviceGray, DeviceRGB, DeviceCMYK</description>
+			<description>Entry ColorSpace with type Name in XObjectImage shall have one of values: DeviceCMYK, DeviceRGB, DeviceGray</description>
 			<test>ColorSpaceHasTypeName != true || ColorSpaceNameValue == "DeviceCMYK" || ColorSpaceNameValue == "DeviceRGB" || ColorSpaceNameValue == "DeviceGray"</test>
 			<error>
-				<message>Entry ColorSpace with type Name in XObjectImage has incorrect value %1 instead of DeviceGray, DeviceRGB, DeviceCMYK</message>
+				<message>Entry ColorSpace with type Name in XObjectImage has incorrect value %1 instead of DeviceCMYK, DeviceRGB, DeviceGray</message>
 				<arguments>
 					<argument>ColorSpaceNameValue</argument>
 				</arguments>
@@ -43691,10 +43691,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_3" clause="XObjectImage-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in XObjectImage shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry FFilter with type Name in XObjectImage shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode" || FFilterNameValue == "CCITTFaxDecode" || FFilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in XObjectImage has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry FFilter with type Name in XObjectImage has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -43725,10 +43725,10 @@
 		</rule>
 		<rule object="AXObjectImage">
 			<id specification="PDF_1_3" clause="XObjectImage-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in XObjectImage shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry Filter with type Name in XObjectImage shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode" || FilterNameValue == "CCITTFaxDecode" || FilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in XObjectImage has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry Filter with type Name in XObjectImage has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
@@ -44197,10 +44197,10 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="PDF_1_3" clause="XObjectImageMask-FFilter-Name" testNumber="6"/>
-			<description>Entry FFilter with type Name in XObjectImageMask shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry FFilter with type Name in XObjectImageMask shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FFilterHasTypeName != true || FFilterNameValue == "ASCIIHexDecode" || FFilterNameValue == "ASCII85Decode" || FFilterNameValue == "LZWDecode" || FFilterNameValue == "FlateDecode" || FFilterNameValue == "RunLengthDecode" || FFilterNameValue == "CCITTFaxDecode" || FFilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry FFilter with type Name in XObjectImageMask has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry FFilter with type Name in XObjectImageMask has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FFilterNameValue</argument>
 				</arguments>
@@ -44231,10 +44231,10 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="PDF_1_3" clause="XObjectImageMask-Filter-Name" testNumber="6"/>
-			<description>Entry Filter with type Name in XObjectImageMask shall have one of values: ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</description>
+			<description>Entry Filter with type Name in XObjectImageMask shall have one of values: ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</description>
 			<test>FilterHasTypeName != true || FilterNameValue == "ASCIIHexDecode" || FilterNameValue == "ASCII85Decode" || FilterNameValue == "LZWDecode" || FilterNameValue == "FlateDecode" || FilterNameValue == "RunLengthDecode" || FilterNameValue == "CCITTFaxDecode" || FilterNameValue == "DCTDecode"</test>
 			<error>
-				<message>Entry Filter with type Name in XObjectImageMask has incorrect value %1 instead of ASCIIHexDecode, LZWDecode, RunLengthDecode, ASCII85Decode, CCITTFaxDecode, DCTDecode, FlateDecode</message>
+				<message>Entry Filter with type Name in XObjectImageMask has incorrect value %1 instead of ASCIIHexDecode, ASCII85Decode, LZWDecode, FlateDecode, RunLengthDecode, CCITTFaxDecode, DCTDecode</message>
 				<arguments>
 					<argument>FilterNameValue</argument>
 				</arguments>
