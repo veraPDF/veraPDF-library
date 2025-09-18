@@ -1446,18 +1446,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEReference" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Art-Reference" testNumber="1"/>
-            <description>&lt;Art&gt; shall not contain &lt;Reference&gt;</description>
-            <test>parentStandardType != 'Art'</test>
-            <error>
-                <message>&lt;Art&gt; contains &lt;Reference&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SERuby" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Art-Ruby" testNumber="1"/>
             <description>&lt;Art&gt; shall not contain &lt;Ruby&gt;</description>
@@ -2076,18 +2064,6 @@
             <test>parentStandardType != 'BibEntry'</test>
             <error>
                 <message>&lt;BibEntry&gt; contains &lt;Form&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEFormula" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-Formula" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;Formula&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;Formula&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -8634,18 +8610,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SELink" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Link-Link" testNumber="1"/>
-            <description>&lt;Link&gt; shall not contain &lt;Link&gt;</description>
-            <test>parentStandardType != 'Link'</test>
-            <error>
-                <message>&lt;Link&gt; contains &lt;Link&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SELink" tags="structure,paragraph">
             <id specification="ISO_32005" clause="Table 5. Link-P" testNumber="1"/>
             <description>&lt;Link&gt;, when used as a non-grouping element, shall not contain &lt;P&gt;</description>
@@ -9498,12 +9462,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEDiv" tags="structure">
+        <rule object="SEQuote" tags="structure">
             <id specification="ISO_32005" clause="Table 5. Quote-Div" testNumber="1"/>
-            <description>&lt;Quote&gt; shall not contain &lt;Div&gt;</description>
-            <test>parentStandardType != 'Quote'</test>
+            <description>&lt;Quote&gt;, when used as a non-grouping element, shall not contain &lt;Div&gt;</description>
+            <test>isGrouping == true || kidsStandardTypes.split('&amp;').filter(elem =&gt; elem == 'Div').length == 0</test>
             <error>
-                <message>&lt;Quote&gt; contains &lt;Div&gt;</message>
+                <message>&lt;Quote&gt; is used as a non-grouping element, but contains &lt;Div&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -11418,18 +11382,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SELink" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Reference-Link" testNumber="1"/>
-            <description>&lt;Reference&gt; shall not contain &lt;Link&gt;</description>
-            <test>parentStandardType != 'Reference'</test>
-            <error>
-                <message>&lt;Reference&gt; contains &lt;Link&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SEReference" tags="structure,paragraph">
             <id specification="ISO_32005" clause="Table 5. Reference-P" testNumber="1"/>
             <description>&lt;Reference&gt;, when used as a non-grouping element, shall not contain &lt;P&gt;</description>
@@ -12312,18 +12264,6 @@
             <test>parentStandardType != 'Sect'</test>
             <error>
                 <message>&lt;Sect&gt; contains &lt;RT&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEReference" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. Sect-Reference" testNumber="1"/>
-            <description>&lt;Sect&gt; shall not contain &lt;Reference&gt;</description>
-            <test>parentStandardType != 'Sect'</test>
-            <error>
-                <message>&lt;Sect&gt; contains &lt;Reference&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -17160,18 +17100,6 @@
             <test>hasContentItems == false</test>
             <error>
                 <message>&lt;TOC&gt; contains content item(s)</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEAnnot" tags="structure,toc">
-            <id specification="ISO_32005" clause="Table 5. TOCI-Annot" testNumber="1"/>
-            <description>&lt;TOCI&gt; shall not contain &lt;Annot&gt;</description>
-            <test>parentStandardType != 'TOCI'</test>
-            <error>
-                <message>&lt;TOCI&gt; contains &lt;Annot&gt;</message>
                 <arguments/>
             </error>
             <references>
