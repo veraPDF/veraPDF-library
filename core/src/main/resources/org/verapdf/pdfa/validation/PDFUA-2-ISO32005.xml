@@ -2185,18 +2185,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEBibEntry" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-BibEntry" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;BibEntry&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;BibEntry&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SEBlockQuote" tags="structure">
             <id specification="ISO_32005" clause="Table 5. BibEntry-BlockQuote" testNumber="1"/>
             <description>&lt;BibEntry&gt; shall not contain &lt;BlockQuote&gt;</description>
@@ -2251,18 +2239,6 @@
             <test>parentStandardType != 'BibEntry'</test>
             <error>
                 <message>&lt;BibEntry&gt; contains &lt;DocumentFragment&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEForm" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-Form" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;Form&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;Form&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -2341,18 +2317,6 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SEQuote" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-Quote" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;Quote&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;Quote&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SERB" tags="structure">
             <id specification="ISO_32005" clause="Table 5. BibEntry-RB" testNumber="1"/>
             <description>&lt;BibEntry&gt; shall not contain &lt;RB&gt;</description>
@@ -2389,36 +2353,12 @@
                 <reference specification="ISO-32000-2" clause="Annex_L"/>
             </references>
         </rule>
-        <rule object="SERuby" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-Ruby" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;Ruby&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;Ruby&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
         <rule object="SESect" tags="structure">
             <id specification="ISO_32005" clause="Table 5. BibEntry-Sect" testNumber="1"/>
             <description>&lt;BibEntry&gt; shall not contain &lt;Sect&gt;</description>
             <test>parentStandardType != 'BibEntry'</test>
             <error>
                 <message>&lt;BibEntry&gt; contains &lt;Sect&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SESub" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-Sub" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;Sub&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;Sub&gt;</message>
                 <arguments/>
             </error>
             <references>
@@ -2563,18 +2503,6 @@
             <test>parentStandardType != 'BibEntry'</test>
             <error>
                 <message>&lt;BibEntry&gt; contains &lt;WT&gt;</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO-32000-2" clause="Annex_L"/>
-            </references>
-        </rule>
-        <rule object="SEWarichu" tags="structure">
-            <id specification="ISO_32005" clause="Table 5. BibEntry-Warichu" testNumber="1"/>
-            <description>&lt;BibEntry&gt; shall not contain &lt;Warichu&gt;</description>
-            <test>parentStandardType != 'BibEntry'</test>
-            <error>
-                <message>&lt;BibEntry&gt; contains &lt;Warichu&gt;</message>
                 <arguments/>
             </error>
             <references>
