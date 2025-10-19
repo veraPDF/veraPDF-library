@@ -3161,12 +3161,12 @@
 		</rule>
 		<rule object="AActionSubmitForm">
 			<id specification="PDF_1_6" clause="ActionSubmitForm" testNumber="1"/>
-			<description>ActionSubmitForm shall not contain entries except CharSet, F, Fields, Flags, S, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionSubmitForm shall not contain entries except CharSet, F, Fields, Flags, Next, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionSubmitForm contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -3248,6 +3248,28 @@
 			<error>
 				<message>Entry Flags with type Bitmask in ActionSubmitForm does not satisfy special case: fn:Eval(fn:BitClear(13) &amp;&amp; fn:BitsClear(15, 32))</message>
 				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSubmitForm">
+			<id specification="PDF_1_6" clause="ActionSubmitForm-Next-Dictionary" testNumber="17"/>
+			<description>Entry Next with type Dictionary in ActionSubmitForm shall be one of objects ActionGoTo, ActionGoToR, ActionGoToE, ActionLaunch, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData, ActionSetOCGState, ActionRendition, ActionTransition, ActionGoTo3DView, ActionECMAScript</description>
+			<test>NextHasTypeDictionary != true || Next_size == 1</test>
+			<error>
+				<message>Entry Next with type Dictionary in ActionSubmitForm is not one of objects ActionGoTo, ActionGoToR, ActionGoToE, ActionLaunch, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData, ActionSetOCGState, ActionRendition, ActionTransition, ActionGoTo3DView, ActionECMAScript</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSubmitForm">
+			<id specification="PDF_1_6" clause="ActionSubmitForm-Next" testNumber="8"/>
+			<description>Entry Next in ActionSubmitForm shall have one of types: Array, Dictionary</description>
+			<test>containsNext == false || NextHasTypeArray == true || NextHasTypeDictionary == true</test>
+			<error>
+				<message>Entry Next in ActionSubmitForm has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>NextType</argument>
+				</arguments>
 			</error>
 			<references/>
 		</rule>

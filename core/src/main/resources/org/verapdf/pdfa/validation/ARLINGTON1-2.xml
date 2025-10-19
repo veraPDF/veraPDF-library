@@ -1092,13 +1092,45 @@
 		</rule>
 		<rule object="AActionNOP">
 			<id specification="PDF_1_2" clause="ActionNOP" testNumber="1"/>
-			<description>ActionNOP shall not contain entries except S, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionNOP shall not contain entries except Next, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionNOP contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionNOP">
+			<id specification="PDF_1_2" clause="ActionNOP-Next-Dictionary" testNumber="17"/>
+			<description>Entry Next with type Dictionary in ActionNOP shall be one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionNOP, ActionSetState, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData</description>
+			<test>NextHasTypeDictionary != true || Next_size == 1</test>
+			<error>
+				<message>Entry Next with type Dictionary in ActionNOP is not one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionNOP, ActionSetState, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionNOP">
+			<id specification="PDF_1_2" clause="ActionNOP-Next" testNumber="8"/>
+			<description>Entry Next in ActionNOP shall have one of types: Array, Dictionary</description>
+			<test>containsNext == false || NextHasTypeArray == true || NextHasTypeDictionary == true</test>
+			<error>
+				<message>Entry Next in ActionNOP has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>NextType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionNOP">
+			<id specification="PDF_1_2" clause="ActionNOP-Next" testNumber="5"/>
+			<description>Entry Next in ActionNOP is deprecated since PDF 1.2</description>
+			<test>containsNext == false</test>
+			<error>
+				<message>Entry Next in ActionNOP is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -1434,12 +1466,12 @@
 		</rule>
 		<rule object="AActionSetState">
 			<id specification="PDF_1_2" clause="ActionSetState" testNumber="1"/>
-			<description>ActionSetState shall not contain entries except AS, S, T, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AS' &amp;&amp; elem != 'S' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionSetState shall not contain entries except AS, Next, S, T, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AS' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionSetState contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AS' &amp;&amp; elem != 'S' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AS' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'T' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1462,6 +1494,38 @@
 			<test>containsAS == false</test>
 			<error>
 				<message>Entry AS in ActionSetState is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
+			<id specification="PDF_1_2" clause="ActionSetState-Next-Dictionary" testNumber="17"/>
+			<description>Entry Next with type Dictionary in ActionSetState shall be one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionNOP, ActionSetState, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData</description>
+			<test>NextHasTypeDictionary != true || Next_size == 1</test>
+			<error>
+				<message>Entry Next with type Dictionary in ActionSetState is not one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionNOP, ActionSetState, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
+			<id specification="PDF_1_2" clause="ActionSetState-Next" testNumber="8"/>
+			<description>Entry Next in ActionSetState shall have one of types: Array, Dictionary</description>
+			<test>containsNext == false || NextHasTypeArray == true || NextHasTypeDictionary == true</test>
+			<error>
+				<message>Entry Next in ActionSetState has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>NextType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSetState">
+			<id specification="PDF_1_2" clause="ActionSetState-Next" testNumber="5"/>
+			<description>Entry Next in ActionSetState is deprecated since PDF 1.2</description>
+			<test>containsNext == false</test>
+			<error>
+				<message>Entry Next in ActionSetState is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -1780,12 +1844,12 @@
 		</rule>
 		<rule object="AActionSubmitForm">
 			<id specification="PDF_1_2" clause="ActionSubmitForm" testNumber="1"/>
-			<description>ActionSubmitForm shall not contain entries except CharSet, F, Fields, Flags, S, Type</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>ActionSubmitForm shall not contain entries except CharSet, F, Fields, Flags, Next, S, Type</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>ActionSubmitForm contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'CharSet' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Fields' &amp;&amp; elem != 'Flags' &amp;&amp; elem != 'Next' &amp;&amp; elem != 'S' &amp;&amp; elem != 'Type' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1867,6 +1931,28 @@
 			<error>
 				<message>Entry Flags with type Bitmask in ActionSubmitForm does not satisfy special case: fn:Eval(fn:BitClear(13) &amp;&amp; fn:BitsClear(15, 32))</message>
 				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSubmitForm">
+			<id specification="PDF_1_2" clause="ActionSubmitForm-Next-Dictionary" testNumber="17"/>
+			<description>Entry Next with type Dictionary in ActionSubmitForm shall be one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionNOP, ActionSetState, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData</description>
+			<test>NextHasTypeDictionary != true || Next_size == 1</test>
+			<error>
+				<message>Entry Next with type Dictionary in ActionSubmitForm is not one of objects ActionGoTo, ActionGoToR, ActionLaunch, ActionNOP, ActionSetState, ActionThread, ActionURI, ActionSound, ActionMovie, ActionHide, ActionNamed, ActionSubmitForm, ActionResetForm, ActionImportData</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AActionSubmitForm">
+			<id specification="PDF_1_2" clause="ActionSubmitForm-Next" testNumber="8"/>
+			<description>Entry Next in ActionSubmitForm shall have one of types: Array, Dictionary</description>
+			<test>containsNext == false || NextHasTypeArray == true || NextHasTypeDictionary == true</test>
+			<error>
+				<message>Entry Next in ActionSubmitForm has type %1 instead of one of types: Array, Dictionary</message>
+				<arguments>
+					<argument>NextType</argument>
+				</arguments>
 			</error>
 			<references/>
 		</rule>
