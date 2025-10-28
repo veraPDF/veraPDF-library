@@ -31,7 +31,7 @@ package org.verapdf.pdfa.flavours;
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
  *
  */
-final class PDFAFlavours {
+public final class PDFAFlavours {
     static final String NONE = "";
     static final String PDFA = "PDF/A"; //$NON-NLS-1$
     static final String PDFUA = "PDF/UA"; //$NON-NLS-1$
@@ -40,6 +40,9 @@ final class PDFAFlavours {
     static final String WCAG_2_1 = "WCAG2.1"; //$NON-NLS-1$
     static final String WCAG_2_2 = "WCAG2.2"; //$NON-NLS-1$
     static final String WCAG = "WCAG"; //$NON-NLS-1$
+    public static final float VERSION_1_4 = 1.4f;
+    public static final float VERSION_1_7 = 1.7f;
+    public static final float VERSION_2_0 = 2.0f;
     static final String PDFUA_PREFIX = "ua"; //$NON-NLS-1$
     static final String WCAG_PREFIX = "wcag"; //$NON-NLS-1$
     static final String WTPDF_PREFIX = "wt"; //$NON-NLS-1$
