@@ -46,6 +46,7 @@ public final class PDFAFlavours {
     public static final String ARLINGTON_PREFIX = "arlington"; //$NON-NLS-1$
     public static final float VERSION_1_4 = 1.4f;
     public static final float VERSION_1_7 = 1.7f;
+    public static final float VERSION_2_0 = 2.0f;
     static final String PDFUA_PREFIX = "ua"; //$NON-NLS-1$
     static final String WCAG_PREFIX = "wcag"; //$NON-NLS-1$
     static final String WTPDF_PREFIX = "wt"; //$NON-NLS-1$
