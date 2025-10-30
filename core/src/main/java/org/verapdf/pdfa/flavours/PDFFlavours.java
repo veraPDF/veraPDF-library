@@ -60,7 +60,8 @@ public class PDFFlavours {
     }
 
     public static boolean isPDFUA2RelatedFlavour(PDFAFlavour flavour) {
-        return isFlavour(flavour, PDFAFlavour.PDFUA_2) || isFlavourPart(flavour, PDFAFlavour.Specification.WTPDF_1_0);
+        return isFlavour(flavour, PDFAFlavour.PDFUA_2) || isFlavourPart(flavour, PDFAFlavour.Specification.WTPDF_1_0) || 
+                isWCAGFlavour(flavour);
     }
 
     public static boolean isWCAGFlavour(List<PDFAFlavour> flavours) {
