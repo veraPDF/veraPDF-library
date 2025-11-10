@@ -34594,6 +34594,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfSourceInformationEntry">
+			<id specification="ISO_32000_2_0" clause="ArrayOfSourceInformationEntry" testNumber="5"/>
+			<description>Entry in ArrayOfSourceInformation is deprecated since PDF 2.0</description>
+			<test>false</test>
+			<error>
+				<message>Entry %keyName% in ArrayOfSourceInformation is present</message>
+				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfStreamsGeneralEntry">
 			<id specification="ISO_32000_2_0" clause="ArrayOfStreamsGeneralEntry" testNumber="8"/>
 			<description>Entry in ArrayOfStreamsGeneral shall have type Stream</description>
@@ -43243,6 +43255,16 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
+			<id specification="ISO_32000_2_0" clause="Catalog-DPartRoot-Dictionary" testNumber="10"/>
+			<description>Entry DPartRoot with type Dictionary in Catalog shall be indirect</description>
+			<test>DPartRootHasTypeDictionary != true || isDPartRootIndirect == true</test>
+			<error>
+				<message>Entry DPartRoot with type Dictionary in Catalog is direct</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
 			<id specification="ISO_32000_2_0" clause="Catalog-DSS" testNumber="8"/>
 			<description>Entry DSS in Catalog shall have type Dictionary</description>
 			<test>containsDSS == false || DSSHasTypeDictionary == true</test>
@@ -43607,6 +43629,16 @@
 				<arguments>
 					<argument>SpiderInfoType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ACatalog">
+			<id specification="ISO_32000_2_0" clause="Catalog-SpiderInfo" testNumber="5"/>
+			<description>Entry SpiderInfo in Catalog is deprecated since PDF 2.0</description>
+			<test>containsSpiderInfo == false</test>
+			<error>
+				<message>Entry SpiderInfo in Catalog is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -75065,6 +75097,16 @@
 			<references/>
 		</rule>
 		<rule object="APageObject">
+			<id specification="ISO_32000_2_0" clause="PageObject-ID" testNumber="5"/>
+			<description>Entry ID in PageObject is deprecated since PDF 2.0</description>
+			<test>containsID == false</test>
+			<error>
+				<message>Entry ID in PageObject is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="APageObject">
 			<id specification="ISO_32000_2_0" clause="PageObject-LastModified" testNumber="8"/>
 			<description>Entry LastModified in PageObject shall have type Date</description>
 			<test>containsLastModified == false || LastModifiedHasTypeDate == true</test>
@@ -89752,6 +89794,16 @@
 			<references/>
 		</rule>
 		<rule object="ASourceInformation">
+			<id specification="ISO_32000_2_0" clause="SourceInformation-AU" testNumber="5"/>
+			<description>Entry AU in SourceInformation is deprecated since PDF 2.0</description>
+			<test>containsAU == false</test>
+			<error>
+				<message>Entry AU in SourceInformation is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASourceInformation">
 			<id specification="ISO_32000_2_0" clause="SourceInformation-C" testNumber="8"/>
 			<description>Entry C in SourceInformation shall have type Dictionary</description>
 			<test>containsC == false || CHasTypeDictionary == true</test>
@@ -89760,6 +89812,16 @@
 				<arguments>
 					<argument>CType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASourceInformation">
+			<id specification="ISO_32000_2_0" clause="SourceInformation-C" testNumber="5"/>
+			<description>Entry C in SourceInformation is deprecated since PDF 2.0</description>
+			<test>containsC == false</test>
+			<error>
+				<message>Entry C in SourceInformation is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -89796,6 +89858,16 @@
 			<references/>
 		</rule>
 		<rule object="ASourceInformation">
+			<id specification="ISO_32000_2_0" clause="SourceInformation-E" testNumber="5"/>
+			<description>Entry E in SourceInformation is deprecated since PDF 2.0</description>
+			<test>containsE == false</test>
+			<error>
+				<message>Entry E in SourceInformation is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASourceInformation">
 			<id specification="ISO_32000_2_0" clause="SourceInformation-S" testNumber="8"/>
 			<description>Entry S in SourceInformation shall have type Integer</description>
 			<test>containsS == false || SHasTypeInteger == true</test>
@@ -89804,6 +89876,16 @@
 				<arguments>
 					<argument>SType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASourceInformation">
+			<id specification="ISO_32000_2_0" clause="SourceInformation-S" testNumber="5"/>
+			<description>Entry S in SourceInformation is deprecated since PDF 2.0</description>
+			<test>containsS == false</test>
+			<error>
+				<message>Entry S in SourceInformation is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -89838,6 +89920,16 @@
 				<arguments>
 					<argument>TSType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ASourceInformation">
+			<id specification="ISO_32000_2_0" clause="SourceInformation-TS" testNumber="5"/>
+			<description>Entry TS in SourceInformation is deprecated since PDF 2.0</description>
+			<test>containsTS == false</test>
+			<error>
+				<message>Entry TS in SourceInformation is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -95402,6 +95494,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-CT" testNumber="5"/>
+			<description>Entry CT in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsCT == false</test>
+			<error>
+				<message>Entry CT in WebCaptureCommand is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
 			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-F" testNumber="8"/>
 			<description>Entry F in WebCaptureCommand shall have type Bitmask</description>
 			<test>containsF == false || FHasTypeBitmask == true</test>
@@ -95410,6 +95512,16 @@
 				<arguments>
 					<argument>FType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-F" testNumber="5"/>
+			<description>Entry F in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsF == false</test>
+			<error>
+				<message>Entry F in WebCaptureCommand is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -95436,6 +95548,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-H" testNumber="5"/>
+			<description>Entry H in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsH == false</test>
+			<error>
+				<message>Entry H in WebCaptureCommand is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
 			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-L" testNumber="8"/>
 			<description>Entry L in WebCaptureCommand shall have type Integer</description>
 			<test>containsL == false || LHasTypeInteger == true</test>
@@ -95444,6 +95566,16 @@
 				<arguments>
 					<argument>LType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-L" testNumber="5"/>
+			<description>Entry L in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsL == false</test>
+			<error>
+				<message>Entry L in WebCaptureCommand is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -95470,6 +95602,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-P" testNumber="5"/>
+			<description>Entry P in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsP == false</test>
+			<error>
+				<message>Entry P in WebCaptureCommand is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
 			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-P-Stream" testNumber="10"/>
 			<description>Entry P with type Stream in WebCaptureCommand shall be indirect</description>
 			<test>PHasTypeStream != true || isPIndirect == true</test>
@@ -95492,6 +95634,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-S" testNumber="5"/>
+			<description>Entry S in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsS == false</test>
+			<error>
+				<message>Entry S in WebCaptureCommand is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
 			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-URL" testNumber="8"/>
 			<description>Entry URL in WebCaptureCommand shall have type StringAscii</description>
 			<test>containsURL == false || URLHasTypeStringAscii == true</test>
@@ -95509,6 +95661,16 @@
 			<test>containsURL == true</test>
 			<error>
 				<message>Entry URL in WebCaptureCommand is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommand">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommand-URL" testNumber="5"/>
+			<description>Entry URL in WebCaptureCommand is deprecated since PDF 2.0</description>
+			<test>containsURL == false</test>
+			<error>
+				<message>Entry URL in WebCaptureCommand is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -95538,6 +95700,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureCommandSettings">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommandSettings-C" testNumber="5"/>
+			<description>Entry C in WebCaptureCommandSettings is deprecated since PDF 2.0</description>
+			<test>containsC == false</test>
+			<error>
+				<message>Entry C in WebCaptureCommandSettings is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommandSettings">
 			<id specification="ISO_32000_2_0" clause="WebCaptureCommandSettings-G" testNumber="8"/>
 			<description>Entry G in WebCaptureCommandSettings shall have type Dictionary</description>
 			<test>containsG == false || GHasTypeDictionary == true</test>
@@ -95546,6 +95718,16 @@
 				<arguments>
 					<argument>GType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureCommandSettings">
+			<id specification="ISO_32000_2_0" clause="WebCaptureCommandSettings-G" testNumber="5"/>
+			<description>Entry G in WebCaptureCommandSettings is deprecated since PDF 2.0</description>
+			<test>containsG == false</test>
+			<error>
+				<message>Entry G in WebCaptureCommandSettings is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -95574,6 +95756,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-CT" testNumber="5"/>
+			<description>Entry CT in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsCT == false</test>
+			<error>
+				<message>Entry CT in WebCaptureImageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
 			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-ID" testNumber="8"/>
 			<description>Entry ID in WebCaptureImageSet shall have type String</description>
 			<test>containsID == false || entryIDHasTypeString == true</test>
@@ -95591,6 +95783,16 @@
 			<test>containsID == true</test>
 			<error>
 				<message>Entry ID in WebCaptureImageSet is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-ID" testNumber="5"/>
+			<description>Entry ID in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsID == false</test>
+			<error>
+				<message>Entry ID in WebCaptureImageSet is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -95618,6 +95820,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-O" testNumber="5"/>
+			<description>Entry O in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsO == false</test>
+			<error>
+				<message>Entry O in WebCaptureImageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
 			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-R" testNumber="8"/>
 			<description>Entry R in WebCaptureImageSet shall have one of types: Array, Integer</description>
 			<test>containsR == false || RHasTypeArray == true || RHasTypeInteger == true</test>
@@ -95635,6 +95847,16 @@
 			<test>containsR == true</test>
 			<error>
 				<message>Entry R in WebCaptureImageSet is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-R" testNumber="5"/>
+			<description>Entry R in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsR == false</test>
+			<error>
+				<message>Entry R in WebCaptureImageSet is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -95682,6 +95904,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-S" testNumber="5"/>
+			<description>Entry S in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsS == false</test>
+			<error>
+				<message>Entry S in WebCaptureImageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
 			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-S-Name" testNumber="6"/>
 			<description>Entry S with type Name in WebCaptureImageSet shall have value SIS</description>
 			<test>SHasTypeName != true || SNameValue == "SIS"</test>
@@ -95716,6 +95948,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-SI" testNumber="5"/>
+			<description>Entry SI in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsSI == false</test>
+			<error>
+				<message>Entry SI in WebCaptureImageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
 			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-TS" testNumber="8"/>
 			<description>Entry TS in WebCaptureImageSet shall have type Date</description>
 			<test>containsTS == false || TSHasTypeDate == true</test>
@@ -95728,6 +95970,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-TS" testNumber="5"/>
+			<description>Entry TS in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsTS == false</test>
+			<error>
+				<message>Entry TS in WebCaptureImageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
 			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-Type" testNumber="8"/>
 			<description>Entry Type in WebCaptureImageSet shall have type Name</description>
 			<test>containsType == false || TypeHasTypeName == true</test>
@@ -95736,6 +95988,16 @@
 				<arguments>
 					<argument>TypeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCaptureImageSet">
+			<id specification="ISO_32000_2_0" clause="WebCaptureImageSet-Type" testNumber="5"/>
+			<description>Entry Type in WebCaptureImageSet is deprecated since PDF 2.0</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in WebCaptureImageSet is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -95854,6 +96116,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-CT" testNumber="5"/>
+			<description>Entry CT in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsCT == false</test>
+			<error>
+				<message>Entry CT in WebCapturePageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
 			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-ID" testNumber="8"/>
 			<description>Entry ID in WebCapturePageSet shall have type StringByte</description>
 			<test>containsID == false || entryIDHasTypeStringByte == true</test>
@@ -95871,6 +96143,16 @@
 			<test>containsID == true</test>
 			<error>
 				<message>Entry ID in WebCapturePageSet is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-ID" testNumber="5"/>
+			<description>Entry ID in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsID == false</test>
+			<error>
+				<message>Entry ID in WebCapturePageSet is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -95898,6 +96180,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-O" testNumber="5"/>
+			<description>Entry O in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsO == false</test>
+			<error>
+				<message>Entry O in WebCapturePageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
 			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-S" testNumber="8"/>
 			<description>Entry S in WebCapturePageSet shall have type Name</description>
 			<test>containsS == false || SHasTypeName == true</test>
@@ -95915,6 +96207,16 @@
 			<test>containsS == true</test>
 			<error>
 				<message>Entry S in WebCapturePageSet is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-S" testNumber="5"/>
+			<description>Entry S in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsS == false</test>
+			<error>
+				<message>Entry S in WebCapturePageSet is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -95954,6 +96256,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-SI" testNumber="5"/>
+			<description>Entry SI in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsSI == false</test>
+			<error>
+				<message>Entry SI in WebCapturePageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
 			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-T" testNumber="8"/>
 			<description>Entry T in WebCapturePageSet shall have type StringText</description>
 			<test>containsT == false || THasTypeStringText == true</test>
@@ -95962,6 +96274,16 @@
 				<arguments>
 					<argument>TType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-T" testNumber="5"/>
+			<description>Entry T in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsT == false</test>
+			<error>
+				<message>Entry T in WebCapturePageSet is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -95978,6 +96300,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-TID" testNumber="5"/>
+			<description>Entry TID in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsTID == false</test>
+			<error>
+				<message>Entry TID in WebCapturePageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
 			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-TS" testNumber="8"/>
 			<description>Entry TS in WebCapturePageSet shall have type Date</description>
 			<test>containsTS == false || TSHasTypeDate == true</test>
@@ -95990,6 +96322,16 @@
 			<references/>
 		</rule>
 		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-TS" testNumber="5"/>
+			<description>Entry TS in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsTS == false</test>
+			<error>
+				<message>Entry TS in WebCapturePageSet is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
 			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-Type" testNumber="8"/>
 			<description>Entry Type in WebCapturePageSet shall have type Name</description>
 			<test>containsType == false || TypeHasTypeName == true</test>
@@ -95998,6 +96340,16 @@
 				<arguments>
 					<argument>TypeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AWebCapturePageSet">
+			<id specification="ISO_32000_2_0" clause="WebCapturePageSet-Type" testNumber="5"/>
+			<description>Entry Type in WebCapturePageSet is deprecated since PDF 2.0</description>
+			<test>containsType == false</test>
+			<error>
+				<message>Entry Type in WebCapturePageSet is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -99658,6 +100010,16 @@
 			<references/>
 		</rule>
 		<rule object="AXObjectImage">
+			<id specification="ISO_32000_2_0" clause="XObjectImage-ID" testNumber="5"/>
+			<description>Entry ID in XObjectImage is deprecated since PDF 2.0</description>
+			<test>containsID == false</test>
+			<error>
+				<message>Entry ID in XObjectImage is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImage">
 			<id specification="ISO_32000_2_0" clause="XObjectImage-ImageMask" testNumber="8"/>
 			<description>Entry ImageMask in XObjectImage shall have type Boolean</description>
 			<test>containsImageMask == false || ImageMaskHasTypeBoolean == true</test>
@@ -100329,13 +100691,23 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="ISO_32000_2_0" clause="XObjectImageMask-ID" testNumber="8"/>
-			<description>Entry ID in XObjectImageMask shall have type String</description>
-			<test>containsID == false || entryIDHasTypeString == true</test>
+			<description>Entry ID in XObjectImageMask shall have type StringByte</description>
+			<test>containsID == false || entryIDHasTypeStringByte == true</test>
 			<error>
-				<message>Entry ID in XObjectImageMask has type %1 instead of type String</message>
+				<message>Entry ID in XObjectImageMask has type %1 instead of type StringByte</message>
 				<arguments>
 					<argument>entryIDType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AXObjectImageMask">
+			<id specification="ISO_32000_2_0" clause="XObjectImageMask-ID" testNumber="5"/>
+			<description>Entry ID in XObjectImageMask is deprecated since PDF 2.0</description>
+			<test>containsID == false</test>
+			<error>
+				<message>Entry ID in XObjectImageMask is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>

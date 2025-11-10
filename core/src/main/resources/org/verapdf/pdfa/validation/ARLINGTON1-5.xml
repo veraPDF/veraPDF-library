@@ -63581,10 +63581,10 @@
 		</rule>
 		<rule object="AXObjectImageMask">
 			<id specification="PDF_1_5" clause="XObjectImageMask-ID" testNumber="8"/>
-			<description>Entry ID in XObjectImageMask shall have type String</description>
-			<test>containsID == false || entryIDHasTypeString == true</test>
+			<description>Entry ID in XObjectImageMask shall have type StringByte</description>
+			<test>containsID == false || entryIDHasTypeStringByte == true</test>
 			<error>
-				<message>Entry ID in XObjectImageMask has type %1 instead of type String</message>
+				<message>Entry ID in XObjectImageMask has type %1 instead of type StringByte</message>
 				<arguments>
 					<argument>entryIDType</argument>
 				</arguments>
