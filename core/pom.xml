@@ -125,7 +125,7 @@
               <configuration>
                   <archive>
                       <manifestEntries>
-                          <Automatic-Module-Name>org.verapdf.core</Automatic-Module-Name>
+                          <Automatic-Module-Name>org.verapdf.arlington.core</Automatic-Module-Name>
                       </manifestEntries>
                   </archive>
               </configuration>

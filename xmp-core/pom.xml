@@ -30,7 +30,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Automatic-Module-Name>org.verapdf.xmp.core</Automatic-Module-Name>
+                            <Automatic-Module-Name>org.verapdf.arlington.xmp.core</Automatic-Module-Name>
                         </manifestEntries>
                     </archive>
                 </configuration>
