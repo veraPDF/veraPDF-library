@@ -54,10 +54,10 @@
         </rule>
         <rule object="PDFUAIdentification" tags="metadata">
             <id specification="ISO_14289_2" clause="5" testNumber="5"/>
-            <description>The value of "pdfuaid:rev" shall be the four digit year</description>
-            <test>/^\d{4}$/.test(rev)</test>
+            <description>The value of "pdfuaid:rev" shall be "2024"</description>
+            <test>rev == "2024"</test>
             <error>
-                <message>The value of "pdfuaid:rev" (%1) is not the four digit year</message>
+                <message>The value of "pdfuaid:rev" (%1) is not "2024"</message>
                 <arguments>
                     <argument>rev</argument>
                 </arguments>
