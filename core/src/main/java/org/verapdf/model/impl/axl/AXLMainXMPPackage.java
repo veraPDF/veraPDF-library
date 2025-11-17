@@ -26,7 +26,10 @@ import org.verapdf.xmp.impl.VeraPDFXMPNode;
 import org.verapdf.model.baselayer.Object;
 import org.verapdf.model.xmplayer.MainXMPPackage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Current class is representation of XMPPackage interface from abstract model based on adobe xmp library
@@ -123,6 +126,6 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         if (xmpMetadata != null) {
             return xmpMetadata.getDeclarations();
         }
-        return new HashSet<>();
+        return Collections.emptySet();
     }
 }
