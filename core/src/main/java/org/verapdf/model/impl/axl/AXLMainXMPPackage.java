@@ -126,6 +126,6 @@ public class AXLMainXMPPackage extends AXLXMPPackage implements MainXMPPackage {
         if (xmpMetadata != null) {
             return xmpMetadata.getDeclarations();
         }
-        return null;
+        return Collections.emptySet();
     }
 }
