@@ -80,6 +80,7 @@ public final class PDFAFlavours {
     static final int WCAG_2_2_SUBPART = 2;
     static final int WTPDF_1_0_PART = 1;
     static final int WTPDF_1_0_SUBPART = 0;
+    static final String PDF_2_0_PART = "2";
     static final String LEVEL_A_CODE = "a"; //$NON-NLS-1$
     static final String LEVEL_B_CODE = "b"; //$NON-NLS-1$
     static final String LEVEL_U_CODE = "u"; //$NON-NLS-1$
