@@ -99,10 +99,14 @@ public enum PDFAFlavour {
     WTPDF_1_0_ACCESSIBILITY(Specification.WTPDF_1_0, Level.ACCESSIBILITY),
     /** wcag PDF version 2.1 */
     WCAG_2_1(Specification.WCAG_2_1, Level.NO_LEVEL),
-    /** human wcag PDF version 2.2 */
+    /** human wcag version 2.2 PDF 1.7 */
     WCAG_2_2_HUMAN(Specification.WCAG_2_2, Level.HUMAN),
-    /** machine wcag PDF version 2.2 */
-    WCAG_2_2_MACHINE(Specification.WCAG_2_2, Level.MACHINE);
+    /** machine wcag version 2.2 PDF 1.7 */
+    WCAG_2_2_MACHINE(Specification.WCAG_2_2, Level.MACHINE),
+    /** human wcag version 2.2 PDF 2.0 */
+    WCAG_2_2_PDF_2_0_HUMAN(Specification.WCAG_2_2_PDF_2_0, Level.HUMAN),
+    /** machine wcag version 2.2 PDF 2.0 */
+    WCAG_2_2_PDF_2_0_MACHINE(Specification.WCAG_2_2_PDF_2_0, Level.MACHINE);
 
     private static final Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -127,7 +131,8 @@ public enum PDFAFlavour {
     
     private static String getID(final Specification standard, final Level level) {
         String levelString = level.getCode().length() > 1 ? level.getCode().substring(0, 1) : level.getCode(); 
-        return getPrefix(standard) + standard.getPartNumber() + levelString.toLowerCase();
+        String postfix = standard == Specification.WCAG_2_2_PDF_2_0 ? PDFAFlavours.PDF_2_0_PART : "";
+        return getPrefix(standard) + standard.getPartNumber() + levelString.toLowerCase() + postfix;
     }
 
     private static String getPrefix(final Specification standard) {
@@ -214,9 +219,12 @@ public enum PDFAFlavour {
                 PDFAFlavours.WCAG_2_1_PART, PDFAFlavours.WCAG_2_1_SUBPART, PDFAFlavours.WCAG_2_1_YEAR, 
                 PDFAFlavours.WCAG_2_1_DESCRIPTION),
         /** WCAG Version 2.2 */
-        WCAG_2_2(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WCAG, 
+        WCAG_2_2(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_1_7, SpecificationFamily.WCAG, 
                 PDFAFlavours.WCAG_2_2_PART, PDFAFlavours.WCAG_2_2_SUBPART, PDFAFlavours.WCAG_2_2_YEAR, 
-                PDFAFlavours.WCAG_2_2_DESCRIPTION);
+                PDFAFlavours.WCAG_2_2_DESCRIPTION),
+        WCAG_2_2_PDF_2_0(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WCAG,
+                 PDFAFlavours.WCAG_2_2_PART, PDFAFlavours.WCAG_2_2_SUBPART, PDFAFlavours.WCAG_2_2_YEAR,
+                 PDFAFlavours.WCAG_2_2_DESCRIPTION);
 
         private final IsoStandardSeries series;
         private final PDFSpecification pdfSpecification;
