@@ -47,7 +47,9 @@ public class PDFFlavours {
     }
     
     public static boolean isPDFUA1RelatedFlavour(PDFAFlavour flavour) {
-        return isFlavour(flavour, PDFAFlavour.PDFUA_1) || isWCAGFlavour(flavour);
+        return isFlavour(flavour, PDFAFlavour.PDFUA_1) ||
+                isFlavourPart(flavour, PDFAFlavour.Specification.WCAG_2_1) ||
+                isFlavourPart(flavour, PDFAFlavour.Specification.WCAG_2_2);
     }
 
     public static boolean isPDFUA2RelatedFlavour(List<PDFAFlavour> flavours) {
@@ -61,7 +63,7 @@ public class PDFFlavours {
 
     public static boolean isPDFUA2RelatedFlavour(PDFAFlavour flavour) {
         return isFlavour(flavour, PDFAFlavour.PDFUA_2) || isFlavourPart(flavour, PDFAFlavour.Specification.WTPDF_1_0) || 
-                isWCAGFlavour(flavour);
+                isFlavourPart(flavour, PDFAFlavour.Specification.WCAG_2_2_PDF_2_0);
     }
 
     public static boolean isWCAGFlavour(List<PDFAFlavour> flavours) {
