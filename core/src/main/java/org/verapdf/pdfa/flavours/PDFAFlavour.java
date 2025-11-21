@@ -110,10 +110,14 @@ public enum PDFAFlavour {
     ARLINGTON2_0(Specification.ISO_32000_2_0, Level.NO_LEVEL),
     /** wcag PDF version 2.1 */
     WCAG_2_1(Specification.WCAG_2_1, Level.NO_LEVEL),
-    /** human wcag PDF version 2.2 */
+    /** human wcag version 2.2 PDF 1.7 */
     WCAG_2_2_HUMAN(Specification.WCAG_2_2, Level.HUMAN),
-    /** machine wcag PDF version 2.2 */
-    WCAG_2_2_MACHINE(Specification.WCAG_2_2, Level.MACHINE);
+    /** machine wcag version 2.2 PDF 1.7 */
+    WCAG_2_2_MACHINE(Specification.WCAG_2_2, Level.MACHINE),
+    /** human wcag version 2.2 PDF 2.0 */
+    WCAG_2_2_PDF_2_0_HUMAN(Specification.WCAG_2_2_PDF_2_0, Level.HUMAN),
+    /** machine wcag version 2.2 PDF 2.0 */
+    WCAG_2_2_PDF_2_0_MACHINE(Specification.WCAG_2_2_PDF_2_0, Level.MACHINE);
 
     private static final Map<String, PDFAFlavour> FLAVOUR_LOOKUP = new HashMap<>();
     static {
@@ -141,6 +145,9 @@ public enum PDFAFlavour {
         StringBuilder id = new StringBuilder(getPrefix(standard) + standard.getPartNumber());
         if (SpecificationFamily.ARLINGTON == standard.family) {
             id.append(".").append(standard.getSubpartNumber());
+        }
+        if (standard == Specification.WCAG_2_2_PDF_2_0) {
+            id.append(PDFAFlavours.PDF_2_0_PART);
         }
         id.append(levelString.toLowerCase());
         return id.toString();
@@ -251,9 +258,12 @@ public enum PDFAFlavour {
                 PDFAFlavours.WCAG_2_1_PART, PDFAFlavours.WCAG_2_1_SUBPART, PDFAFlavours.WCAG_2_1_YEAR, 
                 PDFAFlavours.WCAG_2_1_DESCRIPTION),
         /** WCAG Version 2.2 */
-        WCAG_2_2(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WCAG, 
+        WCAG_2_2(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_1_7, SpecificationFamily.WCAG, 
                 PDFAFlavours.WCAG_2_2_PART, PDFAFlavours.WCAG_2_2_SUBPART, PDFAFlavours.WCAG_2_2_YEAR, 
-                PDFAFlavours.WCAG_2_2_DESCRIPTION);
+                PDFAFlavours.WCAG_2_2_DESCRIPTION),
+        WCAG_2_2_PDF_2_0(IsoStandardSeries.NO_SERIES, PDFSpecification.ISO_32000_2_0, SpecificationFamily.WCAG,
+                 PDFAFlavours.WCAG_2_2_PART, PDFAFlavours.WCAG_2_2_SUBPART, PDFAFlavours.WCAG_2_2_YEAR,
+                 PDFAFlavours.WCAG_2_2_DESCRIPTION);
 
         private final IsoStandardSeries series;
         private final PDFSpecification pdfSpecification;
@@ -430,8 +440,6 @@ public enum PDFAFlavour {
         ISO_19005(PDFAFlavours.ISO_19005_ID, PDFAFlavours.ISO_19005_DESCRIPTION),
         /** Identifier for PDF 1.7 ISO Standard */
         ISO_32000(PDFAFlavours.ISO_32000_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
-        ISO_32000_1(PDFAFlavours.ISO_32000_1_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
-        ISO_32000_2(PDFAFlavours.ISO_32000_2_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
         /** Identifier for Tagged PDF ISO Standard */
         ISO_32005(PDFAFlavours.ISO_32005_ID, PDFAFlavours.ISO_32005_DESCRIPTION);
 
@@ -478,7 +486,6 @@ public enum PDFAFlavour {
         PDF_UA(PDFAFlavours.PDFUA),
         WTPDF(PDFAFlavours.WTPDF),
         TAGGED_PDF(PDFAFlavours.TAGGED_PDF),
-        ARLINGTON(PDFAFlavours.ARLINGTON.toUpperCase()),
         WCAG(PDFAFlavours.WCAG);
         
         private final String family;
