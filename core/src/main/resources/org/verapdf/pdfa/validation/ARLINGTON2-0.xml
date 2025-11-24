@@ -69901,6 +69901,16 @@
 			<references/>
 		</rule>
 		<rule object="AName">
+			<id specification="ISO_32000_2_0" clause="Name-IDS" testNumber="5"/>
+			<description>Entry IDS in Name is deprecated since PDF 2.0</description>
+			<test>containsIDS == false</test>
+			<error>
+				<message>Entry IDS in Name is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-IDSTreeNode" testNumber="8"/>
 			<description>Entry IDSTreeNode in Name shall have type NameTree</description>
 			<test>containsIDSTreeNode == false || IDSTreeNodeHasTypeNameTree == true</test>
@@ -69909,6 +69919,16 @@
 				<arguments>
 					<argument>IDSTreeNodeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AName">
+			<id specification="ISO_32000_2_0" clause="Name-IDSTreeNode" testNumber="5"/>
+			<description>Entry IDSTreeNode in Name is deprecated since PDF 2.0</description>
+			<test>containsIDSTreeNode == false</test>
+			<error>
+				<message>Entry IDSTreeNode in Name is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -70021,6 +70041,16 @@
 			<references/>
 		</rule>
 		<rule object="AName">
+			<id specification="ISO_32000_2_0" clause="Name-URLS" testNumber="5"/>
+			<description>Entry URLS in Name is deprecated since PDF 2.0</description>
+			<test>containsURLS == false</test>
+			<error>
+				<message>Entry URLS in Name is present</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-URLSTreeNode" testNumber="8"/>
 			<description>Entry URLSTreeNode in Name shall have type NameTree</description>
 			<test>containsURLSTreeNode == false || URLSTreeNodeHasTypeNameTree == true</test>
@@ -70029,6 +70059,16 @@
 				<arguments>
 					<argument>URLSTreeNodeType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AName">
+			<id specification="ISO_32000_2_0" clause="Name-URLSTreeNode" testNumber="5"/>
+			<description>Entry URLSTreeNode in Name is deprecated since PDF 2.0</description>
+			<test>containsURLSTreeNode == false</test>
+			<error>
+				<message>Entry URLSTreeNode in Name is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
