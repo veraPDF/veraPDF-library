@@ -16339,18 +16339,6 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="PDF_1_3" clause="Catalog-PageLabelsTreeNode" testNumber="8"/>
-			<description>Entry PageLabelsTreeNode in Catalog shall have type NumberTree</description>
-			<test>containsPageLabelsTreeNode == false || PageLabelsTreeNodeHasTypeNumberTree == true</test>
-			<error>
-				<message>Entry PageLabelsTreeNode in Catalog has type %1 instead of type NumberTree</message>
-				<arguments>
-					<argument>PageLabelsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACatalog">
 			<id specification="PDF_1_3" clause="Catalog-PageLayout" testNumber="8"/>
 			<description>Entry PageLayout in Catalog shall have type Name</description>
 			<test>containsPageLayout == false || PageLayoutHasTypeName == true</test>
@@ -31673,18 +31661,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-APTreeNode" testNumber="8"/>
-			<description>Entry APTreeNode in Name shall have type NameTree</description>
-			<test>containsAPTreeNode == false || APTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry APTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>APTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="PDF_1_3" clause="Name-Dests" testNumber="8"/>
 			<description>Entry Dests in Name shall have type NameTree</description>
 			<test>containsDests == false || DestsHasTypeNameTree == true</test>
@@ -31692,18 +31668,6 @@
 				<message>Entry Dests in Name has type %1 instead of type NameTree</message>
 				<arguments>
 					<argument>DestsType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-DestsTreeNode" testNumber="8"/>
-			<description>Entry DestsTreeNode in Name shall have type NameTree</description>
-			<test>containsDestsTreeNode == false || DestsTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry DestsTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>DestsTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -31721,18 +31685,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-IDSTreeNode" testNumber="8"/>
-			<description>Entry IDSTreeNode in Name shall have type NameTree</description>
-			<test>containsIDSTreeNode == false || IDSTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry IDSTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>IDSTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="PDF_1_3" clause="Name-JavaScript" testNumber="8"/>
 			<description>Entry JavaScript in Name shall have type NameTree</description>
 			<test>containsJavaScript == false || JavaScriptHasTypeNameTree == true</test>
@@ -31740,18 +31692,6 @@
 				<message>Entry JavaScript in Name has type %1 instead of type NameTree</message>
 				<arguments>
 					<argument>JavaScriptType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-JavaScriptTreeNode" testNumber="8"/>
-			<description>Entry JavaScriptTreeNode in Name shall have type NameTree</description>
-			<test>containsJavaScriptTreeNode == false || JavaScriptTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry JavaScriptTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>JavaScriptTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -31769,18 +31709,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-PagesTreeNode" testNumber="8"/>
-			<description>Entry PagesTreeNode in Name shall have type NameTree</description>
-			<test>containsPagesTreeNode == false || PagesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry PagesTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>PagesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="PDF_1_3" clause="Name-Templates" testNumber="8"/>
 			<description>Entry Templates in Name shall have type NameTree</description>
 			<test>containsTemplates == false || TemplatesHasTypeNameTree == true</test>
@@ -31793,18 +31721,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-TemplatesTreeNode" testNumber="8"/>
-			<description>Entry TemplatesTreeNode in Name shall have type NameTree</description>
-			<test>containsTemplatesTreeNode == false || TemplatesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry TemplatesTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>TemplatesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="PDF_1_3" clause="Name-URLS" testNumber="8"/>
 			<description>Entry URLS in Name shall have type NameTree</description>
 			<test>containsURLS == false || URLSHasTypeNameTree == true</test>
@@ -31812,18 +31728,6 @@
 				<message>Entry URLS in Name has type %1 instead of type NameTree</message>
 				<arguments>
 					<argument>URLSType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="PDF_1_3" clause="Name-URLSTreeNode" testNumber="8"/>
-			<description>Entry URLSTreeNode in Name shall have type NameTree</description>
-			<test>containsURLSTreeNode == false || URLSTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry URLSTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>URLSTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -39392,18 +39296,6 @@
 			<references/>
 		</rule>
 		<rule object="AStructTreeRoot">
-			<id specification="PDF_1_3" clause="StructTreeRoot-IDTreeTreeNode" testNumber="8"/>
-			<description>Entry IDTreeTreeNode in StructTreeRoot shall have type NameTree</description>
-			<test>containsIDTreeTreeNode == false || IDTreeTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry IDTreeTreeNode in StructTreeRoot has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>IDTreeTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructTreeRoot">
 			<id specification="PDF_1_3" clause="StructTreeRoot-K" testNumber="8"/>
 			<description>Entry K in StructTreeRoot shall have one of types: Array, Dictionary</description>
 			<test>containsK == false || KHasTypeArray == true || KHasTypeDictionary == true</test>
@@ -39435,18 +39327,6 @@
 				<message>Entry ParentTreeNextKey in StructTreeRoot has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>ParentTreeNextKeyType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructTreeRoot">
-			<id specification="PDF_1_3" clause="StructTreeRoot-ParentTreeTreeNode" testNumber="8"/>
-			<description>Entry ParentTreeTreeNode in StructTreeRoot shall have type NumberTree</description>
-			<test>containsParentTreeTreeNode == false || ParentTreeTreeNodeHasTypeNumberTree == true</test>
-			<error>
-				<message>Entry ParentTreeTreeNode in StructTreeRoot has type %1 instead of type NumberTree</message>
-				<arguments>
-					<argument>ParentTreeTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>

@@ -3021,28 +3021,6 @@
 			<references/>
 		</rule>
 		<rule object="A3DStream">
-			<id specification="ISO_32000_2_0" clause="3DStream-ResourcesTreeNode" testNumber="8"/>
-			<description>Entry ResourcesTreeNode in 3DStream shall have type NameTree</description>
-			<test>containsResourcesTreeNode == false || ResourcesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in 3DStream has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>ResourcesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="A3DStream">
-			<id specification="ISO_32000_2_0" clause="3DStream-ResourcesTreeNode" testNumber="5"/>
-			<description>Entry ResourcesTreeNode in 3DStream is deprecated since PDF 2.0</description>
-			<test>containsResourcesTreeNode == false</test>
-			<error>
-				<message>Entry ResourcesTreeNode in 3DStream is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="A3DStream">
 			<id specification="ISO_32000_2_0" clause="3DStream-Subtype" testNumber="8"/>
 			<description>Entry Subtype in 3DStream shall have type Name</description>
 			<test>containsSubtype == false || SubtypeHasTypeName == true</test>
@@ -43493,18 +43471,6 @@
 			<references/>
 		</rule>
 		<rule object="ACatalog">
-			<id specification="ISO_32000_2_0" clause="Catalog-PageLabelsTreeNode" testNumber="8"/>
-			<description>Entry PageLabelsTreeNode in Catalog shall have type NumberTree</description>
-			<test>containsPageLabelsTreeNode == false || PageLabelsTreeNodeHasTypeNumberTree == true</test>
-			<error>
-				<message>Entry PageLabelsTreeNode in Catalog has type %1 instead of type NumberTree</message>
-				<arguments>
-					<argument>PageLabelsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACatalog">
 			<id specification="ISO_32000_2_0" clause="Catalog-PageLayout" testNumber="8"/>
 			<description>Entry PageLayout in Catalog shall have type Name</description>
 			<test>containsPageLayout == false || PageLayoutHasTypeName == true</test>
@@ -44159,48 +44125,6 @@
 			<test>ResourcesHasTypeNameTree != true || isResourcesIndirect == true</test>
 			<error>
 				<message>Entry Resources with type NameTree in Collection is direct</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACollection">
-			<id specification="ISO_32000_2_0" clause="Collection-ResourcesTreeNode" testNumber="8"/>
-			<description>Entry ResourcesTreeNode in Collection shall have type NameTree</description>
-			<test>containsResourcesTreeNode == false || ResourcesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Collection has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>ResourcesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACollection">
-			<id specification="ISO_32000_2_0" clause="Collection-ResourcesTreeNode" testNumber="23"/>
-			<description>Entry ResourcesTreeNode in Collection can only be present, if satisfy predicate fn:Extension(ADBE_Extn3, 1.7)</description>
-			<test>containsResourcesTreeNode == false || hasExtensionADBE_Extn3 == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Collection is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACollection">
-			<id specification="ISO_32000_2_0" clause="Collection-ResourcesTreeNode" testNumber="5"/>
-			<description>Entry ResourcesTreeNode in Collection is deprecated since PDF 2.0</description>
-			<test>containsResourcesTreeNode == false</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Collection is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ACollection">
-			<id specification="ISO_32000_2_0" clause="Collection-ResourcesTreeNode-NameTree" testNumber="10"/>
-			<description>Entry ResourcesTreeNode with type NameTree in Collection shall be indirect</description>
-			<test>ResourcesTreeNodeHasTypeNameTree != true || isResourcesTreeNodeIndirect == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode with type NameTree in Collection is direct</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -69785,18 +69709,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-APTreeNode" testNumber="8"/>
-			<description>Entry APTreeNode in Name shall have type NameTree</description>
-			<test>containsAPTreeNode == false || APTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry APTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>APTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-AlternatePresentations" testNumber="8"/>
 			<description>Entry AlternatePresentations in Name shall have type NameTree</description>
 			<test>containsAlternatePresentations == false || AlternatePresentationsHasTypeNameTree == true</test>
@@ -69819,28 +69731,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-AlternatePresentationsTreeNode" testNumber="8"/>
-			<description>Entry AlternatePresentationsTreeNode in Name shall have type NameTree</description>
-			<test>containsAlternatePresentationsTreeNode == false || AlternatePresentationsTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry AlternatePresentationsTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>AlternatePresentationsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-AlternatePresentationsTreeNode" testNumber="5"/>
-			<description>Entry AlternatePresentationsTreeNode in Name is deprecated since PDF 2.0</description>
-			<test>containsAlternatePresentationsTreeNode == false</test>
-			<error>
-				<message>Entry AlternatePresentationsTreeNode in Name is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-Dests" testNumber="8"/>
 			<description>Entry Dests in Name shall have type NameTree</description>
 			<test>containsDests == false || DestsHasTypeNameTree == true</test>
@@ -69853,18 +69743,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-DestsTreeNode" testNumber="8"/>
-			<description>Entry DestsTreeNode in Name shall have type NameTree</description>
-			<test>containsDestsTreeNode == false || DestsTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry DestsTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>DestsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-EmbeddedFiles" testNumber="8"/>
 			<description>Entry EmbeddedFiles in Name shall have type NameTree</description>
 			<test>containsEmbeddedFiles == false || EmbeddedFilesHasTypeNameTree == true</test>
@@ -69872,18 +69750,6 @@
 				<message>Entry EmbeddedFiles in Name has type %1 instead of type NameTree</message>
 				<arguments>
 					<argument>EmbeddedFilesType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-EmbeddedFilesTreeNode" testNumber="8"/>
-			<description>Entry EmbeddedFilesTreeNode in Name shall have type NameTree</description>
-			<test>containsEmbeddedFilesTreeNode == false || EmbeddedFilesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry EmbeddedFilesTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>EmbeddedFilesTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -69911,28 +69777,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-IDSTreeNode" testNumber="8"/>
-			<description>Entry IDSTreeNode in Name shall have type NameTree</description>
-			<test>containsIDSTreeNode == false || IDSTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry IDSTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>IDSTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-IDSTreeNode" testNumber="5"/>
-			<description>Entry IDSTreeNode in Name is deprecated since PDF 2.0</description>
-			<test>containsIDSTreeNode == false</test>
-			<error>
-				<message>Entry IDSTreeNode in Name is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-JavaScript" testNumber="8"/>
 			<description>Entry JavaScript in Name shall have type NameTree</description>
 			<test>containsJavaScript == false || JavaScriptHasTypeNameTree == true</test>
@@ -69940,18 +69784,6 @@
 				<message>Entry JavaScript in Name has type %1 instead of type NameTree</message>
 				<arguments>
 					<argument>JavaScriptType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-JavaScriptTreeNode" testNumber="8"/>
-			<description>Entry JavaScriptTreeNode in Name shall have type NameTree</description>
-			<test>containsJavaScriptTreeNode == false || JavaScriptTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry JavaScriptTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>JavaScriptTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -69969,18 +69801,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-PagesTreeNode" testNumber="8"/>
-			<description>Entry PagesTreeNode in Name shall have type NameTree</description>
-			<test>containsPagesTreeNode == false || PagesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry PagesTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>PagesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-Renditions" testNumber="8"/>
 			<description>Entry Renditions in Name shall have type NameTree</description>
 			<test>containsRenditions == false || RenditionsHasTypeNameTree == true</test>
@@ -69993,18 +69813,6 @@
 			<references/>
 		</rule>
 		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-RenditionsTreeNode" testNumber="8"/>
-			<description>Entry RenditionsTreeNode in Name shall have type NameTree</description>
-			<test>containsRenditionsTreeNode == false || RenditionsTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry RenditionsTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>RenditionsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
 			<id specification="ISO_32000_2_0" clause="Name-Templates" testNumber="8"/>
 			<description>Entry Templates in Name shall have type NameTree</description>
 			<test>containsTemplates == false || TemplatesHasTypeNameTree == true</test>
@@ -70012,18 +69820,6 @@
 				<message>Entry Templates in Name has type %1 instead of type NameTree</message>
 				<arguments>
 					<argument>TemplatesType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-TemplatesTreeNode" testNumber="8"/>
-			<description>Entry TemplatesTreeNode in Name shall have type NameTree</description>
-			<test>containsTemplatesTreeNode == false || TemplatesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry TemplatesTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>TemplatesTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -70046,28 +69842,6 @@
 			<test>containsURLS == false</test>
 			<error>
 				<message>Entry URLS in Name is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-URLSTreeNode" testNumber="8"/>
-			<description>Entry URLSTreeNode in Name shall have type NameTree</description>
-			<test>containsURLSTreeNode == false || URLSTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry URLSTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>URLSTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-URLSTreeNode" testNumber="5"/>
-			<description>Entry URLSTreeNode in Name is deprecated since PDF 2.0</description>
-			<test>containsURLSTreeNode == false</test>
-			<error>
-				<message>Entry URLSTreeNode in Name is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -70100,38 +69874,6 @@
 			<test>containsXFAResources == false</test>
 			<error>
 				<message>Entry XFAResources in Name is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-XFAResourcesTreeNode" testNumber="8"/>
-			<description>Entry XFAResourcesTreeNode in Name shall have type NameTree</description>
-			<test>containsXFAResourcesTreeNode == false || XFAResourcesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry XFAResourcesTreeNode in Name has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>XFAResourcesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-XFAResourcesTreeNode" testNumber="23"/>
-			<description>Entry XFAResourcesTreeNode in Name can only be present, if satisfy predicate fn:Extension(ADBE_Extn3, 1.7)</description>
-			<test>containsXFAResourcesTreeNode == false || hasExtensionADBE_Extn3 == true</test>
-			<error>
-				<message>Entry XFAResourcesTreeNode in Name is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AName">
-			<id specification="ISO_32000_2_0" clause="Name-XFAResourcesTreeNode" testNumber="5"/>
-			<description>Entry XFAResourcesTreeNode in Name is deprecated since PDF 2.0</description>
-			<test>containsXFAResourcesTreeNode == false</test>
-			<error>
-				<message>Entry XFAResourcesTreeNode in Name is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -71119,48 +70861,6 @@
 			<references/>
 		</rule>
 		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-ResourcesTreeNode" testNumber="8"/>
-			<description>Entry ResourcesTreeNode in Navigator shall have type NameTree</description>
-			<test>containsResourcesTreeNode == false || ResourcesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Navigator has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>ResourcesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-ResourcesTreeNode" testNumber="7"/>
-			<description>Entry ResourcesTreeNode in Navigator is required</description>
-			<test>containsResourcesTreeNode == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Navigator is missing</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-ResourcesTreeNode" testNumber="23"/>
-			<description>Entry ResourcesTreeNode in Navigator can only be present, if satisfy predicate fn:Extension(ADBE_Extn3, 1.7)</description>
-			<test>containsResourcesTreeNode == false || hasExtensionADBE_Extn3 == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Navigator is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-ResourcesTreeNode" testNumber="5"/>
-			<description>Entry ResourcesTreeNode in Navigator is deprecated since PDF 2.0</description>
-			<test>containsResourcesTreeNode == false</test>
-			<error>
-				<message>Entry ResourcesTreeNode in Navigator is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
 			<id specification="ISO_32000_2_0" clause="Navigator-SWF" testNumber="8"/>
 			<description>Entry SWF in Navigator shall have type StringText</description>
 			<test>containsSWF == false || SWFHasTypeStringText == true</test>
@@ -71230,38 +70930,6 @@
 			<test>containsStrings == false</test>
 			<error>
 				<message>Entry Strings in Navigator is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-StringsTreeNode" testNumber="8"/>
-			<description>Entry StringsTreeNode in Navigator shall have type NameTree</description>
-			<test>containsStringsTreeNode == false || StringsTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry StringsTreeNode in Navigator has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>StringsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-StringsTreeNode" testNumber="23"/>
-			<description>Entry StringsTreeNode in Navigator can only be present, if satisfy predicate fn:Extension(ADBE_Extn3, 1.7)</description>
-			<test>containsStringsTreeNode == false || hasExtensionADBE_Extn3 == true</test>
-			<error>
-				<message>Entry StringsTreeNode in Navigator is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ANavigator">
-			<id specification="ISO_32000_2_0" clause="Navigator-StringsTreeNode" testNumber="5"/>
-			<description>Entry StringsTreeNode in Navigator is deprecated since PDF 2.0</description>
-			<test>containsStringsTreeNode == false</test>
-			<error>
-				<message>Entry StringsTreeNode in Navigator is present</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -82132,18 +81800,6 @@
 			<references/>
 		</rule>
 		<rule object="ARichMediaContent">
-			<id specification="ISO_32000_2_0" clause="RichMediaContent-AssetsTreeNode" testNumber="8"/>
-			<description>Entry AssetsTreeNode in RichMediaContent shall have type NameTree</description>
-			<test>containsAssetsTreeNode == false || AssetsTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry AssetsTreeNode in RichMediaContent has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>AssetsTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ARichMediaContent">
 			<id specification="ISO_32000_2_0" clause="RichMediaContent-Configurations" testNumber="8"/>
 			<description>Entry Configurations in RichMediaContent shall have type Array</description>
 			<test>containsConfigurations == false || ConfigurationsHasTypeArray == true</test>
@@ -88686,38 +88342,6 @@
 			<references/>
 		</rule>
 		<rule object="ASlideShow">
-			<id specification="ISO_32000_2_0" clause="SlideShow-ResourcesTreeNode" testNumber="8"/>
-			<description>Entry ResourcesTreeNode in SlideShow shall have type NameTree</description>
-			<test>containsResourcesTreeNode == false || ResourcesTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in SlideShow has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>ResourcesTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ASlideShow">
-			<id specification="ISO_32000_2_0" clause="SlideShow-ResourcesTreeNode" testNumber="7"/>
-			<description>Entry ResourcesTreeNode in SlideShow is required</description>
-			<test>containsResourcesTreeNode == true</test>
-			<error>
-				<message>Entry ResourcesTreeNode in SlideShow is missing</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ASlideShow">
-			<id specification="ISO_32000_2_0" clause="SlideShow-ResourcesTreeNode" testNumber="5"/>
-			<description>Entry ResourcesTreeNode in SlideShow is deprecated since PDF 2.0</description>
-			<test>containsResourcesTreeNode == false</test>
-			<error>
-				<message>Entry ResourcesTreeNode in SlideShow is present</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ASlideShow">
 			<id specification="ISO_32000_2_0" clause="SlideShow-StartResource" testNumber="8"/>
 			<description>Entry StartResource in SlideShow shall have type StringByte</description>
 			<test>containsStartResource == false || StartResourceHasTypeStringByte == true</test>
@@ -90607,18 +90231,6 @@
 			<references/>
 		</rule>
 		<rule object="AStructTreeRoot">
-			<id specification="ISO_32000_2_0" clause="StructTreeRoot-IDTreeTreeNode" testNumber="8"/>
-			<description>Entry IDTreeTreeNode in StructTreeRoot shall have type NameTree</description>
-			<test>containsIDTreeTreeNode == false || IDTreeTreeNodeHasTypeNameTree == true</test>
-			<error>
-				<message>Entry IDTreeTreeNode in StructTreeRoot has type %1 instead of type NameTree</message>
-				<arguments>
-					<argument>IDTreeTreeNodeType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructTreeRoot">
 			<id specification="ISO_32000_2_0" clause="StructTreeRoot-K" testNumber="8"/>
 			<description>Entry K in StructTreeRoot shall have one of types: Array, Dictionary</description>
 			<test>containsK == false || KHasTypeArray == true || KHasTypeDictionary == true</test>
@@ -90662,18 +90274,6 @@
 				<message>Entry ParentTreeNextKey in StructTreeRoot has type %1 instead of type Integer</message>
 				<arguments>
 					<argument>ParentTreeNextKeyType</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructTreeRoot">
-			<id specification="ISO_32000_2_0" clause="StructTreeRoot-ParentTreeTreeNode" testNumber="8"/>
-			<description>Entry ParentTreeTreeNode in StructTreeRoot shall have type NumberTree</description>
-			<test>containsParentTreeTreeNode == false || ParentTreeTreeNodeHasTypeNumberTree == true</test>
-			<error>
-				<message>Entry ParentTreeTreeNode in StructTreeRoot has type %1 instead of type NumberTree</message>
-				<arguments>
-					<argument>ParentTreeTreeNodeType</argument>
 				</arguments>
 			</error>
 			<references/>
