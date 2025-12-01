@@ -440,6 +440,8 @@ public enum PDFAFlavour {
         ISO_19005(PDFAFlavours.ISO_19005_ID, PDFAFlavours.ISO_19005_DESCRIPTION),
         /** Identifier for PDF 1.7 ISO Standard */
         ISO_32000(PDFAFlavours.ISO_32000_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
+        ISO_32000_1(PDFAFlavours.ISO_32000_1_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
+        ISO_32000_2(PDFAFlavours.ISO_32000_2_ID, PDFAFlavours.ISO_32000_DESCRIPTION),
         /** Identifier for Tagged PDF ISO Standard */
         ISO_32005(PDFAFlavours.ISO_32005_ID, PDFAFlavours.ISO_32005_DESCRIPTION);
 
@@ -486,6 +488,7 @@ public enum PDFAFlavour {
         PDF_UA(PDFAFlavours.PDFUA),
         WTPDF(PDFAFlavours.WTPDF),
         TAGGED_PDF(PDFAFlavours.TAGGED_PDF),
+        ARLINGTON(PDFAFlavours.ARLINGTON.toUpperCase()),
         WCAG(PDFAFlavours.WCAG);
         
         private final String family;
