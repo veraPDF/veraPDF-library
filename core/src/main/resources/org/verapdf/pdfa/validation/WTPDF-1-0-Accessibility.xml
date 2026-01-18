@@ -394,12 +394,10 @@
         <rule object="SEMathMLStructElem" tags="structure">
             <id specification="WTPDF_1_0" clause="8.2.5.29" testNumber="1"/>
             <description>The math structure type shall occur only as a child of a Formula structure element</description>
-            <test>parentStandardType == 'Formula' || parentStandardType == 'MathML'</test>
+            <test>hasParentFormulaOrMathML == true</test>
             <error>
-                <message>The math structure type is nested within %1 tag instead of Formula</message>
-                <arguments>
-                    <argument>parentStandardType</argument>
-                </arguments>
+                <message>The math structure type is not nested within Formula tag</message>
+                <arguments/>
             </error>
             <references/>
         </rule>
