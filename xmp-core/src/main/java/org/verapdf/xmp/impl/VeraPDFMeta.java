@@ -28,6 +28,9 @@ public class VeraPDFMeta {
     public static final String DECLARATIONS = "declarations";
     public static final String CONFORMS_TO = "conformsTo";
     public static final String PDFA_DECLARATIONS = "http://pdfa.org/declarations/";
+    public static final String WTPDF_ACCESSIBILITY_DECLARATION = "http://pdfa.org/declarations/wtpdf#accessibility1.0";
+    public static final String WTPDF_REUSE_DECLARATION = "http://pdfa.org/declarations/wtpdf#reuse1.0";
+
 
     private final XMPMetaImpl meta;
     private VeraPDFXMPNode extensionSchemasNode;
