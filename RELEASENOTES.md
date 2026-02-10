@@ -1,3 +1,37 @@
+Version 1.30 RC (February 10, 2026)
+=================================
+
+###  Applications
+- ended PDFBox support
+- added new option to install CLI only without GUI ([commit](https://github.com/veraPDF/veraPDF-apps/commit/cf1177a8793c7286e219d50fe947b6357364476e))
+- removed sources of validation profiles and the model from the installer ([commit](https://github.com/veraPDF/veraPDF-apps/commit/405f777249d585b3ff150aa52611e093fb2937e5))
+- veraPDF Rest API: changed license to MIT ([commit](https://github.com/veraPDF/veraPDF-rest/commit/6eb01dd38cc86c12b7f6ad66994072ce9599cbb0)) and updated dropwizard version to 3.0.16 ([commit](https://github.com/veraPDF/veraPDF-rest/commit/0917c0c2bc9a4231af458e673474f6b595d1da0a))
+
+###  Validation
+- (PDF/A-2,3,4, PDF/UA-1,2, WTPDF-1) fixed misprint in three names of predefined CMaps ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/38ec3b6a50233c7e616421b7d61515982413fbce))
+- (PDF/A-2,3,4, PDF/UA-1,2, WTPDF-1) relaxed the requirement for the presence of the (3,1) cmap in non-symbolic TrueType fonts in case of a font used solely in rendering mode and no embedded font program (commits [1](https://github.com/veraPDF/veraPDF-validation/commit/a6c4b7f9ed908205b81ccf490efc6770756a4ca8) [2](https://github.com/veraPDF/veraPDF-validation-profiles/commit/f14c0059df4ce82e7778b285b74d2d1546f1a0f5))
+- (PDF/A-4, PDF/UA-2) added validation of `pdfaid:rev` and `pdfuaid:rev` ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/44324a8fa55957e626b8df41906d043c174fcc49))
+- (PDF/UA-2, WTPDF-1) permit **math** to be not necessarily an immediate child of **Formula** structure element ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/affcbab2f785de738f691b6bd129032e822a863c))
+- (PDF/UA-2, WTPDF-1) limited PDF/UA-2 8.10.1 and 8.10.2 clauses to Widget annotations used as appearance of interactive form fields  ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/8779f018fb5ccd96d3d8372d21f10068579f3960))
+- (PDF/A) fixed issue with Default ColorSpace not taken into account for the alternate CS of a DeviceN CS of an Image XObject (commits [1](https://github.com/veraPDF/veraPDF-parser/commit/36a43430c0d6c7468262da4b0228c56456002b4d) [2](https://github.com/veraPDF/veraPDF-validation/commit/3f0283f63e60ff24d9da51b16a207634a32425b9))
+- (PDF/A-1) fixed matching date validation in case of any of the dates missing in the XMP metadata ([commit](https://github.com/veraPDF/veraPDF-validation/commit/986631569203e7a8833e84ecefd6de25200670ee))
+
+### PDF Parser
+- fixed Unicode calculation for Type0 fonts ([commit](https://github.com/veraPDF/veraPDF-parser/commit/c95f61fb3c4f08704602bc49c03fa540af75e950))
+- supported the RunLengthDecode filter ([commit](https://github.com/veraPDF/veraPDF-parser/commit/5c5904bf5092db447577bb7554c9e45336f36af3))
+- supported the Crypt filter without decode parameters ([commit](https://github.com/veraPDF/veraPDF-parser/commit/ae2f4d84155d0e6fab8769268451d033df1bdb19))
+- fixed Runtime exceptions in cases of invalid data structures
+- improved logs (commits [1](https://github.com/veraPDF/veraPDF-parser/commit/12a717b7b20fad4af828c0ef66373ea652b47722) [2](https://github.com/veraPDF/veraPDF-parser/commit/6011e0cae3fff14462508bfe7f043d560ecffb41) [3](https://github.com/veraPDF/veraPDF-parser/commit/5f5578f9b3ea881640f780465280d32eda31bbfd) [4](https://github.com/veraPDF/veraPDF-parser/commit/0bb0e840e694f8079c4183d539750cc2146c4bf5))
+
+### Core library
+- added support for Java 25
+- added automatic module names to the MANIFEST files
+- fixed thread safety issues ([commit](https://github.com/veraPDF/veraPDF-library/commit/64aac64cbe1d59d2802488356e736221a1d0f234))
+- changed Java interface `parser.getFlavours()` to return empty list instead of a default flavour in case of missing conformance declarations ([commit](https://github.com/veraPDF/veraPDF-validation/commit/7d3c24b7e712649f25969c8de6a41f3c075c9adc))
+
+### Policy Checker
+- fixed URI support in XSLT engine ([commit](https://github.com/veraPDF/veraPDF-library/commit/ef2f3fac3e858eb6268dc3de35932d11949a84e4))
+
 Version 1.28.2 (July 15, 2025)
 =================================
 
