@@ -86,6 +86,12 @@ public enum PDFAFlavour {
     /** 3u PDF Version 3 Level U */
     PDFA_3_U(Specification.ISO_19005_3, Level.U),
     /** 4 PDF Version 4 */
+    PDFA_4_2020(Specification.ISO_19005_4_2020, Level.NO_LEVEL),
+    /** 4 PDF Version 4 Level F */
+    PDFA_4_F_2020(Specification.ISO_19005_4_2020, Level.F),
+    /** 4 PDF Version 4 Level E */
+    PDFA_4_E_2020(Specification.ISO_19005_4_2020, Level.E),
+    /** 4 PDF Version 4 */
     PDFA_4(Specification.ISO_19005_4, Level.NO_LEVEL),
     /** 4 PDF Version 4 Level F */
     PDFA_4_F(Specification.ISO_19005_4, Level.F),
@@ -208,8 +214,12 @@ public enum PDFAFlavour {
                 PDFAFlavours.ISO_19005_3_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_3_YEAR, 
                 PDFAFlavours.ISO_19005_3_DESCRIPTION),
         /** PDF/A Version 4 */
+        ISO_19005_4_2020(IsoStandardSeries.ISO_19005, PDFSpecification.ISO_32000_2_0, SpecificationFamily.PDF_A, 
+                PDFAFlavours.ISO_19005_4_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_4_2020_YEAR, 
+                PDFAFlavours.ISO_19005_4_DESCRIPTION),
+        /** PDF/A Version 4 */
         ISO_19005_4(IsoStandardSeries.ISO_19005, PDFSpecification.ISO_32000_2_0, SpecificationFamily.PDF_A, 
-                PDFAFlavours.ISO_19005_4_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_4_YEAR, 
+                PDFAFlavours.ISO_19005_4_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_19005_4_2026_YEAR, 
                 PDFAFlavours.ISO_19005_4_DESCRIPTION),
         ISO_32005(IsoStandardSeries.ISO_32005, PDFSpecification.ISO_32000_2_0, SpecificationFamily.TAGGED_PDF, 
                 PDFAFlavours.NONE_PART, PDFAFlavours.NONE_SUBPART, PDFAFlavours.ISO_32005_YEAR, 
