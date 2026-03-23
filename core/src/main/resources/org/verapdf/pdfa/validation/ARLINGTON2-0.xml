@@ -92163,8 +92163,8 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_2_0" clause="Target-N" testNumber="11"/>
-			<description>Entry N in Target is required, when (@R == C) &amp;&amp; fn:IsNameTreeValue(trailer::Catalog::Names::@EmbeddedFiles, parent::@T)</description>
-			<test>containsN == true || ((RNameValue != "C") || parentTIsNameTreetrailerCatalogNamesEmbeddedFilesValue != true)</test>
+			<description>Entry N in Target is required, when (@R == C) &amp;&amp; fn:IsNameTreeIndex(trailer::Catalog::Names::@EmbeddedFiles, @N)</description>
+			<test>containsN == true || ((RNameValue != "C") || NIsNameTreetrailerCatalogNamesEmbeddedFilesIndex != true)</test>
 			<error>
 				<message>Entry N in Target is missing</message>
 				<arguments/>
@@ -92173,10 +92173,10 @@
 		</rule>
 		<rule object="ATarget">
 			<id specification="ISO_32000_2_0" clause="Target-N-StringByte" testNumber="9"/>
-			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:IsNameTreeValue(trailer::Catalog::Names::@EmbeddedFiles, parent::@T)))))</description>
-			<test>NHasTypeStringByte != true || ((((RNameValue != "C") || parentTIsNameTreetrailerCatalogNamesEmbeddedFilesValue != true) &amp;&amp; containsN == true) != true)</test>
+			<description>Entry N with type StringByte in Target shall satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:IsNameTreeIndex(trailer::Catalog::Names::@EmbeddedFiles, @N)))))</description>
+			<test>NHasTypeStringByte != true || ((((RNameValue != "C") || NIsNameTreetrailerCatalogNamesEmbeddedFilesIndex != true) &amp;&amp; containsN == true) != true)</test>
 			<error>
-				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:IsNameTreeValue(trailer::Catalog::Names::@EmbeddedFiles, parent::@T)))))</message>
+				<message>Entry N with type StringByte in Target does not satisfy special case: fn:Eval(fn:Not(fn:IsPresent(fn:Not((@R == C) &amp;&amp; fn:IsNameTreeIndex(trailer::Catalog::Names::@EmbeddedFiles, @N)))))</message>
 				<arguments/>
 			</error>
 			<references/>
