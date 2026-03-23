@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_4_F">
     <details creator="veraPDF Consortium" created="2020-12-25T07:59:15.826Z">
-        <name>PDF/A-4F validation profile</name>
+        <name>PDF/A-4f validation profile</name>
         <description>Validation rules against ISO 19005-4:2020, Level F</description>
     </details>
     <hash></hash>
