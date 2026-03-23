@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <profile xmlns="http://www.verapdf.org/ValidationProfile" flavour="PDFA_3_A">
     <details creator="veraPDF Consortium" created="2017-08-25T08:00:12.789Z">
-        <name>PDF/A-3A validation profile</name>
+        <name>PDF/A-3a validation profile</name>
         <description>Validation rules against ISO 19005-3:2012, Level A</description>
     </details>
     <hash></hash>
