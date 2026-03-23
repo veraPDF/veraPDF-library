@@ -1612,7 +1612,7 @@
             <description>A Level A conforming file shall specify the value of pdfaid:conformance as A. A Level B conforming file shall specify the value of pdfaid:conformance as B. A Level U conforming file shall specify the value of pdfaid:conformance as U</description>
             <test>conformance == "B" || conformance == "U" || conformance == "A"</test>
             <error>
-                <message>The "conformance" property of the PDF/A Identification Schema is %1 instead of "B" for PDF/A-3B conforming file</message>
+                <message>The "conformance" property of the PDF/A Identification Schema is %1 instead of "B" for PDF/A-3b conforming file</message>
                 <arguments>
                     <argument>conformance</argument>
                 </arguments>
