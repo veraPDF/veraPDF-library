@@ -1,3 +1,21 @@
+Version 1.30.1 (April 16, 2026)
+=================================
+
+###  Applications
+- consistent use of PDF/A part and conformance level capitalization ([commit](https://github.com/veraPDF/veraPDF-apps/commit/78e8c8d2c078df42daa3ce2e9f19dad65781c9af))
+
+###  Validation
+- (PDF/UA-1,2, WTPDF-1) permitted top left cells with no Scope in Table structure element ([commit](https://github.com/veraPDF/veraPDF-validation/commit/dfe0dcbcf183b851bf5e419facf85128ce62aeb7))
+
+### PDF Parser
+- fixed processing of CID = 0 for symbolic fonts (commits [1](https://github.com/veraPDF/veraPDF-parser/commit/6f78b654e4aff90e4e4ea9d014a348bc10855087) [2](https://github.com/veraPDF/veraPDF-validation/commit/8537c161954340b4c3c06561bc8f26e342ccdc05))
+
+### Metadata fixer
+- (PDF/A-4, PDF/UA-2) fixed `rev` value ([commit](https://github.com/veraPDF/veraPDF-validation/commit/e24b45ae6dff5bf8f0b1ad995c83bebcd13829fc))
+
+### Security
+- included the fix for [GHSA-72hv-8253-57q](https://github.com/FasterXML/jackson-core/security/advisories/GHSA-72hv-8253-57qq) ([commit](https://github.com/veraPDF/veraPDF-library/commit/06f17c90081f1d3f0f09d81bdde4ebe1c9cd8ae6))
+
 Version 1.30 RC (February 10, 2026)
 =================================
 
