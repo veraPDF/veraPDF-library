@@ -20,7 +20,7 @@ public class VeraPDFMeta {
     public static final String PDFUAID_PREFIX = "pdfuaid";
     public static final String PDFA_EXTENSION_PREFIX = "pdfaExtension";
     public static final String DC_PREFIX = "dc";
-    public static final String PDFD_Prefix = "pdfd";
+    public static final String PDFD_PREFIX = "pdfd";
     public static final String SCHEMAS = "schemas";
     public static final String CONFORMANCE = "conformance";
     public static final String PART = "part";
