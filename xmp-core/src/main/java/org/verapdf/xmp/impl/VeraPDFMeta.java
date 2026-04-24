@@ -19,6 +19,8 @@ public class VeraPDFMeta {
     public static final String PDFAID_PREFIX = "pdfaid";
     public static final String PDFUAID_PREFIX = "pdfuaid";
     public static final String PDFA_EXTENSION_PREFIX = "pdfaExtension";
+    public static final String DC_PREFIX = "dc";
+    public static final String PDFD_Prefix = "pdfd";
     public static final String SCHEMAS = "schemas";
     public static final String CONFORMANCE = "conformance";
     public static final String PART = "part";
@@ -363,6 +365,38 @@ public class VeraPDFMeta {
             } 
         }
         return false;
+    }
+
+    public VeraPDFMeta addDeclarations(Set<String> conformsToURIs) throws XMPException {
+        if (conformsToURIs == null || conformsToURIs.isEmpty()) {
+            throw new IllegalArgumentException("Argument conformsToURIs can not be null or empty");
+        }
+        if (getProperty(PDFA_DECLARATIONS, DECLARATIONS) == null) {
+                    new PropertyOptions().setArray(true));
+        }
+
+        for (String uri : conformsToURIs) {
+            this.meta.appendArrayItem(
+                    PDFA_DECLARATIONS,
+                    DECLARATIONS,
+                    null,
+                    null,
+                    new PropertyOptions().setStruct(true)
+            );
+            int idx = this.meta.countArrayItems(PDFA_DECLARATIONS, DECLARATIONS);
+            String itemPath = XMPPathFactory.composeArrayItemPath(DECLARATIONS, idx);
+            this.meta.setStructField(
+                    PDFA_DECLARATIONS,
+                    itemPath,
+                    PDFA_DECLARATIONS,
+                    CONFORMS_TO,
+                    uri,
+                    null
+            );
+        }
+
+        update();
+        return this;
     }
 
     public VeraPDFMeta setPDFAIdentificationPart(Integer identificationPart) throws XMPException {
