@@ -372,6 +372,7 @@ public class VeraPDFMeta {
             throw new IllegalArgumentException("Argument conformsToURIs can not be null or empty");
         }
         if (getProperty(PDFA_DECLARATIONS, DECLARATIONS) == null) {
+            meta.setProperty(PDFA_DECLARATIONS, DECLARATIONS, null,
                     new PropertyOptions().setArray(true));
         }
 
