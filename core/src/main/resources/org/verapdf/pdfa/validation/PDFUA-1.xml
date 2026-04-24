@@ -798,7 +798,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="SEH" tags="structure,heading">
+        <rule object="SEH" deferred="true" tags="structure,heading">
             <id specification="ISO_14289_1" clause="7.4.4" testNumber="2"/>
             <description>All documents shall be either strongly or weakly structured, but not both</description>
             <test>usesHn == false</test>
@@ -808,7 +808,7 @@
             </error>
             <references/>
         </rule>
-        <rule object="SEHn" tags="structure,heading">
+        <rule object="SEHn" deferred="true" tags="structure,heading">
             <id specification="ISO_14289_1" clause="7.4.4" testNumber="3"/>
             <description>All documents shall be either strongly or weakly structured, but not both</description>
             <test>usesH == false</test>
