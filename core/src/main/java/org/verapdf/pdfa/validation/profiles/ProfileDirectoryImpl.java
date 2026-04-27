@@ -182,6 +182,16 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
         if (PDFFlavours.isWTPDFFlavour(flavour)) {
             profilePath.append("-"); //$NON-NLS-1$
             profilePath.append(flavour.getLevel().getCode());
+        } else if (PDFFlavours.isWCAGFlavour(flavour)) {
+            profilePath.append("-"); //$NON-NLS-1$
+            if (PDFFlavours.isFlavourLevel(flavour, PDFAFlavour.Level.HUMAN)) {
+                profilePath.append("Complete"); //$NON-NLS-1$
+            } else {
+                profilePath.append(flavour.getLevel().getCode());
+            }
+            if (PDFFlavours.isPDFSpecification(flavour, PDFAFlavour.PDFSpecification.ISO_32000_2_0)) {
+                profilePath.append("-").append("PDF20"); //$NON-NLS-1$
+            }
         } else {
             profilePath.append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
         }
