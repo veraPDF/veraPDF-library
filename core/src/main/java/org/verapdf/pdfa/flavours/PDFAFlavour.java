@@ -130,8 +130,13 @@ public enum PDFAFlavour {
     }
     
     private static String getID(final Specification standard, final Level level) {
-        String levelString = level.getCode().length() > 1 ? level.getCode().substring(0, 1) : level.getCode(); 
-        String postfix = standard == Specification.WCAG_2_2_PDF_2_0 ? PDFAFlavours.PDF_2_0_PART : "";
+        String levelString = level.getCode().length() > 1 ? level.getCode().substring(0, 1) : level.getCode();
+        String postfix = "";
+        if (standard == Specification.WCAG_2_2_PDF_2_0) {
+            postfix = PDFAFlavours.PDF_POSTFIX + PDFAFlavours.PDF_2_0_PART;
+        } else if (standard == Specification.WCAG_2_2) {
+            postfix = PDFAFlavours.PDF_POSTFIX + PDFAFlavours.PDF_1_7_PART;
+        }
         return getPrefix(standard) + standard.getPartNumber() + levelString.toLowerCase() + postfix;
     }
 
