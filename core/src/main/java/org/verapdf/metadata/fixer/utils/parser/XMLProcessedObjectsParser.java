@@ -23,6 +23,7 @@ package org.verapdf.metadata.fixer.utils.parser;
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.model.RuleDescription;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFFlavours;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -109,7 +110,7 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
         if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_1) {
             return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_1;
         }
-        if (flavour.getPart() == PDFAFlavour.Specification.ISO_19005_4) {
+        if (PDFFlavours.isPDFA4RelatedFlavour(flavour)) {
             return XML_PROCESSED_OBJECTS_PATH_PROPERTY_PDFA_4;
         }
         if (flavour.getPart() == PDFAFlavour.Specification.ISO_14289_1) {

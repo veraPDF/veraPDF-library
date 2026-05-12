@@ -93,6 +93,20 @@ public class PDFFlavours {
         return isFlavourFamily(flavour, PDFAFlavour.SpecificationFamily.WTPDF);
     }
 
+    public static boolean isPDFA4RelatedFlavour(List<PDFAFlavour> flavours) {
+        for (PDFAFlavour flavour : flavours) {
+            if (isPDFA4RelatedFlavour(flavour)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isPDFA4RelatedFlavour(PDFAFlavour flavour) {
+        return isFlavourPart(flavour, PDFAFlavour.Specification.ISO_19005_4) || 
+                isFlavourPart(flavour, PDFAFlavour.Specification.ISO_19005_4_2020);
+    }
+
     public static boolean isFlavour(List<PDFAFlavour> flavours, PDFAFlavour checkedFlavour) {
         for (PDFAFlavour flavour : flavours) {
             if (isFlavour(flavour, checkedFlavour)) {

@@ -38,6 +38,7 @@ import javax.xml.bind.JAXBException;
 import org.verapdf.core.Directory;
 import org.verapdf.core.MapBackedDirectory;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.pdfa.flavours.PDFAFlavours;
 import org.verapdf.pdfa.flavours.PDFFlavours;
 
 /**
@@ -192,6 +193,9 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
             }
         } else {
             profilePath.append(flavour.getLevel().getCode().toUpperCase()); //$NON-NLS-1$
+        }
+        if (PDFFlavours.isFlavourPart(flavour, PDFAFlavour.Specification.ISO_19005_4_2020)) {
+            profilePath.append("-").append(PDFAFlavours.ISO_19005_4_2020_YEAR);
         }
         if (PDFFlavours.isFlavour(flavour, PDFAFlavour.PDFUA_2)) {
             profilePath.append("-").append("ISO32005");
