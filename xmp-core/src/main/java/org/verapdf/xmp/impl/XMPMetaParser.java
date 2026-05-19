@@ -16,11 +16,10 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
 
-import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.verapdf.xmp.tools.SecureXML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -47,7 +46,6 @@ public class XMPMetaParser
 	/**  */
 	private static final Object XMP_RDF = new Object();
 	/** the DOM Parser Factory, options are set */ 
-	private static DocumentBuilderFactory factory = createDocumentBuilderFactory();
 	//------------------------------------------------------------------------------ veraPDF: additional field for actual encoding used for XMP package serialization
 	private String actualEncoding;
 
@@ -280,8 +278,7 @@ public class XMPMetaParser
 	{
 		try
 		{
-			DocumentBuilder builder = factory.newDocumentBuilder();
-			builder.setErrorHandler(null);
+			DocumentBuilder builder = SecureXML.newSafeDocumentBuilder();
 			return builder.parse(source);
 		}
 		catch (SAXException e)
@@ -394,30 +391,5 @@ public class XMPMetaParser
 		// no appropriate node has been found
 		return null;
 		//     is extracted here in the C++ Toolkit		
-	}
-
-	
-	/**
-	 * @return Creates, configures and returnes the document builder factory for
-	 *         the Metadata Parser.
-	 */
-	private static DocumentBuilderFactory createDocumentBuilderFactory()
-	{
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		factory.setNamespaceAware(true);
-		factory.setIgnoringComments(true);
-		
-		try
-		{
-			// honor System parsing limits, e.g.
-			// System.setProperty("entityExpansionLimit", "10");
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		}
-		catch (Exception e)
-		{
-			// Ignore IllegalArgumentException and ParserConfigurationException
-			// in case the configured XML-Parser does not implement the feature.
-		}		
-		return factory;
 	}
 }
