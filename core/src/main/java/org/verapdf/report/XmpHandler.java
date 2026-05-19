@@ -24,6 +24,7 @@
 package org.verapdf.report;
 
 import org.verapdf.features.tools.FeatureTreeNode;
+import org.verapdf.xmp.tools.SecureXML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
@@ -137,14 +138,7 @@ public class XmpHandler {
 		if (is == null) {
 			return null;
 		}
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		try {
-			factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, "Unable to secure metadata processing");
-		}
-		factory.setNamespaceAware(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();
+		DocumentBuilder builder = SecureXML.newSafeDocumentBuilder();
 		Document metadataDocument = builder.parse(is);
 		return metadataDocument.getDocumentElement();
 	}

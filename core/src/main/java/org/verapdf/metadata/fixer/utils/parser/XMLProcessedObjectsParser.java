@@ -23,6 +23,7 @@ package org.verapdf.metadata.fixer.utils.parser;
 import org.verapdf.metadata.fixer.utils.model.ProcessedObjects;
 import org.verapdf.metadata.fixer.utils.model.RuleDescription;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
+import org.verapdf.xmp.tools.SecureXML;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -86,16 +87,7 @@ public class XMLProcessedObjectsParser implements ProcessedObjectsParser {
     @Override
     public ProcessedObjects getProcessedObjects(InputStream xml)
             throws ParserConfigurationException, IOException, SAXException {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        try {
-            factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Unable to secure xml processing");
-        }
-        DocumentBuilder builder = factory.newDocumentBuilder();
-
-        factory.setIgnoringElementContentWhitespace(true);
-
+        DocumentBuilder builder = SecureXML.newSafeDocumentBuilder();
         Document doc = builder.parse(xml);
 
         Node root = doc.getDocumentElement();
