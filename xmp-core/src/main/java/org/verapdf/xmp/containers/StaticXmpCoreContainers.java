@@ -8,12 +8,12 @@ public class StaticXmpCoreContainers {
     /**
      * a map from a namespace URI to its registered prefix
      */
-    private static final ThreadLocal<Map<String, String>> namespaceToPrefixMap = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, String>> namespaceToPrefixMap = ThreadLocal.withInitial(HashMap::new);
 
     /**
      * a map from a prefix to the associated namespace URI
      */
-    private static final ThreadLocal<Map<String, String>> prefixToNamespaceMap = new ThreadLocal<>();
+    private static final ThreadLocal<Map<String, String>> prefixToNamespaceMap = ThreadLocal.withInitial(HashMap::new);
 
     /**
      * Clears all namespaces and prefixes.
