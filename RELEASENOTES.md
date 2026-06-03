@@ -1,3 +1,20 @@
+Version 1.30.2 (June 3, 2026)
+=================================
+
+### Security
+- added Security policy ([commit](https://github.com/veraPDF/veraPDF-library/commit/f2a6e22ba3fbf6924321d209491c82171ae64fc0))
+- fixed vulnerabilities related to unsecure parsing of Rich Text values and XFA forms (commits [1](https://github.com/veraPDF/veraPDF-library/commit/695b44f1d3a38349eb857a8d047923150cd96e2a) [2](https://github.com/veraPDF/veraPDF-validation/commit/cacd9436d0de40b0e58cc7d2dbb06451619e61ec))
+- fixed vulnerabilities related to unsecure parsing of PostScript syntax in /ToUnicode CMaps and PS Type1 fonts ([commit](https://github.com/veraPDF/veraPDF-validation/commit/cacd9436d0de40b0e58cc7d2dbb06451619e61ec))
+
+###  Validation
+- (PDF/UA-1) fixed missing validation error for the initial use of H (or Hn) structure element if Hn (resp. H) is located later in the document ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/67cf43ede81d0438fb615dcf92baead3b9f3ad67))
+- (PDF/UA-2, WTPDF-1) permitted Link and Markup annotations to be Artifacts (commits [1](https://github.com/veraPDF/veraPDF-validation-profiles/commit/1d1e2722960e097aaf187680afd44dff65a2b867) [2](https://github.com/veraPDF/veraPDF-validation-profiles/commit/1d1e2722960e097aaf187680afd44dff65a2b867))
+
+### PDF Parser
+- fixed glyph parser in case of a CFF subtable in OpenType ([commit](https://github.com/veraPDF/veraPDF-parser/commit/f0677e25408faea91fad5172e5f43f64051e8e3e))
+- fixed the logic of finding alternative description of an annotation ([commit](https://github.com/veraPDF/veraPDF-validation/commit/c8fb5d03f04d20f9d8ee0e6fcfaa74bc344c2cd0))
+- fixed Default color space handing in case of Indexed inline images ([commit](https://github.com/veraPDF/veraPDF-parser/commit/862b1f227a184fefeafd959f1e0346b8fde1f9fa))
+
 Version 1.30.1 (April 16, 2026)
 =================================
 
