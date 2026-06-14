@@ -20,17 +20,21 @@
  */
 package org.verapdf.containers;
 
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 
 import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 
 public class StaticCoreContainers {
 
     private static final ThreadLocal<List<PDFAFlavour>> flavour = new ThreadLocal<>();
+    private static final ThreadLocal<EnumSet<ExtensionObjectType>> enabledExtensions = new ThreadLocal<>();
 
     public static void clearAllContainers() {
         flavour.set(null);
+        enabledExtensions.set(EnumSet.noneOf(ExtensionObjectType.class));
     }
 
     public static List<PDFAFlavour> getFlavour() {
@@ -43,5 +47,16 @@ public class StaticCoreContainers {
 
     public static void setFlavour(PDFAFlavour flavour) {
         StaticCoreContainers.flavour.set(Collections.singletonList(flavour));
+    }
+
+    public static EnumSet<ExtensionObjectType> getEnabledExtensions() {
+        if (enabledExtensions.get() == null) {
+            enabledExtensions.set(EnumSet.noneOf(ExtensionObjectType.class));
+        }
+        return enabledExtensions.get();
+    }
+
+    public static void setEnabledExtensions(EnumSet<ExtensionObjectType> enabledExtensions) {
+        StaticCoreContainers.enabledExtensions.set(enabledExtensions);
     }
 }

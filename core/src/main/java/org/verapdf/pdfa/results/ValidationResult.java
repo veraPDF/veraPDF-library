@@ -94,4 +94,6 @@ public interface ValidationResult {
     public JobEndStatus getJobEndStatus();
 
     public Map<RuleId, Integer> getFailedChecks();
+    
+    public String getExtensions();
 }

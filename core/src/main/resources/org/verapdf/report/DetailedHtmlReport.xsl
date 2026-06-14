@@ -121,6 +121,17 @@
                         </td>
                     </tr>
                 </xsl:if>
+                <xsl:if test="/report/jobs/job/arlingtonReport/@extensions">
+                    <tr>
+                        <td width="200">
+                            <b>Extensions:</b>
+                        </td>
+                        <td>
+                            <xsl:value-of
+                                    select="/report/jobs/job/arlingtonReport/@extensions"/>
+                        </td>
+                    </tr>
+                </xsl:if>
 <!--                <xsl:if test="/report/jobs/job/arlingtonReport/@isCompliant">-->
 <!--                    <tr>-->
 <!--                        <td width="200" class="{$validClass}">-->

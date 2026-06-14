@@ -23,6 +23,8 @@
  */
 package org.verapdf.pdfa.results;
 
+import org.verapdf.containers.StaticCoreContainers;
+import org.verapdf.extensions.ExtensionObjectType;
 import org.verapdf.pdfa.flavours.PDFAFlavour;
 import org.verapdf.pdfa.results.TestAssertion.Status;
 import org.verapdf.pdfa.validation.profiles.ProfileDetails;
@@ -37,6 +39,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author <a href="mailto:carl@openpreservation.org">Carl Wilson</a>
@@ -57,6 +60,8 @@ final class ValidationResultImpl implements ValidationResult {
 	private final boolean isCompliant;
 	@XmlAttribute
 	private final JobEndStatus jobEndStatus;
+	@XmlAttribute
+	private final String extensions;
 
 	private HashMap<RuleId, Integer> failedChecks = null;
 
@@ -83,6 +88,8 @@ final class ValidationResultImpl implements ValidationResult {
 		this.profileDetails = validationProfile.getDetails();
 		this.validationProfile = validationProfile;
 		this.jobEndStatus = endStatus;
+		this.extensions = StaticCoreContainers.getEnabledExtensions().stream().map(ExtensionObjectType::toString)
+				.collect(Collectors.joining(", "));
 	}
 
 	private ValidationResultImpl(final ValidationProfile validationProfile, final List<TestAssertion> assertions,
@@ -150,6 +157,11 @@ final class ValidationResultImpl implements ValidationResult {
 		return this.failedChecks;
 	}
 
+	@Override
+	public String getExtensions() {
+		return this.extensions;
+	}
+
 	/**
 	 * { @inheritDoc }
 	 */
@@ -162,6 +174,7 @@ final class ValidationResultImpl implements ValidationResult {
 		result = prime * result + (this.isCompliant ? 1231 : 1237);
 		result = prime * result + ((this.jobEndStatus == null) ? 0 : this.jobEndStatus.hashCode());
 		result = prime * result + this.totalAssertions;
+		result = prime * result + ((this.extensions == null) ? 0 : this.extensions.hashCode());
 		return result;
 	}
 
@@ -178,6 +191,9 @@ final class ValidationResultImpl implements ValidationResult {
 			return false;
 		ValidationResult other = (ValidationResult) obj;
 		if (!Objects.equals(this.assertions, other.getTestAssertions())) {
+			return false;
+		}
+		if (!Objects.equals(this.extensions, other.getExtensions())) {
 			return false;
 		}
 		if (this.flavour != other.getPDFAFlavour())

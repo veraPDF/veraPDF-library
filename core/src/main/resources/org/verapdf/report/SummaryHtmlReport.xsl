@@ -202,6 +202,7 @@
         <tr>
           <th>File Name</th>
           <th>Profile</th>
+          <th>Extensions</th>
           <th>Deviations</th>
           <xsl:if test="$isPolicy">
             <th>Policy Check</th>
@@ -252,6 +253,9 @@
             </td>
             <td>
               <xsl:value-of select="arlingtonReport/@profileName" />
+            </td>
+            <td>
+              <xsl:value-of select="arlingtonReport/@extensions" />
             </td>
             <td>
               <xsl:value-of select="arlingtonReport/details/@deviations" />

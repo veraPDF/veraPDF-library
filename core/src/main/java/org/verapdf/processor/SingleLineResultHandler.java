@@ -99,7 +99,9 @@ class SingleLineResultHandler extends AbstractBatchHandler {
 	void validationSuccess(final TaskResult taskResult, final List<ValidationResult> validationResult)
 			throws VeraPDFException {
 		for (ValidationResult result : validationResult) {
-			String reportSummary = (result.isCompliant() ? pass : fail) + this.item.getName() + " " + result.getPDFAFlavour() + "\n"; //$NON-NLS-1$
+			String reportSummary = (result.isCompliant() ? pass : fail) + this.item.getName() + " " + 
+					result.getPDFAFlavour() + (result.getExtensions() == null || 
+					result.getExtensions().isEmpty() ? "" : " extensions: " + result.getExtensions()) + "\n"; //$NON-NLS-1$
 			try {
 				this.outputStreamWriter.write(reportSummary);
 				if (this.isVerbose || this.logSuccess) {
