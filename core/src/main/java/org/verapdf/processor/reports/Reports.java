@@ -92,8 +92,9 @@ public final class Reports {
 	 */
 	public static final ValidationReport createValidationReport(final ValidationDetails details,
 	                                                            final String profileName, final String statement,
-	                                                            final boolean isCompliant, final String jobEndStatus) {
-		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant, jobEndStatus);
+	                                                            final boolean isCompliant, final String jobEndStatus,
+																final String extensions) {
+		return ValidationReportImpl.fromValues(details, profileName, statement, isCompliant, jobEndStatus, extensions);
 	}
 
 	public static final ValidationReport createValidationReport(final ValidationResult validationResult,
@@ -101,7 +102,7 @@ public final class Reports {
 		ValidationDetails details = Reports.fromValues(validationResult, logPassed);
 		return Reports.createValidationReport(details, validationResult.getProfileDetails().getName(),
 		                                      getStatement(validationResult.isCompliant()), validationResult.isCompliant(),
-		                                      validationResult.getJobEndStatus().getValue());
+		                                      validationResult.getJobEndStatus().getValue(), validationResult.getExtensions());
 	}
 
 	private static String getStatement(boolean status) {

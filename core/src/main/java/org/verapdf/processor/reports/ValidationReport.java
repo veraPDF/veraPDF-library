@@ -55,4 +55,6 @@ public interface ValidationReport {
 	public boolean isCompliant();
 
 	public String getJobEndStatus();
+
+	public String getExtensions();
 }

@@ -48,20 +48,23 @@ final class ValidationReportImpl implements ValidationReport {
 	private final String statement;
 	@XmlAttribute
 	private final boolean isCompliant;
+	@XmlAttribute
+	private final String extensions;
 
 	private ValidationReportImpl() {
 		this(ValidationDetailsImpl.defaultInstance(), "Unknown Profile", "Statement", //$NON-NLS-1$ //$NON-NLS-2$
-		     false, JobEndStatus.NORMAL.getValue());
+		     false, JobEndStatus.NORMAL.getValue(), null);
 	}
 
 	private ValidationReportImpl(final ValidationDetails details, final String profileName, final String statement,
-	                             final boolean isCompliant, final String jobEndStatus) {
+	                             final boolean isCompliant, final String jobEndStatus, final String extensions) {
 		super();
 		this.details = details;
 		this.profileName = profileName;
 		this.statement = statement;
 		this.isCompliant = isCompliant;
 		this.jobEndStatus = jobEndStatus;
+		this.extensions = extensions;
 	}
 
 	@Override
@@ -89,6 +92,11 @@ final class ValidationReportImpl implements ValidationReport {
 		return this.jobEndStatus;
 	}
 
+	@Override
+	public String getExtensions() {
+		return extensions;
+	}
+
 	static class Adapter extends XmlAdapter<ValidationReportImpl, ValidationReport> {
 		@Override
 		public ValidationReport unmarshal(ValidationReportImpl report) {
@@ -106,7 +114,8 @@ final class ValidationReportImpl implements ValidationReport {
 	}
 
 	static final ValidationReport fromValues(final ValidationDetails details, final String profileName,
-	                                         final String statement, final boolean isCompliant, final String jobEndStatus) {
-		return new ValidationReportImpl(details, profileName, statement, isCompliant, jobEndStatus);
+	                                         final String statement, final boolean isCompliant, final String jobEndStatus,
+											 final String extensions) {
+		return new ValidationReportImpl(details, profileName, statement, isCompliant, jobEndStatus, extensions);
 	}
 }
