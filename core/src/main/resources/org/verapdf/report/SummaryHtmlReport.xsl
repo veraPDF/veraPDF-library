@@ -202,7 +202,11 @@
         <tr>
           <th>File Name</th>
           <th>Profile</th>
-          <th>Extensions</th>
+          <th>
+              <a href="https://github.com/pdf-association/arlington-pdf-model/blob/master/EXTENSIONS.md">
+                  Extensions
+              </a>
+          </th>
           <th>Deviations</th>
           <xsl:if test="$isPolicy">
             <th>Policy Check</th>
@@ -255,7 +259,12 @@
               <xsl:value-of select="arlingtonReport/@profileName" />
             </td>
             <td>
-              <xsl:value-of select="arlingtonReport/@extensions" />
+                <xsl:choose>
+                    <xsl:when test="string(arlingtonReport/@extensions)">
+                        <xsl:value-of select="arlingtonReport/@extensions"/>
+                    </xsl:when>
+                    <xsl:otherwise>-</xsl:otherwise>
+                </xsl:choose>
             </td>
             <td>
               <xsl:value-of select="arlingtonReport/details/@deviations" />
