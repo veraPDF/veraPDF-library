@@ -124,11 +124,19 @@
                 <xsl:if test="/report/jobs/job/arlingtonReport/@extensions">
                     <tr>
                         <td width="200">
-                            <b>Extensions:</b>
+                            <b>
+                                <a href="https://github.com/pdf-association/arlington-pdf-model/blob/master/EXTENSIONS.md">
+                                    Extensions:
+                                </a>
+                            </b>
                         </td>
                         <td>
-                            <xsl:value-of
-                                    select="/report/jobs/job/arlingtonReport/@extensions"/>
+                            <xsl:choose>
+                                <xsl:when test="string(/report/jobs/job/arlingtonReport/@extensions)">
+                                    <xsl:value-of select="/report/jobs/job/arlingtonReport/@extensions"/>
+                                </xsl:when>
+                                <xsl:otherwise>-</xsl:otherwise>
+                            </xsl:choose>
                         </td>
                     </tr>
                 </xsl:if>
