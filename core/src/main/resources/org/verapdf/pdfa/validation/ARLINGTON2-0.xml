@@ -86133,10 +86133,10 @@
 		</rule>
 		<rule object="ASigFieldSeedValue">
 			<id specification="ISO_32000_2_0" clause="SigFieldSeedValue-LockDocument-Name" testNumber="6"/>
-			<description>Entry LockDocument with type Name in SigFieldSeedValue shall have one of values: True, False, auto</description>
-			<test>LockDocumentHasTypeName != true || LockDocumentNameValue == "True" || LockDocumentNameValue == "False" || LockDocumentNameValue == "auto"</test>
+			<description>Entry LockDocument with type Name in SigFieldSeedValue shall have one of values: true, false, auto</description>
+			<test>LockDocumentHasTypeName != true || LockDocumentNameValue == "true" || LockDocumentNameValue == "false" || LockDocumentNameValue == "auto"</test>
 			<error>
-				<message>Entry LockDocument with type Name in SigFieldSeedValue has incorrect value %1 instead of True, False, auto</message>
+				<message>Entry LockDocument with type Name in SigFieldSeedValue has incorrect value %1 instead of true, false, auto</message>
 				<arguments>
 					<argument>LockDocumentNameValue</argument>
 				</arguments>
