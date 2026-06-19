@@ -165,6 +165,11 @@ public class BaseValidator implements PDFAValidator {
 	}
 
 	@Override
+	public Map<String, java.lang.Object> getValidationProgressStats() {
+		return validationProgress.getCurrentValidationJobStats();
+	}
+
+	@Override
 	public void cancelValidation(JobEndStatus endStatus) {
 		this.jobEndStatus = endStatus;
 		this.abortProcessing = true;
