@@ -20,6 +20,9 @@
  */
 package org.verapdf.core.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ValidationProgress {
 
 	private static final int UPPER_LIMIT_POWER_OF_TEN = 6;
@@ -93,6 +96,15 @@ public class ValidationProgress {
 		       + numberOfFailedChecks + " failed / "
 		       + numberOfProcessedObjects + " processed objects / "
 		       + numberOfObjectsToBeProcessed + " in stack.";
+	}
+
+	public Map<String, Object> getCurrentValidationJobStats() {
+		Map<String, Object> progressStats = new HashMap<>();
+		progressStats.put("checks", numberOfChecks);
+		progressStats.put("failedChecks", numberOfFailedChecks);
+		progressStats.put("processedObjects", numberOfProcessedObjects);
+		progressStats.put("objectsToBeProcessed", numberOfObjectsToBeProcessed);
+		return progressStats;
 	}
 
 	private boolean checkCurrentNumberOfChecks() {
