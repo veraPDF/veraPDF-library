@@ -27,6 +27,7 @@ import org.verapdf.pdfa.validation.profiles.ValidationProfile;
 import org.verapdf.processor.reports.enums.JobEndStatus;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * A PDFAValidator performs a series of checks on PDF/A documents to verify that
@@ -64,6 +65,8 @@ public interface PDFAValidator extends Component {
     public ValidationResult validate(PDFAParser toValidate) throws ValidationException;
 
     public List<ValidationResult> validateAll(PDFAParser toValidate) throws ValidationException;
+
+    public Map<String, Object> getValidationProgressStats();
 
     public String getValidationProgressString();
 
