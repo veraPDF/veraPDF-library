@@ -1,3 +1,17 @@
+/*
+ * Copyright (c) 2006, Adobe Systems Incorporated.
+ * Copyright (c) 2015-2026, veraPDF Consortium.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Portions derived from Adobe XMP Toolkit's XMPMetaParser.java.
+ *
+ * Redistribution and use are permitted under the BSD 3-Clause License.
+ * See the LICENSE.txt file distributed with this module for the full
+ * license terms and disclaimer.
+ */
+
 package org.verapdf.xmp.tools;
 
 import javax.xml.XMLConstants;
