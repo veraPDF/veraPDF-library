@@ -1,3 +1,14 @@
+/*
+ * Copyright (c) 2015-2026, veraPDF Consortium.
+ * All rights reserved.
+ *
+ * SPDX-License-Identifier: BSD-3-Clause
+ *
+ * Redistribution and use are permitted under the BSD 3-Clause License.
+ * See the LICENSE.txt file distributed with this module for the full
+ * license terms and disclaimer.
+ */
+
 package org.verapdf.xmp.impl;
 
 import java.util.ArrayList;
