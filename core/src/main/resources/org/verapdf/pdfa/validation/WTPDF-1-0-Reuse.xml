@@ -235,7 +235,7 @@
             <description>Link annotations that target different locations shall be in separate Link or Reference structure elements</description>
             <test>differentTargetAnnotObjectKey == null</test>
             <error>
-                <message>Struct element %1 contains Link annotations %1 and %2 that target different locations</message>
+                <message>Struct element %1 contains Link annotations %2 and %3 that target different locations</message>
                 <arguments>
                     <argument>structParentObjectKey</argument>
                     <argument>objectKey</argument>
