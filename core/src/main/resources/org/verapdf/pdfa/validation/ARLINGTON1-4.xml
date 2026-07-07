@@ -14945,18 +14945,6 @@
 			</error>
 			<references/>
 		</rule>
-		<rule object="AArrayOfStructElemKidsEntry">
-			<id specification="PDF_1_4" clause="ArrayOfStructElemKidsEntry-Integer" testNumber="9"/>
-			<description>Entry with type Integer in ArrayOfStructElemKids shall satisfy special case: fn:Eval(fn:IsPresent(parent::Pg))</description>
-			<test>HasTypeInteger != true || (containsparentPg == true)</test>
-			<error>
-				<message>Entry %keyName% with type Integer in ArrayOfStructElemKids does not satisfy special case: fn:Eval(fn:IsPresent(parent::Pg))</message>
-				<arguments>
-					<argument name="keyName">keyName</argument>
-				</arguments>
-			</error>
-			<references/>
-		</rule>
 		<rule object="AArrayOfStructElemParentTreeEntry">
 			<id specification="PDF_1_4" clause="ArrayOfStructElemParentTreeEntry" testNumber="8"/>
 			<description>Entry in ArrayOfStructElemParentTree shall have one of types: Dictionary, Null</description>
@@ -42685,16 +42673,6 @@
 				<arguments>
 					<argument>KType</argument>
 				</arguments>
-			</error>
-			<references/>
-		</rule>
-		<rule object="AStructElem">
-			<id specification="PDF_1_4" clause="StructElem-K-Integer" testNumber="9"/>
-			<description>Entry K with type Integer in StructElem shall satisfy special case: fn:Eval(fn:IsPresent(Pg))</description>
-			<test>KHasTypeInteger != true || (containsPg == true)</test>
-			<error>
-				<message>Entry K with type Integer in StructElem does not satisfy special case: fn:Eval(fn:IsPresent(Pg))</message>
-				<arguments/>
 			</error>
 			<references/>
 		</rule>
