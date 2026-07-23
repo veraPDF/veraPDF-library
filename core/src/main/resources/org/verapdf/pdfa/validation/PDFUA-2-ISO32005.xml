@@ -283,11 +283,13 @@
             <description>Link annotations that target different locations shall be in separate Link or Reference structure elements</description>
             <test>differentTargetAnnotObjectKey == null</test>
             <error>
-                <message>Struct element %1 contains Link annotations %2 and %3 that target different locations</message>
+                <message>Struct element %1 contains Link annotations %2 and %3 that target different locations (%4 and %5 respectively)</message>
                 <arguments>
                     <argument>structParentObjectKey</argument>
                     <argument>objectKey</argument>
                     <argument>differentTargetAnnotObjectKey</argument>
+                    <argument>structDestinationKey</argument>
+                    <argument>differentTargetAnnotDestinationKey</argument>
                 </arguments>
             </error>
             <references/>
