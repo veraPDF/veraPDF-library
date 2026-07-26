@@ -57999,6 +57999,16 @@
 			<references/>
 		</rule>
 		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsColorants-Name" testNumber="9"/>
+			<description>Entry GTS_ProcStepsColorants with type Name in GTS_ProcStepsGroup shall satisfy special case: fn:Eval((@GTS_ProcStepsColorants != All) &amp;&amp; (@GTS_ProcStepsColorants != None))</description>
+			<test>GTS_ProcStepsColorantsHasTypeName != true || ((GTS_ProcStepsColorantsNameValue != "All") &amp;&amp; (GTS_ProcStepsColorantsNameValue != "None"))</test>
+			<error>
+				<message>Entry GTS_ProcStepsColorants with type Name in GTS_ProcStepsGroup does not satisfy special case: fn:Eval((@GTS_ProcStepsColorants != All) &amp;&amp; (@GTS_ProcStepsColorants != None))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
 			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsGroup" testNumber="8"/>
 			<description>Entry GTS_ProcStepsGroup in GTS_ProcStepsGroup shall have type Name</description>
 			<test>containsGTS_ProcStepsGroup == false || GTS_ProcStepsGroupHasTypeName == true</test>
@@ -58083,6 +58093,16 @@
 				<arguments>
 					<argument>GTS_ProcStepsTypeNameValue</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AGTS_ProcStepsGroup">
+			<id specification="ISO_32000_1_7" clause="GTS_ProcStepsGroup-GTS_ProcStepsType-Name" testNumber="9"/>
+			<description>Entry GTS_ProcStepsType with type Name in GTS_ProcStepsGroup shall satisfy special case: fn:Eval(((@GTS_ProcStepsGroup == Structural) &amp;&amp; ((@GTS_ProcStepsType == Cutting) || (@GTS_ProcStepsType == PartialCutting) || (@GTS_ProcStepsType == ReversePartialCutting) || (@GTS_ProcStepsType == Creasing) || (@GTS_ProcStepsType == ReverseCreasing) || (@GTS_ProcStepsType == CuttingCreasing) || (@GTS_ProcStepsType == ReverseCuttingCreasing) || (@GTS_ProcStepsType == PartialCuttingCreasing) || (@GTS_ProcStepsType == ReversePartialCuttingCreasing) || (@GTS_ProcStepsType == Drilling) || (@GTS_ProcStepsType == Gluing) || (@GTS_ProcStepsType == FoilStamping) || (@GTS_ProcStepsType == ColdFoilStamping) || (@GTS_ProcStepsType == Embossing) || (@GTS_ProcStepsType == Debossing) || (@GTS_ProcStepsType == Perforating) || (@GTS_ProcStepsType == Bleed) || (@GTS_ProcStepsType == VarnishFree) || (@GTS_ProcStepsType == InkFree) || (@GTS_ProcStepsType == InkVarnishFree) || (@GTS_ProcStepsType == Folding) || (@GTS_ProcStepsType == Punching) || (@GTS_ProcStepsType == Stapling))) || ((@GTS_ProcStepsGroup == Positions) &amp;&amp; ((@GTS_ProcStepsType == Hologram) || (@GTS_ProcStepsType == Barcode) || (@GTS_ProcStepsType == ContentArea) || (@GTS_ProcStepsType == CodingMarking) || (@GTS_ProcStepsType == Imprinting) || (@GTS_ProcStepsType == StationInfo) || (@GTS_ProcStepsType == PlateStamping) || (@GTS_ProcStepsType == OverstepArea))) || ((@GTS_ProcStepsGroup == PlateMaking) &amp;&amp; ((@GTS_ProcStepsType == Cutting) || (@GTS_ProcStepsType == Bleed) || (@GTS_ProcStepsType == NoMark))))</description>
+			<test>GTS_ProcStepsTypeHasTypeName != true || (((GTS_ProcStepsGroupNameValue == "Structural") &amp;&amp; ((GTS_ProcStepsTypeNameValue == "Cutting") || (GTS_ProcStepsTypeNameValue == "PartialCutting") || (GTS_ProcStepsTypeNameValue == "ReversePartialCutting") || (GTS_ProcStepsTypeNameValue == "Creasing") || (GTS_ProcStepsTypeNameValue == "ReverseCreasing") || (GTS_ProcStepsTypeNameValue == "CuttingCreasing") || (GTS_ProcStepsTypeNameValue == "ReverseCuttingCreasing") || (GTS_ProcStepsTypeNameValue == "PartialCuttingCreasing") || (GTS_ProcStepsTypeNameValue == "ReversePartialCuttingCreasing") || (GTS_ProcStepsTypeNameValue == "Drilling") || (GTS_ProcStepsTypeNameValue == "Gluing") || (GTS_ProcStepsTypeNameValue == "FoilStamping") || (GTS_ProcStepsTypeNameValue == "ColdFoilStamping") || (GTS_ProcStepsTypeNameValue == "Embossing") || (GTS_ProcStepsTypeNameValue == "Debossing") || (GTS_ProcStepsTypeNameValue == "Perforating") || (GTS_ProcStepsTypeNameValue == "Bleed") || (GTS_ProcStepsTypeNameValue == "VarnishFree") || (GTS_ProcStepsTypeNameValue == "InkFree") || (GTS_ProcStepsTypeNameValue == "InkVarnishFree") || (GTS_ProcStepsTypeNameValue == "Folding") || (GTS_ProcStepsTypeNameValue == "Punching") || (GTS_ProcStepsTypeNameValue == "Stapling"))) || ((GTS_ProcStepsGroupNameValue == "Positions") &amp;&amp; ((GTS_ProcStepsTypeNameValue == "Hologram") || (GTS_ProcStepsTypeNameValue == "Barcode") || (GTS_ProcStepsTypeNameValue == "ContentArea") || (GTS_ProcStepsTypeNameValue == "CodingMarking") || (GTS_ProcStepsTypeNameValue == "Imprinting") || (GTS_ProcStepsTypeNameValue == "StationInfo") || (GTS_ProcStepsTypeNameValue == "PlateStamping") || (GTS_ProcStepsTypeNameValue == "OverstepArea"))) || ((GTS_ProcStepsGroupNameValue == "PlateMaking") &amp;&amp; ((GTS_ProcStepsTypeNameValue == "Cutting") || (GTS_ProcStepsTypeNameValue == "Bleed") || (GTS_ProcStepsTypeNameValue == "NoMark"))))</test>
+			<error>
+				<message>Entry GTS_ProcStepsType with type Name in GTS_ProcStepsGroup does not satisfy special case: fn:Eval(((@GTS_ProcStepsGroup == Structural) &amp;&amp; ((@GTS_ProcStepsType == Cutting) || (@GTS_ProcStepsType == PartialCutting) || (@GTS_ProcStepsType == ReversePartialCutting) || (@GTS_ProcStepsType == Creasing) || (@GTS_ProcStepsType == ReverseCreasing) || (@GTS_ProcStepsType == CuttingCreasing) || (@GTS_ProcStepsType == ReverseCuttingCreasing) || (@GTS_ProcStepsType == PartialCuttingCreasing) || (@GTS_ProcStepsType == ReversePartialCuttingCreasing) || (@GTS_ProcStepsType == Drilling) || (@GTS_ProcStepsType == Gluing) || (@GTS_ProcStepsType == FoilStamping) || (@GTS_ProcStepsType == ColdFoilStamping) || (@GTS_ProcStepsType == Embossing) || (@GTS_ProcStepsType == Debossing) || (@GTS_ProcStepsType == Perforating) || (@GTS_ProcStepsType == Bleed) || (@GTS_ProcStepsType == VarnishFree) || (@GTS_ProcStepsType == InkFree) || (@GTS_ProcStepsType == InkVarnishFree) || (@GTS_ProcStepsType == Folding) || (@GTS_ProcStepsType == Punching) || (@GTS_ProcStepsType == Stapling))) || ((@GTS_ProcStepsGroup == Positions) &amp;&amp; ((@GTS_ProcStepsType == Hologram) || (@GTS_ProcStepsType == Barcode) || (@GTS_ProcStepsType == ContentArea) || (@GTS_ProcStepsType == CodingMarking) || (@GTS_ProcStepsType == Imprinting) || (@GTS_ProcStepsType == StationInfo) || (@GTS_ProcStepsType == PlateStamping) || (@GTS_ProcStepsType == OverstepArea))) || ((@GTS_ProcStepsGroup == PlateMaking) &amp;&amp; ((@GTS_ProcStepsType == Cutting) || (@GTS_ProcStepsType == Bleed) || (@GTS_ProcStepsType == NoMark))))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
