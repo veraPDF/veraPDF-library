@@ -13431,6 +13431,18 @@
 			</error>
 			<references/>
 		</rule>
+		<rule object="AArrayOfStructElemKidsEntry">
+			<id specification="PDF_1_3" clause="ArrayOfStructElemKidsEntry-Dictionary" testNumber="9"/>
+			<description>Entry with type Dictionary in ArrayOfStructElemKids shall satisfy special case: fn:Eval(fn:IsPresent(parent::Pg) || (*::@Type != OBJR &amp;&amp; *::@Type != MCR) || fn:IsPresent(*::Pg))</description>
+			<test>HasTypeDictionary != true || ((containsparentPg == true) || (EntryTypeNameValue != "OBJR" &amp;&amp; EntryTypeNameValue != "MCR") || (containsEntryPg == true))</test>
+			<error>
+				<message>Entry %keyName% with type Dictionary in ArrayOfStructElemKids does not satisfy special case: fn:Eval(fn:IsPresent(parent::Pg) || (*::@Type != OBJR &amp;&amp; *::@Type != MCR) || fn:IsPresent(*::Pg))</message>
+				<arguments>
+					<argument name="keyName">keyName</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
 		<rule object="AArrayOfStructElemParentTreeEntry">
 			<id specification="PDF_1_3" clause="ArrayOfStructElemParentTreeEntry" testNumber="8"/>
 			<description>Entry in ArrayOfStructElemParentTree shall have one of types: Dictionary, Null</description>
@@ -39100,6 +39112,16 @@
 				<arguments>
 					<argument>KType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AStructElem">
+			<id specification="PDF_1_3" clause="StructElem-K-Dictionary" testNumber="9"/>
+			<description>Entry K with type Dictionary in StructElem shall satisfy special case: fn:Eval(fn:IsPresent(Pg) || (K::@Type != OBJR &amp;&amp; K::@Type != MCR) || fn:IsPresent(K::Pg))</description>
+			<test>KHasTypeDictionary != true || ((containsPg == true) || (KTypeNameValue != "OBJR" &amp;&amp; KTypeNameValue != "MCR") || (containsKPg == true))</test>
+			<error>
+				<message>Entry K with type Dictionary in StructElem does not satisfy special case: fn:Eval(fn:IsPresent(Pg) || (K::@Type != OBJR &amp;&amp; K::@Type != MCR) || fn:IsPresent(K::Pg))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
