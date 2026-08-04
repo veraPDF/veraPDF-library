@@ -307,6 +307,18 @@
                 <reference specification="ISO 32000-2:2020" clause="14.11.5, Table 401"/>
             </references>
         </rule>
+        <rule object="OutputIntents">
+            <id specification="ISO_19005_4" clause="6.2.3" testNumber="4"/>
+            <description>OutputIntents array shall contain at most one PDF/A output intent</description>
+            <test>numberOfPDFAOutputIntents &lt;= 1</test>
+            <error>
+                <message>OutputIntents array contains %1 PDF/A output intents</message>
+                <arguments>
+                    <argument>numberOfPDFAOutputIntents</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="ICCInputProfile">
             <id specification="ISO_19005_4" clause="6.2.4.2" testNumber="1"/>
             <description>The profile that forms the stream of an ICCBased colour space shall conform to ISO 32000-2:2020, 8.6.5.5</description>
