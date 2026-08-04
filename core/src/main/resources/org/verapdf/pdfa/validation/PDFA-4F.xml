@@ -201,6 +201,19 @@
                 <reference specification="ISO 32000-2:2020" clause="8.9.7"/>
             </references>
         </rule>
+        <rule object="PDInlineImage">
+            <id specification="ISO_19005_4" clause="6.1.9" testNumber="2"/>
+            <description>Any inline image dictionary shall contain a L key whose value is the length of the data as it appears in the stream, before applying the filters, if any.</description>
+            <test> L == streamLength</test>
+            <error>
+                <message>The value of the L key %1 in the inline image dictionary does not represent actual length of the data %2</message>
+                <arguments>
+                    <argument>L</argument>
+                    <argument>streamLength</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="PDPerms">
             <id specification="ISO_19005_4" clause="6.1.11" testNumber="1"/>
             <description>No keys other than UR3 and DocMDP shall be present in a permissions dictionary (ISO 32000-2:2020, 12.8.6, Table 263)</description>
