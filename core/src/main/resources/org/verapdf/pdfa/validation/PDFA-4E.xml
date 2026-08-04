@@ -230,12 +230,12 @@
         </rule>
         <rule object="PDPerms">
             <id specification="ISO_19005_4" clause="6.1.11" testNumber="1"/>
-            <description>No keys other than UR3 and DocMDP shall be present in a permissions dictionary (ISO 32000-2:2020, 12.8.6, Table 263)</description>
-            <test>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').length == 0 || entries == ''</test>
+            <description>No key other than DocMDP shall be present in a permissions dictionary (ISO 32000-2:2020, 12.8.6, Table 263)</description>
+            <test>entries.split('&amp;').filter(elem =&gt; elem != 'DocMDP').length == 0 || entries == ''</test>
             <error>
-                <message>The document permissions dictionary contains key(s) %1 other than UR3 and DocMDP</message>
+                <message>The document permissions dictionary contains key(s) %1 other than DocMDP</message>
                 <arguments>
-                    <argument>entries.split('&amp;').filter(elem =&gt; elem != 'UR3' &amp;&amp; elem != 'DocMDP').toString()</argument>
+                    <argument>entries.split('&amp;').filter(elem =&gt; elem != 'DocMDP').toString()</argument>
                 </arguments>
             </error>
             <references>
@@ -438,6 +438,18 @@
             </error>
             <references/>
         </rule>
+        <rule object="CosRenderingIntent">
+            <id specification="ISO_19005_4" clause="6.2.4.6" testNumber="1"/>
+            <description>Where a rendering intent is specified, its value shall be one of the four values defined in ISO 32000-2:2020, Table 69: RelativeColorimetric, AbsoluteColorimetric, Perceptual or Saturation</description>
+            <test>internalRepresentation == "RelativeColorimetric" || internalRepresentation == "AbsoluteColorimetric" || internalRepresentation == "Perceptual" || internalRepresentation == "Saturation"</test>
+            <error>
+                <message>A rendering intent with non-standard value %1 is used</message>
+                <arguments>
+                    <argument>internalRepresentation</argument>
+                </arguments>
+            </error>
+            <references/>
+        </rule>
         <rule object="PDExtGState">
             <id specification="ISO_19005_4" clause="6.2.5" testNumber="1"/>
             <description>A graphics state parameter dictionary (ISO 32000-2:2020, 8.4.5) shall not contain the TR key</description>
@@ -491,18 +503,6 @@
                 <arguments/>
             </error>
             <references/>
-        </rule>
-        <rule object="PDHalftone">
-            <id specification="ISO_19005_4" clause="6.2.5" testNumber="6"/>
-            <description>The TransferFunction key in a halftone dictionary shall be used only as required by ISO 32000-2:2020</description>
-            <test>colorantName == 'Default' || ((colorantName == null || colorantName == 'Cyan' || colorantName == 'Magenta' || colorantName == 'Yellow' || colorantName == 'Black') ? TransferFunction == null : TransferFunction != null)</test>
-            <error>
-                <message>Custom TransferFunction in a Halftone dictionary is not permitted for primary (CMYK) colorants</message>
-                <arguments/>
-            </error>
-            <references>
-                <reference specification="ISO 32000-2:2020" clause="10.6.5.2, Table 128"/>
-            </references>
         </rule>
         <rule object="PDXImage">
             <id specification="ISO_19005_4" clause="6.2.7.1" testNumber="1"/>
@@ -576,7 +576,7 @@
         </rule>
         <rule object="JPEG2000">
             <id specification="ISO_19005_4" clause="6.2.7.3" testNumber="2"/>
-            <description>If the number of colour space specifications in the JPEG2000 data is greater than 1, there shall be exactly one colour space specification that has the value 0x01 in the APPROX field</description>
+            <description>If a ColorSpace entry is not present on the Image XObject and if the number of colour space specifications in the JPEG2000 data is greater than 1, there shall be exactly one colour space specification that has the value 0x01 in the APPROX field</description>
             <test>hasColorSpace == true || nrColorSpaceSpecs == 1 || nrColorSpacesWithApproxField == 1</test>
             <error>
                 <message>The JPEG2000 image contains %1 colour specifications with the best colour fidelity (value 0x01 in the APPROX field)</message>
@@ -588,7 +588,7 @@
         </rule>
         <rule object="JPEG2000">
             <id specification="ISO_19005_4" clause="6.2.7.3" testNumber="3"/>
-            <description>The value of the METH entry in its 'colr' box shall be 0x01, 0x02 or 0x03. A conforming processor shall use only that colour space and shall ignore all other colour space specifications</description>
+            <description>If a ColorSpace entry is not present on the Image XObject, then the value of the METH entry in its 'colr' box shall be 0x01, 0x02 or 0x03. A conforming processor shall use only that colour space and shall ignore all other colour space specifications</description>
             <test>hasColorSpace == true || colrMethod == 1 || colrMethod == 2 || colrMethod == 3</test>
             <error>
                 <message>Invalid JPEG2000 image: the value of the METH entry (%1) in its 'colr' box is different from 0x01, 0x02 or 0x03</message>
@@ -600,7 +600,7 @@
         </rule>
         <rule object="JPEG2000">
             <id specification="ISO_19005_4" clause="6.2.7.3" testNumber="4"/>
-            <description>JPEG2000 enumerated colour space 19 (CIEJab) shall not be used</description>
+            <description>If a ColorSpace entry is not present on the Image XObject, then JPEG2000 enumerated colour space 19 (CIEJab) shall not be used</description>
             <test>hasColorSpace == true || colrEnumCS == null || colrEnumCS != 19</test>
             <error>
                 <message>JPEG2000 image uses enumerated colour space 19 (CIEJab), which is not allowed in PDF/A</message>
@@ -972,8 +972,8 @@
         </rule>
         <rule object="PDAnnot">
             <id specification="ISO_19005_4" clause="6.3.2" testNumber="1"/>
-            <description>Except for annotation dictionaries whose Subtype value is Popup, all annotation dictionaries shall contain the F key</description>
-            <test>Subtype == "Popup" || F != null</test>
+            <description>All annotation dictionaries shall contain the F key, except for annotation dictionaries whose Subtype key has a value of Popup or those whose Rect key’s value is an array where the value at index 0 is equal to the value at index 2 and the value at index 1 is equal to the value at index 3</description>
+            <test>(width == 0 &amp;&amp; height == 0) || Subtype == "Popup" || F != null</test>
             <error>
                 <message>A dictionary of %1 annotation does not contain F key</message>
                 <arguments>
