@@ -44165,6 +44165,26 @@
 			<references/>
 		</rule>
 		<rule object="ANameTreeNode">
+			<id specification="PDF_1_5" clause="NameTreeNode-Limits" testNumber="11"/>
+			<description>Entry Limits in NameTreeNode is required, when fn:IsPresent(parent::Kids)</description>
+			<test>containsLimits == true || (containsparentKids != true)</test>
+			<error>
+				<message>Entry Limits in NameTreeNode is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ANameTreeNode">
+			<id specification="PDF_1_5" clause="NameTreeNode-Limits-Array" testNumber="9"/>
+			<description>Entry Limits with type Array in NameTreeNode shall satisfy special case: fn:Not(fn:IsPresent(fn:Not(fn:IsPresent(parent::Kids))))</description>
+			<test>LimitsHasTypeArray != true || ((containsparentKids == true) || containsLimits != true)</test>
+			<error>
+				<message>Entry Limits with type Array in NameTreeNode does not satisfy special case: fn:Not(fn:IsPresent(fn:Not(fn:IsPresent(parent::Kids))))</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ANameTreeNode">
 			<id specification="PDF_1_5" clause="NameTreeNode-Names" testNumber="8"/>
 			<description>Entry Names in NameTreeNode shall have type Array</description>
 			<test>containsNames == false || NamesHasTypeArray == true</test>
@@ -44188,10 +44208,10 @@
 		</rule>
 		<rule object="ANameTreeNode">
 			<id specification="PDF_1_5" clause="NameTreeNode-Names-Array" testNumber="9"/>
-			<description>Entry Names with type Array in NameTreeNode shall satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids)))</description>
-			<test>NamesHasTypeArray != true || ((containsKids != true) || containsNames != true)</test>
+			<description>Entry Names with type Array in NameTreeNode shall satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids))) &amp;&amp; fn:ArraySortAscending(Names, 2)</description>
+			<test>NamesHasTypeArray != true || (((containsKids != true) || containsNames != true) &amp;&amp; isNamesArraySortAscending2 == true)</test>
 			<error>
-				<message>Entry Names with type Array in NameTreeNode does not satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids)))</message>
+				<message>Entry Names with type Array in NameTreeNode does not satisfy special case: fn:Not(fn:IsPresent(fn:IsPresent(Kids))) &amp;&amp; fn:ArraySortAscending(Names, 2)</message>
 				<arguments/>
 			</error>
 			<references/>
@@ -44450,6 +44470,26 @@
 				<arguments>
 					<argument>LimitsType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ANumberTreeNode">
+			<id specification="PDF_1_5" clause="NumberTreeNode-Limits" testNumber="11"/>
+			<description>Entry Limits in NumberTreeNode is required, when fn:IsPresent(parent::Kids)</description>
+			<test>containsLimits == true || (containsparentKids != true)</test>
+			<error>
+				<message>Entry Limits in NumberTreeNode is missing</message>
+				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ANumberTreeNode">
+			<id specification="PDF_1_5" clause="NumberTreeNode-Limits-Array" testNumber="9"/>
+			<description>Entry Limits with type Array in NumberTreeNode shall satisfy special case: fn:Not(fn:IsPresent(fn:Not(fn:IsPresent(parent::Kids))))</description>
+			<test>LimitsHasTypeArray != true || ((containsparentKids == true) || containsLimits != true)</test>
+			<error>
+				<message>Entry Limits with type Array in NumberTreeNode does not satisfy special case: fn:Not(fn:IsPresent(fn:Not(fn:IsPresent(parent::Kids))))</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
