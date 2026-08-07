@@ -52,7 +52,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
             Integer part = this.metadata.getPDFAIdentificationPart();
             return part == null ? null : part.longValue();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get PDF/A identification part", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/A identification part");
             return null;
         }
     }
@@ -62,7 +62,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
         try {
             return this.metadata.getPDFAIdentificationConformance();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get PDF/A identification conformance", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/A identification conformance");
             return null;
         }
     }
@@ -102,7 +102,7 @@ public class AXLPDFAIdentification extends AXLXMPObject implements PDFAIdentific
         try {
             return this.metadata.getPDFARevisionYear();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get PDF/A identification revision year", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/A identification revision year");
             return null;
         }
     }

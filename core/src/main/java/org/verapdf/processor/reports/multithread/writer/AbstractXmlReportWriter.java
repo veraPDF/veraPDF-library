@@ -59,7 +59,7 @@ public abstract class AbstractXmlReportWriter extends ReportWriter {
 			this.isFirstReport = true;
             this.writer.writeStartDocument();
 		} catch (XMLStreamException e) {
-			LOGGER.log(Level.SEVERE, "Can't write start document", e);
+			LOGGER.log(Level.SEVERE, "Can't write start document");
 		}
 	}
 
@@ -72,7 +72,6 @@ public abstract class AbstractXmlReportWriter extends ReportWriter {
 			this.writer.flush();
 
 		} catch (XMLStreamException e) {
-			e.printStackTrace();
 		}
 	}
 

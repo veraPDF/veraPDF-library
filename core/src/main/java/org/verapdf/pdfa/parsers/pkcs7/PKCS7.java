@@ -38,8 +38,8 @@ public class PKCS7 {
         try {
             parse(new DEREncodedInputStream(bytes));
         } catch (IOException e) {
-            LOGGER.log(Level.INFO, "Error while parsing the encoded bytes", e);
-            throw new IOException("Error while parsing the encoded bytes", e);
+            LOGGER.log(Level.INFO, "Error while parsing the encoded bytes");
+            throw new IOException("Error while parsing the encoded bytes");
         }
     }
 

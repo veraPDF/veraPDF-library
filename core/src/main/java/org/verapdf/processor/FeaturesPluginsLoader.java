@@ -70,7 +70,7 @@ public class FeaturesPluginsLoader {
 				return loadExtractors(fis);
 			} catch (IOException e) {
 				LOGGER.log(Level.WARNING, MessageFormat.format("Problem loading Feature Extraction plugins from file: {0}.",
-						pluginsConfigFile), e);
+						pluginsConfigFile));
 			}
 		}
 		return Collections.emptyList();
@@ -82,7 +82,7 @@ public class FeaturesPluginsLoader {
 					PluginsCollectionConfig.create(pluginsConfigStream);
 			return loadExtractors(pluginsCollectionConfig);
 		} catch (JAXBException e) {
-			LOGGER.log(Level.WARNING, "Problem parsing Feature Extraction plugins config file.", e);
+			LOGGER.log(Level.WARNING, "Problem parsing Feature Extraction plugins config file.");
 		}
 		return Collections.emptyList();
 	}
@@ -165,7 +165,7 @@ public class FeaturesPluginsLoader {
 			return loadExtractorByClassNames(jar, classNames);
 		} catch (IOException e) {
 			LOGGER.log(Level.WARNING, MessageFormat.format("Can not load Extractor class from file: {0}",
-					jar.getPath()), e);
+					jar.getPath()));
 		}
 		return null;
 	}
@@ -209,7 +209,7 @@ public class FeaturesPluginsLoader {
 				}
 			} catch (ClassNotFoundException e) {
 				LOGGER.log(Level.WARNING, "Can not load class " + className + " from jar "
-						+ jar.getAbsolutePath(), e);
+						+ jar.getAbsolutePath());
 			} catch (NoClassDefFoundError ignored) {
 			}
 		}
@@ -222,7 +222,7 @@ public class FeaturesPluginsLoader {
 				LOGGER.log(Level.WARNING,
 						"Can not create an instance of the class "
 								+ extractorClass.getName() + " from jar "
-								+ jar.getPath(), e);
+								+ jar.getPath());
 			}
 		}
 		return null;

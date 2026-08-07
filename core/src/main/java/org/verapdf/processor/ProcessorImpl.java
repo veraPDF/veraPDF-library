@@ -130,24 +130,24 @@ final class ProcessorImpl implements ItemProcessor {
 			}
 		} catch (EncryptedPdfException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF."); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.encryptedResult(fileDetails,
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (ModelParsingException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.invalidPdfResult(fileDetails,
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (OutOfMemoryError e) {
 			logger.log(Level.WARNING, "OutOfMemory caught when validating item"); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.outOfMemoryResult(fileDetails,
 					TaskResultImpl.fromValues(task, parseTimer.stop(), new VeraPDFException("OutOfMemory caught when validating item", e)));
 		} catch (IOException excep) {
-			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
+			logger.log(Level.FINER, "Problem closing PDF Stream"); //$NON-NLS-1$
 		} catch (Exception e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.veraExceptionResult(fileDetails,
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
@@ -185,24 +185,24 @@ final class ProcessorImpl implements ItemProcessor {
 			}
 		} catch (EncryptedPdfException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " appears to be an encrypted PDF."); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.encryptedResult(fileDetails,
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (ModelParsingException e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.invalidPdfResult(fileDetails,
 					TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(), e));
 		} catch (OutOfMemoryError e) {
 			logger.log(Level.WARNING, "OutOfMemory caught when validating item"); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.outOfMemoryResult(fileDetails,
 					TaskResultImpl.fromValues(task, parseTimer.stop(), new VeraPDFException("OutOfMemory caught when validating item", e)));
 		} catch (IOException excep) {
-			logger.log(Level.FINER, "Problem closing PDF Stream", excep); //$NON-NLS-1$
+			logger.log(Level.FINER, "Problem closing PDF Stream"); //$NON-NLS-1$
 		}  catch (Exception e) {
 			logger.log(Level.WARNING, fileDetails.getName() + " doesn't appear to be a valid PDF."); //$NON-NLS-1$
-			logger.log(Level.FINE, "Exception details:", e); //$NON-NLS-1$
+			logger.log(Level.FINE, "Exception details:", e.getMessage()); //$NON-NLS-1$
 			return ProcessorResultImpl.veraExceptionResult(fileDetails,
 			       TaskResultImpl.fromValues(TaskType.PARSE, parseTimer.stop(),
 			       new VeraPDFException("Caught unexpected exception during parsing", e))); //$NON-NLS-1$
@@ -242,10 +242,10 @@ final class ProcessorImpl implements ItemProcessor {
 			TaskResult taskResult = TaskResultImpl.fromValues(type, timer.stop());
 			this.taskResults.put(type, taskResult);
 		} catch (ValidationException excep) {
-			logger.log(Level.WARNING, "Exception caught when validating item", excep); //$NON-NLS-1$
+			logger.log(Level.WARNING, "Exception caught when validating item"); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
 		} catch (IOException excep) {
-			logger.log(Level.INFO, "IOException closing validator.", excep); //$NON-NLS-1$
+			logger.log(Level.INFO, "IOException closing validator."); //$NON-NLS-1$
 		}
 	}
 
@@ -309,7 +309,7 @@ final class ProcessorImpl implements ItemProcessor {
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop()));
 		} catch (Throwable e) {
-			logger.log(Level.WARNING, "Exception caught when extracting features of item", e); //$NON-NLS-1$
+			logger.log(Level.WARNING, "Exception caught when extracting features of item"); //$NON-NLS-1$
 			VeraPDFException veraExcep = new VeraPDFException("Exception caught when extracting features of item", e); //$NON-NLS-1$
 			this.taskResults.put(TaskType.EXTRACT_FEATURES,
 					TaskResultImpl.fromValues(TaskType.EXTRACT_FEATURES, timer.stop(), veraExcep));

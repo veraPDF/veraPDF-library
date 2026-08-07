@@ -90,7 +90,7 @@ public final class ICCProfileFeaturesData extends FeaturesData {
 			try {
 				this.metadata.close();
 			} catch (IOException e) {
-				LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+				LOGGER.log(Level.FINE, "Exception during metadata closing");
 			}
 		}
 		super.close();

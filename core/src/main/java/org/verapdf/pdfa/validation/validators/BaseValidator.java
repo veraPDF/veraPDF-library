@@ -148,9 +148,9 @@ public class BaseValidator implements PDFAValidator {
 		try {
 			return this.validate(toValidate.getRoot());
 		} catch (RuntimeException e) {
-			throw new ValidationException("Caught unexpected runtime exception during validation", e);
+			throw new ValidationException("Caught unexpected runtime exception during validation");
 		} catch (ModelParsingException excep) {
-			throw new ValidationException("Parsing problem trying to validate.", excep);
+			throw new ValidationException("Parsing problem trying to validate.");
 		}
 	}
 

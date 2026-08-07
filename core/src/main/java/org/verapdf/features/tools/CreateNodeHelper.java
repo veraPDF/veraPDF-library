@@ -91,7 +91,7 @@ public final class CreateNodeHelper {
 			try {
 				modificationDate.setValue(getXMLFormat(date));
 			} catch (DatatypeConfigurationException e) {
-				LOGGER.log(Level.FINE, "DatatypeFactory implementation not available or can't be instantiated", e);
+				LOGGER.log(Level.FINE, "DatatypeFactory implementation not available or can't be instantiated");
 				object.registerNewError(e.getMessage());
 			}
 		}
@@ -234,7 +234,7 @@ public final class CreateNodeHelper {
 			String hexString = DatatypeConverter.printHexBinary(bStream);
 			node.setValue(hexString);
 		} catch (IOException e) {
-			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
+			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream");
 			object.registerNewError(e.getMessage());
 		}
 
