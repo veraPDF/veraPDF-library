@@ -37,13 +37,13 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 final class ProfileDetailsImpl implements ProfileDetails {
     private static final ProfileDetailsImpl DEFAULT = new ProfileDetailsImpl();
     @XmlElement
-    private final String name;
+    private String name;
     @XmlElement
-    private final String description;
+    private String description;
     @XmlAttribute
-    private final String creator;
+    private String creator;
     @XmlAttribute
-    private final Date created;
+    private Date created;
 
     private ProfileDetailsImpl() {
         this("name", "description", "creator", new Date(0L));

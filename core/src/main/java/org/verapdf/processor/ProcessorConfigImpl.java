@@ -45,19 +45,19 @@ final class ProcessorConfigImpl implements ProcessorConfig {
 	private static final String defaultMdFolder = ".";
 	private static final ProcessorConfig defaultInstance = new ProcessorConfigImpl();
 	@XmlElement
-	private final EnumSet<TaskType> tasks;
+	private EnumSet<TaskType> tasks;
 	@XmlElement
-	private final ValidatorConfig validatorConfig;
+	private ValidatorConfig validatorConfig;
 	@XmlElement
-	private final FeatureExtractorConfig featureConfig;
+	private FeatureExtractorConfig featureConfig;
 	@XmlElement
-	private final PluginsCollectionConfig pluginsCollectionConfig;
+	private PluginsCollectionConfig pluginsCollectionConfig;
 	@XmlElement
-	private final MetadataFixerConfig fixerConfig;
+	private MetadataFixerConfig fixerConfig;
 	@XmlElement
-	private final ValidationProfile customProfile;
+	private ValidationProfile customProfile;
 	@XmlAttribute
-	private final String mdFolder;
+	private String mdFolder;
 
 	private ProcessorConfigImpl() {
 		this(ValidatorFactory.defaultConfig(), FeatureFactory.defaultConfig(),

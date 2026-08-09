@@ -48,20 +48,20 @@ import java.util.stream.Collectors;
 final class ValidationResultImpl implements ValidationResult {
 	private static final ValidationResultImpl DEFAULT = new ValidationResultImpl();
 	@XmlAttribute
-	private final PDFAFlavour flavour;
+	private PDFAFlavour flavour;
 	@XmlElement
-	private final ProfileDetails profileDetails;
+	private ProfileDetails profileDetails;
 	@XmlAttribute
-	private final int totalAssertions;
+	private int totalAssertions;
 	@XmlElementWrapper
 	@XmlElement(name = "assertion")
-	private final List<TestAssertion> assertions;
+	private List<TestAssertion> assertions;
 	@XmlAttribute
-	private final boolean isCompliant;
+	private boolean isCompliant;
 	@XmlAttribute
-	private final JobEndStatus jobEndStatus;
+	private JobEndStatus jobEndStatus;
 	@XmlAttribute
-	private final String extensions;
+	private String extensions;
 
 	private HashMap<RuleId, Integer> failedChecks = null;
 
