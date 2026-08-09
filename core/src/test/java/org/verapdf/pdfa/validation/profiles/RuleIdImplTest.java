@@ -42,7 +42,7 @@ public class RuleIdImplTest {
      */
     @Test
     public final void testEqualsObject() {
-        EqualsVerifier.forClass(RuleIdImpl.class).verify();
+        EqualsVerifier.simple().forClass(RuleIdImpl.class).verify();
     }
 
     /**

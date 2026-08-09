@@ -39,9 +39,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class ItemDetails {
 	static final ItemDetails DEFAULT = new ItemDetails();
 	@XmlElement
-	private final String name;
+	private String name;
 	@XmlAttribute
-	private final long size;
+	private long size;
 
 	private ItemDetails() {
 		this("unknown");

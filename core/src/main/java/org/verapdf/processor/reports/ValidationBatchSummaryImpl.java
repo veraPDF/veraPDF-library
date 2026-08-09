@@ -28,9 +28,9 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 final class ValidationBatchSummaryImpl extends AbstractBatchJobSummary implements ValidationBatchSummary {
 	static final ValidationBatchSummary DEFAULT = new ValidationBatchSummaryImpl();
 	@XmlAttribute
-	private final int compliant;
+	private int compliant;
 	@XmlAttribute
-	private final int nonCompliant;
+	private int nonCompliant;
 
 	private ValidationBatchSummaryImpl() {
 		this(0, 0, 0);

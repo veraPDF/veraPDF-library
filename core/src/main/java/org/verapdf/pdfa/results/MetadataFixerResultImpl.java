@@ -34,10 +34,10 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 @XmlRootElement(name = "fixerResult")
 public final class MetadataFixerResultImpl implements MetadataFixerResult {
 	@XmlAttribute
-	private final RepairStatus status;
+	private RepairStatus status;
 	@XmlElementWrapper
 	@XmlElement(name = "fix")
-	private final List<String> appliedFixes;
+	private List<String> appliedFixes;
 
 	private MetadataFixerResultImpl() {
 		this(RepairStatus.NO_ACTION, new ArrayList<>());

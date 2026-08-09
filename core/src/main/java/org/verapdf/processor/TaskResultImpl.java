@@ -48,13 +48,13 @@ class TaskResultImpl implements TaskResult {
 	private final VeraPDFException exception;
 
 	@XmlAttribute
-	private final TaskType type;
+	private TaskType type;
 	@XmlAttribute
-	private final boolean isExecuted;
+	private boolean isExecuted;
 	@XmlAttribute
-	private final boolean isSuccess;
+	private boolean isSuccess;
 	@XmlElement
-	private final AuditDuration duration;
+	private AuditDuration duration;
 
 	@XmlElement
 	public String getExceptionMessage() {

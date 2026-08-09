@@ -60,7 +60,7 @@ public class TestAssertionTest {
      */
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(TestAssertionImpl.class).withIgnoredFields("ordinal", "errorArguments").verify();
+        EqualsVerifier.simple().forClass(TestAssertionImpl.class).withIgnoredFields("ordinal", "errorArguments").verify();
     }
 
     /**

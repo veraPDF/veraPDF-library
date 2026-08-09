@@ -37,37 +37,37 @@ public class FeaturesReport {
 	private static final String ERROR_STATUS = "Could not finish features collecting due to unexpected error."; //$NON-NLS-1$
 
 	@XmlElement
-	private final String status;
+	private String status;
 	@XmlElement
-	private final FeaturesNode informationDict;
+	private FeaturesNode informationDict;
 	@XmlElement
-	private final FeaturesNode metadata;
+	private FeaturesNode metadata;
 	@XmlElement
-	private final FeaturesNode documentSecurity;
+	private FeaturesNode documentSecurity;
 	@XmlElement
-	private final FeaturesNode signatures;
+	private FeaturesNode signatures;
 	@XmlElement
-	private final FeaturesNode lowLevelInfo;
+	private FeaturesNode lowLevelInfo;
 	@XmlElement
-	private final FeaturesNode actions;
+	private FeaturesNode actions;
 	@XmlElement
-	private final FeaturesNode interactiveFormFields;
+	private FeaturesNode interactiveFormFields;
 	@XmlElement
-	private final FeaturesNode embeddedFiles;
+	private FeaturesNode embeddedFiles;
 	@XmlElement
-	private final FeaturesNode iccProfiles;
+	private FeaturesNode iccProfiles;
 	@XmlElement
-	private final FeaturesNode outputIntents;
+	private FeaturesNode outputIntents;
 	@XmlElement
-	private final FeaturesNode outlines;
+	private FeaturesNode outlines;
 	@XmlElement
-	private final FeaturesNode annotations;
+	private FeaturesNode annotations;
 	@XmlElement
-	private final FeaturesNode pages;
+	private FeaturesNode pages;
 	@XmlElement
-	private final DocumentResourcesFeatures documentResources;
+	private DocumentResourcesFeatures documentResources;
 	@XmlElement
-	private final FeaturesNode errors;
+	private FeaturesNode errors;
 
 	private FeaturesReport(FeaturesNode informationDict, FeaturesNode metadata,
 						   FeaturesNode documentSecurity, FeaturesNode signatures,

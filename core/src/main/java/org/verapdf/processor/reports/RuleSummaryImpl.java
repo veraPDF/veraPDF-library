@@ -42,26 +42,26 @@ import java.util.*;
 final class RuleSummaryImpl implements RuleSummary {
 	private final Status ruleStatus;
 	@XmlAttribute
-	private final String specification;
+	private String specification;
 	@XmlAttribute
-	private final String clause;
+	private String clause;
 	@XmlAttribute
-	private final int testNumber;
+	private int testNumber;
 	@XmlAttribute
-	private final String status;
-	private final Integer passedChecks;
+	private String status;
+	private Integer passedChecks;
 	@XmlAttribute(name="deviations")
-	private final int failedChecks;
+	private int failedChecks;
 	@XmlAttribute
-	private final String tags;
+	private String tags;
 	@XmlElement
-	private final String description;
+	private String description;
 	@XmlElement
-	private final String object;
+	private String object;
 	@XmlElement
-	private final String test;
+	private String test;
 	@XmlElement(name = "check")
-	private final List<Check> checks;
+	private List<Check> checks;
 
 	private RuleSummaryImpl(final RuleId ruleId, final Status status, final Integer passedChecks, final int failedChecks,
 			final String tags, final String description, final String object, final String test, final List<Check> checks) {
