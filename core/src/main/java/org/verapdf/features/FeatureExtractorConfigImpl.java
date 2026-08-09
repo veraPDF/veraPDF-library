@@ -36,7 +36,7 @@ final class FeatureExtractorConfigImpl implements FeatureExtractorConfig {
 	private static final FeatureExtractorConfig DEFAULT = new FeatureExtractorConfigImpl(EnumSet.of(FeatureObjectType.INFORMATION_DICTIONARY));
 	@XmlElementWrapper(name="enabledFeatures")
 	@XmlElement(name="feature")
-	private final EnumSet<FeatureObjectType> enabledFeatures;
+	private EnumSet<FeatureObjectType> enabledFeatures;
 
 	private FeatureExtractorConfigImpl() {
 		this(EnumSet.noneOf(FeatureObjectType.class));

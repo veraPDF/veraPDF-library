@@ -55,7 +55,7 @@ public class ReleaseDetailsTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(ReleaseDetails.class).verify();
+		EqualsVerifier.simple().forClass(ReleaseDetails.class).verify();
 	}
 
 	/**

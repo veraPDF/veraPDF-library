@@ -40,23 +40,23 @@ import org.verapdf.component.Components;
 final class BatchSummaryImpl implements BatchSummary {
 	private static final BatchSummary DEFAULT = new BatchSummaryImpl();
 	@XmlElement
-	private final ValidationBatchSummary validationReports;
+	private ValidationBatchSummary validationReports;
 	@XmlElement
-	private final FeaturesBatchSummary featureReports;
+	private FeaturesBatchSummary featureReports;
 	@XmlElement
-	private final MetadataRepairBatchSummary repairReports;
+	private MetadataRepairBatchSummary repairReports;
 	@XmlElement
-	private final AuditDuration duration;
+	private AuditDuration duration;
 	@XmlAttribute
-	private final int totalJobs;
+	private int totalJobs;
 	@XmlAttribute
-	private final int failedToParse;
+	private int failedToParse;
 	@XmlAttribute
-	private final int encrypted;
+	private int encrypted;
 	@XmlAttribute
-	private final int outOfMemory;
+	private int outOfMemory;
 	@XmlAttribute
-	private final int veraExceptions;
+	private int veraExceptions;
 
 	private BatchSummaryImpl() {
 		this(Components.defaultDuration(), ValidationBatchSummaryImpl.defaultInstance(),

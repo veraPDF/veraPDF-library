@@ -40,9 +40,9 @@ public final class LogsSummaryImpl implements LogsSummary {
     private static final Logger logger = Logger.getLogger(LogsSummaryImpl.class.getCanonicalName());
     private static final String logBeginning = "[log]";
     @XmlAttribute
-    private final int logsCount;
+    private int logsCount;
     @XmlElement(name = "logMessage")
-    private final Set<Log> logs;
+    private Set<Log> logs;
 
     private LogsSummaryImpl() {
         this(0, Collections.emptySet());

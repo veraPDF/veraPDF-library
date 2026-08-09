@@ -30,9 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Attribute {
 
     @XmlAttribute
-    private final String key;
+    private String key;
     @XmlAttribute
-    private final String value;
+    private String value;
 
     private Attribute(String key, String value) {
         this.key = key;

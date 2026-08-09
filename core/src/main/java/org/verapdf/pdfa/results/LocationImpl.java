@@ -42,9 +42,9 @@ final class LocationImpl implements Location {
     private static final String DEREF_REPL = "\\(";
     private static final Pattern DEREF_PATTERN = Pattern.compile(DEREF_REGEX);
     @XmlElement
-    private final String level;
+    private String level;
     @XmlElement
-    private final String context;
+    private String context;
 
     private LocationImpl() {
         this("level", "context");

@@ -67,7 +67,7 @@ public class VeraAppConfigTest {
     @SuppressWarnings("static-method")
 	@Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(VeraAppConfigImpl.class).verify();
+        EqualsVerifier.simple().forClass(VeraAppConfigImpl.class).verify();
     }
 
 	/**

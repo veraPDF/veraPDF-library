@@ -39,7 +39,7 @@ public class FeatureExtractorConfigTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(FeatureExtractorConfigImpl.class).verify();
+		EqualsVerifier.simple().forClass(FeatureExtractorConfigImpl.class).verify();
 	}
 
 	@Test

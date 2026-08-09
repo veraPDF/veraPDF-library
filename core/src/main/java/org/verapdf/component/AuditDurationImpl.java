@@ -43,9 +43,9 @@ public final class AuditDurationImpl implements AuditDuration {
 	private static final int minInHour = 60;
 
 	@XmlAttribute
-	private final long start;
+	private long start;
 	@XmlAttribute
-	private final long finish;
+	private long finish;
 
 	private AuditDurationImpl() {
 		this(0, 0);
