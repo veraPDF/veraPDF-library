@@ -53,7 +53,7 @@ public class RuleImplTest {
      */
     @Test
     public final void testEqualsObject() {
-        EqualsVerifier.forClass(RuleImpl.class).suppress(Warning.NULL_FIELDS).verify();
+        EqualsVerifier.simple().forClass(RuleImpl.class).suppress(Warning.NULL_FIELDS).verify();
     }
 
     /**

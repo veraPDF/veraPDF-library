@@ -46,17 +46,17 @@ final class ValidationProfileImpl implements ValidationProfile {
     private final Object objectRuleMapAndRuleLookupLock = new Object();
 
     @XmlAttribute
-    private final PDFAFlavour flavour;
+    private PDFAFlavour flavour;
     @XmlElement
-    private final ProfileDetails details;
+    private ProfileDetails details;
     @XmlElement
-    private final String hash;
+    private String hash;
     @XmlElementWrapper
     @XmlElement(name = "rule")
-    private final Set<Rule> rules;
+    private Set<Rule> rules;
     @XmlElementWrapper
     @XmlElement(name = "variable")
-    private final Set<Variable> variables;
+    private Set<Variable> variables;
 
     private ValidationProfileImpl() {
         this(PDFAFlavour.NO_FLAVOUR, ProfileDetailsImpl.defaultInstance(),

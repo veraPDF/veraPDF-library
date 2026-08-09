@@ -42,7 +42,7 @@ public class LocationTest {
      */
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(LocationImpl.class).verify();
+        EqualsVerifier.simple().forClass(LocationImpl.class).verify();
     }
 
     /**

@@ -37,11 +37,11 @@ import org.verapdf.pdfa.flavours.PDFAFlavour.Specification;
 final class RuleIdImpl implements RuleId {
     private static final RuleIdImpl DEFAULT = new RuleIdImpl();
     @XmlAttribute
-    private final Specification specification;
+    private Specification specification;
     @XmlAttribute
-    private final String clause;
+    private String clause;
     @XmlAttribute
-    private final int testNumber;
+    private int testNumber;
 
     private RuleIdImpl() {
         this(Specification.NO_STANDARD, "clause", 0);

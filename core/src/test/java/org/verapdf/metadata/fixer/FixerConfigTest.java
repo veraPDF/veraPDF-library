@@ -47,7 +47,7 @@ public class FixerConfigTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(FixerConfigImpl.class).verify();
+		EqualsVerifier.simple().forClass(FixerConfigImpl.class).verify();
 	}
 
 	/**

@@ -35,6 +35,6 @@ public class MetadataFixerResultTest {
 	 */
 	@Test
 	public final void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(MetadataFixerResultImpl.class).suppress(Warning.NULL_FIELDS).verify();
+		EqualsVerifier.simple().forClass(MetadataFixerResultImpl.class).suppress(Warning.NULL_FIELDS).verify();
 	}
 }

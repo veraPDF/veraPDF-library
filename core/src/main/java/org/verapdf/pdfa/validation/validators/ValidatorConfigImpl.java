@@ -44,21 +44,21 @@ final class ValidatorConfigImpl implements ValidatorConfig {
 	private PDFAFlavour flavour;
 	private PDFAFlavour defaultFlavour;
 	@XmlAttribute
-	private final boolean recordPasses;
+	private boolean recordPasses;
 	@XmlAttribute
-	private final int maxFails;
+	private int maxFails;
 	@XmlAttribute
-	private final boolean debug;
+	private boolean debug;
 	@XmlAttribute
-	private final boolean showErrorMessages;
+	private boolean showErrorMessages;
 	@XmlAttribute
-	private final boolean isLogsEnabled;
+	private boolean isLogsEnabled;
 	@XmlAttribute
-	private final String loggingLevel;
+	private String loggingLevel;
 	@XmlAttribute
-	private final int maxNumberOfDisplayedFailedChecks;
+	private int maxNumberOfDisplayedFailedChecks;
 	@XmlAttribute
-	private final boolean showProgress;
+	private boolean showProgress;
 	private final boolean nonPDFExtension;
 
 	private ValidatorConfigImpl() {

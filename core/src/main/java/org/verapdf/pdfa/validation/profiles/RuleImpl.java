@@ -43,22 +43,22 @@ import java.util.*;
 final class RuleImpl implements Rule {
     private static final RuleImpl DEFAULT = new RuleImpl();
     @XmlElement
-    private final RuleId id;
+    private RuleId id;
     @XmlAttribute
-    private final String object;
+    private String object;
     @XmlAttribute
-    private final Boolean deferred;
+    private Boolean deferred;
     @XmlAttribute
-    private final String tags;
+    private String tags;
     @XmlElement
-    private final String description;
+    private String description;
     @XmlElement
-    private final String test;
+    private String test;
     @XmlElement
-    private final ErrorDetails error;
+    private ErrorDetails error;
     @XmlElementWrapper
     @XmlElement(name = "reference")
-    private final List<Reference> references = new ArrayList<>();
+    private List<Reference> references = new ArrayList<>();
 
     private RuleImpl() {
         this(RuleIdImpl.defaultInstance(), "object", null, null, "description", "test",

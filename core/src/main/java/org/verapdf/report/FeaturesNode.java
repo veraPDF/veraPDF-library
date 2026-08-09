@@ -64,9 +64,9 @@ public class FeaturesNode {
 	private static final int CR = 0xD;
 
 	@XmlAnyAttribute
-	private final Map<QName, Object> attributes;
+	private Map<QName, Object> attributes;
 	@XmlMixed
-	private final List<Object> children;
+	private List<Object> children;
 
 	private FeaturesNode(Map<QName, Object> attributes, List<Object> children) {
 		this.attributes = attributes;

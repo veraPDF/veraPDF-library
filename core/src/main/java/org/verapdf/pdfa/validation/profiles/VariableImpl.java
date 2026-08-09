@@ -42,13 +42,13 @@ import java.util.Objects;
 final class VariableImpl implements Variable {
     private static final VariableImpl DEFAULT = new VariableImpl();
     @XmlAttribute
-    private final String name;
+    private String name;
     @XmlAttribute
-    private final String object;
+    private String object;
     @XmlElement
-    private final String defaultValue;
+    private String defaultValue;
     @XmlElement
-    private final String value;
+    private String value;
 
     private VariableImpl() {
         this("name", "object", "defaultValue", "value");

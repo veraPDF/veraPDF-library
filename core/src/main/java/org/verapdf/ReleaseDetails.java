@@ -57,11 +57,11 @@ public final class ReleaseDetails {
 	private static final Map<String, ReleaseDetails> DETAILS = initDetailsMap();
 
 	@XmlAttribute
-	private final String id;
+	private String id;
 	@XmlAttribute
-	private final String version;
+	private String version;
 	@XmlAttribute
-	private final Date buildDate;
+	private Date buildDate;
 
 	private ReleaseDetails() {
 		this("name", "version", new Date()); //$NON-NLS-1$ //$NON-NLS-2$

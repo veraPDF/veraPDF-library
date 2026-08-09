@@ -40,15 +40,15 @@ class ComponentDetailsImpl implements ComponentDetails {
 	private static final URI defaultId = URI.create("http://component.verapdf.org#default");
 	private static final ComponentDetailsImpl defaultInstance = new ComponentDetailsImpl();
 	@XmlAttribute
-	private final URI id;
+	private URI id;
 	@XmlAttribute
-	private final String name;
+	private String name;
 	@XmlAttribute
-	private final String version;
+	private String version;
 	@XmlElement
-	private final String provider;
+	private String provider;
 	@XmlElement
-	private final String description;
+	private String description;
 
 	private ComponentDetailsImpl() {
 		this(defaultId, "name", "version", "provider", "description");

@@ -35,7 +35,7 @@ public class AuditDurationImplTest {
 	 */
 	@Test
 	public void testHashCodeAndEquals() {
-		EqualsVerifier.forClass(AuditDurationImpl.class).verify();
+		EqualsVerifier.simple().forClass(AuditDurationImpl.class).verify();
 	}
 
 	@Test

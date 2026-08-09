@@ -47,7 +47,7 @@ public class VariableImplTest {
      */
     @Test
     public final void testEqualsObject() {
-        EqualsVerifier.forClass(VariableImpl.class).verify();
+        EqualsVerifier.simple().forClass(VariableImpl.class).verify();
     }
 
     /**

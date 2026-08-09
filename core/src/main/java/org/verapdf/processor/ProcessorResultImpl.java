@@ -48,21 +48,21 @@ import org.verapdf.report.FeaturesReport;
 class ProcessorResultImpl implements ProcessorResult {
 	private static final ProcessorResult defaultInstance = new ProcessorResultImpl();
 	@XmlAttribute
-	private final boolean isPdf;
+	private boolean isPdf;
 	@XmlAttribute
-	private final boolean isEncryptedPdf;
+	private boolean isEncryptedPdf;
 	@XmlAttribute
-	private final boolean isOutOfMemory;
+	private boolean isOutOfMemory;
 	@XmlAttribute
-	private final boolean hasException;
+	private boolean hasException;
 	@XmlElement
-	private final ItemDetails itemDetails;
-	private final EnumMap<TaskType, TaskResult> taskResults;
+	private ItemDetails itemDetails;
+	private EnumMap<TaskType, TaskResult> taskResults;
 	@XmlElement
-	private final List<ValidationResult> validationResults;
-	private final FeatureExtractionResult featuresResult;
+	private List<ValidationResult> validationResults;
+	private FeatureExtractionResult featuresResult;
 	@XmlElement
-	private final MetadataFixerResult fixerResult;
+	private MetadataFixerResult fixerResult;
 
 	private ProcessorResultImpl() {
 		this(ItemDetails.defaultInstance(), TaskResultImpl.defaultInstance());

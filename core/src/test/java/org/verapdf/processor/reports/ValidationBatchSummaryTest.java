@@ -45,9 +45,9 @@ public class ValidationBatchSummaryTest {
 
     @Test
     public final void testHashCodeAndEquals() {
-        EqualsVerifier.forClass(ValidationBatchSummaryImpl.class).verify();
-        EqualsVerifier.forClass(FeaturesBatchSummary.class).verify();
-        EqualsVerifier.forClass(MetadataRepairBatchSummary.class).verify();
+        EqualsVerifier.simple().forClass(ValidationBatchSummaryImpl.class).verify();
+        EqualsVerifier.simple().forClass(FeaturesBatchSummary.class).verify();
+        EqualsVerifier.simple().forClass(MetadataRepairBatchSummary.class).verify();
     }
 
     /**

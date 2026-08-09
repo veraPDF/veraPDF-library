@@ -43,18 +43,18 @@ import java.util.*;
 final class ValidationDetailsImpl implements ValidationDetails {
 	private static final ValidationDetailsImpl defaultInstance = new ValidationDetailsImpl();
 	@XmlAttribute
-	private final int passedRules;
+	private int passedRules;
 	@XmlAttribute
-	private final int failedRules;
+	private int failedRules;
 	@XmlAttribute
-	private final int passedChecks;
+	private int passedChecks;
 	@XmlAttribute
-	private final int failedChecks;
+	private int failedChecks;
 
 	private final Set<String> tags;
 
 	@XmlElement(name = "rule")
-	private final Set<RuleSummary> ruleSummaries;
+	private Set<RuleSummary> ruleSummaries;
 
 	private ValidationDetailsImpl() {
 		this(0, 0, 0, 0, Collections.emptySet(), null);

@@ -26,11 +26,11 @@ import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 final class LogImpl implements Log {
     @XmlAttribute
-    private final int occurrences;
+    private int occurrences;
     @XmlAttribute
-    private final String level;
+    private String level;
     @XmlValue
-    private final String message;
+    private String message;
 
     private LogImpl(final int occurrences, String level, final String message) {
         this.occurrences = occurrences;

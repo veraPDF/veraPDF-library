@@ -43,15 +43,15 @@ import org.verapdf.pdfa.results.MetadataFixerResult;
 @XmlRootElement(name = "metadataRepairReport")
 final class FixerReportImpl implements MetadataFixerReport {
 	@XmlAttribute
-	private final String status;
+	private String status;
 	@XmlAttribute
-	private final int fixCount;
+	private int fixCount;
 	@XmlElementWrapper(name="fixes")
 	@XmlElement(name="fix")
-	private final List<String> fixes;
+	private List<String> fixes;
 	@XmlElementWrapper(name="errors")
 	@XmlElement(name="error")
-	private final List<String> errors;
+	private List<String> errors;
 
 	private FixerReportImpl(final String status, final int fixCount, final List<String> fixes,
 			final List<String> errors) {
