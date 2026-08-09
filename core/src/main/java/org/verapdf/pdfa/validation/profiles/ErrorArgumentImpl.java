@@ -33,9 +33,9 @@ import java.util.Objects;
 public final class ErrorArgumentImpl implements ErrorArgument {
     private static final ErrorArgumentImpl DEFAULT = new ErrorArgumentImpl();
     @XmlValue
-    private final String argument;
+    private String argument;
     @XmlAttribute(name = "name")
-    private final String name;
+    private String name;
     private final String argumentValue;
 
     private ErrorArgumentImpl() {

@@ -41,9 +41,9 @@ import java.util.Objects;
 final class ReferenceImpl implements Reference {
     private static final ReferenceImpl DEFAULT = new ReferenceImpl();
     @XmlAttribute
-    private final String specification;
+    private String specification;
     @XmlAttribute
-    private final String clause;
+    private String clause;
     
     private ReferenceImpl() {
         this("specification", "clause");

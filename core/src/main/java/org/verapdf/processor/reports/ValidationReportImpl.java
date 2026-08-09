@@ -39,15 +39,15 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
 final class ValidationReportImpl implements ValidationReport {
 	private static final ValidationReportImpl defaultInstance = new ValidationReportImpl();
 	@XmlElement
-	private final ValidationDetails details;
+	private ValidationDetails details;
 	@XmlAttribute
-	private final String jobEndStatus;
+	private String jobEndStatus;
 	@XmlAttribute
-	private final String profileName;
+	private String profileName;
 	@XmlAttribute
-	private final String statement;
+	private String statement;
 	@XmlAttribute
-	private final boolean isCompliant;
+	private boolean isCompliant;
 
 	private ValidationReportImpl() {
 		this(ValidationDetailsImpl.defaultInstance(), "Unknown Profile", "Statement", //$NON-NLS-1$ //$NON-NLS-2$
