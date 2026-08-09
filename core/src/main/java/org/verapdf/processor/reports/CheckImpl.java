@@ -46,14 +46,14 @@ import java.util.stream.Collectors;
 
 final class CheckImpl implements Check {
 	@XmlAttribute
-	private final String status;
+	private String status;
 	@XmlElement
-	private final String location;
+	private String location;
 	@XmlElement
-	private final String context;
+	private String context;
 	@XmlElement
-	private final String errorMessage;
-	private final List<String> errorArguments;
+	private String errorMessage;
+	private List<String> errorArguments;
 
 	private CheckImpl(final TestAssertion.Status status, final String context, final String location,
 	                  final String errorMessage, final List<String> errorArguments) {

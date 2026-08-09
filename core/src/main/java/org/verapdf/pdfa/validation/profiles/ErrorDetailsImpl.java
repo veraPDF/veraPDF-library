@@ -38,10 +38,10 @@ import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 final class ErrorDetailsImpl implements ErrorDetails {
     private static final ErrorDetailsImpl DEFAULT = new ErrorDetailsImpl();
     @XmlElement
-    private final String message;
+    private String message;
     @XmlElementWrapper
     @XmlElement(name = "argument")
-    private final List<ErrorArgument> arguments;
+    private List<ErrorArgument> arguments;
 
     private ErrorDetailsImpl() {
         this("message", Collections.emptyList());

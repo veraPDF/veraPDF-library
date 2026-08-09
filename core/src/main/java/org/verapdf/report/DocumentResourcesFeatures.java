@@ -31,19 +31,19 @@ import jakarta.xml.bind.annotation.XmlElement;
 public class DocumentResourcesFeatures {
 
 	@XmlElement
-	private final FeaturesNode graphicsStates;
+	private FeaturesNode graphicsStates;
 	@XmlElement
-	private final FeaturesNode colorSpaces;
+	private FeaturesNode colorSpaces;
 	@XmlElement
-	private final FeaturesNode patterns;
+	private FeaturesNode patterns;
 	@XmlElement
-	private final FeaturesNode shadings;
+	private FeaturesNode shadings;
 	@XmlElement
-	private final FeaturesNode xobjects;
+	private FeaturesNode xobjects;
 	@XmlElement
-	private final FeaturesNode fonts;
+	private FeaturesNode fonts;
 	@XmlElement
-	private final FeaturesNode propertiesDicts;
+	private FeaturesNode propertiesDicts;
 
 	private DocumentResourcesFeatures(FeaturesNode propertiesDicts, FeaturesNode fonts, FeaturesNode xobjects, FeaturesNode shadings, FeaturesNode patterns, FeaturesNode colorSpaces, FeaturesNode graphicsStates) {
 		this.propertiesDicts = propertiesDicts;

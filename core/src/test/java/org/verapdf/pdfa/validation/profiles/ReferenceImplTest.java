@@ -42,7 +42,7 @@ public class ReferenceImplTest {
 	 */
 	@Test
 	public final void testEqualsObject() {
-		EqualsVerifier.forClass(ReferenceImpl.class).verify();
+		EqualsVerifier.simple().forClass(ReferenceImpl.class).verify();
 	}
 
 	/**

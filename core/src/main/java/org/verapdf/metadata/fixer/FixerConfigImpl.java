@@ -33,7 +33,7 @@ final class FixerConfigImpl implements MetadataFixerConfig {
 	public static final String DEFAULT_PREFIX = "veraFixMd_";  //$NON-NLS-1$
 	private static final MetadataFixerConfig defaultInstance = new FixerConfigImpl();
 	@XmlAttribute
-	private final String fixesPrefix;
+	private String fixesPrefix;
 
 	private FixerConfigImpl() {
 		this(DEFAULT_PREFIX); //$NON-NLS-1$
