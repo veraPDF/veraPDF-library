@@ -25,9 +25,9 @@ import javax.xml.bind.annotation.XmlValue;
 
 public abstract class AbstractBatchJobSummary implements BatchJobSummary {
 	@XmlValue
-	protected final int totalJobs;
+	protected int totalJobs;
 	@XmlAttribute
-	protected final int failedJobs;
+	protected int failedJobs;
 
 	protected AbstractBatchJobSummary() {
 		this(0, 0);

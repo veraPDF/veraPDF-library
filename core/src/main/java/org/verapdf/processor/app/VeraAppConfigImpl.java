@@ -50,17 +50,17 @@ import org.verapdf.processor.FormatOption;
 public final class VeraAppConfigImpl implements VeraAppConfig {
 	private static final VeraAppConfig defaultInstance = AppConfigBuilder.defaultBuilder().build();
 	@XmlAttribute
-	private final ProcessType type;
+	private ProcessType type;
 	@XmlAttribute
-	private final FormatOption format;
+	private FormatOption format;
 	@XmlAttribute
-	private final boolean isVerbose;
+	private boolean isVerbose;
 	@XmlElement
-	private final String fixerFolder;
+	private String fixerFolder;
 	@XmlElement
-	private final String wikiPath;
+	private String wikiPath;
 	@XmlElement
-	private final String policyFile;
+	private String policyFile;
 
 	VeraAppConfigImpl() {
 		this(defaultInstance.getProcessType(), defaultInstance.getFixesFolder(),

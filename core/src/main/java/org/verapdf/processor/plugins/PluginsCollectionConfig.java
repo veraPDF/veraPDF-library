@@ -39,7 +39,7 @@ import java.util.List;
 public final class PluginsCollectionConfig {
 
 	@XmlElement(name = "plugin")
-	private final List<PluginConfig> plugin;
+	private List<PluginConfig> plugin;
 
 	public PluginsCollectionConfig() {
 		this(Collections.emptyList());

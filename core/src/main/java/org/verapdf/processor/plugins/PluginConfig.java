@@ -35,18 +35,18 @@ import java.util.List;
 public class PluginConfig {
 
 	@XmlAttribute
-	private final boolean enabled;
+	private boolean enabled;
 	@XmlElement
-	private final String name;
+	private String name;
 	@XmlElement
-	private final String version;
+	private String version;
 	@XmlElement
-	private final String description;
+	private String description;
 	@XmlElement
-	private final String pluginJar;
+	private String pluginJar;
 	@XmlElement(name="attribute")
 	@XmlElementWrapper(name = "attributes")
-	private final List<Attribute> attributes;
+	private List<Attribute> attributes;
 
 	private PluginConfig(boolean enabled, String name, String version, String description, String pluginJar, List<Attribute> attributes) {
 		this.enabled = enabled;

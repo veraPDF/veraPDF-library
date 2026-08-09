@@ -43,19 +43,19 @@ import java.util.Objects;
 final class TestAssertionImpl implements TestAssertion {
     private static final TestAssertionImpl DEFAULT = new TestAssertionImpl();
     @XmlAttribute
-    private final int ordinal;
+    private int ordinal;
     @XmlElement
-    private final RuleId ruleId;
+    private RuleId ruleId;
     @XmlAttribute
-    private final Status status;
+    private Status status;
     @XmlElement
-    private final String message;
+    private String message;
     @XmlElement
-    private final Location location;
+    private Location location;
     @XmlElement
-    private final String locationContext;
+    private String locationContext;
     @XmlElement
-    private final String errorMessage;
+    private String errorMessage;
 
     private final List<ErrorArgument> errorArguments;
 
