@@ -72,6 +72,7 @@ public abstract class AbstractXmlReportWriter extends ReportWriter {
 			this.writer.flush();
 
 		} catch (XMLStreamException e) {
+            LOGGER.log(Level.SEVERE, "Can't write end document");
 		}
 	}
 
