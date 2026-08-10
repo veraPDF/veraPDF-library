@@ -48,7 +48,7 @@ public class AXLPDFUAIdentification extends AXLXMPObject implements PDFUAIdentif
             Integer part = this.metadata.getPDFUAIdentificationPart();
             return part == null ? null : part.longValue();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get PDF/UA identification part", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/UA identification part");
             return null;
         }
     }
@@ -58,7 +58,7 @@ public class AXLPDFUAIdentification extends AXLXMPObject implements PDFUAIdentif
         try {
             return this.metadata.getPDFUARevisionYear();
         } catch (XMPException e) {
-            LOGGER.log(Level.FINE, "Can not get PDF/UA identification revision year", e);
+            LOGGER.log(Level.FINE, "Can not get PDF/UA identification revision year");
             return null;
         }
     }

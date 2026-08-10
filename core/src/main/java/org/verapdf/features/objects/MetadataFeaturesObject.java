@@ -77,7 +77,7 @@ public class MetadataFeaturesObject extends FeaturesObject {
 		try (InputStream stream = metadataAdapter.getData()) {
 			CreateNodeHelper.parseMetadata(stream, "xmpPackage", root, this);
 		} catch (IOException e) {
-			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
+			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream");
 			registerNewError(e.getMessage());
 		}
 		return root;

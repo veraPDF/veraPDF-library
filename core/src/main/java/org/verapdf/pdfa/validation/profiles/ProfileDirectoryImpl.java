@@ -33,6 +33,8 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jakarta.xml.bind.JAXBException;
 
 import org.verapdf.core.Directory;
@@ -45,6 +47,8 @@ import org.verapdf.pdfa.flavours.PDFFlavours;
  *
  */
 final class ProfileDirectoryImpl implements ProfileDirectory {
+    private static final Logger LOGGER = Logger.getLogger(ProfileDirectoryImpl.class.getCanonicalName());
+
     private static final String PROFILE_RESOURCE_ROOT = "org/verapdf/pdfa/validation/";
     private static final String XML_SUFFIX = ".xml";
     private static final ProfileDirectoryImpl DEFAULT = makeVeraProfileDir();
@@ -160,7 +164,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
                 if (is != null)
                     profiles.add(Profiles.profileFromXml(is));
             } catch (JAXBException | IOException e) {
-                e.printStackTrace();
+                LOGGER.log(Level.WARNING, "Error reading " + profilePath);
             }
         }
         return ProfileDirectoryImpl.fromProfileSet(profiles);

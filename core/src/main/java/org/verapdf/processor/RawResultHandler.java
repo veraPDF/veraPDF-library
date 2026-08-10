@@ -79,7 +79,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 			this.writer.writeStartElement(rawEleName);
 			this.serializeElement(procConfig, configEleName, this.format, this.fragment);
 		} catch (XMLStreamException excep) {
-			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage), excep);
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage));
 			throw wrapStreamException(excep, rawEleName);
 		}
 	}
@@ -152,7 +152,7 @@ final class RawResultHandler extends AbstractXmlHandler {
 			this.writer.flush();
 			endDoc(this.writer);
 		} catch (XMLStreamException excep) {
-			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage), excep);
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage));
 			throw wrapStreamException(excep, rawEleName);
 		}
 		this.close();

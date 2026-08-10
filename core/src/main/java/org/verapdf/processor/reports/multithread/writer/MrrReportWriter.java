@@ -57,7 +57,7 @@ public class MrrReportWriter extends AbstractXmlReportWriter {
 			deleteTemp(result);
 
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Can't write element", e);
+			LOGGER.log(Level.SEVERE, "Can't write element");
 		}
 	}
 
@@ -71,7 +71,7 @@ public class MrrReportWriter extends AbstractXmlReportWriter {
 		try {
 			writer.writeEndElement();
 		} catch (XMLStreamException e) {
-			LOGGER.log(Level.SEVERE, "Can't write end element", e);
+			LOGGER.log(Level.SEVERE, "Can't write end element");
 		}
 	}
 

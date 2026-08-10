@@ -133,7 +133,7 @@ public class FeaturesNode {
 					qChildren.add(metadata);
 				} catch (SAXException | IOException
 						| ParserConfigurationException e) {
-					LOGGER.log(Level.INFO, e.getMessage(), e);
+					LOGGER.log(Level.INFO, e.getMessage());
 					String errorId = ErrorsHelper.addErrorIntoCollection(collection, null, e.getMessage());
 					qAttributes.put(new QName(ErrorsHelper.ERRORID), errorId);
 				}

@@ -107,7 +107,7 @@ public final class ImageFeaturesData extends FeaturesData {
 			try {
 				this.metadata.close();
 			} catch (IOException e) {
-				LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+				LOGGER.log(Level.FINE, "Exception during metadata closing");
 			}
 		}
 
@@ -183,7 +183,7 @@ public final class ImageFeaturesData extends FeaturesData {
 				try {
 					this.stream.close();
 				} catch (IOException e) {
-					LOGGER.log(Level.FINE, "Exception during filter closing", e);
+					LOGGER.log(Level.FINE, "Exception during filter closing");
 				}
 			}
 		}
