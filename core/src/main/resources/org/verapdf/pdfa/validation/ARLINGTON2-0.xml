@@ -4601,10 +4601,10 @@
 		</rule>
 		<rule object="AAFFileSpecification">
 			<id specification="ISO_32000_2_0" clause="AFFileSpecification-Desc" testNumber="8"/>
-			<description>Entry Desc in AFFileSpecification shall have type String</description>
-			<test>containsDesc == false || DescHasTypeString == true</test>
+			<description>Entry Desc in AFFileSpecification shall have type StringText</description>
+			<test>containsDesc == false || DescHasTypeStringText == true</test>
 			<error>
-				<message>Entry Desc in AFFileSpecification has type %1 instead of type String</message>
+				<message>Entry Desc in AFFileSpecification has type %1 instead of type StringText</message>
 				<arguments>
 					<argument>DescType</argument>
 				</arguments>
@@ -52629,10 +52629,10 @@
 		</rule>
 		<rule object="AFileSpecification">
 			<id specification="ISO_32000_2_0" clause="FileSpecification-Desc" testNumber="8"/>
-			<description>Entry Desc in FileSpecification shall have type String</description>
-			<test>containsDesc == false || DescHasTypeString == true</test>
+			<description>Entry Desc in FileSpecification shall have type StringText</description>
+			<test>containsDesc == false || DescHasTypeStringText == true</test>
 			<error>
-				<message>Entry Desc in FileSpecification has type %1 instead of type String</message>
+				<message>Entry Desc in FileSpecification has type %1 instead of type StringText</message>
 				<arguments>
 					<argument>DescType</argument>
 				</arguments>
