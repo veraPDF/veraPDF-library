@@ -93,7 +93,7 @@ public class ReportParserEventHandler extends DefaultHandler {
                 writer.writeAttribute(attributes.getQName(i), attributes.getValue(i));
             }
         } catch (XMLStreamException e) {
-            LOGGER.log(Level.SEVERE, "Can't write the element", e);
+            LOGGER.log(Level.SEVERE, "Can't write the element");
         }
     }
 
@@ -119,7 +119,7 @@ public class ReportParserEventHandler extends DefaultHandler {
 
             writer.writeEndElement();
         } catch (XMLStreamException e) {
-            LOGGER.log(Level.SEVERE, "Can't write the element", e);
+            LOGGER.log(Level.SEVERE, "Can't write the element");
         }
     }
 
@@ -134,13 +134,13 @@ public class ReportParserEventHandler extends DefaultHandler {
                     try {
                         writer.writeAttribute(attribute, valueOf(attributesAndValues.get(attribute)));
                     } catch (XMLStreamException e) {
-                        LOGGER.log(Level.SEVERE, "Can't write the element", e);
+                        LOGGER.log(Level.SEVERE, "Can't write the element");
                     }
                 });
                 writer.writeCharacters(valueOf(sum));
                 writer.writeEndElement();
             } catch (XMLStreamException e) {
-                LOGGER.log(Level.SEVERE, "Can't write the element", e);
+                LOGGER.log(Level.SEVERE, "Can't write the element");
             }
         });
 
@@ -165,7 +165,7 @@ public class ReportParserEventHandler extends DefaultHandler {
             try {
                 writer.writeAttribute(attribute, valueOf(value));
             } catch (XMLStreamException e) {
-                LOGGER.log(Level.SEVERE, "Can't write the element", e);
+                LOGGER.log(Level.SEVERE, "Can't write the element");
             }
         });
     }
@@ -176,7 +176,7 @@ public class ReportParserEventHandler extends DefaultHandler {
             try {
                 writer.writeEndElement();
             } catch (XMLStreamException e) {
-                LOGGER.log(Level.SEVERE, "Can't write the element", e);
+                LOGGER.log(Level.SEVERE, "Can't write the element");
             }
         }
         if (element.equals(qName)) {
@@ -190,7 +190,7 @@ public class ReportParserEventHandler extends DefaultHandler {
             try {
                 writer.writeCharacters(new String(ch, start, length));
             } catch (XMLStreamException e) {
-                LOGGER.log(Level.SEVERE, "Can't write the element", e);
+                LOGGER.log(Level.SEVERE, "Can't write the element");
             }
         }
     }

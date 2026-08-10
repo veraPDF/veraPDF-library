@@ -70,10 +70,10 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 			XmlSerialiser.toXml(obj, this.writer, format, fragment);
 			this.writer.flush();
 		} catch (JAXBException excep) {
-			logger.log(Level.WARNING, String.format(unmarshalErrMessage, eleName), excep);
+			logger.log(Level.WARNING, String.format(unmarshalErrMessage, eleName));
 			throw wrapMarshallException(excep, eleName);
 		} catch (XMLStreamException excep) {
-			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage), excep);
+			logger.log(Level.WARNING, String.format(strmExcpMessTmpl, writingMessage));
 			throw wrapStreamException(excep, eleName);
 		}
 	}
@@ -84,7 +84,7 @@ public abstract class AbstractXmlHandler extends AbstractBatchHandler {
 			this.writer.flush();
 			this.writer.close();
 		} catch (XMLStreamException excep) {
-			logger.log(Level.INFO, String.format(strmExcpMessTmpl, "closing"), excep); //$NON-NLS-1$
+			logger.log(Level.INFO, String.format(strmExcpMessTmpl, "closing")); //$NON-NLS-1$
 		}
 	}
 

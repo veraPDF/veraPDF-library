@@ -125,7 +125,7 @@ public class LowLvlInfoFeaturesObject extends FeaturesObject {
 				double catalogValue = Double.parseDouble(catalogVersion);
 				res = Math.max(res, catalogValue);
 			} catch (NumberFormatException e) {
-				LOGGER.log(Level.FINE, "Problems in obtaining pdf version number from the catalog", e);
+				LOGGER.log(Level.FINE, "Problems in obtaining pdf version number from the catalog");
 			}
 		}
 		return CreateNodeHelper.formatDouble(res, 1);

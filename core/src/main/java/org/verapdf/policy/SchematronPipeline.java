@@ -115,7 +115,7 @@ final class SchematronPipeline {
 				try {
 					inputStream = new FileInputStream(file);
 				} catch (FileNotFoundException e) {
-					LOGGER.log(Level.SEVERE, "File not found but exists", e);
+					LOGGER.log(Level.SEVERE, "File not found but exists");
 					inputStream = new ByteArrayInputStream(new byte[0]);
 				}
 			} else {

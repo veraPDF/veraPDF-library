@@ -118,7 +118,7 @@ public class FeaturesReporter {
 							objData.close();
 						}
 					} catch (IOException e) {
-						LOGGER.log(Level.FINE, "Exception in features data", e);
+						LOGGER.log(Level.FINE, "Exception in features data");
 					}
 				}
 			}
