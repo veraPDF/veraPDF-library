@@ -51,7 +51,7 @@ public class XPathTypeValidator implements TypeValidator {
             xpath.compile(node.getValue());
             return true;
         } catch (XPathExpressionException e) {
-            LOGGER.log(Level.FINE, "Node value: " + node.getValue() + " is not a valid XPath", e);
+            LOGGER.log(Level.FINE, "Node value: " + node.getValue() + " is not a valid XPath");
             return false;
         }
     }

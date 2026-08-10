@@ -90,7 +90,7 @@ public final class ErrorsHelper {
 			// This exception occurs when wrong node creates for feature tree.
 			// The logic of the method guarantees this doesn't occur.
 			String message = "FeatureTreeNode root instance logic failure";
-			LOGGER.log(Level.SEVERE, message, exception);
+			LOGGER.log(Level.SEVERE, message);
 			throw new IllegalStateException(message, exception);
 		}
 	}

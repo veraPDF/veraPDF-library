@@ -60,7 +60,7 @@ public class RawReportWriter extends AbstractXmlReportWriter {
 			deleteTemp(result);
 
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Can't printTag element", e);
+			LOGGER.log(Level.SEVERE, "Can't printTag element");
 		}
 	}
 

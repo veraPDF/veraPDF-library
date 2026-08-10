@@ -238,7 +238,7 @@ public final class FontFeaturesData extends FeaturesData {
 			try {
 				this.metadata.close();
 			} catch (IOException e) {
-				LOGGER.log(Level.FINE, "Exception during metadata closing", e);
+				LOGGER.log(Level.FINE, "Exception during metadata closing");
 			}
 		}
 		super.close();

@@ -229,7 +229,7 @@ public final class ReleaseDetails {
 				 * Safe to ignore this exception as release simply set to new
 				 * date.
 				 */
-				LOGGER.log(Level.FINEST, "No parsable release date found, setting release date to:" + date, e); //$NON-NLS-1$
+				LOGGER.log(Level.FINEST, "No parsable release date found, setting release date to:" + date); //$NON-NLS-1$
 			}
 		}
 		return new ReleaseDetails(id, release, date);

@@ -58,7 +58,7 @@ public abstract class ReportWriter {
 					return null;
 			}
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Can't create new ReportWriter instance", e);
+			LOGGER.log(Level.SEVERE, "Can't create new ReportWriter instance");
 			return null;
 		}
 	}
@@ -77,7 +77,7 @@ public abstract class ReportWriter {
 			}
 			destination.flush();
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Can't read from report file", e);
+			LOGGER.log(Level.SEVERE, "Can't read from report file");
 		}
 	}
 

@@ -331,7 +331,7 @@ public class FontFeaturesObject extends FeaturesObject {
 			try (InputStream metadata = descriptor.getMetadataStream()) {
 				CreateNodeHelper.parseMetadata(metadata, "embeddedFileMetadata", descriptorNode, this);
 			} catch (IOException e) {
-				LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
+				LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream");
 				registerNewError(e.getMessage());
 			}
 		}

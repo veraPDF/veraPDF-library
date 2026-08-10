@@ -95,7 +95,7 @@ public class ICCProfileFeaturesObject extends FeaturesObject {
 		try (InputStream is = ipAdapter.getMetadataStream()) {
 			CreateNodeHelper.parseMetadata(is, "metadata", root, this);
 		} catch (IOException e) {
-			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream", e);
+			LOGGER.log(Level.FINE, "Error while obtaining unfiltered metadata stream");
 			registerNewError(e.getMessage());
 		}
 		return root;

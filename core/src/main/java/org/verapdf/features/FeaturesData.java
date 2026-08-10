@@ -59,7 +59,7 @@ public class FeaturesData implements Closeable {
 			try {
 				this.stream.close();
 			} catch (IOException e) {
-				LOGGER.log(Level.FINE, "Exception during stream closing", e);
+				LOGGER.log(Level.FINE, "Exception during stream closing");
 			}
 		}
 	}
