@@ -33,7 +33,7 @@ public class X509CertificateImpl {
         try {
             parse(value);
         } catch (IOException e) {
-            throw new CertificateException("Error while initializing certificate. ");
+            throw new CertificateException("Error while initializing certificate. ", e);
         }
     }
 
