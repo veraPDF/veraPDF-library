@@ -186,7 +186,7 @@ public class BaseValidator implements PDFAValidator {
 			this.idSet.add(root.getID());
 		}
 
-		while (!this.objectsStack.isEmpty() && !this.abortProcessing) {
+		while (!isAbortProcessing() && !this.objectsStack.isEmpty()) {
 			checkNext();
 			this.validationProgress.incrementNumberOfProcessedObjects();
 			this.validationProgress.updateNumberOfObjectsToBeProcessed(objectsStack.size());
@@ -195,9 +195,11 @@ public class BaseValidator implements PDFAValidator {
 		for (FlavourValidator validator : validators) {
 			for (Map.Entry<Rule, List<ObjectWithContext>> entry : validator.getDeferredRules().entrySet()) {
 				for (ObjectWithContext objectWithContext : entry.getValue()) {
-					checkObjWithRule(validator, objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
+					if (!isAbortProcessing()) {
+						checkObjWithRule(validator, objectWithContext.getObject(), objectWithContext.getContext(), entry.getKey());
+					}
 				}
-			}			
+			}
 		}
 
 		this.validationProgress.showProgressAfterValidation();
@@ -210,6 +212,13 @@ public class BaseValidator implements PDFAValidator {
 					validator.testCounter, this.jobEndStatus));
 		}
 		return results;
+	}
+	
+	private boolean isAbortProcessing() {
+		if (!abortProcessing && Thread.currentThread().isInterrupted()) {
+			cancelValidation(JobEndStatus.CANCELLED);
+		}
+		return abortProcessing;
 	}
 
 	protected void initialise() {
@@ -377,7 +386,7 @@ public class BaseValidator implements PDFAValidator {
 
 	protected void processAssertionResult(FlavourValidator flavourValidator, final boolean assertionResult, final String locationContext,
 										  final Rule rule, final Object obj) {
-		if (!this.abortProcessing) {
+		if (!isAbortProcessing()) {
 			flavourValidator.testCounter++;
 			if (flavourValidator.isCompliant) {
 				flavourValidator.isCompliant = assertionResult;
