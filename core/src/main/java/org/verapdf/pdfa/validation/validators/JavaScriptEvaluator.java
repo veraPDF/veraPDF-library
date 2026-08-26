@@ -177,4 +177,10 @@ public class JavaScriptEvaluator {
 	public static void exitContext() {
 		Context.exit();
 	}
+
+    public static void clearScripts() {
+        ruleScripts.set(new HashMap<>());
+        argumentScripts.set(new HashMap<>());
+        variableScripts.set(new HashMap<>());
+    }
 }
