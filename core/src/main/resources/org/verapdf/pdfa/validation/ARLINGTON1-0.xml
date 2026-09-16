@@ -1288,12 +1288,12 @@
 		</rule>
 		<rule object="ADocInfo">
 			<id specification="PDF_1_0" clause="DocInfo" testNumber="1"/>
-			<description>DocInfo shall not contain entries except Author, CreationDate, Creator, Producer and 2nd/3rd class names</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != '*' &amp;&amp; elem != 'Author' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'Creator' &amp;&amp; elem != 'Keywords' &amp;&amp; elem != 'ModDate' &amp;&amp; elem != 'Producer' &amp;&amp; elem != 'Subject' &amp;&amp; elem != 'Title' &amp;&amp; elem != 'Trapped' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>DocInfo shall not contain entries except AAPL:Keywords, Author, CreationDate, Creator, GTS_PDFXVersion, Producer and 2nd/3rd class names</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != '*' &amp;&amp; elem != 'AAPL:Keywords' &amp;&amp; elem != 'Author' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'Creator' &amp;&amp; elem != 'GTS_PDFXVersion' &amp;&amp; elem != 'Keywords' &amp;&amp; elem != 'ModDate' &amp;&amp; elem != 'Producer' &amp;&amp; elem != 'Subject' &amp;&amp; elem != 'Title' &amp;&amp; elem != 'Trapped' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>DocInfo contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != '*' &amp;&amp; elem != 'Author' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'Creator' &amp;&amp; elem != 'Keywords' &amp;&amp; elem != 'ModDate' &amp;&amp; elem != 'Producer' &amp;&amp; elem != 'Subject' &amp;&amp; elem != 'Title' &amp;&amp; elem != 'Trapped' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != '*' &amp;&amp; elem != 'AAPL:Keywords' &amp;&amp; elem != 'Author' &amp;&amp; elem != 'CreationDate' &amp;&amp; elem != 'Creator' &amp;&amp; elem != 'GTS_PDFXVersion' &amp;&amp; elem != 'Keywords' &amp;&amp; elem != 'ModDate' &amp;&amp; elem != 'Producer' &amp;&amp; elem != 'Subject' &amp;&amp; elem != 'Title' &amp;&amp; elem != 'Trapped' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -1307,6 +1307,28 @@
 				<arguments>
 					<argument>keysString.split('&amp;').filter(elem =&gt; elem == '*' || elem == 'Keywords' || elem == 'ModDate' || elem == 'Subject' || elem == 'Title' || elem == 'Trapped').toString()</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocInfo">
+			<id specification="PDF_1_0" clause="DocInfo-AAPL:Keywords" testNumber="8"/>
+			<description>Entry AAPL:Keywords in DocInfo shall have type Array</description>
+			<test>containsAAPLKeywords == false || AAPLKeywordsHasTypeArray == true</test>
+			<error>
+				<message>Entry AAPL:Keywords in DocInfo has type %1 instead of type Array</message>
+				<arguments>
+					<argument>AAPLKeywordsType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocInfo">
+			<id specification="PDF_1_0" clause="DocInfo-AAPL:Keywords" testNumber="23"/>
+			<description>Entry AAPL:Keywords in DocInfo can only be present, if the predicate fn:Extension(AAPL) is satisfied</description>
+			<test>containsAAPLKeywords == false || hasExtensionAAPL == true</test>
+			<error>
+				<message>Entry AAPL:Keywords in DocInfo is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
@@ -1343,6 +1365,28 @@
 				<arguments>
 					<argument>CreatorType</argument>
 				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocInfo">
+			<id specification="PDF_1_0" clause="DocInfo-GTS_PDFXVersion" testNumber="8"/>
+			<description>Entry GTS_PDFXVersion in DocInfo shall have type StringText</description>
+			<test>containsGTS_PDFXVersion == false || GTS_PDFXVersionHasTypeStringText == true</test>
+			<error>
+				<message>Entry GTS_PDFXVersion in DocInfo has type %1 instead of type StringText</message>
+				<arguments>
+					<argument>GTS_PDFXVersionType</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="ADocInfo">
+			<id specification="PDF_1_0" clause="DocInfo-GTS_PDFXVersion" testNumber="23"/>
+			<description>Entry GTS_PDFXVersion in DocInfo can only be present, if the predicate fn:Extension(PDF_X) is satisfied</description>
+			<test>containsGTS_PDFXVersion == false || hasExtensionPDF_X == true</test>
+			<error>
+				<message>Entry GTS_PDFXVersion in DocInfo is present</message>
+				<arguments/>
 			</error>
 			<references/>
 		</rule>
