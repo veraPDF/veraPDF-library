@@ -41,5 +41,6 @@ public enum ExtensionObjectType {
 	Malforms,
 	OpenOffice,
 	PDF_VT2,
+	PDF_X,
 	WTPDF
 }
