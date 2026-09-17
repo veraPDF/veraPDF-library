@@ -70,7 +70,9 @@ public class LogsFileHandler extends FileHandler {
                 return filePath;
             }
         }
-        logFilePaths.add(Files.createTempFile("logs" + getPID(), SUFFIX).toString());
+        String fileName = Files.createTempFile("logs" + getPID(), SUFFIX).toString();
+        new File(fileName).deleteOnExit();
+        logFilePaths.add(fileName);
         return logFilePaths.get(logFilePaths.size() - 1);
     }
 
