@@ -6,6 +6,21 @@
     </details>
     <hash></hash>
     <rules>
+        <rule object="PDDocument" tags="syntax">
+            <id specification="WTPDF_1_0" clause="6.1" testNumber="1"/>
+            <description>The file version shall be 2.0, specified either in the header or as the value of the Version entry in the document's catalog dictionary</description>
+            <test>pdfVersion == '2.0'</test>
+            <error>
+                <message>The file version is not 2.0 (pdf header = %1, Version from catalog = %2)</message>
+                <arguments>
+                    <argument>header</argument>
+                    <argument>Version</argument>
+                </arguments>
+            </error>
+            <references>
+                <reference specification="ISO 32000-2:2020" clause="7.5.2"/>
+            </references>
+        </rule>
         <rule object="MainXMPPackage" tags="metadata">
             <id specification="WTPDF_1_0" clause="6.1.3" testNumber="1"/>
             <description>File conforming to the WTPDF 1.0 conformance level for accessibility shall include a PDF Declaration with the URI identifier "http://pdfa.org/declarations/wtpdf#accessibility1.0" as its pdfd:conformsTo entry</description>
