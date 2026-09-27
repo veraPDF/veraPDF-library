@@ -251,7 +251,7 @@
             <description>Table element may contain only TR, THead, TBody, TFoot and Caption elements</description>
             <test>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR' &amp;&amp; elem != 'THead' &amp;&amp; elem != 'TBody' &amp;&amp; elem != 'TFoot' &amp;&amp; elem != 'Caption').length == 0 || kidsStandardTypes == ''</test>
             <error>
-                <message>Table element contains %1 element(s) instead of TR, THead, TBode, TFoot or Caption</message>
+                <message>Table element contains %1 element(s) instead of TR, THead, TBody, TFoot or Caption</message>
                 <arguments>
                     <argument>kidsStandardTypes.split('&amp;').filter(elem =&gt; elem != 'TR' &amp;&amp; elem != 'THead'
                         &amp;&amp; elem != 'TBody' &amp;&amp; elem != 'TFoot' &amp;&amp; elem != 'Caption').toString()</argument>
