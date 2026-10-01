@@ -235,7 +235,7 @@
         <rule object="PDLinkAnnot" tags="annotation,structure">
             <id specification="WTPDF_1_0" clause="8.2.5.20" testNumber="1"/>
             <description>When used as real content, a link annotation and its associated content shall be enclosed in either a Link or Reference structure element</description>
-            <test>structParentStandardType == 'Link' || structParentStandardType == 'Reference' || (structParentType == null &amp;&amp; entries.split('&amp;').filter(elem =&gt; elem == 'StructParent').length == 0) || isArtifact == true</test>
+            <test>structParentStandardType == 'Link' || structParentStandardType == 'Reference' || structParentType == null || isArtifact == true</test>
             <error>
                 <message>A Link annotation is nested within %1 tag (standard type = %2) instead of Link or Reference</message>
                 <arguments>
