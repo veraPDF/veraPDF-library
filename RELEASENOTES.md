@@ -1,3 +1,39 @@
+Version 1.30.3 (October 7, 2026)
+=================================
+
+### Security
+- fixed excessive resource consumption caused by recursive validation of nested embedded files ([GHSA-q2xp-cmwp-7cjh](https://github.com/veraPDF/veraPDF-validation/security/advisories/GHSA-q2xp-cmwp-7cjh); commits [1](https://github.com/veraPDF/veraPDF-validation/commit/d9f49545d7949ce18f51ba09691e0591e4f20cff) [2](https://github.com/veraPDF/veraPDF-validation/commit/5b9960eaa881fcbc6ceb0bc877f21e5845365a88))
+- fixed XML parser configuration that prevented security settings from being applied, restoring protection against XML external entity attacks ([GHSA-5gvp-6g43-g47v](https://github.com/veraPDF/veraPDF-library/security/advisories/GHSA-5gvp-6g43-g47v); [commit](https://github.com/veraPDF/veraPDF-library/commit/4b2e07dd2b85ef9fb9fb7eb03e22685b84be14b8))
+- fixed potential excessive memory allocation when parsing CFF font INDEX structures with a corrupted data size or offset size ([GHSA-fg6c-v27x-ffpx](https://github.com/veraPDF/veraPDF-parser/security/advisories/GHSA-fg6c-v27x-ffpx); [commit](https://github.com/veraPDF/veraPDF-parser/commit/4f0c08e5a6aae1344d24a46fa1168f5ce37cbcdc))
+- fixed potential stack overflow and excessive resource consumption caused by deeply nested procedures in Type 4 functions ([GHSA-3pqj-5xfj-xrh9](https://github.com/veraPDF/veraPDF-parser/security/advisories/GHSA-3pqj-5xfj-xrh9); [commit](https://github.com/veraPDF/veraPDF-parser/commit/4ba3042f0e548b30e8ecc2b2cacae80fadb4a77b))
+
+### Validation
+- (PDF/UA-2, WTPDF-1) added a rule requiring PDF version 2.0 ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/bf09279dbc9b3f2879134b2c85670a2613955a92))
+- (PDF/UA-2, WTPDF-1) improved descriptions for rules 8.2.5.20-1 and 8.9.2.3-1 ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/f6dec3ae5232400f14c576609ffa84c0d885dae7))
+- (PDF/UA-2, WTPDF-1) corrected the error message for rule 8.2.5.20-2 (commits [1](https://github.com/veraPDF/veraPDF-validation-profiles/commit/0da6ee4ea63a7efbebeaf8a6ff3b058cced31336) [2](https://github.com/veraPDF/veraPDF-validation/commit/67ff34fb0369868d83a820f8d32ff5ac55db3830))
+- (PDF/UA-2, WTPDF-1) fixed an infinite loop when determining whether an annotation is an Artifact in a document with circular structure-element parent references ([commit](https://github.com/veraPDF/veraPDF-validation/commit/d1a397437ec8a91fd54b36ee361fc4a0616473e4))
+- (PDF/UA-1) restored the PDF 1.7 algorithm for determining table header scope in place of the PDF 2.0 algorithm ([commit](https://github.com/veraPDF/veraPDF-validation/commit/6998f6ecc9863aa702f410064d3ed5e0ea0425eb))
+- (PDF/A-4) fixed detection of undefined resources when a page has no Resources entry (commits [1](https://github.com/veraPDF/veraPDF-parser/commit/9a5525a84ed3f75bd26e76352777b13649f15aa7) [2](https://github.com/veraPDF/veraPDF-validation/commit/5121a287a99dc15509cbc1b974aec9957be973b5))
+- (PDF/A-4) fixed handling of Resources dictionaries in individual Type3 CharProc streams ([commit](https://github.com/veraPDF/veraPDF-validation/commit/2293b248c46e243c46e33006615d71f0a3be7ba0))
+
+### Core library
+- fixed JAXB compatibility issues caused by reflective modification of final fields ([commit](https://github.com/veraPDF/veraPDF-library/commit/093031d1741fa9805c325f5f0bf0c31c4b3c6723))
+- added `JavaScriptEvaluator.clearScripts()` to clear the current thread's cached scripts and allow associated Rhino classloaders to be reclaimed ([commit](https://github.com/veraPDF/veraPDF-library/commit/8a81a292043a0eeb7892f982d77804e4eadd311a))
+- added support for cancelling validation through thread interruption ([commit](https://github.com/veraPDF/veraPDF-library/commit/0247f25567eaf4bdbf02b603953d6ed5a3b73ff0))
+- fixed cleanup of temporary log files ([commit](https://github.com/veraPDF/veraPDF-library/commit/60f8f1dc236adb536c3a935488cd6a56a650c941))
+
+### PDF Parser
+- fixed parsing of CFF fonts when FontMatrix immediately follows ROS in the Top DICT ([commit](https://github.com/veraPDF/veraPDF-parser/commit/957f8b8d589119ef2b94481cea16ea90dc020cca))
+- fixed decryption of documents with R=4 and V=4 when the encryption dictionary has no Length entry ([commit](https://github.com/veraPDF/veraPDF-parser/commit/4d1484e138f2547d4232d196f1f0650c1f58fcb5))
+- fixed AES-256 revision 6 password hashing that could incorrectly reject valid passwords ([commit](https://github.com/veraPDF/veraPDF-parser/commit/40ba1b376cb985bb759b79394be1ef96eb44ee8a))
+- fixed cleanup of object streams during saveAs ([commit](https://github.com/veraPDF/veraPDF-parser/commit/b2ed039395b2c7618130b77c26d7437deef265a4))
+- added configuration of the temporary-file directory and in-memory buffer size ([commit](https://github.com/veraPDF/veraPDF-parser/commit/b0ab310868f29f11499210f8012c8e56ef2666aa))
+- added an optional size limit for streams written to temporary files ([commit](https://github.com/veraPDF/veraPDF-parser/commit/0470691c3f866942f901b0661fdf9967fb213bb7))
+- added an optional limit on the number of indirect objects in a document ([commit](https://github.com/veraPDF/veraPDF-parser/commit/6225623b49b39e66b87353a378f26eb3d26d5bc0))
+- added methods to clear and limit the dynamic PDF-name cache ([commit](https://github.com/veraPDF/veraPDF-parser/commit/3a03b010bb7f9df721e71f2696360888c157676b))
+- removed incorrect log messages about missing TrueType cmap tables and invalid use of ICCBased color spaces (commits [1](https://github.com/veraPDF/veraPDF-parser/commit/9c358090763cb1e61a58f207b611a8a184d8ca57) [2](https://github.com/veraPDF/veraPDF-parser/commit/d7ded0ea74b9a9246e4168e6fdd8c694e33df852) [3](https://github.com/veraPDF/veraPDF-validation/commit/8ca1b80ec71cdda77e2877deda0a705e31e9b745))
+- added logging for invalid hexadecimal strings in content streams ([commit](https://github.com/veraPDF/veraPDF-validation/commit/6d58ed61f582c0bd77e4078cf39990afd46e4c45))
+
 Version 1.30.2 (June 3, 2026)
 =================================
 
