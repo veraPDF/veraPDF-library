@@ -164,7 +164,7 @@ final class ProfileDirectoryImpl implements ProfileDirectory {
                 if (is != null)
                     profiles.add(Profiles.profileFromXml(is));
             } catch (JAXBException | IOException e) {
-                LOGGER.log(Level.WARNING, "Error reading " + profilePath);
+                LOGGER.log(Level.WARNING, "Error during reading profile " + profilePath + ": " + e.getMessage());
             }
         }
         return ProfileDirectoryImpl.fromProfileSet(profiles);
