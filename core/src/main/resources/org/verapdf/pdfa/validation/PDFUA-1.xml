@@ -965,7 +965,7 @@
         <rule object="PDWidgetAnnot" tags="annotation,alt-text">
             <id specification="ISO_14289_1" clause="7.18.1" testNumber="3"/>
             <description>A form field shall have a TU key present or all its Widget annotations shall have alternative descriptions (in the form of an Alt entry in the enclosing structure elements)</description>
-            <test>isOutsideCropBox == true || (F &amp; 2) == 2 || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
+            <test>isOutsideCropBox == true || (F &amp; 2) == 2 || isFieldWidget == false || (TU != null &amp;&amp; TU != '') || (Alt != null &amp;&amp; Alt != '')</test>
             <error>
                 <message>A form field neither has TU key nor its Widget annotations have alternative descriptions (in the form of an Alt entry in the enclosing structure element)</message>
                 <arguments/>
