@@ -1,5 +1,14 @@
-Adobe XMP Toolkit for Java Version 5.1.0
+Adobe XMP Toolkit for Java Version 5.1.3
 ========================================
+
+| yyyy-mm-dd | Description of changes, most recent on top. |
+|-----------|---------------------------------------------|
+|2016-05-05 |Update the xerces dependency and add secure processing features during parsing to avoid exponential entity expansion and xml attacks|
+|2012-03-13 |Change the canonical serialization to use one outer rdf:Description element.|
+|2011-11-24 |Improve iterator for kXMP_IterJustLeafName|
+|2011-01-05 |Change "verbose" serialization form to "canonical" make the compact the default form|
+
+
 
 For information about the Extensible Metadata Platform (XMP), 
 visit the XMP product page on the Adobe website: http://www.adobe.com/xmp.
