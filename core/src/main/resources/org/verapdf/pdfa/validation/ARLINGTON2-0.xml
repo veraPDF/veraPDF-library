@@ -18295,12 +18295,24 @@
 		</rule>
 		<rule object="AAnnotRichMedia">
 			<id specification="ISO_32000_2_0" clause="AnnotRichMedia" testNumber="1"/>
-			<description>AnnotRichMedia shall not contain entries except AF, AP, AS, BM, Border, C, CA, Contents, F, Lang, M, NM, OC, P, Rect, RichMediaContent, RichMediaSettings, StructParent, Subtype, Type, ca and 2nd/3rd class names</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<description>AnnotRichMedia shall not contain entries except 3DU, AF, AP, AS, BM, Border, C, CA, Contents, F, GEO, Lang, M, NM, OC, P, Rect, RichMediaContent, RichMediaSettings, StructParent, Subtype, Type, ca and 2nd/3rd class names</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != '3DU' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'GEO' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotRichMedia contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != '3DU' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'GEO' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+				</arguments>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotRichMedia">
+			<id specification="ISO_32000_2_0" clause="AnnotRichMedia-3DU" testNumber="8"/>
+			<description>Entry 3DU in AnnotRichMedia shall have type Dictionary</description>
+			<test>contains3DU == false || entry3DUHasTypeDictionary == true</test>
+			<error>
+				<message>Entry 3DU in AnnotRichMedia has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>entry3DUType</argument>
 				</arguments>
 			</error>
 			<references/>
@@ -18472,6 +18484,18 @@
 			<error>
 				<message>Entry F with type Bitmask in AnnotRichMedia does not satisfy special case: fn:Eval(fn:BitsClear(11, 32))</message>
 				<arguments/>
+			</error>
+			<references/>
+		</rule>
+		<rule object="AAnnotRichMedia">
+			<id specification="ISO_32000_2_0" clause="AnnotRichMedia-GEO" testNumber="8"/>
+			<description>Entry GEO in AnnotRichMedia shall have type Dictionary</description>
+			<test>containsGEO == false || GEOHasTypeDictionary == true</test>
+			<error>
+				<message>Entry GEO in AnnotRichMedia has type %1 instead of type Dictionary</message>
+				<arguments>
+					<argument>GEOType</argument>
+				</arguments>
 			</error>
 			<references/>
 		</rule>
@@ -64908,10 +64932,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_2_0" clause="ISO_DevExtensions-ExtensionRevision-StringText" testNumber="6"/>
-			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall have one of values: :2022, :2023, 1:2023, :2024</description>
-			<test>ExtensionRevisionHasTypeStringText != true || ExtensionRevisionStringTextValue == ":2022" || ExtensionRevisionStringTextValue == ":2023" || ExtensionRevisionStringTextValue == "1:2023" || ExtensionRevisionStringTextValue == ":2024"</test>
+			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall have one of values: :2022, :2023, 1:2023, :2024, 1:2024</description>
+			<test>ExtensionRevisionHasTypeStringText != true || ExtensionRevisionStringTextValue == ":2022" || ExtensionRevisionStringTextValue == ":2023" || ExtensionRevisionStringTextValue == "1:2023" || ExtensionRevisionStringTextValue == ":2024" || ExtensionRevisionStringTextValue == "1:2024"</test>
 			<error>
-				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions has incorrect value %1 instead of :2022, :2023, 1:2023, :2024</message>
+				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions has incorrect value %1 instead of :2022, :2023, 1:2023, :2024, 1:2024</message>
 				<arguments>
 					<argument>ExtensionRevisionStringTextValue</argument>
 				</arguments>
@@ -64920,10 +64944,10 @@
 		</rule>
 		<rule object="AISO_DevExtensions">
 			<id specification="ISO_32000_2_0" clause="ISO_DevExtensions-ExtensionRevision-StringText" testNumber="9"/>
-			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')) || ((@ExtensionLevel == 32004) &amp;&amp; (@ExtensionRevision == ':2024')))</description>
-			<test>ExtensionRevisionHasTypeStringText != true || (((ExtensionLevelHasTypeInteger == false || ((ExtensionLevelIntegerValue == 32001) || (ExtensionLevelIntegerValue == 32002))) &amp;&amp; (ExtensionRevisionStringTextValue == ":2022")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32003)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 24064)) &amp;&amp; (ExtensionRevisionStringTextValue == "1:2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32004)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2024")))</test>
+			<description>Entry ExtensionRevision with type StringText in ISO_DevExtensions shall satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')) || ((@ExtensionLevel == 32004) &amp;&amp; (@ExtensionRevision == ':2024')) || ((@ExtensionLevel == 32007) &amp;&amp; (@ExtensionRevision == '1:2024')))</description>
+			<test>ExtensionRevisionHasTypeStringText != true || (((ExtensionLevelHasTypeInteger == false || ((ExtensionLevelIntegerValue == 32001) || (ExtensionLevelIntegerValue == 32002))) &amp;&amp; (ExtensionRevisionStringTextValue == ":2022")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32003)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 24064)) &amp;&amp; (ExtensionRevisionStringTextValue == "1:2023")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32004)) &amp;&amp; (ExtensionRevisionStringTextValue == ":2024")) || ((ExtensionLevelHasTypeInteger == false || (ExtensionLevelIntegerValue == 32007)) &amp;&amp; (ExtensionRevisionStringTextValue == "1:2024")))</test>
 			<error>
-				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions does not satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')) || ((@ExtensionLevel == 32004) &amp;&amp; (@ExtensionRevision == ':2024')))</message>
+				<message>Entry ExtensionRevision with type StringText in ISO_DevExtensions does not satisfy special case: fn:Eval((((@ExtensionLevel == 32001) || (@ExtensionLevel == 32002)) &amp;&amp; (@ExtensionRevision == ':2022')) || ((@ExtensionLevel == 32003) &amp;&amp; (@ExtensionRevision == ':2023')) || ((@ExtensionLevel == 24064) &amp;&amp; (@ExtensionRevision == '1:2023')) || ((@ExtensionLevel == 32004) &amp;&amp; (@ExtensionRevision == ':2024')) || ((@ExtensionLevel == 32007) &amp;&amp; (@ExtensionRevision == '1:2024')))</message>
 				<arguments/>
 			</error>
 			<references/>

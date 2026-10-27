@@ -17882,23 +17882,23 @@
 		<rule object="AAnnotRichMedia">
 			<id specification="ISO_32000_1_7" clause="AnnotRichMedia" testNumber="1"/>
 			<description>AnnotRichMedia shall not contain entries except AP, AS, Border, C, Contents, F, M, NM, OC, P, Rect, RichMediaContent, RichMediaSettings, StructParent, Subtype, Type and 2nd/3rd class names</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem != '3DU' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'GEO' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).length == 0</test>
 			<error>
 				<message>AnnotRichMedia contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem != '3DU' &amp;&amp; elem != 'AF' &amp;&amp; elem != 'AP' &amp;&amp; elem != 'AS' &amp;&amp; elem != 'BM' &amp;&amp; elem != 'Border' &amp;&amp; elem != 'C' &amp;&amp; elem != 'CA' &amp;&amp; elem != 'Contents' &amp;&amp; elem != 'F' &amp;&amp; elem != 'GEO' &amp;&amp; elem != 'Lang' &amp;&amp; elem != 'M' &amp;&amp; elem != 'NM' &amp;&amp; elem != 'OC' &amp;&amp; elem != 'P' &amp;&amp; elem != 'Rect' &amp;&amp; elem != 'RichMediaContent' &amp;&amp; elem != 'RichMediaSettings' &amp;&amp; elem != 'StructParent' &amp;&amp; elem != 'Subtype' &amp;&amp; elem != 'Type' &amp;&amp; elem != 'ca' &amp;&amp; /^(XX|(.{4}[_:]))/.test(elem) == false).toString()</argument>
 				</arguments>
 			</error>
 			<references/>
 		</rule>
 		<rule object="AAnnotRichMedia">
 			<id specification="ISO_32000_1_7" clause="AnnotRichMedia" testNumber="22"/>
-			<description>AnnotRichMedia shall not contain entries AF, BM, CA, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
-			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').length == 0</test>
+			<description>AnnotRichMedia shall not contain entries 3DU, AF, BM, CA, GEO, Lang, ca in PDF 1.7. These entries appear in later pdf versions</description>
+			<test>keysString == '' || keysString.split('&amp;').filter(elem =&gt; elem == '3DU' || elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'GEO' || elem == 'Lang' || elem == 'ca').length == 0</test>
 			<error>
 				<message>AnnotRichMedia contains entry(ies) %1</message>
 				<arguments>
-					<argument>keysString.split('&amp;').filter(elem =&gt; elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'Lang' || elem == 'ca').toString()</argument>
+					<argument>keysString.split('&amp;').filter(elem =&gt; elem == '3DU' || elem == 'AF' || elem == 'BM' || elem == 'CA' || elem == 'GEO' || elem == 'Lang' || elem == 'ca').toString()</argument>
 				</arguments>
 			</error>
 			<references/>
