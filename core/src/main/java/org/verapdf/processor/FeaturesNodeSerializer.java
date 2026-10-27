@@ -45,11 +45,12 @@ public class FeaturesNodeSerializer extends StdSerializer<FeaturesNode> {
 			Object child = featuresNode.getChildren().get(0);
 			if (child instanceof JAXBElement) {
 				Object value = (((JAXBElement<?>) child).getValue());
-				if (value instanceof FeaturesNode) {
-					jsonGenerator.writeObject(value);
-				}
+				jsonGenerator.writeObject(value);
 			} else if (child instanceof String) {
 				jsonGenerator.writeObject(child);
+			} else if (child == null) {
+				jsonGenerator.writeStartObject();
+				jsonGenerator.writeEndObject();
 			}
 		} else if ((featuresNode.getAttributes() != null && featuresNode.getAttributes().size() == 1)
 				&& (featuresNode.getChildren() == null || featuresNode.getChildren().isEmpty())) {
