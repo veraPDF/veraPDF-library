@@ -92,6 +92,16 @@ public final class PolicyChecker {
 			final OutputStream mergedReport) throws VeraPDFException {
 		try {
 			Transformer transformer = cachedMergeXsl.newTransformer();
+			transformer.setURIResolver((href, base) -> {
+				try {
+					if (new File(href).getCanonicalFile().equals(policyReport.getCanonicalFile())) {
+						return new StreamSource(policyReport);
+					}
+				} catch (IOException e) {
+					throw new TransformerException("Unable to resolve policy report", e);
+				}
+				throw new TransformerException("External resource access denied: " + href);
+			});
 			transformer.setParameter("policyResultPath", policyReport.getAbsolutePath()); //$NON-NLS-1$
 			transformer.transform(new StreamSource(mrrReport), new StreamResult(mergedReport));
 			return;
@@ -219,8 +229,9 @@ public final class PolicyChecker {
 				null);
 		try {
 			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException e) {
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		} catch (TransformerConfigurationException | IllegalArgumentException e) {
 			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
 		}
 		return fact;

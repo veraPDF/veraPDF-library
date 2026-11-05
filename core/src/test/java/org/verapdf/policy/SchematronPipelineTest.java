@@ -30,10 +30,13 @@ import org.xmlunit.diff.Diff;
 
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 import static org.junit.Assert.*;
 
@@ -64,6 +67,32 @@ public class SchematronPipelineTest {
 				.build();
 		assertFalse(myDiff.toString(), myDiff.hasDifferences());
 		tempResult.delete();
+	}
+
+	@Test
+	public void testSchematronIncludeCannotReadLocalFiles() throws IOException {
+		File included = File.createTempFile("veraPDF", "include"); //$NON-NLS-1$ //$NON-NLS-2$
+		try {
+			String fragment = "<sch:pattern xmlns:sch=\"http://purl.oclc.org/dsdl/schematron\" id=\"p\">" //$NON-NLS-1$
+					+ "<sch:rule context=\"/\"><sch:assert test=\"false()\">LOCAL_INCLUDE_MARKER</sch:assert>" //$NON-NLS-1$
+					+ "</sch:rule></sch:pattern>"; //$NON-NLS-1$
+			try (OutputStream os = new FileOutputStream(included)) {
+				os.write(fragment.getBytes("UTF-8")); //$NON-NLS-1$
+			}
+			String includePath = included.getAbsolutePath().replace('\\', '/').replace("&", "&amp;") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+					.replace("<", "&lt;").replace("\"", "&quot;"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+			String schematron = "<sch:schema xmlns:sch=\"http://purl.oclc.org/dsdl/schematron\">" //$NON-NLS-1$
+					+ "<sch:include href=\"" + includePath + "\"/></sch:schema>"; //$NON-NLS-1$ //$NON-NLS-2$
+			ByteArrayOutputStream result = new ByteArrayOutputStream();
+			try {
+				SchematronPipeline.processSchematron(new ByteArrayInputStream(schematron.getBytes("UTF-8")), result); //$NON-NLS-1$
+			} catch (TransformerException e) {
+				// rejecting the schematron is acceptable
+			}
+			assertFalse(result.toString("UTF-8").contains("LOCAL_INCLUDE_MARKER")); //$NON-NLS-1$ //$NON-NLS-2$
+		} finally {
+			included.delete();
+		}
 	}
 
 }
