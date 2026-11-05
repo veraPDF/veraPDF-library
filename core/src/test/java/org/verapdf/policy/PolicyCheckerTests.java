@@ -105,6 +105,29 @@ public class PolicyCheckerTests {
 	}
 
 	@Test
+	public void testPolicyCannotReadLocalFiles() throws IOException {
+		File secret = File.createTempFile("veraPDF", "secret"); //$NON-NLS-1$ //$NON-NLS-2$
+		try {
+			try (OutputStream os = new FileOutputStream(secret)) {
+				os.write("<secret>LOCAL_XML_CONTENT</secret>".getBytes("UTF-8")); //$NON-NLS-1$ //$NON-NLS-2$
+			}
+			String policy = "<xsl:stylesheet version=\"2.0\" xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\">" //$NON-NLS-1$
+					+ "<xsl:template match=\"/\"><result><xsl:value-of select=\"document('" + secret.toURI().toString().replace("'", "''") //$NON-NLS-1$ //$NON-NLS-2$
+					+ "')/secret\"/></result></xsl:template></xsl:stylesheet>"; //$NON-NLS-1$
+			ByteArrayOutputStream result = new ByteArrayOutputStream();
+			try {
+				PolicyChecker.applyPolicy(new ByteArrayInputStream(policy.getBytes("UTF-8")), //$NON-NLS-1$
+						new ByteArrayInputStream("<report/>".getBytes("UTF-8")), result, true); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			} catch (VeraPDFException e) {
+				// rejecting the policy is acceptable
+			}
+			assertFalse(result.toString("UTF-8").contains("LOCAL_XML_CONTENT")); //$NON-NLS-1$ //$NON-NLS-2$
+		} finally {
+			secret.delete();
+		}
+	}
+
+	@Test
 	public void testInsertPolicyReport() throws IOException, VeraPDFException {
 		File policyReport = File.createTempFile("policyReport", "veraPDF"); //$NON-NLS-1$ //$NON-NLS-2$
 		assertEquals(0, policyReport.length());
