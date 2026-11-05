@@ -94,8 +94,9 @@ final class SchematronPipeline {
 				null);
 		try {
 			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException e) {
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		} catch (TransformerConfigurationException | IllegalArgumentException e) {
 			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
 		}
 		fact.setURIResolver(new ClasspathResourceURIResolver());
@@ -109,17 +110,9 @@ final class SchematronPipeline {
 
 		@Override
 		public Source resolve(String href, String base) throws TransformerException {
-			InputStream inputStream;
-			File file = new File(href);
-			if (file.exists()) {
-				try {
-					inputStream = new FileInputStream(file);
-				} catch (FileNotFoundException e) {
-					LOGGER.log(Level.SEVERE, "File not found but exists", e);
-					inputStream = new ByteArrayInputStream(new byte[0]);
-				}
-			} else {
-				inputStream = cl.getResourceAsStream(resourcePath + href);
+			InputStream inputStream = cl.getResourceAsStream(resourcePath + href);
+			if (inputStream == null) {
+				throw new TransformerException("Unable to resolve classpath resource: " + href);
 			}
 			return new StreamSource(inputStream);
 		}
