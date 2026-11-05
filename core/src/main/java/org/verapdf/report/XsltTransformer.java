@@ -81,8 +81,9 @@ public final class XsltTransformer {
 				null);
 		try {
 			fact.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "file");
-		} catch (TransformerConfigurationException e) {
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_STYLESHEET, "");
+			fact.setAttribute(XMLConstants.ACCESS_EXTERNAL_DTD, "");
+		} catch (TransformerConfigurationException | IllegalArgumentException e) {
 			LOGGER.log(Level.WARNING, "Unable to secure xsl transformer");
 		}
 		return fact;
