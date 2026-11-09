@@ -1,3 +1,26 @@
+Version 1.30.4 (November 9, 2026)
+=================================
+
+### Security
+- fixed a local file disclosure vulnerability that allowed custom XSLT policies to read local XML files through document() ([GHSA-73f4-hgcx-xc59](https://github.com/veraPDF/veraPDF-validation/security/advisories/GHSA-73f4-hgcx-xc59); [commit](https://github.com/veraPDF/veraPDF-library/commit/e74076a68832b024f643a49656a8d245f5884d83))
+
+### Jakarta
+- aligned the Jakarta version with the javax version: changes that were missing in the core-jakarta 1.30.3 are now included
+
+### Docker images
+- added linux/arm64 builds alongside linux/amd64 for the CLI, REST, and Arlington Docker images (commits [1](https://github.com/veraPDF/veraPDF-apps/commit/b1de5f18b0e6760a27d83364dfe395daa1069572) [2](https://github.com/veraPDF/veraPDF-apps/commit/2233f2cea78109c4c9a0801afd3c61a634b007de))
+
+### Validation
+- (PDF/UA-1,2, WTPDF-1) fixed handling of the rule about a missing parent element ([commit](https://github.com/veraPDF/veraPDF-parser/commit/cdbd343b729ec7769db172f72a27fa21450b033b))
+- (PDF/UA-1) fixed rule 7.18.1-3 to apply the alternative-description requirement only to Widget annotations associated with form fields ([commit](https://github.com/veraPDF/veraPDF-validation-profiles/commit/b76c28ff0d8809c30c4d0e64dc6c393f3c9019dc))
+
+### Core library
+- fixed invalid JSON output in feature reports ([commit](https://github.com/veraPDF/veraPDF-library/commit/0ca733012181d0c093e31f0ce65d654a4de3556d))
+- restored the original Adobe XMP Toolkit license and README, added copyright and license notices for veraPDF additions, and prevented veraPDF GPL/MPL headers from being added to XMP source files (commits [1](https://github.com/veraPDF/veraPDF-library/commit/660cb81a70a754ec8b2e78bb37a5176ce9434e9c) [2](https://github.com/veraPDF/veraPDF-library/commit/02b252f57ea308aacbf1485dd167f0598dbf687f) [3](https://github.com/veraPDF/veraPDF-library/commit/36e3b58c57e9447c2828e22fcbb2a223561bc071))
+
+### PDF Parser
+- fixed a race condition that could return a null PDF name when the dynamic name cache was cleared concurrently ([commit](https://github.com/veraPDF/veraPDF-parser/commit/f422c5bbe0a232bf0f617c2a9030e21aa1deed54))
+
 Version 1.30.3 (October 7, 2026)
 =================================
 
