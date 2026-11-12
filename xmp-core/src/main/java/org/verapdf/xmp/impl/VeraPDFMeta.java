@@ -64,6 +64,16 @@ public class VeraPDFMeta {
             if (rootChildren != null) {
                 for (Object schema : rootChildren) {
                     XMPNode xmpSchema = (XMPNode) schema;
+                    String registeredPrefix = XMPMetaFactory.getSchemaRegistry()
+                            .getNamespacePrefix(xmpSchema.getName());
+                    String schemaPrefix = xmpSchema.getValue();
+                    if (registeredPrefix != null && schemaPrefix != null
+                            && !registeredPrefix.equals(schemaPrefix)) {
+                        String normalizedPrefix = schemaPrefix.endsWith(":")
+                                ? schemaPrefix.substring(0, schemaPrefix.length() - 1)
+                                : schemaPrefix;
+                        updateOriginalPrefix(xmpSchema, registeredPrefix, normalizedPrefix);
+                    }
                     addSchema(xmpSchema);
                 }
             }
@@ -233,6 +243,9 @@ public class VeraPDFMeta {
                 ? prefix.substring(0, prefix.length() - 1)
                 : prefix;
         if (normalizedPrefix.isEmpty() || normalizedPrefix.indexOf(':') >= 0 || "xmlns".equals(normalizedPrefix)) {
+            throw new XMPException("Invalid namespace prefix", XMPError.BADXML);
+        }
+        if (!Utils.isXMLNameNS(normalizedPrefix)) {
             throw new XMPException("Invalid namespace prefix", XMPError.BADXML);
         }
         String requestedPrefix = normalizedPrefix + ":";

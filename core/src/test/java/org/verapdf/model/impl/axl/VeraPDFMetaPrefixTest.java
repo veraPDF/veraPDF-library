@@ -22,6 +22,7 @@ package org.verapdf.model.impl.axl;
 
 import org.junit.Test;
 import org.verapdf.xmp.XMPConst;
+import org.verapdf.xmp.XMPError;
 import org.verapdf.xmp.XMPException;
 import org.verapdf.xmp.XMPMetaFactory;
 import org.verapdf.xmp.XMPSchemaRegistry;
@@ -43,6 +44,12 @@ public class VeraPDFMetaPrefixTest {
                     "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">" +
                     "<rdf:Description rdf:about=\"\" xmlns:custom=\"" + XMPConst.NS_PDFUA_ID + "\">" +
                     "<custom:part>1</custom:part><custom:rev>2024</custom:rev>" +
+                    "</rdf:Description></rdf:RDF></x:xmpmeta>";
+    private static final String XMP_PACKET_WITHOUT_REVISION =
+            "<x:xmpmeta xmlns:x=\"adobe:ns:meta/\">" +
+                    "<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\">" +
+                    "<rdf:Description rdf:about=\"\" xmlns:custom=\"" + XMPConst.NS_PDFUA_ID + "\">" +
+                    "<custom:part>1</custom:part>" +
                     "</rdf:Description></rdf:RDF></x:xmpmeta>";
 
     @Test
@@ -116,6 +123,50 @@ public class VeraPDFMetaPrefixTest {
     }
 
     @Test
+    public void setPropertyPrefixNormalizesTrailingColon() throws Exception {
+        VeraPDFMeta metadata = VeraPDFMeta.parse(new ByteArrayInputStream(
+                XMP_PACKET.getBytes(StandardCharsets.UTF_8)));
+
+        metadata.setPropertyPrefix(XMPConst.NS_PDFUA_ID, "part", "uaLocal:");
+
+        assertEquals("uaLocal", metadata.getProperty(XMPConst.NS_PDFUA_ID, "part").getPrefix());
+        assertEquals("uaLocal", metadata.getProperty(XMPConst.NS_PDFUA_ID, "rev").getPrefix());
+    }
+
+    @Test
+    public void setPropertyPrefixRejectsInvalidXmlName() throws Exception {
+        VeraPDFMeta metadata = VeraPDFMeta.parse(new ByteArrayInputStream(
+                XMP_PACKET.getBytes(StandardCharsets.UTF_8)));
+        String oldPrefix = metadata.getProperty(XMPConst.NS_PDFUA_ID, "part").getPrefix();
+
+        try {
+            metadata.setPropertyPrefix(XMPConst.NS_PDFUA_ID, "part", "1invalid");
+            fail("Expected an invalid-prefix exception");
+        } catch (XMPException e) {
+            assertEquals(XMPError.BADXML, e.getErrorCode());
+        }
+
+        assertEquals(oldPrefix, metadata.getProperty(XMPConst.NS_PDFUA_ID, "part").getPrefix());
+    }
+
+    @Test
+    public void setPropertyPrefixRejectsPrefixRegisteredToAnotherNamespace() throws Exception {
+        XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
+        VeraPDFMeta metadata = VeraPDFMeta.parse(new ByteArrayInputStream(
+                XMP_PACKET.getBytes(StandardCharsets.UTF_8)));
+
+        try {
+            metadata.setPropertyPrefix(XMPConst.NS_PDFUA_ID, "part", "rdf");
+            fail("Expected a namespace-prefix conflict");
+        } catch (XMPException e) {
+            assertEquals(XMPError.BADSCHEMA, e.getErrorCode());
+        }
+
+        assertEquals(XMPConst.NS_RDF, registry.getNamespaceURI("rdf"));
+        assertEquals("custom", metadata.getProperty(XMPConst.NS_PDFUA_ID, "part").getPrefix());
+    }
+
+    @Test
     public void setPropertyPrefixRejectsPropertyRemovedFromLiveTree() throws Exception {
         VeraPDFMeta metadata = VeraPDFMeta.parse(new ByteArrayInputStream(
                 XMP_PACKET.getBytes(StandardCharsets.UTF_8)));
@@ -125,8 +176,29 @@ public class VeraPDFMetaPrefixTest {
             metadata.setPropertyPrefix(XMPConst.NS_PDFUA_ID, "part", "uaLocal");
             fail("Expected a missing-property exception");
         } catch (XMPException e) {
-            assertEquals(org.verapdf.xmp.XMPError.BADXPATH, e.getErrorCode());
+            assertEquals(XMPError.BADXPATH, e.getErrorCode());
         }
+    }
+
+    @Test
+    public void propertiesAddedAfterPrefixChangeUseChangedPrefix() throws Exception {
+        VeraPDFMeta metadata = VeraPDFMeta.parse(new ByteArrayInputStream(
+                XMP_PACKET_WITHOUT_REVISION.getBytes(StandardCharsets.UTF_8)));
+
+        metadata.setPropertyPrefix(XMPConst.NS_PDFUA_ID, "part", "uaLocal");
+        metadata.setIdentificationRevisionYear(XMPConst.NS_PDFUA_ID, "2026");
+
+        assertEquals("uaLocal", metadata.getProperty(XMPConst.NS_PDFUA_ID, "rev").getPrefix());
+        assertEquals("2026", metadata.getPDFUARevisionYear());
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        VeraPDFMeta.serialize(metadata, output);
+        String serialized = new String(output.toByteArray(), StandardCharsets.UTF_8);
+        assertTrue(serialized.contains("xmlns:uaLocal=\"" + XMPConst.NS_PDFUA_ID + "\""));
+        assertTrue(serialized.contains("uaLocal:rev"));
+        VeraPDFMeta reparsed = VeraPDFMeta.parse(new ByteArrayInputStream(output.toByteArray()));
+        assertEquals("2026", reparsed.getPDFUARevisionYear());
+        assertEquals("uaLocal", reparsed.getProperty(XMPConst.NS_PDFUA_ID, "rev").getPrefix());
     }
 
     @Test
@@ -136,6 +208,7 @@ public class VeraPDFMetaPrefixTest {
 
         metadata.setPropertyPrefix(XMPConst.NS_PDFA_EXTENSION, "schemas", "extensionLocal");
 
+        assertEquals("extensionLocal", metadata.getExtensionSchemasNode().getPrefix());
         ByteArrayOutputStream output = new ByteArrayOutputStream();
         VeraPDFMeta.serialize(metadata, output);
         String serialized = new String(output.toByteArray(), StandardCharsets.UTF_8);
