@@ -103,6 +103,10 @@ public class XMPNode implements Comparable
 		return this.originalPrefix;
 	}
 
+	void setOriginalPrefix(String originalPrefix) {
+		this.originalPrefix = originalPrefix;
+	}
+
 
 	/**
 	 * Resets the node.
