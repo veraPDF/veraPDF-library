@@ -122,7 +122,69 @@ public class VeraPDFMeta {
     }
 
     public static void serialize(VeraPDFMeta veraPDFMeta, OutputStream out) throws XMPException {
-        XMPMetaFactory.serialize(veraPDFMeta.meta, out, new SerializeOptions().setUseCanonicalFormat(true));
+        XMPMetaFactory.serialize(getMetadataForSerialization(veraPDFMeta.meta), out,
+                new SerializeOptions().setUseCanonicalFormat(true));
+    }
+
+    private static XMPMetaImpl getMetadataForSerialization(XMPMetaImpl metadata) {
+        XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
+        XMPNode root = metadata.getRoot();
+        List schemas = root.getUnmodifiableChildren();
+        boolean hasCustomPrefix = false;
+        if (schemas != null) {
+            for (Object schema : schemas) {
+                XMPNode schemaNode = (XMPNode) schema;
+                String registeredPrefix = registry.getNamespacePrefix(schemaNode.getName());
+                if (registeredPrefix != null && !registeredPrefix.equals(schemaNode.getValue())) {
+                    hasCustomPrefix = true;
+                    break;
+                }
+            }
+        }
+        if (!hasCustomPrefix) {
+            return metadata;
+        }
+
+        XMPMetaImpl serializedMetadata = (XMPMetaImpl) metadata.clone();
+        serializedMetadata.setPacketHeader(metadata.getPacketHeader());
+        List serializedSchemas = serializedMetadata.getRoot().getUnmodifiableChildren();
+        if (serializedSchemas != null) {
+            for (Object schema : serializedSchemas) {
+                XMPNode schemaNode = (XMPNode) schema;
+                String registeredPrefix = registry.getNamespacePrefix(schemaNode.getName());
+                String requestedPrefix = schemaNode.getValue();
+                if (registeredPrefix != null && requestedPrefix != null
+                        && !registeredPrefix.equals(requestedPrefix)) {
+                    renamePrefix(schemaNode, registeredPrefix, requestedPrefix);
+                }
+            }
+        }
+        return serializedMetadata;
+    }
+
+    private static void renamePrefix(XMPNode node, String oldPrefix, String newPrefix) {
+        String oldQNamePrefix = oldPrefix.endsWith(":") ? oldPrefix : oldPrefix + ":";
+        String newQNamePrefix = newPrefix.endsWith(":") ? newPrefix : newPrefix + ":";
+        List children = node.getUnmodifiableChildren();
+        if (children != null) {
+            for (Object child : children) {
+                XMPNode childNode = (XMPNode) child;
+                renameNodePrefix(childNode, oldQNamePrefix, newQNamePrefix);
+                renamePrefix(childNode, oldQNamePrefix, newQNamePrefix);
+            }
+        }
+        for (Iterator qualifiers = node.iterateQualifier(); qualifiers.hasNext();) {
+            XMPNode qualifier = (XMPNode) qualifiers.next();
+            renameNodePrefix(qualifier, oldQNamePrefix, newQNamePrefix);
+            renamePrefix(qualifier, oldQNamePrefix, newQNamePrefix);
+        }
+    }
+
+    private static void renameNodePrefix(XMPNode node, String oldPrefix, String newPrefix) {
+        String name = node.getName();
+        if (name != null && name.startsWith(oldPrefix)) {
+            node.setName(newPrefix + name.substring(oldPrefix.length()));
+        }
     }
 
     public List<VeraPDFXMPNode> getProperties() {
@@ -175,14 +237,13 @@ public class VeraPDFMeta {
         }
         String requestedPrefix = normalizedPrefix + ":";
 
-        VeraPDFXMPNode property = getProperty(namespaceURI, propertyName);
-        if (property == null) {
+        XMPNode schemaNode = findSchemaNode(namespaceURI);
+        XMPNode propertyNode = findSchemaProperty(schemaNode, propertyName);
+        if (propertyNode == null) {
             throw new XMPException("Property " + propertyName + " does not exist in namespace " + namespaceURI,
                     XMPError.BADXPATH);
         }
 
-        XMPNode propertyNode = property.getOriginalNode();
-        XMPNode schemaNode = propertyNode.getParent();
         if (schemaNode == null || !schemaNode.getOptions().isSchemaNode()
                 || !namespaceURI.equals(schemaNode.getName())) {
             throw new XMPException("Property " + propertyName + " is not in namespace " + namespaceURI,
@@ -191,44 +252,78 @@ public class VeraPDFMeta {
 
         XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
         String existingPrefix = registry.getNamespacePrefix(namespaceURI);
-        String registeredNamespace = registry.getNamespaceURI(requestedPrefix);
+        String registeredNamespace = registry.getNamespaceURI(normalizedPrefix);
         if (registeredNamespace != null && !namespaceURI.equals(registeredNamespace)) {
             throw new XMPException("Prefix " + normalizedPrefix + " is already registered for another namespace",
                     XMPError.BADSCHEMA);
         }
-        if (registeredNamespace != null && !requestedPrefix.equals(existingPrefix)) {
-            throw new XMPException("Prefix " + normalizedPrefix + " is already registered",
-                    XMPError.BADSCHEMA);
-        }
-
-        String registeredPrefix = registry.registerNamespace(namespaceURI, normalizedPrefix, false);
-        if (!requestedPrefix.equals(registeredPrefix)) {
-            registry.deleteNamespace(namespaceURI);
-            registeredPrefix = registry.registerNamespace(namespaceURI, normalizedPrefix, false);
-            if (!requestedPrefix.equals(registeredPrefix)) {
-                registry.deleteNamespace(namespaceURI);
-                if (existingPrefix != null) {
-                    registry.registerNamespace(namespaceURI, existingPrefix, false);
+        List schemas = this.meta.getRoot().getUnmodifiableChildren();
+        if (schemas != null) {
+            for (Object schema : schemas) {
+                XMPNode otherSchema = (XMPNode) schema;
+                if (otherSchema != schemaNode && requestedPrefix.equals(otherSchema.getValue())) {
+                    throw new XMPException("Prefix " + normalizedPrefix + " is already used by another namespace",
+                            XMPError.BADSCHEMA);
                 }
-                throw new XMPException("Could not register prefix " + normalizedPrefix + " for namespace "
-                        + namespaceURI, XMPError.BADSCHEMA);
             }
         }
 
         schemaNode.setValue(requestedPrefix);
-        List children = schemaNode.getUnmodifiableChildren();
-        if (children != null) {
-            for (Object child : children) {
-                XMPNode childNode = (XMPNode) child;
-                String childName = childNode.getName();
-                int prefixEndIndex = childName.indexOf(':');
-                childNode.setName(requestedPrefix + childName.substring(prefixEndIndex + 1));
-                childNode.setOriginalPrefix(normalizedPrefix);
-            }
-        }
+        updateOriginalPrefix(schemaNode, existingPrefix, normalizedPrefix);
 
         update();
         return this;
+    }
+
+    private XMPNode findSchemaNode(String namespaceURI) {
+        List schemas = this.meta.getRoot().getUnmodifiableChildren();
+        if (schemas != null) {
+            for (Object schema : schemas) {
+                XMPNode schemaNode = (XMPNode) schema;
+                if (schemaNode.getOptions().isSchemaNode() && namespaceURI.equals(schemaNode.getName())) {
+                    return schemaNode;
+                }
+            }
+        }
+        return null;
+    }
+
+    private static XMPNode findSchemaProperty(XMPNode schemaNode, String propertyName) {
+        if (schemaNode == null || schemaNode.getUnmodifiableChildren() == null) {
+            return null;
+        }
+        for (Object child : schemaNode.getUnmodifiableChildren()) {
+            XMPNode property = (XMPNode) child;
+            String name = property.getName();
+            int prefixEndIndex = name.indexOf(':');
+            String localName = name.substring(prefixEndIndex + 1);
+            if (propertyName.equals(localName)) {
+                return property;
+            }
+        }
+        return null;
+    }
+
+    private static void updateOriginalPrefix(XMPNode node, String oldPrefix, String newPrefix) {
+        if (oldPrefix != null) {
+            renameOriginalPrefix(node, oldPrefix.endsWith(":") ? oldPrefix : oldPrefix + ":", newPrefix);
+        }
+    }
+
+    private static void renameOriginalPrefix(XMPNode node, String prefix, String newPrefix) {
+        String name = node.getName();
+        if (name != null && name.startsWith(prefix)) {
+            node.setOriginalPrefix(newPrefix);
+        }
+        List children = node.getUnmodifiableChildren();
+        if (children != null) {
+            for (Object child : children) {
+                renameOriginalPrefix((XMPNode) child, prefix, newPrefix);
+            }
+        }
+        for (Iterator qualifiers = node.iterateQualifier(); qualifiers.hasNext();) {
+            renameOriginalPrefix((XMPNode) qualifiers.next(), prefix, newPrefix);
+        }
     }
 
     public boolean deletePDFAIdentificationSchema() {
