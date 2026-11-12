@@ -154,6 +154,83 @@ public class VeraPDFMeta {
         return null;
     }
 
+    /**
+     * Sets the namespace prefix for the given property. Because XMP stores a single prefix per
+     * schema, this also updates all top-level properties in the namespace.
+     *
+     * @param namespaceURI the namespace URI containing the property
+     * @param propertyName the property name
+     * @param prefix the namespace prefix, with or without a trailing colon
+     */
+    public VeraPDFMeta setPropertyPrefix(String namespaceURI, String propertyName, String prefix) throws XMPException {
+        ParameterAsserts.assertSchemaNS(namespaceURI);
+        ParameterAsserts.assertPropName(propertyName);
+        ParameterAsserts.assertPrefix(prefix);
+
+        String normalizedPrefix = prefix.endsWith(":")
+                ? prefix.substring(0, prefix.length() - 1)
+                : prefix;
+        if (normalizedPrefix.isEmpty() || normalizedPrefix.indexOf(':') >= 0 || "xmlns".equals(normalizedPrefix)) {
+            throw new XMPException("Invalid namespace prefix", XMPError.BADXML);
+        }
+        String requestedPrefix = normalizedPrefix + ":";
+
+        VeraPDFXMPNode property = getProperty(namespaceURI, propertyName);
+        if (property == null) {
+            throw new XMPException("Property " + propertyName + " does not exist in namespace " + namespaceURI,
+                    XMPError.BADXPATH);
+        }
+
+        XMPNode propertyNode = property.getOriginalNode();
+        XMPNode schemaNode = propertyNode.getParent();
+        if (schemaNode == null || !schemaNode.getOptions().isSchemaNode()
+                || !namespaceURI.equals(schemaNode.getName())) {
+            throw new XMPException("Property " + propertyName + " is not in namespace " + namespaceURI,
+                    XMPError.BADSCHEMA);
+        }
+
+        XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
+        String existingPrefix = registry.getNamespacePrefix(namespaceURI);
+        String registeredNamespace = registry.getNamespaceURI(requestedPrefix);
+        if (registeredNamespace != null && !namespaceURI.equals(registeredNamespace)) {
+            throw new XMPException("Prefix " + normalizedPrefix + " is already registered for another namespace",
+                    XMPError.BADSCHEMA);
+        }
+        if (registeredNamespace != null && !requestedPrefix.equals(existingPrefix)) {
+            throw new XMPException("Prefix " + normalizedPrefix + " is already registered",
+                    XMPError.BADSCHEMA);
+        }
+
+        String registeredPrefix = registry.registerNamespace(namespaceURI, normalizedPrefix, false);
+        if (!requestedPrefix.equals(registeredPrefix)) {
+            registry.deleteNamespace(namespaceURI);
+            registeredPrefix = registry.registerNamespace(namespaceURI, normalizedPrefix, false);
+            if (!requestedPrefix.equals(registeredPrefix)) {
+                registry.deleteNamespace(namespaceURI);
+                if (existingPrefix != null) {
+                    registry.registerNamespace(namespaceURI, existingPrefix, false);
+                }
+                throw new XMPException("Could not register prefix " + normalizedPrefix + " for namespace "
+                        + namespaceURI, XMPError.BADSCHEMA);
+            }
+        }
+
+        schemaNode.setValue(requestedPrefix);
+        List children = schemaNode.getUnmodifiableChildren();
+        if (children != null) {
+            for (Object child : children) {
+                XMPNode childNode = (XMPNode) child;
+                String childName = childNode.getName();
+                int prefixEndIndex = childName.indexOf(':');
+                childNode.setName(requestedPrefix + childName.substring(prefixEndIndex + 1));
+                childNode.setOriginalPrefix(normalizedPrefix);
+            }
+        }
+
+        update();
+        return this;
+    }
+
     public boolean deletePDFAIdentificationSchema() {
         return deleteSchema(XMPSchemaRegistryImpl.NS_PDFA_ID);
     }
