@@ -202,6 +202,27 @@ public class VeraPDFMetaPrefixTest {
     }
 
     @Test
+    public void cloneWithChangedPrefixSerializesWithConsistentNamespaceDeclarations() throws Exception {
+        VeraPDFMeta metadata = VeraPDFMeta.parse(new ByteArrayInputStream(
+                XMP_PACKET.getBytes(StandardCharsets.UTF_8)));
+        String registeredPrefix = XMPMetaFactory.getSchemaRegistry()
+                .getNamespacePrefix(XMPConst.NS_PDFUA_ID);
+
+        metadata.setPropertyPrefix(XMPConst.NS_PDFUA_ID, "part", "uaLocal");
+
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        XMPMetaFactory.serialize(metadata.getCloneOfInitialMeta(), output);
+        String serialized = new String(output.toByteArray(), StandardCharsets.UTF_8);
+        String registeredPrefixName = registeredPrefix.substring(0, registeredPrefix.length() - 1);
+        assertTrue(serialized.contains("xmlns:" + registeredPrefixName + "=\"" + XMPConst.NS_PDFUA_ID + "\""));
+        assertTrue(serialized.contains(registeredPrefix + "part"));
+        assertFalse(serialized.contains("xmlns:uaLocal=\"" + XMPConst.NS_PDFUA_ID + "\""));
+
+        VeraPDFMeta reparsed = VeraPDFMeta.parse(new ByteArrayInputStream(output.toByteArray()));
+        assertEquals(Integer.valueOf(1), reparsed.getPDFUAIdentificationPart());
+    }
+
+    @Test
     public void setPropertyPrefixSupportsPdfaExtensionSchemasProperty() throws Exception {
         VeraPDFMeta metadata = VeraPDFMeta.create();
         metadata.createExtensionSchema();

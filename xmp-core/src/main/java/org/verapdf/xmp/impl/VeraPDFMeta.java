@@ -627,6 +627,18 @@ public class VeraPDFMeta {
     }
 
     public XMPMeta getCloneOfInitialMeta() {
-        return (XMPMeta) meta.clone();
+        XMPMetaImpl clone = (XMPMetaImpl) meta.clone();
+        XMPSchemaRegistry registry = XMPMetaFactory.getSchemaRegistry();
+        List schemas = clone.getRoot().getUnmodifiableChildren();
+        if (schemas != null) {
+            for (Object schema : schemas) {
+                XMPNode schemaNode = (XMPNode) schema;
+                String registeredPrefix = registry.getNamespacePrefix(schemaNode.getName());
+                if (registeredPrefix != null) {
+                    schemaNode.setValue(registeredPrefix);
+                }
+            }
+        }
+        return clone;
     }
 }
