@@ -86,10 +86,10 @@ public abstract class AbstractBatchHandler implements BatchProcessingHandler {
 			case PARSE:
 				if (taskResult.isSuccess())
 					parsingSuccess(taskResult);
-				else if (!result.isPdf())
-					parsingFailure(taskResult);
-				else
+				else if (result.isEncryptedPdf())
 					pdfEncrypted(taskResult);
+				else
+					parsingFailure(taskResult);
 				break;
 
 			case EXTRACT_FEATURES:
