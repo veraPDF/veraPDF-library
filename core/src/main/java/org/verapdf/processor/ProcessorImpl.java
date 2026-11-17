@@ -247,7 +247,7 @@ final class ProcessorImpl implements ItemProcessor {
 			TaskResult taskResult = TaskResultImpl.fromValues(type, timer.stop());
 			this.taskResults.put(type, taskResult);
 		} catch (ValidationException excep) {
-			logger.log(Level.WARNING, "Exception caught when validating item"); //$NON-NLS-1$
+			logger.log(Level.WARNING, "Exception caught when validating item", excep); //$NON-NLS-1$
 			this.taskResults.put(type, TaskResultImpl.fromValues(type, timer.stop(), excep));
 		} catch (IOException excep) {
 			logger.log(Level.INFO, "IOException closing validator."); //$NON-NLS-1$
