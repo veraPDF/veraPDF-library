@@ -86880,16 +86880,6 @@
 			<references/>
 		</rule>
 		<rule object="ASignature">
-			<id specification="ISO_32000_2_0" clause="Signature-SubFilter-Name-ETSI.CAdES.detached" testNumber="27"/>
-			<description>Entry SubFilter with type Name in Signature should not have value ETSI.CAdES.detached unless extension ETSI_PAdES is enabled</description>
-			<test>(hasExtensionETSI_PAdES == true) || SubFilterNameValue != "ETSI.CAdES.detached"</test>
-			<error>
-				<message>Entry SubFilter with type Name in Signature has value ETSI.CAdES.detached</message>
-				<arguments/>
-			</error>
-			<references/>
-		</rule>
-		<rule object="ASignature">
 			<id specification="ISO_32000_2_0" clause="Signature-SubFilter-Name" testNumber="19"/>
 			<description>Entry SubFilter with type Name in Signature should not have deprecated value adbe.pkcs7.sha1</description>
 			<test>SubFilterNameValue != "adbe.pkcs7.sha1"</test>
